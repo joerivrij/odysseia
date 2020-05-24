@@ -1,0 +1,19 @@
+{
+  "nomina": [
+    {"greek": "ὁ δοῦλος", "dutch": "slaaf"},
+    {"greek": "ὁ θεός","dutch": "god"},
+    {"greek": "ὁ Bίοσ", "dutch": "leven"},
+    {"greek": "ὁ οἶνος","dutch": "ezel"},
+    {"greek": "ὁ ἄνθρωπος","dutch": "mens, persoon"},
+    {"greek": "ὁ θάνατος","dutch": "dood"},
+    {"greek": "ὁ νεκρός","dutch": "lijk, dode"},
+    {"greek": "ὁ πόνος","dutch": "inspanning, moeite, werk, pijn, nood"},
+    {"greek": "τὸ ἆθλον", "dutch": "(wedstrijd)prijs"},
+    {"greek": "ἄριστος","dutch": "best"},
+    {"greek": "ἔνιοι","dutch": "sommige, enige"},
+    {"greek": "τό ἔργον","dutch": "werk, daad"},
+    {"greek": "ὁ θρόνος","dutch": "troon, (ere)zetel"},
+    {"greek": "τό κακόν","dutch": "onheil, ongeluk, ramp"},
+    {"greek": "ὁ, τό","dutch": "de, het"}
+  ]
+}
