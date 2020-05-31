@@ -61,18 +61,18 @@ def check_answer():
     json_body = request.json
     answer = json_body['answer']
     quiz_word = json_body['quizWord']
-    categorie = json_body['categorie']
+    category = json_body['categorie']
 
     correct_answer = False
 
     local_json_list = ""
-    if categorie == "nomina":
+    if category == "nomina":
         global json_nomina
         local_json_list = json_nomina['nomina']
-    elif categorie == "verba":
+    elif category == "verba":
         global json_verba
         local_json_list = json_verba['verba']
-    elif categorie == "misc":
+    elif category == "misc":
         global json_misc
         local_json_list = json_misc['misc']
     else:
@@ -90,11 +90,11 @@ def set_global_lists():
     global json_nomina
     global json_verba
     global json_misc
-    with open('api/nomina/wordlist.json') as f:
+    with open('./nomina/wordlist.json') as f:
         json_nomina = json.load(f)
-    with open('api/verba/wordlist.json') as f:
+    with open('./verba/wordlist.json') as f:
         json_verba = json.load(f)
-    with open('api/misc/wordlist.json') as f:
+    with open('./misc/wordlist.json') as f:
         json_misc = json.load(f)
     return
 
