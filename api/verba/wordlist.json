@@ -28,7 +28,7 @@
     {"greek": "μέλει + dat.", "dutch": "het gaat (iemand) ter harte; het interesseert (iemand)", "chapter" : 3},
     {"greek": "μετέχω + gen.", "dutch": "deel hebben aan, meedoen aan", "chapter" : 3},
     {"greek": "ποιέω", "dutch": "maken, doen, veroorzaken", "chapter" : 3},
-    {"greek": "φθονέω + dat.", "dutch": "jaloers zijn op.misgunnen, benijden", "chapter" : 3},
+    {"greek": "φθονέω + dat.", "dutch": "jaloers zijn op misgunnen, benijden", "chapter" : 3},
     {"greek": "φιλέω", "dutch": "houden van", "chapter" : 3},
     {"greek": "αἴρω", "dutch": "optillen, oppakken, oprichten", "chapter" : 4},
     {"greek": "ἁμαρτάνω + gen.", "dutch": "(het doel) missen, mislopen", "chapter" : 4},
@@ -52,6 +52,11 @@
     {"greek": "καλέω", "dutch": "roepen", "chapter" : 6},
     {"greek": "κωλύω", "dutch": "verhinderen, beletten", "chapter" : 6},
     {"greek": "λύω", "dutch": "losmaken, beslechten (van een ruzie), schenden (een verdrag)", "chapter" : 6},
-    {"greek": "παρασκευάζω", "dutch": "klaarmaken, voorzien van, organiseren", "chapter" : 6}
+    {"greek": "παρασκευάζω", "dutch": "klaarmaken, voorzien van, organiseren", "chapter" : 6},
+    {"greek": "ὀρμέν", "dutch": "voor anker liggen", "chapter" : 6},
+    {"greek": "ἁγανακτέω", "dutch": "boos zijn", "chapter" : 6},
+    {"greek": "ἁναΒαίνω εἰς", "dutch": "aan boord gaan van", "chapter" : 6},
+    {"greek": "ἁνέλκω", "dutch": "ophalen, lichten (zoals een anker)", "chapter" : 6},
+    {"greek": "θοπυβέω", "dutch": "lawaai maken", "chapter" : 6}
   ]
 }

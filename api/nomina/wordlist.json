@@ -55,8 +55,19 @@
     {"greek": "στρατιώτης, ὁ", "dutch": "soldaat", "chapter" : 6},
     {"greek": "φαῦλος", "dutch": "onbetekenend, waardeloos", "chapter" : 6},
     {"greek": "χαλκοῦς", "dutch": "bronzen, koperen", "chapter" : 6},
-    {"greek": "χρυσοῦς", "dutch": "gouden", "chapter" : 6}
-
-
+    {"greek": "χρυσοῦς", "dutch": "gouden", "chapter" : 6},
+    {"greek": "Αχαϊκός", "dutch": "Achaïsch, Grieks","chapter" : 6},
+    {"greek": "κόλπος, ὁ", "dutch": "baai", "chapter" : 6},
+    {"greek": "Βασίλεια, ἡ", "dutch": "koningin", "chapter" : 6},
+    {"greek": "ἁρπαγή, ἡ", "dutch": "roof", "chapter" : 6},
+    {"greek": "ιστός, ὁ", "dutch": "mast", "chapter" : 6},
+    {"greek": "ιστίον, τό", "dutch": "zeil", "chapter" : 6},
+    {"greek": "εὐνή, ἡ", "dutch": "ankersteen (meervoud)", "chapter" : 6},
+    {"greek": "νηνεμία, ἡ", "dutch": "windstilte", "chapter" : 6},
+    {"greek": "ἁκτή, ἡ", "dutch": "kust", "chapter" : 6},
+    {"greek": "ἄπλοια, ἡ", "dutch": "oponthoud, verhindering van de vaart", "chapter" : 6},
+    {"greek": "Δάρδανοι", "dutch": "Trojanen", "chapter" : 6},
+    {"greek": "Ἴλιον", "dutch": "Troje", "chapter" : 6},
+    {"greek": "Σπάρτη", "dutch": "Sparta", "chapter" : 6}
   ]
 }
