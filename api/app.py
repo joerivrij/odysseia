@@ -18,39 +18,57 @@ def ping_pong():
 
 
 # creates a new quiz word from the nominas
-@application.route('/api/v1/nomina', methods=['GET'])
-def nomina():
+@application.route('/api/v1/nomina/<chapter>', methods=['GET'])
+@application.route('/api/v1/nomina', methods=['GET'], defaults={'chapter': None})
+def nomina(chapter):
     global json_nomina
     if json_nomina == "":
         set_global_lists()
 
     nomina_json_list = json_nomina['nomina']
+
+    if chapter is not None:
+        chapter_list = list(filter(lambda word_list: word_list['chapter'] == int(chapter), nomina_json_list))
+        nomina_json_list = chapter_list
+
     quiz = create_new_quiz_list(nomina_json_list)
 
     return jsonify(quiz), 200
 
 
 # creates a new quiz word from the verbas
-@application.route('/api/v1/verba', methods=['GET'])
-def verba():
+@application.route('/api/v1/verba/<chapter>', methods=['GET'])
+@application.route('/api/v1/verba', methods=['GET'], defaults={'chapter': None})
+def verba(chapter):
     global json_verba
     if json_verba == "":
         set_global_lists()
 
     verba_json_list = json_verba['verba']
+
+    if chapter is not None:
+        chapter_list = list(filter(lambda word_list: word_list['chapter'] == int(chapter), verba_json_list))
+        verba_json_list = chapter_list
+
     quiz = create_new_quiz_list(verba_json_list)
 
     return jsonify(quiz), 200
 
 
-# creates a new quiz word from the verbas
-@application.route('/api/v1/misc', methods=['GET'])
-def misc():
+# creates a new quiz word from the misc category
+@application.route('/api/v1/misc/<chapter>', methods=['GET'])
+@application.route('/api/v1/misc', methods=['GET'], defaults={'chapter': None})
+def misc(chapter):
     global json_misc
     if json_misc == "":
         set_global_lists()
 
     misc_json_list = json_misc['misc']
+
+    if chapter is not None:
+        chapter_list = list(filter(lambda word_list: word_list['chapter'] == int(chapter), misc_json_list))
+        misc_json_list = chapter_list
+
     quiz = create_new_quiz_list(misc_json_list)
 
     return jsonify(quiz), 200
@@ -86,15 +104,28 @@ def check_answer():
     return jsonify({"correctAnswer": correct_answer}), 200
 
 
+# creates a new quiz word from the nominas
+@application.route('/api/v1/chapters', methods=['GET'])
+def chapters():
+    global json_nomina
+    if json_nomina == "":
+        set_global_lists()
+
+    last_item = json_nomina['nomina'][-1]
+    chapters = last_item['chapter']
+
+    return jsonify({"chapters": chapters}), 200
+
+
 def set_global_lists():
     global json_nomina
     global json_verba
     global json_misc
-    with open('./nomina/wordlist.json') as f:
+    with open('./api/nomina/wordlist.json') as f:
         json_nomina = json.load(f)
-    with open('./verba/wordlist.json') as f:
+    with open('./api/verba/wordlist.json') as f:
         json_verba = json.load(f)
-    with open('./misc/wordlist.json') as f:
+    with open('./api/misc/wordlist.json') as f:
         json_misc = json.load(f)
     return
 
@@ -109,7 +140,11 @@ def create_new_quiz_list(json_list):
     quiz.append(quiz_word)
     quiz.append(answer)
 
-    while len(quiz) != 5:
+    number_of_answers = 5
+    if len(json_list) < number_of_answers:
+        number_of_answers = len(json_list) + 1
+
+    while len(quiz) != number_of_answers:
         rand_entry = random.choice(list(json_list))
         if rand_entry['dutch'] not in quiz:
             quiz.append(rand_entry['dutch'])

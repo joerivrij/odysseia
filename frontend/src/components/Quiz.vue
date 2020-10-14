@@ -1,13 +1,27 @@
 <template>
     <div>
         <div class="topArea">
+            <div class="sidenav">
+                <h2>Beschikbare hoofdstukken</h2>
+                <button class="categorieButton"
+                        @click="chosenChapter = ''">
+                    <strong>Alle hoofdstukken</strong></button>
+                <div v-for="chapter in chapters" :key="chapter">
+                    <a @click="chosenChapter = chapter" v-on:click="getNextQuestion">
+                {{chapter}}</a>
+                </div>
+            </div>
         <header>
             <h1>Tijd voor de Quiz</h1>
+            <h2 v-if="chosenChapter">Hoofdstuk {{chosenChapter}}</h2>
         </header>
         </div>
 
         <div id="quizarea" class="quizarea">
         <h4> Je hebt {{correctlyAnswered}} van de {{answered}} goed beantwoord ({{percentage}}%)</h4>
+            <button class="categorieButton"
+                    v-on:click="resetProgress">
+                <strong>Reset voortgang</strong></button>
         <h3>Je hebt gekozen voor {{categorie}}</h3>
 
         <button class="categorieButton"
@@ -29,12 +43,6 @@
             <strong>Misc</strong></button>
 
         <h3>Vertaal: {{quizWord}}</h3><br>
-        <div v-for="answer in answers" :key="answer">
-            <button class="answerButton"
-                    @click="selectedAnswer = answer"
-                    v-on:click="postAnswer">{{answer}}</button>
-        </div>
-
         <div v-if="showAnswer">
             <h2 v-if="correct" class="rightText">Correct</h2>
             <h2 v-else class="wrongText">Verkeerd</h2>
@@ -45,6 +53,13 @@
                     v-on:click="getNextQuestion">
                 <strong>Volgende</strong></button>
         </div>
+        <div v-for="answer in answers" :key="answer">
+            <button class="answerButton"
+                    @click="selectedAnswer = answer"
+                    v-on:click="postAnswer">{{answer}}</button>
+        </div>
+
+
     </div>
     </div>
 </template>
@@ -64,20 +79,26 @@
                 answered: 0,
                 correctlyAnswered: 0,
                 percentage: 100,
+                chosenChapter : "",
+                chapters : []
             }
         },
         created() {
+            this.getChapters()
         },
         methods: {
             getQuestion: function () {
-                this.$apiClient.get(`${this.$proxyUrl}/${this.categorie}`)
+                let url = `${this.$proxyUrl}/${this.categorie}`
+                if (this.chosenChapter !== "") {
+                    url = url + `/${this.chosenChapter}`
+                }
+                this.$apiClient.get(url)
                     .then((response) => {
                         let shuffeledArray = response.data.slice(1, 5)
                         for (let i = shuffeledArray.length - 1; i > 0; i--) {
                             const j = Math.floor(Math.random() * (i + 1));
                             [shuffeledArray[i], shuffeledArray[j]] = [shuffeledArray[j], shuffeledArray[i]];
                         }
-                        console.log(shuffeledArray)
                         this.answers = shuffeledArray;
                         this.quizWord = response.data[0];
                         this.correctAnswer = response.data[1]
@@ -113,6 +134,24 @@
                     .catch(e => {
                         this.errors.push(e)
                     })
+            },
+            getChapters : function () {
+                let url = `${this.$proxyUrl}/chapters`
+                this.$apiClient.get(url)
+                    .then((response) => {
+                        let endOfArray = response.data['chapters']
+                        for (let i = 1; i <= endOfArray; i++) {
+                            this.chapters.push(i)
+                        }
+                    })
+                    .catch(e => {
+                        this.errors.push(e)
+                    })
+            },
+            resetProgress : function () {
+                this.correctlyAnswered = 0
+                this.answered = 0
+                this.percentage = 100
             }
         },
         mounted() {
@@ -180,6 +219,7 @@
     }
 
     .rightText {
+        margin: 0.1em;
         color: green;
     }
 
@@ -191,12 +231,11 @@
         width: 200px;
     }
 
-
     .topArea {
         padding: 8em 8em 8em 8em;
         text-align: center;
         position: relative;
-        height: 5em;
+        height: 1em;
     }
     .topArea::after {
         background-image: url("../assets/images/parthenon.jpg");
@@ -208,6 +247,46 @@
         width: 50%;
         height: 50em;
         z-index: -1;
+    }
+
+    /* The sidebar menu */
+    .sidenav {
+        height: 100%; /* Full-height: remove this if you want "auto" height */
+        width: 160px; /* Set the width of the sidebar */
+        position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+        z-index: 1; /* Stay on top */
+        top: 0; /* Stay at the top */
+        left: 0;
+        background-color: cadetblue;
+        overflow-x: hidden; /* Disable horizontal scroll */
+        padding-top: 20px;
+    }
+
+    /* The navigation menu links */
+    .sidenav a {
+        padding: 6px 8px 6px 16px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #ffffff;
+        display: block;
+        cursor: pointer;
+    }
+
+    /* When you mouse over the navigation links, change their color */
+    .sidenav a:hover {
+        color: darkseagreen;
+    }
+
+    /* Style page content */
+    .main {
+        margin-left: 160px; /* Same as the width of the sidebar */
+        padding: 0px 10px;
+    }
+
+    /* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+    @media screen and (max-height: 450px) {
+        .sidenav {padding-top: 15px;}
+        .sidenav a {font-size: 18px;}
     }
 
 </style>

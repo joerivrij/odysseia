@@ -12,7 +12,13 @@ RUN pip install -r requirements.txt
 EXPOSE 5000
 
 # add app
-ADD . /usr/src/app
+ADD app.py /usr/src/app
+ADD error_model.py /usr/src/app
+
+RUN mkdir -p /usr/src/app/api
+ADD misc /usr/src/app/api
+ADD verba /usr/src/app/verba
+ADD nomina /usr/src/app/nomina
 
 # run server
 #CMD python manage.py runserver -h 0.0.0.0
