@@ -1,3 +1,6 @@
+"""Class for error models"""
+
+
 class InvalidUsage(Exception):
     """Creates an exception to be returned by the api"""
     status_code = 400

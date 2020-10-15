@@ -1,3 +1,8 @@
+"""
+Main app module used by flask to serve the application.
+If this file continues to grow consider moving part to submodules
+"""
+
 import json
 import random
 
