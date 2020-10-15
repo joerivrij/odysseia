@@ -1,13 +1,14 @@
-from error_model import InvalidUsage
-from flask import Flask, jsonify, request
-from flask_cors import CORS
 import json
 import random
+
+from flask import Flask, jsonify, request
+from flask_cors import CORS
+from error_model import InvalidUsage
 
 application = Flask(__name__)
 CORS(application)
 
-json_nomina = ""
+JSON_NOMINA = ""
 json_verba = ""
 json_misc = ""
 
@@ -21,11 +22,11 @@ def ping_pong():
 @application.route('/api/v1/nomina/<chapter>', methods=['GET'])
 @application.route('/api/v1/nomina', methods=['GET'], defaults={'chapter': None})
 def nomina(chapter):
-    global json_nomina
-    if json_nomina == "":
+    global JSON_NOMINA
+    if JSON_NOMINA == "":
         set_global_lists()
 
-    nomina_json_list = json_nomina['nomina']
+    nomina_json_list = JSON_NOMINA['nomina']
 
     if chapter is not None:
         chapter_list = list(filter(lambda word_list: word_list['chapter'] == int(chapter), nomina_json_list))
@@ -66,7 +67,8 @@ def misc(chapter):
     misc_json_list = json_misc['misc']
 
     if chapter is not None:
-        chapter_list = list(filter(lambda word_list: word_list['chapter'] == int(chapter), misc_json_list))
+        chapter_list = \
+            list(filter(lambda word_list: word_list['chapter'] == int(chapter), misc_json_list))
         misc_json_list = chapter_list
 
     quiz = create_new_quiz_list(misc_json_list)
@@ -107,22 +109,22 @@ def check_answer():
 # creates a new quiz word from the nominas
 @application.route('/api/v1/chapters', methods=['GET'])
 def chapters():
-    global json_nomina
-    if json_nomina == "":
+    global JSON_NOMINA
+    if JSON_NOMINA == "":
         set_global_lists()
 
-    last_item = json_nomina['nomina'][-1]
+    last_item = JSON_NOMINA['nomina'][-1]
     chapters = last_item['chapter']
 
     return jsonify({"chapters": chapters}), 200
 
 
 def set_global_lists():
-    global json_nomina
+    global JSON_NOMINA
     global json_verba
     global json_misc
     with open('./api/nomina/wordlist.json') as f:
-        json_nomina = json.load(f)
+        JSON_NOMINA = json.load(f)
     with open('./api/verba/wordlist.json') as f:
         json_verba = json.load(f)
     with open('./api/misc/wordlist.json') as f:
