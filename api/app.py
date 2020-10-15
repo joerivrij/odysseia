@@ -1,3 +1,8 @@
+"""
+Main app module used by flask to serve the application.
+If this file continues to grow consider moving part to submodules
+"""
+
 import json
 import random
 
@@ -9,19 +14,20 @@ application = Flask(__name__)
 CORS(application)
 
 JSON_NOMINA = ""
-json_verba = ""
-json_misc = ""
+JSON_VERBA = ""
+JSON_MISC = ""
 
 
 @application.route('/ping')
 def ping_pong():
+    """Endpoint to check if the app is running"""
     return 'pong'
 
 
-# creates a new quiz word from the nominas
 @application.route('/api/v1/nomina/<chapter>', methods=['GET'])
 @application.route('/api/v1/nomina', methods=['GET'], defaults={'chapter': None})
 def nomina(chapter):
+    """Creates a new quiz word from the nomina category"""
     global JSON_NOMINA
     if JSON_NOMINA == "":
         set_global_lists()
@@ -29,7 +35,8 @@ def nomina(chapter):
     nomina_json_list = JSON_NOMINA['nomina']
 
     if chapter is not None:
-        chapter_list = list(filter(lambda word_list: word_list['chapter'] == int(chapter), nomina_json_list))
+        chapter_list = \
+            list(filter(lambda word_list: word_list['chapter'] == int(chapter), nomina_json_list))
         nomina_json_list = chapter_list
 
     quiz = create_new_quiz_list(nomina_json_list)
@@ -37,18 +44,19 @@ def nomina(chapter):
     return jsonify(quiz), 200
 
 
-# creates a new quiz word from the verbas
 @application.route('/api/v1/verba/<chapter>', methods=['GET'])
 @application.route('/api/v1/verba', methods=['GET'], defaults={'chapter': None})
 def verba(chapter):
-    global json_verba
-    if json_verba == "":
+    """Creates a new quiz word from the verba category"""
+    global JSON_VERBA
+    if JSON_VERBA == "":
         set_global_lists()
 
-    verba_json_list = json_verba['verba']
+    verba_json_list = JSON_VERBA['verba']
 
     if chapter is not None:
-        chapter_list = list(filter(lambda word_list: word_list['chapter'] == int(chapter), verba_json_list))
+        chapter_list = \
+            list(filter(lambda word_list: word_list['chapter'] == int(chapter), verba_json_list))
         verba_json_list = chapter_list
 
     quiz = create_new_quiz_list(verba_json_list)
@@ -56,15 +64,15 @@ def verba(chapter):
     return jsonify(quiz), 200
 
 
-# creates a new quiz word from the misc category
 @application.route('/api/v1/misc/<chapter>', methods=['GET'])
 @application.route('/api/v1/misc', methods=['GET'], defaults={'chapter': None})
 def misc(chapter):
-    global json_misc
-    if json_misc == "":
+    """Creates a new quiz word from the misc category"""
+    global JSON_MISC
+    if JSON_MISC == "":
         set_global_lists()
 
-    misc_json_list = json_misc['misc']
+    misc_json_list = JSON_MISC['misc']
 
     if chapter is not None:
         chapter_list = \
@@ -78,6 +86,7 @@ def misc(chapter):
 
 @application.route('/api/v1/answer', methods=['POST'])
 def check_answer():
+    """Checks the send in answer for correctness"""
     json_body = request.json
     answer = json_body['answer']
     quiz_word = json_body['quizWord']
@@ -87,14 +96,14 @@ def check_answer():
 
     local_json_list = ""
     if category == "nomina":
-        global json_nomina
-        local_json_list = json_nomina['nomina']
+        global JSON_NOMINA
+        local_json_list = JSON_NOMINA['nomina']
     elif category == "verba":
-        global json_verba
-        local_json_list = json_verba['verba']
+        global JSON_VERBA
+        local_json_list = JSON_VERBA['verba']
     elif category == "misc":
-        global json_misc
-        local_json_list = json_misc['misc']
+        global JSON_MISC
+        local_json_list = JSON_MISC['misc']
     else:
         return jsonify({"error": "please provide a categorie"}), 400
 
@@ -106,33 +115,37 @@ def check_answer():
     return jsonify({"correctAnswer": correct_answer}), 200
 
 
-# creates a new quiz word from the nominas
 @application.route('/api/v1/chapters', methods=['GET'])
 def chapters():
+    """Returns the latest chapter number"""
     global JSON_NOMINA
     if JSON_NOMINA == "":
         set_global_lists()
 
     last_item = JSON_NOMINA['nomina'][-1]
-    chapters = last_item['chapter']
+    last_chapter = last_item['chapter']
 
-    return jsonify({"chapters": chapters}), 200
+    return jsonify({"chapters": last_chapter}), 200
 
 
 def set_global_lists():
+    """Sets the global lists to the contents of the different json files"""
     global JSON_NOMINA
-    global json_verba
-    global json_misc
-    with open('./api/nomina/wordlist.json') as f:
-        JSON_NOMINA = json.load(f)
-    with open('./api/verba/wordlist.json') as f:
-        json_verba = json.load(f)
-    with open('./api/misc/wordlist.json') as f:
-        json_misc = json.load(f)
-    return
+    global JSON_VERBA
+    global JSON_MISC
+    with open('./api/nomina/wordlist.json') as nomina_list:
+        JSON_NOMINA = json.load(nomina_list)
+    with open('./api/verba/wordlist.json') as verba_list:
+        JSON_VERBA = json.load(verba_list)
+    with open('./api/misc/wordlist.json') as misc_list:
+        JSON_MISC = json.load(misc_list)
 
 
 def create_new_quiz_list(json_list):
+    """Creates a new quiz list for the user
+    it will return 5 different answers from the json_list
+    if the number of answers is lower than 5 than the length of the json_list + 1 is used
+    """
     quiz = []
 
     random_entry = random.choice(list(json_list))
@@ -155,6 +168,7 @@ def create_new_quiz_list(json_list):
 
 @application.errorhandler(InvalidUsage)
 def handle_invalid_usage(error):
+    """Error handler for the api"""
     response = jsonify(error.to_dict())
     response.status_code = error.status_code
     return response

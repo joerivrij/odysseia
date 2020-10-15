@@ -1,4 +1,8 @@
+"""Class for error models"""
+
+
 class InvalidUsage(Exception):
+    """Creates an exception to be returned by the api"""
     status_code = 400
 
     def __init__(self, message, status_code=None, meta=None, payload=None):
@@ -10,6 +14,7 @@ class InvalidUsage(Exception):
         self.payload = payload
 
     def to_dict(self):
+        """Creates a dict from the error message to be returned as json"""
         error_message = dict(self.payload or ())
         error_message['error'] = self.message
         if self.meta and self.meta is not None:
