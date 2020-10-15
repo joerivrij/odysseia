@@ -10,8 +10,8 @@ class InvalidUsage(Exception):
         self.payload = payload
 
     def to_dict(self):
-        rv = dict(self.payload or ())
-        rv['error'] = self.message
+        error_message = dict(self.payload or ())
+        error_message['error'] = self.message
         if self.meta and self.meta is not None:
-            rv['meta'] = self.meta
-        return rv
+            error_message['meta'] = self.meta
+        return error_message
