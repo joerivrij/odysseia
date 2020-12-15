@@ -1,5 +1,7 @@
 <template>
   <div id="quizarea" class="quizarea">
+
+    <h2>Hoofdstuk {{this.$parent.selectedChapter}}</h2>
     <h4> Je hebt {{correctlyAnswered}} van de {{answered}} goed beantwoord ({{percentage}}%)</h4>
     <button class="categorieButton"
             v-on:click="resetProgress">
@@ -24,6 +26,13 @@
             v-on:click="getNextQuestion">
       <strong>Misc</strong></button>
 
+
+    <button class="categorieButton"
+            id="logosButton"
+            @click="categorie = 'logos'"
+            v-on:click="getNextQuestion">
+      <strong>Logos</strong></button>
+
     <h3>Vertaal: {{quizWord}}</h3><br>
     <div v-if="showAnswer">
       <h2 v-if="correct" class="rightText">Correct</h2>
@@ -40,7 +49,6 @@
               @click="selectedAnswer = answer"
               v-on:click="postAnswer">{{answer}}</button>
     </div>
-
 
   </div>
 </template>
@@ -152,9 +160,8 @@ h3 {
 .quizarea {
   background: lightblue;
   text-align: center;
-  margin-left: 3%;
-  width: 90%;
-  padding: 2em;
+  width: 100%;
+  padding: 2em 0 0 0;
 }
 
 .categorieButton {
@@ -167,7 +174,7 @@ h3 {
   margin: 10px 1px;
   border: none;
   border-radius: .1875rem;
-  padding: 11px 22px;
+  padding: 1em 2em;
   cursor: pointer;
   text-align: center;
   vertical-align: middle;

@@ -3,7 +3,7 @@
         <div class="topArea">
         <header>
             <h1>εξέταση</h1>
-            <h2>Hoofdstuk {{this.$parent.selectedChapter}}</h2>
+          <h2>Ἓν οἶδα ὅτι οὐδὲν οἶδα</h2>
         </header>
         </div>
     </div>
@@ -11,7 +11,7 @@
 
 <script>
     export default {
-        name: "Quiz",
+        name: "HeadingImage",
         data() {
         }
     }
@@ -19,16 +19,8 @@
 
 <style scoped>
 
-    ol {
-        padding: 0;
-        text-align: center;
-        list-style-type: decimal;
-        margin-left: 15em;
-        width: 200px;
-    }
-
     .topArea {
-        padding: 5%;
+        padding: 6% 0 40em 0;
         text-align: center;
         position: relative;
         opacity: 0.9;

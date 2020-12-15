@@ -22,7 +22,7 @@
           QuizArea,
             'headingImage': HeadingImage,
             'navbar': Navbar,
-          'quiz-area': QuizArea
+            'quiz-area': QuizArea
         },
         methods: {
           setChapter(e) {

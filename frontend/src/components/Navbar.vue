@@ -1,11 +1,10 @@
 <template>
   <div id="navbar">
     <main id="page-wrap" class="navbar">
-        <h2 v-on:click="collapseBar()">Beschikbare hoofdstukken</h2>
+        <h2>Beschikbare hoofdstukken</h2>
           <div v-for="chapter in chapters" :key="chapter" class="buttonContainer">
-            <button class="chapterButton" v-if="showBar">
-              <a v-on:click="setChapterToParent(chapter)">
-          {{chapter}}</a>
+            <button class="chapterButton" v-on:click="setChapterToParent(chapter)">
+              <a>{{chapter}}</a>
             </button>
           </div>
     </main>
@@ -18,7 +17,6 @@ export default {
   data() {
     return {
       chapters : [],
-      showBar: false,
     }
   },
   created() {
@@ -42,11 +40,7 @@ export default {
     },
     setChapterToParent(chapter) {
       this.$emit("update-chapter", chapter);
-      this.showBar = !this.showBar
     },
-    collapseBar : function () {
-      this.showBar = !this.showBar
-    }
   },
 }
 </script>
@@ -57,7 +51,7 @@ export default {
   background-color: cadetblue;
   color: white;
   cursor: pointer;
-  padding: 18px;
+  padding: 2em 0 2em 0;
   width: 100%;
   border: none;
   outline: none;

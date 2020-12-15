@@ -85,6 +85,19 @@ def misc(chapter):
     return jsonify(quiz), 200
 
 
+@application.route('/api/v1/logos/<chapter>', methods=['GET'])
+@application.route('/api/v1/logos', methods=['GET'], defaults={'chapter': None})
+def logos(chapter):
+    """Creates a new quiz word from the logos category"""
+
+    with open('json_words/logos/wordlist.json') as logos_list:
+        logos_json_list = json.load(logos_list)['logos']
+
+    quiz = create_new_quiz_list(logos_json_list)
+
+    return jsonify(quiz), 200
+
+
 @application.route('/api/v1/answer', methods=['POST'])
 def check_answer():
     """Checks the send in answer for correctness"""
@@ -105,6 +118,9 @@ def check_answer():
     elif category == "misc":
         global JSON_MISC
         local_json_list = JSON_MISC['misc']
+    elif category == "logos":
+        with open('json_words/logos/wordlist.json') as logos_list:
+            local_json_list = json.load(logos_list)['logos']
     else:
         return jsonify({"error": "please provide a categorie"}), 400
 
