@@ -5,6 +5,7 @@ If this file continues to grow consider moving part to submodules
 
 import json
 import random
+import subprocess
 
 from flask import Flask, jsonify, request
 from flask_cors import CORS
@@ -129,15 +130,16 @@ def chapters():
 
 
 def set_global_lists():
-    """Sets the global lists to the contents of the different json files"""
+    """Sets the global lists to the contents of the different json_words files"""
     global JSON_NOMINA
     global JSON_VERBA
     global JSON_MISC
-    with open('./api/nomina/wordlist.json') as nomina_list:
+    subprocess.call(["ls", "-lha"])
+    with open('json_words/nomina/wordlist.json') as nomina_list:
         JSON_NOMINA = json.load(nomina_list)
-    with open('./api/verba/wordlist.json') as verba_list:
+    with open('json_words/verba/wordlist.json') as verba_list:
         JSON_VERBA = json.load(verba_list)
-    with open('./api/misc/wordlist.json') as misc_list:
+    with open('json_words/misc/wordlist.json') as misc_list:
         JSON_MISC = json.load(misc_list)
 
 

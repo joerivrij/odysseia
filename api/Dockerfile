@@ -15,10 +15,8 @@ EXPOSE 5000
 ADD app.py /usr/src/app
 ADD error_model.py /usr/src/app
 
-RUN mkdir -p /usr/src/app/api
-ADD misc /usr/src/app/api
-ADD verba /usr/src/app/verba
-ADD nomina /usr/src/app/nomina
+RUN mkdir -p /usr/src/app/json_words
+ADD json_words /usr/src/app/json_words
 
 # run server
 #CMD python manage.py runserver -h 0.0.0.0
