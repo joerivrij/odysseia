@@ -119,13 +119,17 @@ def check_answer():
         global JSON_MISC
         local_json_list = JSON_MISC['misc']
     elif category == "logos":
-        with open('json_words/logos/wordlist.json') as logos_list:
+        with open('api/json_words/logos/wordlist.json') as logos_list:
             local_json_list = json.load(logos_list)['logos']
     else:
         return jsonify({"error": "please provide a categorie"}), 400
 
     quiz_answer = list(filter(lambda greek: greek['greek'] == quiz_word, local_json_list))
 
+    if len(quiz_answer) > 1:
+        for q_answer in quiz_answer:
+            if q_answer['dutch'] == answer:
+                correct_answer = True
     if quiz_answer[0]['dutch'] == answer:
         correct_answer = True
 
@@ -151,11 +155,11 @@ def set_global_lists():
     global JSON_VERBA
     global JSON_MISC
     subprocess.call(["ls", "-lha"])
-    with open('json_words/nomina/wordlist.json') as nomina_list:
+    with open('api/json_words/nomina/wordlist.json') as nomina_list:
         JSON_NOMINA = json.load(nomina_list)
-    with open('json_words/verba/wordlist.json') as verba_list:
+    with open('api/json_words/verba/wordlist.json') as verba_list:
         JSON_VERBA = json.load(verba_list)
-    with open('json_words/misc/wordlist.json') as misc_list:
+    with open('api/json_words/misc/wordlist.json') as misc_list:
         JSON_MISC = json.load(misc_list)
 
 
