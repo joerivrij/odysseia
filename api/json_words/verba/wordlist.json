@@ -84,6 +84,24 @@
     {"greek": "πλέω", "dutch": "varen", "chapter" : 9},
     {"greek": "σπεύδω", "dutch": "zich haasten", "chapter" : 9},
     {"greek": "φιλέω", "dutch": "houden van", "chapter" : 9},
-    {"greek": "φιλέω + inf.", "dutch": "gewoon zijn te", "chapter" : 9}
+    {"greek": "φιλέω + inf.", "dutch": "gewoon zijn te", "chapter" : 9},
+    {"greek": "δοκέω + dat. (en inf.)", "dutch": "(toe)schijnen, de indruk maken (te)", "chapter" : 10},
+    {"greek": "ἐντυγχάνω + dat", "dutch": "tegenkomen, ontmoeten", "chapter" : 10},
+    {"greek": "καλύπτω", "dutch": "bedekken", "chapter" : 10},
+    {"greek": "ὁμολογέω + dat", "dutch": "het eens zijn met, instemmen", "chapter" : 10},
+    {"greek": "σκοπέω", "dutch": "bekijken, letten op; beschouwen", "chapter" : 10},
+    {"greek": "συλλέγω", "dutch": "verzamelen", "chapter" : 10},
+    {"greek": "ὑπολαμβάνω", "dutch": "antwoorden", "chapter" : 10},
+    {"greek": "φρονέω", "dutch": "verstandig zijn, denken", "chapter" : 10},
+    {"greek": "χωρέω", "dutch": "plaats maken, wijken, gaan", "chapter" : 10},
+    {"greek": "ἀναγκάζω", "dutch": "noodzaken, dwingen", "chapter" : 11},
+    {"greek": "ἀπαγγέλλω", "dutch": "rapporteren, vermelden", "chapter" : 11},
+    {"greek": "γιγνώσκω", "dutch": "inzien, begrijpen, leren kennen, kennen", "chapter" : 11},
+    {"greek": "ἐθέλω/θέλω", "dutch": "willen, bereid zijn", "chapter" : 11},
+    {"greek": "ελεύω", "dutch": "bevelen, verzoeken, aanraden", "chapter" : 11},
+    {"greek": "πείθω", "dutch": "overreden, overtuigen", "chapter" : 11},
+    {"greek": "πίνω", "dutch": "drinken", "chapter" : 11},
+    {"greek": "πράττω", "dutch": "handelen, doen", "chapter" : 11},
+    {"greek": "προβαίνω", "dutch": "1. naar voren komen 2. voortgaan", "chapter" : 11}
   ]
 }
