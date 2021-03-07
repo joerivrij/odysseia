@@ -64,6 +64,28 @@
     {"greek": "ἤ", "dutch": "of", "chapter" : 9},
     {"greek": "μετά + gen.", "dutch": "(samen) met", "chapter" : 9},
     {"greek": "πρότερον", "dutch": "eerder, vroeger", "chapter" : 9},
-    {"greek": "σύν + dat.", "dutch": "met, in gezelschap van, met behulp van", "chapter" : 9}
+    {"greek": "σύν + dat.", "dutch": "met, in gezelschap van, met behulp van", "chapter" : 9},
+    {"greek": "ἐπί + acc", "dutch": "op … af, naar", "chapter" : 10},
+    {"greek": "ἴσως", "dutch": "misschien", "chapter" : 10},
+    {"greek": "πάνυ", "dutch": "volkomen, heel, zeker", "chapter" : 10},
+    {"greek": "πλήν + gen", "dutch": "behalve", "chapter" : 10},
+    {"greek": "ταχέως", "dutch": "snel", "chapter" : 10},
+    {"greek": "τότε", "dutch": "toen, op dat moment, dan", ",chapter" : 10},
+    {"greek": "ὡς", "dutch": "dat (eigenlijk: hoe), in vergelijkingen (als ὅτι), zoals, als", "chapter" : 10},
+    {"greek": "ὥσπερ", "dutch": "zoals", "chapter" : 10},
+    {"greek": "ἀλλά", "dutch": "1. maar, toch, 2. vooruit (bij een verzoek of bevel)", "chapter" : 11},
+    {"greek": "αὐτοῦ", "dutch": "1. opnieuw, weer, verder, 2. op zijn beurt", "chapter" : 11},
+    {"greek": "γε", "dutch": "op de plaats zelf, ter plekke, vertalen met een klemtoon, soms met tenminste, althans", "chapter" : 11},
+    {"greek": "διά + gen.", "dutch": "1. door (… heen), 2. door middel van", "chapter" : 11},
+    {"greek": "ἐκτός", "dutch": "buiten", "chapter" : 11},
+    {"greek": "ἐπί + gen.", "dutch": "tijdens", "chapter" : 11},
+    {"greek": "καίτοι", "dutch": "evenwel, toch", "chapter" : 11},
+    {"greek": "μογις", "dutch": "met moeite, ternauwernood", "chapter" : 11},
+    {"greek": "μόνον", "dutch": "slechts, alleen", "chapter" : 11},
+    {"greek": "πάλιν", "dutch": "terug, weer", "chapter" : 11},
+    {"greek": "περί + gen.", "dutch": "met betrekking tot, om, over", "chapter" : 11},
+    {"greek": "ποτε", "dutch": "eens, ooit, soms", "chapter" : 11},
+    {"greek": "ὕστερον", "dutch": "later, in de toekomst", "chapter" : 11}
+
   ]
 }
