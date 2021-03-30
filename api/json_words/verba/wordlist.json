@@ -98,10 +98,26 @@
     {"greek": "ἀπαγγέλλω", "dutch": "rapporteren, vermelden", "chapter" : 11},
     {"greek": "γιγνώσκω", "dutch": "inzien, begrijpen, leren kennen, kennen", "chapter" : 11},
     {"greek": "ἐθέλω/θέλω", "dutch": "willen, bereid zijn", "chapter" : 11},
-    {"greek": "ελεύω", "dutch": "bevelen, verzoeken, aanraden", "chapter" : 11},
+    {"greek": "κελεύω", "dutch": "bevelen, verzoeken, aanraden", "chapter" : 11},
     {"greek": "πείθω", "dutch": "overreden, overtuigen", "chapter" : 11},
     {"greek": "πίνω", "dutch": "drinken", "chapter" : 11},
     {"greek": "πράττω", "dutch": "handelen, doen", "chapter" : 11},
-    {"greek": "προβαίνω", "dutch": "1. naar voren komen 2. voortgaan", "chapter" : 11}
+    {"greek": "προβαίνω", "dutch": "1. naar voren komen 2. voortgaan", "chapter" : 11},
+    {"greek": "ἂγω", "dutch": "leiden, brengen", "chapter" : 12},
+    {"greek": "ἄγε(τε)", "dutch": "vooruit! (bij een verzoek of bevel)", "chapter" : 12},
+    {"greek": "αἱρέω", "dutch": "(in)nemen, gevangen nemen", "chapter" : 12},
+    {"greek": "δηλόω", "dutch": "duidelijk maken", "chapter" : 12},
+    {"greek": "ἐάω", "dutch": "(toe)laten, toestaan", "chapter" : 12},
+    {"greek": "ἐπαινέω", "dutch": "goedkeuren, prijzen, instemmen met", "chapter" : 12},
+    {"greek": "ἐρωτάω", "dutch": "vragen", "chapter" : 12},
+    {"greek": "εὑρίσκω", "dutch": "vinden, ontdekken, aantreffen", "chapter" : 12},
+    {"greek": "κοσμέω", "dutch": "1. ordenen; 2. versieren, voorzien van", "chapter" : 12},
+    {"greek": "οἰκέω", "dutch": "(be)wonen", "chapter" : 12},
+    {"greek": "ὁράω", "dutch": "zien", "chapter" : 12},
+    {"greek": "πρέπει (+ dat. en inf.)", "dutch": "het is passend (voor iemand om te ...)", "chapter" : 12},
+    {"greek": "συλλαμβάνω + dat.", "dutch": "helpen", "chapter" : 12},
+    {"greek": "τελευτάω", "dutch": "1. (be)ëindigen; 2. sterven", "chapter" : 12},
+    {"greek": "τιμάω", "dutch": "eren", "chapter" : 12},
+    {"greek": "ὑβρίζω", "dutch": "1. agressief/overmoedig handelen; 2. mishandelen", "chapter" : 12}
   ]
 }

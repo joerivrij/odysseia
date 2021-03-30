@@ -185,6 +185,14 @@
     {"greek": "τοιοῦτος, τοιαύτη, τοιοῦτο", "dutch": "zodanig, dergelijk, zo'n", "chapter" : 11},
     {"greek": "τόπος, ὁ", "dutch": "plaats", "chapter" : 11},
     {"greek": "φροντίς, φροντίδος, ἡ", "dutch": "gedachte, zorg", "chapter" : 11},
-    {"greek": "χειμών ν, χειμῶνος, ὁ", "dutch": "winter, storm", "chapter" : 11}
+    {"greek": "χειμών ν, χειμῶνος, ὁ", "dutch": "winter, storm", "chapter" : 11},
+    {"greek": "δαίμων, δαίμονος, ὁ", "dutch": "goddelijk wezen, demon", "chapter" : 12},
+    {"greek": "ἐναντίος +gen./dat.", "dutch": "tegen(over)gesteld aan, strijdig met", "chapter" : 12},
+    {"greek": "ἐπιστήμη, ἡ", "dutch": "kennis, wetenschap", "chapter" : 12},
+    {"greek": "ἔρως, ἔρώτος, ὁ", "dutch": "liefde, begeerte", "chapter" : 12},
+    {"greek": "μέγιστος", "dutch": "grootst, zeer groot", "chapter" : 12},
+    {"greek": "ὅς/ἥ/ὅ rel.", "dutch": "1. die, dat; 2. (met ingesloten antecedent", "chapter" : 12},
+    {"greek": "ὥρα, ἡ,", "dutch": "seizoen, tijd van de dag", "chapter" : 12},
+    {"greek": "ὥρα (ἐστίν) + inf.", "dutch": "het is tijd om te ...", "chapter" : 12}
   ]
 }

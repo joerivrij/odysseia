@@ -74,8 +74,9 @@
     {"greek": "ὡς", "dutch": "dat (eigenlijk: hoe), in vergelijkingen zoals, als", "chapter" : 10},
     {"greek": "ὥσπερ", "dutch": "zoals", "chapter" : 10},
     {"greek": "ἀλλά", "dutch": "1. maar, toch 2. vooruit (bij een verzoek of bevel)", "chapter" : 11},
-    {"greek": "αὐτοῦ", "dutch": "1. opnieuw, weer, verder, 2. op zijn beurt", "chapter" : 11},
-    {"greek": "γε", "dutch": "op de plaats zelf, ter plekke, vertalen met een klemtoon, soms met tenminste, althans", "chapter" : 11},
+    {"greek": "αὖ", "dutch": "1. opnieuw, weer, verder, 2. op zijn beurt", "chapter" : 11},
+    {"greek": "αὐτοῦ", "dutch": "op de plaats zelf, ter plekke", "chapter" : 11},
+    {"greek": "γε", "dutch": "vertalen met een klemtoon, soms met tenminste, althans", "chapter" : 11},
     {"greek": "διά + gen.", "dutch": "1. door (...heen), 2. door middel van", "chapter" : 11},
     {"greek": "ἐκτός", "dutch": "buiten", "chapter" : 11},
     {"greek": "ἐπί + gen.", "dutch": "tijdens", "chapter" : 11},
@@ -85,6 +86,12 @@
     {"greek": "πάλιν", "dutch": "terug, weer", "chapter" : 11},
     {"greek": "περί + gen.", "dutch": "met betrekking tot, om, over", "chapter" : 11},
     {"greek": "ποτε", "dutch": "eens, ooit, soms", "chapter" : 11},
-    {"greek": "ὕστερον", "dutch": "later, in de toekomst", "chapter" : 11}
+    {"greek": "ὕστερον", "dutch": "later, in de toekomst", "chapter" : 11},
+    {"greek": "ἅμα", "dutch": "tegelijk", "chapter" : 12},
+    {"greek": "ἐνθάδε", "dutch": "hier, hierheen", "chapter" : 12},
+    {"greek": "ὅτι", "dutch": "1. dat (na verba van zeggen en menen); 2. omdat", "chapter" : 12},
+    {"greek": "-περ", "dutch": "zeer, juist, precies(benadrukt het voorafgaande woord)", "chapter" : 12},
+    {"greek": "πῶς;", "dutch": "hoe?", "chapter" : 12}
+
   ]
 }
