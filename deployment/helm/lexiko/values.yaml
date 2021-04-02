@@ -1,0 +1,26 @@
+# Default values for Lexiko.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+config:
+  environment: development
+  pullPolicy: Never
+  replicas:
+    low: 1
+    medium: 3
+    high: 5
+
+images:
+  tag: cbaf6db
+  frontend:
+    repo: lexiko_spa
+  backend:
+    repo: lexiko_api
+
+envVariables:
+  frontend:
+    nodeEnv: production
+    port: 3000
+  backend:
+    port: 5000
+
