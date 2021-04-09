@@ -14,7 +14,7 @@ RUN go mod download
 COPY . .
 
 # Build the binary
-RUN GO111MODULE=on GOOS=linux CGO_ENABLED=0 go build -o sokrates cmd/main.go
+RUN GO111MODULE=on GOOS=linux CGO_ENABLED=0 go build -o parmenides cmd/main.go
 
 FROM alpine
 
@@ -23,10 +23,11 @@ RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
 RUN mkdir /app
 WORKDIR /app
 
-COPY --from=build-env /app/sokrates /app/
+COPY --from=build-env /app/parmenides /app/
+COPY sullego /app/
 
 ENV TMPDIR=/tmp
 ENV GOMAXPROCS=8
 
 EXPOSE 5001
-ENTRYPOINT ["/app/sokrates"]
+ENTRYPOINT ["/app/parmenides"]

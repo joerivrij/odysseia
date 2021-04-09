@@ -1,5 +1,5 @@
 git_short_hash=`git rev-parse --short HEAD`
-project_name='sokrates'
+project_name='parmenides'
 
 build:
 	GO111MODULE=on GOOS=linux CGO_ENABLED=0 go build -o $(project_name) cmd/main.go
