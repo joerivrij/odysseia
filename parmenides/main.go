@@ -4,7 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/elastic/go-elasticsearch/v8"
 	"github.com/elastic/go-elasticsearch/v8/esapi"
+	"github.com/kpango/glg"
 	"io/ioutil"
 	"log"
 	"os"
@@ -12,10 +14,29 @@ import (
 	"strconv"
 	"strings"
 	"time"
-
-	"github.com/elastic/go-elasticsearch/v8"
-	"github.com/kpango/glg"
 )
+
+type Logos []Word
+
+func UnmarshalLogos(data []byte) (Logos, error) {
+	var r Logos
+	err := json.Unmarshal(data, &r)
+	return r, err
+}
+
+func (r *Logos) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+type Word struct {
+	Greek   string `json:"greek"`
+	Dutch   string `json:"dutch"`
+	Chapter int64  `json:"chapter"`
+}
+
+func (r *Word) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
 
 func init() {
 	errlog := glg.FileWriter("/tmp/error.log", 0666)
@@ -32,7 +53,6 @@ func main() {
 	glg.Info("\"τό γάρ αυτο νοειν έστιν τε καί ειναι\"")
 	glg.Info("\"for it is the same thinking and being\"")
 	glg.Info(strings.Repeat("~", 37))
-
 
 	elasticClient := createElasticClient("changeme", "elastic")
 	healthy := checkHealthyStatusElasticSearch(elasticClient, 60)
@@ -67,7 +87,7 @@ func main() {
 				for _, word := range logoi {
 					jsonifiedLogos, _ := word.Marshal()
 					esRequest := esapi.IndexRequest{
-						Body:        strings.NewReader(string(jsonifiedLogos)),
+						Body:       strings.NewReader(string(jsonifiedLogos)),
 						Refresh:    "true",
 						Index:      dir.Name(),
 						DocumentID: "",
@@ -94,7 +114,6 @@ func main() {
 					}
 				}
 			}
-
 		}
 	}
 	glg.Infof("created: %s", strconv.Itoa(created))
@@ -163,7 +182,7 @@ func checkHealthyStatusElasticSearch(es *elasticsearch.Client, ticks time.Durati
 			healthy = true
 			ticker.Stop()
 
-		case <- timeout:
+		case <-timeout:
 			ticker.Stop()
 		}
 		break

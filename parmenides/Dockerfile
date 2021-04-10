@@ -14,7 +14,7 @@ RUN go mod download
 COPY . .
 
 # Build the binary
-RUN GO111MODULE=on GOOS=linux CGO_ENABLED=0 go build -o parmenides cmd/main.go
+RUN GO111MODULE=on GOOS=linux CGO_ENABLED=0 go build -o parmenides main.go
 
 FROM alpine
 
@@ -29,5 +29,4 @@ COPY sullego /app/
 ENV TMPDIR=/tmp
 ENV GOMAXPROCS=8
 
-EXPOSE 5001
 ENTRYPOINT ["/app/parmenides"]
