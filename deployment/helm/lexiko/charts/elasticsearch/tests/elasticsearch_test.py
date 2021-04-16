@@ -45,6 +45,7 @@ def test_defaults():
         {"name": "discovery.seed_hosts", "value": uname + "-headless"},
         {"name": "network.host", "value": "0.0.0.0"},
         {"name": "cluster.name", "value": clusterName},
+        {"name": "ES_JAVA_OPTS", "value": "-Xmx1g -Xms1g"},
         {"name": "node.master", "value": "true"},
         {"name": "node.data", "value": "true"},
         {"name": "node.ingest", "value": "true"},
@@ -171,8 +172,53 @@ imageTag: 6.2.4
     )
 
 
-def test_set_initial_master_nodes():
+def test_set_discovery_hosts_to_custom_master_service():
     config = """
+esMajorVersion: 6
+masterService: "elasticsearch-custommaster"
+"""
+    r = helm_template(config)
+    env = r["statefulset"][uname]["spec"]["template"]["spec"]["containers"][0]["env"]
+    assert {
+        "name": "discovery.zen.ping.unicast.hosts",
+        "value": "elasticsearch-custommaster-headless",
+    } in env
+
+
+def test_set_master_service_to_default_nodegroup_name_if_not_set():
+    config = """
+esMajorVersion: 6
+nodeGroup: "data"
+"""
+    r = helm_template(config)
+    env = r["statefulset"]["elasticsearch-data"]["spec"]["template"]["spec"][
+        "containers"
+    ][0]["env"]
+    assert {
+        "name": "discovery.zen.ping.unicast.hosts",
+        "value": "elasticsearch-master-headless",
+    } in env
+
+
+def test_set_master_service_to_default_nodegroup_name_with_custom_cluster_name():
+    config = """
+esMajorVersion: 6
+clusterName: "custom"
+nodeGroup: "data"
+"""
+    r = helm_template(config)
+    env = r["statefulset"]["custom-data"]["spec"]["template"]["spec"]["containers"][0][
+        "env"
+    ]
+    assert {
+        "name": "discovery.zen.ping.unicast.hosts",
+        "value": "custom-master-headless",
+    } in env
+
+
+def test_set_initial_master_nodes_when_using_v_7():
+    config = """
+esMajorVersion: 7
 roles:
   master: "true"
 """
@@ -189,8 +235,9 @@ roles:
         assert e["name"] != "discovery.zen.minimum_master_nodes"
 
 
-def test_dont_set_initial_master_nodes_if_not_master():
+def test_dont_set_initial_master_nodes_if_not_master_when_using_es_version_7():
     config = """
+esMajorVersion: 7
 roles:
   master: "false"
 """
@@ -200,8 +247,9 @@ roles:
         assert e["name"] != "cluster.initial_master_nodes"
 
 
-def test_set_discovery_seed_host():
+def test_set_discovery_seed_host_when_using_v_7():
     config = """
+esMajorVersion: 7
 roles:
   master: "true"
 """
@@ -976,32 +1024,41 @@ def test_esMajorVersion_detect_default_version():
     config = ""
 
     r = helm_template(config)
-    assert r["statefulset"][uname]["metadata"]["annotations"]["esMajorVersion"] == "8"
+    assert r["statefulset"][uname]["metadata"]["annotations"]["esMajorVersion"] == "7"
 
 
-def test_esMajorVersion_default_to_8_if_not_elastic_image():
+def test_esMajorVersion_default_to_7_if_not_elastic_image():
     config = """
     image: notElastic
     imageTag: 1.0.0
     """
 
     r = helm_template(config)
-    assert r["statefulset"][uname]["metadata"]["annotations"]["esMajorVersion"] == "8"
+    assert r["statefulset"][uname]["metadata"]["annotations"]["esMajorVersion"] == "7"
 
 
-def test_esMajorVersion_default_to_8_if_no_version_is_found():
+def test_esMajorVersion_default_to_7_if_no_version_is_found():
     config = """
     imageTag: not_a_number
     """
 
     r = helm_template(config)
-    assert r["statefulset"][uname]["metadata"]["annotations"]["esMajorVersion"] == "8"
+    assert r["statefulset"][uname]["metadata"]["annotations"]["esMajorVersion"] == "7"
+
+
+def test_esMajorVersion_set_to_6_based_on_image_tag():
+    config = """
+    imageTag: 6.8.1
+    """
+
+    r = helm_template(config)
+    assert r["statefulset"][uname]["metadata"]["annotations"]["esMajorVersion"] == "6"
 
 
 def test_esMajorVersion_always_wins():
     config = """
     esMajorVersion: 7
-    imageTag: 8.0.0
+    imageTag: 6.0.0
     """
 
     r = helm_template(config)
@@ -1366,37 +1423,37 @@ networkPolicy:
     explicitNamespacesSelector:
       # Accept from namespaces with all those different rules (from whitelisted Pods)
       matchLabels:
-        role: frontend-http
+        role: frontend
       matchExpressions:
-        - {key: role, operator: In, values: [frontend-http]}
+        - {key: role, operator: In, values: [frontend]}
     additionalRules:
       - podSelector:
           matchLabels:
-            role: frontend-http
+            role: frontend
       - podSelector:
           matchExpressions:
             - key: role
               operator: In
               values:
-                - frontend-http
+                - frontend
   transport:
     enabled: true
     allowExternal: true
     explicitNamespacesSelector:
       matchLabels:
-        role: frontend-transport
+        role: frontend
       matchExpressions:
-        - {key: role, operator: In, values: [frontend-transport]}
+        - {key: role, operator: In, values: [frontend]}
     additionalRules:
       - podSelector:
           matchLabels:
-            role: frontend-transport
+            role: frontend
       - podSelector:
           matchExpressions:
             - key: role
               operator: In
               values:
-                - frontend-transport
+                - frontend
 
 """
     r = helm_template(config)
@@ -1411,16 +1468,16 @@ networkPolicy:
             },
             "namespaceSelector": {
                 "matchExpressions": [
-                    {"key": "role", "operator": "In", "values": ["frontend-http"]}
+                    {"key": "role", "operator": "In", "values": ["frontend"]}
                 ],
-                "matchLabels": {"role": "frontend-http"},
+                "matchLabels": {"role": "frontend"},
             },
         },
-        {"podSelector": {"matchLabels": {"role": "frontend-http"}}},
+        {"podSelector": {"matchLabels": {"role": "frontend"}}},
         {
             "podSelector": {
                 "matchExpressions": [
-                    {"key": "role", "operator": "In", "values": ["frontend-http"]}
+                    {"key": "role", "operator": "In", "values": ["frontend"]}
                 ]
             }
         },
@@ -1433,16 +1490,16 @@ networkPolicy:
             },
             "namespaceSelector": {
                 "matchExpressions": [
-                    {"key": "role", "operator": "In", "values": ["frontend-transport"]}
+                    {"key": "role", "operator": "In", "values": ["frontend"]}
                 ],
-                "matchLabels": {"role": "frontend-transport"},
+                "matchLabels": {"role": "frontend"},
             },
         },
-        {"podSelector": {"matchLabels": {"role": "frontend-transport"}}},
+        {"podSelector": {"matchLabels": {"role": "frontend"}}},
         {
             "podSelector": {
                 "matchExpressions": [
-                    {"key": "role", "operator": "In", "values": ["frontend-transport"]}
+                    {"key": "role", "operator": "In", "values": ["frontend"]}
                 ]
             }
         },

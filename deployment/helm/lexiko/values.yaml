@@ -4,6 +4,7 @@
 
 config:
   environment: development
+  inClusterElastic: true
   pullPolicy: Never
   replicas:
     low: 1

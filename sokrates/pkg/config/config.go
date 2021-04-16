@@ -2,7 +2,7 @@ package config
 
 import (
 	"encoding/json"
-	"github.com/elastic/go-elasticsearch/v8"
+	"github.com/elastic/go-elasticsearch/v7"
 	"github.com/ianschenck/envflag"
 	"github.com/kpango/glg"
 	"log"
@@ -14,6 +14,7 @@ type SokratesConfig struct {
 	ElastictUser string
 	ElasticPassword string
 	ElasticClient elasticsearch.Client
+	SearchTerm string
 }
 
 func Get() *SokratesConfig {
@@ -63,6 +64,7 @@ func Get() *SokratesConfig {
 		ElastictUser: *elasticUser,
 		ElasticPassword: *elasticPassword,
 		ElasticClient: *es,
+		SearchTerm: "greek",
 	}
 
 	return config

@@ -20,7 +20,7 @@ http:
       - '"cluster_name" : "security"'
       - "You Know, for Search"
 
-  https://localhost:9200/_license:
+  https://localhost:9200/_xpack/license:
     status: 200
     timeout: 2000
     allow-insecure: true

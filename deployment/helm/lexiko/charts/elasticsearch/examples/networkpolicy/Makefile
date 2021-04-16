@@ -1,14 +1,13 @@
 default: test
-
 include ../../../helpers/examples.mk
 
 RELEASE := helm-es-networkpolicy
-TIMEOUT := 1200s
 
 install:
-	helm upgrade --wait --timeout=$(TIMEOUT) --install --values values.yaml $(RELEASE) ../../
+	helm upgrade --wait --timeout=600s --install $(RELEASE) --values ./values.yaml ../../ ; \
 
-test: install goss
+restart:
+	helm upgrade --set terminationGracePeriod=121 --wait --timeout=600s --install $(RELEASE) --values ./values.yaml ../../ ; \
 
 purge:
-	helm del $(RELEASE)
+	helm del --purge $(RELEASE)

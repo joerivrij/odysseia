@@ -58,10 +58,16 @@ func ResponseWithJson(w http.ResponseWriter, payload interface{}) {
 		code = 200
 	case models.Word:
 		code = 200
+	case models.CheckAnswerResponse:
+		code = 200
+	case models.LastChapterResponse:
+		code = 200
 	case map[string]interface{}:
 		code = 200
 	case models.ValidationError:
 		code = 400
+	case models.NotFoundError:
+		code = 404
 	case models.MethodError:
 		code = 405
 	default:

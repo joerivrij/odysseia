@@ -6,7 +6,6 @@ This Helm chart is a lightweight way to configure and run our official
 [Kibana Docker image][].
 
 <!-- development warning placeholder -->
-**Warning**: This branch is used for development, please use the latest [7.x][] release for released version.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -14,7 +13,7 @@ This Helm chart is a lightweight way to configure and run our official
 - [Requirements](#requirements)
 - [Installing](#installing)
   - [Install released version using Helm repository](#install-released-version-using-helm-repository)
-  - [Install development version using master branch](#install-development-version-using-master-branch)
+  - [Install development version from a branch](#install-development-version-from-a-branch)
 - [Upgrading](#upgrading)
 - [Usage notes](#usage-notes)
 - [Configuration](#configuration)
@@ -38,8 +37,9 @@ This Helm chart is a lightweight way to configure and run our official
 
 See [supported configurations][] for more details.
 
-
 ## Installing
+
+This chart is tested with the latest 7.12.0 version.
 
 ### Install released version using Helm repository
 
@@ -47,17 +47,18 @@ See [supported configurations][] for more details.
 `helm repo add elastic https://helm.elastic.co`
 
 * Install it:
-  - with Helm 3: `helm install kibana elastic/kibana`
-  - with Helm 2 (deprecated): `helm install --name kibana elastic/kibana`
+  - with Helm 3: `helm install kibana --version <version> elastic/kibana`
+  - with Helm 2 (deprecated): `helm install --name kibana --version <version> elastic/kibana`
 
-
-### Install development version using master branch
+### Install development version from a branch
 
 * Clone the git repo: `git clone git@github.com:elastic/helm-charts.git`
 
+* Checkout the branch : `git checkout 7.12`
+
 * Install it:
-  - with Helm 3: `helm install kibana ./helm-charts/kibana --set imageTag=8.0.0-SNAPSHOT`
-  - with Helm 2 (deprecated): `helm install --name kibana ./helm-charts/kibana --set imageTag=8.0.0-SNAPSHOT`
+  - with Helm 3: `helm install kibana ./helm-charts/kibana --set imageTag=7.12.0`
+  - with Helm 2 (deprecated): `helm install --name kibana ./helm-charts/kibana --set imageTag=7.12.0`
 
 
 ## Upgrading
@@ -91,7 +92,7 @@ as a reference. They are also used in the automated testing of this chart.
 | `httpPort`            | The http port that Kubernetes will use for the healthchecks and the service                                                                                                                    | `5601`                             |
 | `imagePullPolicy`     | The Kubernetes [imagePullPolicy][]value                                                                                                                                                        | `IfNotPresent`                     |
 | `imagePullSecrets`    | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                                   | `[]`                               |
-| `imageTag`            | The Kibana Docker image tag                                                                                                                                                                    | `8.0.0-SNAPSHOT`                   |
+| `imageTag`            | The Kibana Docker image tag                                                                                                                                                                    | `7.12.0`                  |
 | `image`               | The Kibana Docker image                                                                                                                                                                        | `docker.elastic.co/kibana/kibana`  |
 | `ingress`             | Configurable [ingress][] to expose the Kibana service.                                                                                                                                         | see [values.yaml][]                |
 | `kibanaConfig`        | Allows you to add any config files in `/usr/share/kibana/config/` such as `kibana.yml` See [values.yaml][] for an example of the formatting                                                    | `{}`                               |
@@ -194,40 +195,39 @@ lifecycle:
 Please check [CONTRIBUTING.md][] before any contribution or for any questions
 about our development and testing process.
 
-[7.x]: https://github.com/elastic/helm-charts/releases
-[7.9.2]: https://github.com/elastic/helm-charts/blob/7.9.2/kibana/README.md
+[7.12]: https://github.com/elastic/helm-charts/releases
 [BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
 [CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
 [CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
 [affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 [annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
-[default elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/README.md#default
+[default elasticsearch helm chart]: https://github.com/elastic/helm-charts/tree/7.12/elasticsearch/README.md#default
 [environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
 [environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
-[examples]: https://github.com/elastic/helm-charts/tree/master/kibana/examples
-[examples/security]: https://github.com/elastic/helm-charts/tree/master/kibana/examples/security
+[examples]: https://github.com/elastic/helm-charts/tree/7.12/kibana/examples
+[examples/security]: https://github.com/elastic/helm-charts/tree/7.12/kibana/examples/security
 [gke]: https://cloud.google.com/kubernetes-engine
 [helm]: https://helm.sh
 [hostAliases]: https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
 [imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
 [imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
 [ingress]: https://kubernetes.io/docs/concepts/services-networking/ingress/
-[kibana docker image]: https://www.elastic.co/guide/en/kibana/current/docker.html
+[kibana docker image]: https://www.elastic.co/guide/en/kibana/7.12/docker.html
 [kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
 [labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 [lifecycle hooks]: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/
 [nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
-[openshift]: https://github.com/elastic/helm-charts/tree/master/kibana/examples/openshift
+[openshift]: https://github.com/elastic/helm-charts/tree/7.12/kibana/examples/openshift
 [priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 [probe]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
 [resources]: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-[security enabled elasticsearch cluster]: https://github.com/elastic/helm-charts/tree/master/elasticsearch/README.md#security
+[security enabled elasticsearch cluster]: https://github.com/elastic/helm-charts/tree/7.12/elasticsearch/README.md#security
 [securityContext]: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
-[server.host]: https://www.elastic.co/guide/en/kibana/current/settings.html
+[server.host]: https://www.elastic.co/guide/en/kibana/7.12/settings.html
 [service]: https://kubernetes.io/docs/concepts/services-networking/service/
 [serviceAccount]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
-[standard upgrade]: https://www.elastic.co/guide/en/kibana/current/upgrade-standard.html
-[supported configurations]: https://github.com/elastic/helm-charts/tree/master/README.md#supported-configurations
+[standard upgrade]: https://www.elastic.co/guide/en/kibana/7.12/upgrade-standard.html
+[supported configurations]: https://github.com/elastic/helm-charts/tree/7.12/README.md#supported-configurations
 [tolerations]: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 [updateStrategy]: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#updating-a-deployment
-[values.yaml]: https://github.com/elastic/helm-charts/tree/master/kibana/values.yaml
+[values.yaml]: https://github.com/elastic/helm-charts/tree/7.12/kibana/values.yaml

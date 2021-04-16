@@ -17,6 +17,16 @@ type ValidationError struct {
 	Messages   []ValidationMessages `json:"errorModel"`
 }
 
+type NotFoundError struct {
+	ErrorModel
+	Message NotFoundMessage `json:"errorModel"`
+}
+
+type NotFoundMessage struct {
+	Type string `json:"type"`
+	Reason string `json:"reason"`
+}
+
 //  messages used in method error
 type MethodMessages struct {
 	Methods    string `json:"allowedMethods"`

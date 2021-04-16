@@ -1,16 +1,14 @@
 package impl
 
 import (
-	"bytes"
-	"context"
 	"encoding/json"
-	"github.com/elastic/go-elasticsearch/v8/esapi"
-	"log"
+	"fmt"
+	"github.com/gorilla/mux"
+	"github.com/kpango/glg"
 	"net/http"
 	"sokrates/pkg/config"
 	"sokrates/pkg/middleware"
 	"sokrates/pkg/models"
-	"strings"
 )
 
 type SokratesHandler struct {
@@ -23,108 +21,56 @@ func (s *SokratesHandler)PingPong(w http.ResponseWriter, req *http.Request) {
 	middleware.ResponseWithJson(w, pingPong)
 }
 
-func (s *SokratesHandler)CreateDocuments(w http.ResponseWriter, req *http.Request) {
-	var logosModel = models.Logos{Logos:
-		[]models.Word{
-			{
-				Greek:   "ἀγαθός",
-				Dutch:   "goed",
-				Chapter: 0,
-			},
-			{
-				Greek:   "τὸ αγαθών",
-				Dutch:   "het goede",
-				Chapter: 0,
-		},
-	}}
+func (s *SokratesHandler)FindHighestChapter(w http.ResponseWriter, req *http.Request) {
+	pathParams := mux.Vars(req)
+	category := pathParams["category"]
 
-	for _, word := range logosModel.Logos {
-		jsonifiedLogos, _ := word.Marshal()
-		esRequest := esapi.IndexRequest{
-			Body:        strings.NewReader(string(jsonifiedLogos)),
-			Refresh:    "true",
-			Index:      "logos",
-			DocumentID: middleware.CreateGUID(),
-		}
+	chapter, elasticErr := QueryLastChapter(s.Config.ElasticClient, category)
 
-		// Perform the request with the client.
-		res, err := esRequest.Do(context.Background(), &s.Config.ElasticClient)
-		if err != nil {
-			log.Fatalf("Error getting response: %s", err)
-		}
-		defer res.Body.Close()
+	if elasticErr != nil {
 
-		if res.IsError() {
-			log.Printf("[%s]", res.Status())
-		} else {
-			// Deserialize the response into a map.
-			var r map[string]interface{}
-			if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
-				log.Printf("Error parsing the response body: %s", err)
-			} else {
-				// Print the response status and indexed document version.
-				log.Printf("[%s] %s; version=%d", res.Status(), r["result"], int(r["_version"].(float64)))
-			}
+		notFoundErr := models.NotFoundMessage{
+			Type:   fmt.Sprintf("%v", elasticErr["error"].(map[string]interface{})["type"]),
+			Reason: fmt.Sprintf("%v", elasticErr["error"].(map[string]interface{})["reason"]),
 		}
+		e := models.NotFoundError{ErrorModel: models.ErrorModel{middleware.CreateGUID()}, Message: notFoundErr}
+		middleware.ResponseWithJson(w, e)
+		return
 	}
 
+	response := models.LastChapterResponse{LastChapter: chapter}
 
-
-	pingPong := models.ResultModel{Result: "pong"}
-	middleware.ResponseWithJson(w, pingPong)
+	middleware.ResponseWithJson(w, response)
 }
 
-func (s *SokratesHandler)QueryAllForIndex(w http.ResponseWriter, req *http.Request) {
-	var buf bytes.Buffer
-	query := map[string]interface{}{
-		"query": map[string]interface{}{
-			"match": map[string]interface{}{
-				"greek": "ἀγαθός",
-			},
-		},
-	}
-	if err := json.NewEncoder(&buf).Encode(query); err != nil {
-		log.Fatalf("Error encoding query: %s", err)
-	}
-
-	res, err := s.Config.ElasticClient.Search(
-		s.Config.ElasticClient.Search.WithContext(context.Background()),
-		s.Config.ElasticClient.Search.WithIndex("logos"),
-		s.Config.ElasticClient.Search.WithBody(&buf),
-		s.Config.ElasticClient.Search.WithTrackTotalHits(true),
-		s.Config.ElasticClient.Search.WithPretty(),
-	)
-
+func (s *SokratesHandler)CheckAnswer(w http.ResponseWriter, req *http.Request) {
+	var checkAnswerRequest models.CheckAnswerRequest
+	decoder := json.NewDecoder(req.Body)
+	err := decoder.Decode(&checkAnswerRequest)
 	if err != nil {
-		log.Fatalf("Error getting response: %s", err)
+		glg.Error(err)
 	}
-	defer res.Body.Close()
 
-	if res.IsError() {
-		var e map[string]interface{}
-		if err := json.NewDecoder(res.Body).Decode(&e); err != nil {
-			log.Fatalf("Error parsing the response body: %s", err)
-		} else {
-			// Print the response status and error information.
-			log.Fatalf("[%s] %s: %s",
-				res.Status(),
-				e["error"].(map[string]interface{})["type"],
-				e["error"].(map[string]interface{})["reason"],
-			)
+	storedAnswer, _ := QueryWithMatch(s.Config.ElasticClient, checkAnswerRequest.Category, s.Config.SearchTerm, checkAnswerRequest.QuizWord)
+
+	answer := models.CheckAnswerResponse{ Correct : false}
+
+	for _, logos := range storedAnswer.Logos {
+		if logos.Dutch == checkAnswerRequest.AnswerProvided {
+			answer.Correct = true
 		}
 	}
 
-	var r  map[string]interface{}
+	middleware.ResponseWithJson(w, answer)
+}
 
-	var someArray []interface{}
-	json.NewDecoder(res.Body).Decode(&r)
-	for _, hit := range r["hits"].(map[string]interface{})["hits"].([]interface{}) {
-		log.Printf(" * ID=%s, %s", hit.(map[string]interface{})["_id"], hit.(map[string]interface{})["_source"])
-		tie := hit.(map[string]interface{})["_source"]
-		someArray = append(someArray, tie)
-	}
+func (s *SokratesHandler)CreateQuestion(w http.ResponseWriter, req *http.Request) {
+	chapter := req.URL.Query().Get("chapter")
+	category := req.URL.Query().Get("category")
 
-	middleware.ResponseWithJson(w, someArray)
+	questionSet, _ := QueryWithScroll(s.Config.ElasticClient, category, "chapter", chapter)
 
+	fmt.Print(questionSet)
 
+	middleware.ResponseWithJson(w, chapter)
 }
