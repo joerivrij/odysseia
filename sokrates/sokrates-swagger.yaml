@@ -1,127 +1,241 @@
 swagger: "2.0"
 info:
-  description: "This is a sample server Petstore server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters."
-  version: "1.0.0"
-  title: "Swagger Petstore"
-  termsOfService: "http://swagger.io/terms/"
+  description: "This is a sample Sokrates server which is part of lexiko.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net"
+  version: "0.1.0"
+  title: "Swagger Sokrates"
+  termsOfService: "https://github.com/joerivrij/lexiko"
   contact:
-    email: "apiteam@swagger.io"
+    email: "joerivrijaldenhoven@lexiko.io"
   license:
-    name: "Apache 2.0"
-    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-host: "petstore.swagger.io"
-basePath: "/v2"
+    name: "MIT License"
+    url: "https://opensource.org/licenses/MIT"
+host: "localhost:5000"
+basePath: "/api/v1"
 tags:
-  - name: "pet"
-    description: "Everything about your Pets"
-    externalDocs:
-      description: "Find out more"
-      url: "http://swagger.io"
-  - name: "store"
-    description: "Access to Petstore orders"
-  - name: "user"
-    description: "Operations about user"
-    externalDocs:
-      description: "Find out more about our store"
-      url: "http://swagger.io"
+  - name: "health"
+    description: "Endpoints relating to health and checks"
+  - name: "multi"
+    description: "Endpoints relating to getting multi-choice questions and answers"
 schemes:
-  - "https"
   - "http"
 paths:
-  /pet:
+  /ping:
+    get:
+      tags:
+        - "health"
+      summary: "Standard ping pong"
+      description: ""
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Ping"
+        "405":
+          description: "method not allowed"
+          schema:
+            $ref: "#/definitions/MethodNotAllowedError"
+  /health:
+    get:
+      tags:
+        - "health"
+      summary: "Health endpoint"
+      description: "To check whether calls can be made"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Health"
+  /chapters/{category}:
+    get:
+      tags:
+        - "multi"
+      parameters:
+        - name: "category"
+          in: "path"
+          description: "category to find the number of chapters in"
+          required: true
+          type: "string"
+      summary: "Get chapter count for category"
+      description: "Max chapters per category"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/LastChapterResponse"
+        "400":
+          description: "method not allowed"
+          schema:
+            $ref: "#/definitions/ValidationError"
+        "404":
+          description: "not found"
+          schema:
+            $ref: "#/definitions/NotFoundError"
+        "405":
+          description: "method not allowed"
+          schema:
+            $ref: "#/definitions/MethodNotAllowedError"
+  /createQuestion:
+    get:
+      tags:
+        - "multi"
+      parameters:
+        - name: "category"
+          in: "query"
+          description: "category to find the number of chapters in"
+          required: true
+          type: "string"
+        - name: "chapter"
+          in: "query"
+          description: "chapter to create a question for"
+          required: true
+          type: "integer"
+          format: "int64"
+      summary: "Get a new question"
+      description: "Based on a category and a chapter this endpoint creates a question"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/CreateQuestionResponse"
+        "400":
+          description: "method not allowed"
+          schema:
+            $ref: "#/definitions/ValidationError"
+        "405":
+          description: "method not allowed"
+          schema:
+            $ref: "#/definitions/MethodNotAllowedError"
+  /answer:
     post:
       tags:
-        - "pet"
-      summary: "Add a new pet to the store"
-      description: ""
-      operationId: "addPet"
-      consumes:
-        - "application/json"
-        - "application/xml"
-      produces:
-        - "application/xml"
-        - "application/json"
+        - "multi"
       parameters:
         - in: "body"
           name: "body"
           description: "Pet object that needs to be added to the store"
           required: true
           schema:
-            $ref: "#/definitions/Pet"
-      responses:
-        "405":
-          description: "Invalid input"
-      security:
-        - petstore_auth:
-            - "write:pets"
-            - "read:pets"
-    put:
-      tags:
-        - "pet"
-      summary: "Update an existing pet"
-      description: ""
-      operationId: "updatePet"
+            $ref: "#/definitions/CheckAnswerRequest"
+      summary: "Get a new question"
+      description: "Based on a category and a chapter this endpoint creates a question"
       consumes:
         - "application/json"
-        - "application/xml"
       produces:
-        - "application/xml"
         - "application/json"
-      parameters:
-        - in: "body"
-          name: "body"
-          description: "Pet object that needs to be added to the store"
-          required: true
-          schema:
-            $ref: "#/definitions/Pet"
       responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/CheckAnswerResponse"
         "400":
-          description: "Invalid ID supplied"
-        "404":
-          description: "Pet not found"
+          description: "method not allowed"
+          schema:
+            $ref: "#/definitions/ValidationError"
         "405":
-          description: "Validation exception"
-      security:
-        - petstore_auth:
-            - "write:pets"
+          description: "method not allowed"
+          schema:
+            $ref: "#/definitions/MethodNotAllowedError"
+
 definitions:
-  Order:
+  Ping:
     type: "object"
     properties:
-      id:
+      result:
+        type: "string"
+        example: "pong"
+  Health:
+    type: "object"
+    properties:
+      test:
+        type: "string"
+      test2:
         type: "integer"
         format: "int64"
-      petId:
+  LastChapterResponse:
+    type: "object"
+    properties:
+      lastChapter:
         type: "integer"
         format: "int64"
-      quantity:
+        example: 5
+  CreateQuestionResponse:
+    type: "object"
+    properties:
+      lastChapter:
         type: "integer"
-        format: "int32"
-      shipDate:
+        format: "int64"
+        example: 5
+  CheckAnswerRequest:
+    type: "object"
+    properties:
+      quizWord:
         type: "string"
-        format: "date-time"
-      status:
+        example: "τὸ αγαθών"
+      answerProvided:
         type: "string"
-        description: "Order Status"
-        enum:
-          - "placed"
-          - "approved"
-          - "delivered"
-      complete:
+        example: "het goede"
+      category:
+        type: "string"
+        example: "logos"
+  CheckAnswerResponse:
+    type: "object"
+    properties:
+      correct:
         type: "boolean"
-        default: false
-    xml:
-      name: "Order"
-  ApiResponse:
+        example: true
+  ValidationError:
     type: "object"
     properties:
-      code:
-        type: "integer"
-        format: "int32"
-      type:
+      uniqueCode:
         type: "string"
-      message:
+      errorModel:
+        type: "object"
+        properties:
+          validationField:
+            type: "string"
+          validationMessage:
+            type: "string"
+  NotFoundError:
+    type: "object"
+    properties:
+      uniqueCode:
         type: "string"
+      errorModel:
+        type: "object"
+        properties:
+          reason:
+            type: "string"
+          type:
+            type: "string"
+  MethodNotAllowedError:
+    type: "object"
+    properties:
+      uniqueCode:
+        type: "string"
+      errorModel:
+        type: "object"
+        properties:
+          allowedMethods:
+            type: "string"
+          methodError:
+            type: "string"
+
 externalDocs:
   description: "Find out more about Swagger"
   url: "http://swagger.io"
