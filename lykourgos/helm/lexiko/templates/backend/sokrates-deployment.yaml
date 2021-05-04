@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sokrates
+  labels:
+    app: sokrates
+spec:
+  replicas: {{ int .Values.config.replicas.medium }}
+  selector:
+    matchLabels:
+      app: sokrates
+  template:
+    metadata:
+      labels:
+        app: sokrates
+        release: {{ .Release.Name }}
+        version: {{ .Values.images.tag }}
+    spec:
+      containers:
+        - image: {{ .Values.images.sokrates.repo }}:{{ .Values.images.tag }}
+          name: sokrates
+          env:
+            - name: ELASTIC_SEARCH_SERVICE
+              value: {{ .Values.envVariables.sokrates.elasticService }}
+          imagePullPolicy: {{ .Values.config.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.envVariables.sokrates.port }}
+
