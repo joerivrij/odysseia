@@ -24,14 +24,17 @@ func Get() *SokratesConfig {
 
 	envflag.Parse()
 
-	glg.Debugf("%s : %s", "VAULT_PASSWORD", *elasticPassword)
-	glg.Debugf("%s : %s", "VAULT_USERNAME", *elasticUser)
-	glg.Debugf("%s : %s", "VAULT_SERVICE", *elasticService)
+	glg.Debugf("%s : %s", "ELASTIC_SEARCH_PASSWORD", *elasticPassword)
+	glg.Debugf("%s : %s", "ELASTIC_SEARCH_USER", *elasticUser)
+	glg.Debugf("%s : %s", "ELASTIC_SEARCH_SERVICE", *elasticService)
 
 
 	cfg := elasticsearch.Config{
 		Username: "elastic",
 		Password: "changeme",
+		Addresses: []string{
+			*elasticService,
+		},
 	}
 	es, err := elasticsearch.NewClient(cfg)
 	if err != nil {

@@ -59,3 +59,5 @@ type CheckAnswerResponse struct {
 type LastChapterResponse struct {
 	LastChapter int64 `json:"lastChapter"`
 }
+
+type QuizResponse []string

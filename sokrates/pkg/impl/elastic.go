@@ -59,7 +59,7 @@ func QueryWithMatch(elasticClient elasticsearch.Client, index, term, word string
 
 	json.NewDecoder(res.Body).Decode(&r)
 	for _, hit := range r["hits"].(map[string]interface{})["hits"].([]interface{}) {
-		glg.Debugf(" * ID=%s, %s", hit.(map[string]interface{})["_id"], hit.(map[string]interface{})["_source"])
+		//glg.Debugf(" * ID=%s, %s", hit.(map[string]interface{})["_id"], hit.(map[string]interface{})["_source"])
 		tie, _:= json.Marshal(hit.(map[string]interface{})["_source"])
 		queryWord, _ := models.UnmarshalWord(tie)
 		queryResult.Logos = append(queryResult.Logos, queryWord)

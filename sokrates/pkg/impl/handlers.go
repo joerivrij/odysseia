@@ -5,10 +5,12 @@ import (
 	"fmt"
 	"github.com/gorilla/mux"
 	"github.com/kpango/glg"
+	"math/rand"
 	"net/http"
 	"sokrates/pkg/config"
 	"sokrates/pkg/middleware"
 	"sokrates/pkg/models"
+	"time"
 )
 
 type SokratesHandler struct {
@@ -68,9 +70,46 @@ func (s *SokratesHandler)CreateQuestion(w http.ResponseWriter, req *http.Request
 	chapter := req.URL.Query().Get("chapter")
 	category := req.URL.Query().Get("category")
 
+	var quiz models.QuizResponse
+
 	questionSet, _ := QueryWithScroll(s.Config.ElasticClient, category, "chapter", chapter)
+	randNumber := generateRandomNumber(len(questionSet.Logos))
 
-	fmt.Print(questionSet)
+	question := questionSet.Logos[randNumber]
+	quiz = append(quiz, question.Greek)
+	quiz = append(quiz, question.Dutch)
 
-	middleware.ResponseWithJson(w, chapter)
+	numberOfNeededAnswers := 5
+
+	if len(questionSet.Logos) < numberOfNeededAnswers {
+		numberOfNeededAnswers = len(questionSet.Logos)+1
+	}
+
+	for len(quiz) != numberOfNeededAnswers {
+		randNumber = generateRandomNumber(len(questionSet.Logos))
+		randEntry := questionSet.Logos[randNumber]
+
+		exists := findQuizWord(quiz, randEntry.Dutch)
+		if !exists {
+			quiz = append(quiz, randEntry.Dutch)
+		}
+	}
+
+	middleware.ResponseWithJson(w, quiz)
+}
+
+func generateRandomNumber(length int) int {
+	localRandomizer := rand.NewSource(time.Now().UnixNano())
+	r1 := rand.New(localRandomizer)
+	return r1.Intn(length)
+}
+
+// findQuizWord takes a slice and looks for an element in it
+func findQuizWord(slice []string, val string) bool {
+	for _, item := range slice {
+		if item == val {
+			return true
+		}
+	}
+	return false
 }

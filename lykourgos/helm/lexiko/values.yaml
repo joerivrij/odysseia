@@ -1,0 +1,26 @@
+# Default values for Lexiko.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+config:
+  environment: development
+  pullPolicy: Never
+  replicas:
+    low: 1
+    medium: 3
+    high: 5
+
+images:
+  tag: 39b6ad6
+  pheidias:
+    repo: pheidias
+  sokrates:
+    repo: sokrates
+
+envVariables:
+  pheidias:
+    nodeEnv: production
+    port: 3000
+  sokrates:
+    port: 5000
+    elasticService: http://elasticsearch-master:9200

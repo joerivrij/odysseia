@@ -48,6 +48,22 @@ func ValidateRestMethod(method string) Adapter {
 		}
 	}
 }
+func SetCorsHeaders() Adapter {
+
+	return func(f http.HandlerFunc) http.HandlerFunc {
+
+		return func(w http.ResponseWriter, r *http.Request) {
+			//allow all CORS
+			w.Header().Set("Access-Control-Allow-Origin", "*")
+			w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+			w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+			if (*r).Method == "OPTIONS" {
+				return
+			}
+			f(w, r)
+		}
+	}
+}
 
 // ResponseWithJson returns formed JSON
 func ResponseWithJson(w http.ResponseWriter, payload interface{}) {
@@ -61,6 +77,8 @@ func ResponseWithJson(w http.ResponseWriter, payload interface{}) {
 	case models.CheckAnswerResponse:
 		code = 200
 	case models.LastChapterResponse:
+		code = 200
+	case models.QuizResponse:
 		code = 200
 	case map[string]interface{}:
 		code = 200
