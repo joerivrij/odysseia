@@ -1,5 +1,8 @@
 git_short_hash=`git rev-parse --short HEAD`
-project_name='pheidias'
+project_name=pheidias
 
 docker-build:
 	docker build -t $(project_name):$(git_short_hash) .
+
+build:
+	@echo "no building to be done in ${project_name}"

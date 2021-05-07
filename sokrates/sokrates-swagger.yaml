@@ -10,7 +10,7 @@ info:
     name: "MIT License"
     url: "https://opensource.org/licenses/MIT"
 host: "localhost:5000"
-basePath: "/api/v1"
+basePath: "/sokrates/v1"
 tags:
   - name: "health"
     description: "Endpoints relating to health and checks"

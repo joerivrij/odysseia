@@ -2,8 +2,8 @@ package impl
 
 import (
 	"github.com/gorilla/mux"
-	"sokrates/pkg/config"
-	"sokrates/pkg/middleware"
+	"github.com/lexiko/sokrates/pkg/config"
+	"github.com/lexiko/sokrates/pkg/middleware"
 )
 
 // InitRoutes to start up a mux router and return the routes
@@ -12,11 +12,11 @@ func InitRoutes(config config.SokratesConfig) *mux.Router {
 
 	sokratesHandler := SokratesHandler{Config: &config}
 
-	serveMux.HandleFunc("api/v1/ping", middleware.Adapt(sokratesHandler.PingPong, middleware.ValidateRestMethod("GET"), middleware.LogRequestDetails(), middleware.SetCorsHeaders()))
-	serveMux.HandleFunc("/api/v1/health", middleware.Adapt(sokratesHandler.PingPong, middleware.ValidateRestMethod("GET"), middleware.LogRequestDetails()))
-	serveMux.HandleFunc("/api/v1/chapters/{category}", middleware.Adapt(sokratesHandler.FindHighestChapter, middleware.ValidateRestMethod("GET"), middleware.LogRequestDetails(), middleware.SetCorsHeaders()))
-	serveMux.HandleFunc("/api/v1/createQuestion", middleware.Adapt(sokratesHandler.CreateQuestion, middleware.ValidateRestMethod("GET"), middleware.LogRequestDetails(), middleware.SetCorsHeaders()))
-	serveMux.HandleFunc("/api/v1/answer", middleware.Adapt(sokratesHandler.CheckAnswer, middleware.LogRequestDetails(), middleware.ValidateRestMethod("POST"), middleware.SetCorsHeaders()))
+	serveMux.HandleFunc("/sokrates/v1/ping", middleware.Adapt(sokratesHandler.PingPong, middleware.ValidateRestMethod("GET"), middleware.LogRequestDetails(), middleware.SetCorsHeaders()))
+	serveMux.HandleFunc("/sokrates/v1/health", middleware.Adapt(sokratesHandler.PingPong, middleware.ValidateRestMethod("GET"), middleware.LogRequestDetails(), middleware.SetCorsHeaders()))
+	serveMux.HandleFunc("/sokrates/v1/chapters/{category}", middleware.Adapt(sokratesHandler.FindHighestChapter, middleware.ValidateRestMethod("GET"), middleware.LogRequestDetails(), middleware.SetCorsHeaders()))
+	serveMux.HandleFunc("/sokrates/v1/createQuestion", middleware.Adapt(sokratesHandler.CreateQuestion, middleware.ValidateRestMethod("GET"), middleware.LogRequestDetails(), middleware.SetCorsHeaders()))
+	serveMux.HandleFunc("/sokrates/v1/answer", middleware.Adapt(sokratesHandler.CheckAnswer, middleware.LogRequestDetails(), middleware.ValidateRestMethod("POST"), middleware.SetCorsHeaders()))
 
 	return serveMux
 }

@@ -5,11 +5,12 @@ import (
 	"fmt"
 	"github.com/gorilla/mux"
 	"github.com/kpango/glg"
+	"github.com/lexiko/plato/models"
+	"github.com/lexiko/sokrates/pkg/config"
+	"github.com/lexiko/sokrates/pkg/middleware"
+	apiModels "github.com/lexiko/sokrates/pkg/models"
 	"math/rand"
 	"net/http"
-	"sokrates/pkg/config"
-	"sokrates/pkg/middleware"
-	"sokrates/pkg/models"
 	"time"
 )
 
@@ -18,12 +19,12 @@ type SokratesHandler struct {
 }
 
 // PingPong pongs the ping
-func (s *SokratesHandler)PingPong(w http.ResponseWriter, req *http.Request) {
+func (s *SokratesHandler) PingPong(w http.ResponseWriter, req *http.Request) {
 	pingPong := models.ResultModel{Result: "pong"}
 	middleware.ResponseWithJson(w, pingPong)
 }
 
-func (s *SokratesHandler)FindHighestChapter(w http.ResponseWriter, req *http.Request) {
+func (s *SokratesHandler) FindHighestChapter(w http.ResponseWriter, req *http.Request) {
 	pathParams := mux.Vars(req)
 	category := pathParams["category"]
 
@@ -40,13 +41,13 @@ func (s *SokratesHandler)FindHighestChapter(w http.ResponseWriter, req *http.Req
 		return
 	}
 
-	response := models.LastChapterResponse{LastChapter: chapter}
+	response := apiModels.LastChapterResponse{LastChapter: chapter}
 
 	middleware.ResponseWithJson(w, response)
 }
 
-func (s *SokratesHandler)CheckAnswer(w http.ResponseWriter, req *http.Request) {
-	var checkAnswerRequest models.CheckAnswerRequest
+func (s *SokratesHandler) CheckAnswer(w http.ResponseWriter, req *http.Request) {
+	var checkAnswerRequest apiModels.CheckAnswerRequest
 	decoder := json.NewDecoder(req.Body)
 	err := decoder.Decode(&checkAnswerRequest)
 	if err != nil {
@@ -55,7 +56,7 @@ func (s *SokratesHandler)CheckAnswer(w http.ResponseWriter, req *http.Request) {
 
 	storedAnswer, _ := QueryWithMatch(s.Config.ElasticClient, checkAnswerRequest.Category, s.Config.SearchTerm, checkAnswerRequest.QuizWord)
 
-	answer := models.CheckAnswerResponse{ Correct : false}
+	answer := apiModels.CheckAnswerResponse{Correct: false}
 
 	for _, logos := range storedAnswer.Logos {
 		if logos.Dutch == checkAnswerRequest.AnswerProvided {
@@ -66,11 +67,11 @@ func (s *SokratesHandler)CheckAnswer(w http.ResponseWriter, req *http.Request) {
 	middleware.ResponseWithJson(w, answer)
 }
 
-func (s *SokratesHandler)CreateQuestion(w http.ResponseWriter, req *http.Request) {
+func (s *SokratesHandler) CreateQuestion(w http.ResponseWriter, req *http.Request) {
 	chapter := req.URL.Query().Get("chapter")
 	category := req.URL.Query().Get("category")
 
-	var quiz models.QuizResponse
+	var quiz apiModels.QuizResponse
 
 	questionSet, _ := QueryWithScroll(s.Config.ElasticClient, category, "chapter", chapter)
 	randNumber := generateRandomNumber(len(questionSet.Logos))
@@ -82,7 +83,7 @@ func (s *SokratesHandler)CreateQuestion(w http.ResponseWriter, req *http.Request
 	numberOfNeededAnswers := 5
 
 	if len(questionSet.Logos) < numberOfNeededAnswers {
-		numberOfNeededAnswers = len(questionSet.Logos)+1
+		numberOfNeededAnswers = len(questionSet.Logos) + 1
 	}
 
 	for len(quiz) != numberOfNeededAnswers {

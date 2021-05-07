@@ -21,7 +21,11 @@ spec:
           name: sokrates
           env:
             - name: ELASTIC_SEARCH_SERVICE
-              value: {{ .Values.envVariables.sokrates.elasticService }}
+              value: {{ .Values.envVariables.elastic.elasticService }}
+            - name: ELASTIC_SEARCH_USER
+              value: {{ .Values.envVariables.elastic.elasticUser }}
+            - name: ELASTIC_SEARCH_PASSWORD
+              value: {{ .Values.envVariables.elastic.elasticPassword }}
           imagePullPolicy: {{ .Values.config.pullPolicy }}
           ports:
             - containerPort: {{ .Values.envVariables.sokrates.port }}

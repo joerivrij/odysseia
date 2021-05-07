@@ -7,8 +7,12 @@ import store from './store'
 Vue.config.productionTip = false
 
 Vue.http = Vue.prototype.$apiClient = axios;
-Vue.prototype.$proxyUrl = store.state.proxyUrl + "/api/v1"
-// Vue.prototype.$proxyUrl = "http://localhost:5000/api/v1"
+Vue.prototype.$proxyUrl = store.state.proxyUrl + "/sokrates/v1"
+if (process.env.NODE_ENV === 'development') {
+  Vue.prototype.$proxyUrl = "http://minikube-lexiko.test/sokrates/v1"
+}
+
+console.log(`sokrates proxy found at: ${Vue.prototype.$proxyUrl}`)
 
 new Vue({
   el: '#app',

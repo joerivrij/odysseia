@@ -3,9 +3,9 @@ package main
 import (
 	"github.com/ianschenck/envflag"
 	"github.com/kpango/glg"
+	"github.com/lexiko/sokrates/pkg/config"
+	"github.com/lexiko/sokrates/pkg/impl"
 	"net/http"
-	"sokrates/pkg/config"
-	"sokrates/pkg/impl"
 )
 
 func init() {
@@ -18,11 +18,13 @@ func init() {
 }
 
 func main() {
-	port := envflag.String("PORT",":5000", "port")
+	port := envflag.String("PORT", ":5000", "port")
 
 	envflag.Parse()
 
 	glg.Info("\n _______  _______  ___   _  ______    _______  _______  _______  _______ \n|       ||       ||   | | ||    _ |  |   _   ||       ||       ||       |\n|  _____||   _   ||   |_| ||   | ||  |  |_|  ||_     _||    ___||  _____|\n| |_____ |  | |  ||      _||   |_||_ |       |  |   |  |   |___ | |_____ \n|_____  ||  |_|  ||     |_ |    __  ||       |  |   |  |    ___||_____  |\n _____| ||       ||    _  ||   |  | ||   _   |  |   |  |   |___  _____| |\n|_______||_______||___| |_||___|  |_||__| |__|  |___|  |_______||_______|\n")
+	glg.Info("\"ἓν οἶδα ὅτι οὐδὲν οἶδα\"")
+	glg.Info("\"I know one thing, that I know nothing\"")
 	glg.Info("starting up.....")
 	glg.Debug("starting up and getting env variables")
 

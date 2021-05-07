@@ -39,6 +39,7 @@ export default {
     },
     setChapterToParent(chapter) {
       this.$emit("update-chapter", chapter);
+      this.$root.$refs.quizarea.getQuestion()
     },
   },
 }

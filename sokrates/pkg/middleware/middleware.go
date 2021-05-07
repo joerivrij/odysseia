@@ -4,8 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/kpango/glg"
+	"github.com/lexiko/plato/models"
+	apiModels "github.com/lexiko/sokrates/pkg/models"
 	"gopkg.in/oauth2.v3/utils/uuid"
-	"sokrates/pkg/models"
 	"net/http"
 	"strconv"
 )
@@ -24,10 +25,10 @@ func LogRequestDetails() Adapter {
 	return func(f http.HandlerFunc) http.HandlerFunc {
 
 		return func(w http.ResponseWriter, r *http.Request) {
-				glg.Infof("%s route %s", r.Method, r.URL.Path)
-				f(w, r)
-			}
+			glg.Infof("%s route %s", r.Method, r.URL.Path)
+			f(w, r)
 		}
+	}
 }
 
 // middleware to validate proper methods
@@ -74,11 +75,11 @@ func ResponseWithJson(w http.ResponseWriter, payload interface{}) {
 		code = 200
 	case models.Word:
 		code = 200
-	case models.CheckAnswerResponse:
+	case apiModels.CheckAnswerResponse:
 		code = 200
-	case models.LastChapterResponse:
+	case apiModels.LastChapterResponse:
 		code = 200
-	case models.QuizResponse:
+	case apiModels.QuizResponse:
 		code = 200
 	case map[string]interface{}:
 		code = 200

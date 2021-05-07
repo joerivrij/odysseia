@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"github.com/elastic/go-elasticsearch/v7"
 	"github.com/kpango/glg"
+	"github.com/lexiko/plato/models"
 	"log"
-	"sokrates/pkg/models"
 	"time"
 )
 
@@ -17,7 +17,7 @@ func QueryWithMatch(elasticClient elasticsearch.Client, index, term, word string
 	var buf bytes.Buffer
 	query := map[string]interface{}{
 		"query": map[string]interface{}{
-			"match": map[string]interface{}{
+			"match_phrase": map[string]interface{}{
 				term: word,
 			},
 		},
@@ -60,7 +60,7 @@ func QueryWithMatch(elasticClient elasticsearch.Client, index, term, word string
 	json.NewDecoder(res.Body).Decode(&r)
 	for _, hit := range r["hits"].(map[string]interface{})["hits"].([]interface{}) {
 		//glg.Debugf(" * ID=%s, %s", hit.(map[string]interface{})["_id"], hit.(map[string]interface{})["_source"])
-		tie, _:= json.Marshal(hit.(map[string]interface{})["_source"])
+		tie, _ := json.Marshal(hit.(map[string]interface{})["_source"])
 		queryWord, _ := models.UnmarshalWord(tie)
 		queryResult.Logos = append(queryResult.Logos, queryWord)
 	}
@@ -87,7 +87,7 @@ func QueryWithScroll(elasticClient elasticsearch.Client, index, term, word strin
 		elasticClient.Search.WithIndex(index),
 		elasticClient.Search.WithBody(&buf),
 		elasticClient.Search.WithSize(10),
-		elasticClient.Search.WithScroll(5 * time.Second),
+		elasticClient.Search.WithScroll(5*time.Second),
 		elasticClient.Search.WithTrackTotalHits(true),
 		elasticClient.Search.WithPretty(),
 	)
@@ -119,14 +119,14 @@ func QueryWithScroll(elasticClient elasticsearch.Client, index, term, word strin
 
 	scrollID := fmt.Sprintf("%v", r["_scroll_id"])
 	for _, hit := range r["hits"].(map[string]interface{})["hits"].([]interface{}) {
-		glg.Debugf(" * ID=%s, %s", hit.(map[string]interface{})["_id"], hit.(map[string]interface{})["_source"])
-		tie, _:= json.Marshal(hit.(map[string]interface{})["_source"])
+		//glg.Debugf(" * ID=%s, %s", hit.(map[string]interface{})["_id"], hit.(map[string]interface{})["_source"])
+		tie, _ := json.Marshal(hit.(map[string]interface{})["_source"])
 		queryWord, _ := models.UnmarshalWord(tie)
 		queryResult.Logos = append(queryResult.Logos, queryWord)
 	}
 
 	for {
-		scrollRes, err := elasticClient.Scroll(elasticClient.Scroll.WithScrollID(scrollID), elasticClient.Scroll.WithScroll(5 * time.Second))
+		scrollRes, err := elasticClient.Scroll(elasticClient.Scroll.WithScrollID(scrollID), elasticClient.Scroll.WithScroll(5*time.Second))
 		if err != nil {
 			log.Fatalf("Error: %s", err)
 		}
@@ -157,7 +157,7 @@ func QueryWithScroll(elasticClient elasticsearch.Client, index, term, word strin
 		}
 		for _, hit := range scroll["hits"].(map[string]interface{})["hits"].([]interface{}) {
 			glg.Debugf(" * ID=%s, %s", hit.(map[string]interface{})["_id"], hit.(map[string]interface{})["_source"])
-			tie, _:= json.Marshal(hit.(map[string]interface{})["_source"])
+			tie, _ := json.Marshal(hit.(map[string]interface{})["_source"])
 			queryWord, _ := models.UnmarshalWord(tie)
 			queryResult.Logos = append(queryResult.Logos, queryWord)
 		}
@@ -170,8 +170,7 @@ func QueryLastChapter(elasticClient elasticsearch.Client, index string) (int64, 
 	var buf bytes.Buffer
 	query := map[string]interface{}{
 		"query": map[string]interface{}{
-			"match_all": map[string]interface{}{
-			},
+			"match_all": map[string]interface{}{},
 		},
 	}
 	if err := json.NewEncoder(&buf).Encode(query); err != nil {
