@@ -32,9 +32,9 @@ esConfig: {}
 # Extra environment variables to append to this nodeGroup
 # This will be appended to the current 'env:' key. You can use any of the kubernetes env
 # syntax here
-extraEnvs: []
-#  - name: MY_ENVIRONMENT_VAR
-#    value: the_value_goes_here
+extraEnvs:
+  - name: ELASTIC_PASSWORD
+    value: lexiko
 
 # Allows you to load environment variables from kubernetes secret or config map
 envFrom: []

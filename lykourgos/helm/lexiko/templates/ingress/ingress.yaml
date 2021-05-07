@@ -2,16 +2,16 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: lexiko-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+#  annotations:
+#    nginx.ingress.kubernetes.io/rewrite-target: /
   labels:
     app: lexiko-ingress
 spec:
   defaultBackend:
     service:
-      name: pheidias-service
+      name: sokrates-service
       port:
-        number: {{ .Values.envVariables.pheidias.port }}
+        number: {{ .Values.envVariables.sokrates.port }}
   rules:
     - http:
         paths:
@@ -23,7 +23,7 @@ spec:
                 port:
                   number: {{ .Values.envVariables.pheidias.port }}
           - pathType: Prefix
-            path: /api/v1
+            path: /sokrates/v1
             backend:
               service:
                 name: sokrates-service

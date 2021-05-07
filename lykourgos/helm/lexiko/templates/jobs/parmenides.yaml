@@ -1,13 +1,27 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: pi
+  name: parmenides
+  labels:
+    app: parmenides
 spec:
   template:
+    metadata:
+      labels:
+        app: parmenides
+        release: {{ .Release.Name }}
+        version: {{ .Values.images.tag }}
     spec:
       containers:
-        - name: pi
-          image: perl
-          command: ["perl",  "-Mbignum=bpi", "-wle", "print bpi(2000)"]
+        - image: {{ .Values.images.parmenides.repo }}:{{ .Values.images.tag }}
+          name: parmenides
+          env:
+            - name: ELASTIC_SEARCH_SERVICE
+              value: {{ .Values.envVariables.elastic.elasticService }}
+            - name: ELASTIC_SEARCH_USER
+              value: {{ .Values.envVariables.elastic.elasticUser }}
+            - name: ELASTIC_SEARCH_PASSWORD
+              value: {{ .Values.envVariables.elastic.elasticPassword }}
+          imagePullPolicy: {{ .Values.config.pullPolicy }}
       restartPolicy: Never
-  backoffLimit: 4
+  backoffLimit: 3

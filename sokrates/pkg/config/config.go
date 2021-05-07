@@ -5,22 +5,23 @@ import (
 	"github.com/elastic/go-elasticsearch/v7"
 	"github.com/ianschenck/envflag"
 	"github.com/kpango/glg"
+	"github.com/lexiko/plato/elastic"
 	"log"
 	"strings"
 )
 
 type SokratesConfig struct {
-	ElasticService string
-	ElastictUser string
+	ElasticService  string
+	ElastictUser    string
 	ElasticPassword string
-	ElasticClient elasticsearch.Client
-	SearchTerm string
+	ElasticClient   elasticsearch.Client
+	SearchTerm      string
 }
 
 func Get() *SokratesConfig {
-	elasticService := envflag.String("ELASTIC_SEARCH_SERVICE","http://127.0.0.1:9200", "location of the es service")
-	elasticUser := envflag.String("ELASTIC_SEARCH_USER","sokrates", "es username")
-	elasticPassword := envflag.String("ELASTIC_SEARCH_PASSWORD","sokrates", "es password")
+	elasticService := envflag.String("ELASTIC_SEARCH_SERVICE", "http://127.0.0.1:9200", "location of the es service")
+	elasticUser := envflag.String("ELASTIC_SEARCH_USER", "sokrates", "es username")
+	elasticPassword := envflag.String("ELASTIC_SEARCH_PASSWORD", "sokrates", "es password")
 
 	envflag.Parse()
 
@@ -28,17 +29,14 @@ func Get() *SokratesConfig {
 	glg.Debugf("%s : %s", "ELASTIC_SEARCH_USER", *elasticUser)
 	glg.Debugf("%s : %s", "ELASTIC_SEARCH_SERVICE", *elasticService)
 
-
-	cfg := elasticsearch.Config{
-		Username: "elastic",
-		Password: "changeme",
-		Addresses: []string{
-			*elasticService,
-		},
-	}
-	es, err := elasticsearch.NewClient(cfg)
+	es, err := elastic.CreateElasticClient(*elasticPassword, *elasticUser, []string{*elasticService})
 	if err != nil {
 		log.Fatalf("Error creating the client: %s", err)
+	}
+
+	healthy := elastic.CheckHealthyStatusElasticSearch(es, 200)
+	if !healthy {
+		glg.Fatal("death has found me")
 	}
 
 	res, err := es.Info()
@@ -63,11 +61,11 @@ func Get() *SokratesConfig {
 	log.Println(strings.Repeat("~", 37))
 
 	config := &SokratesConfig{
-		ElasticService: *elasticService,
-		ElastictUser: *elasticUser,
+		ElasticService:  *elasticService,
+		ElastictUser:    *elasticUser,
 		ElasticPassword: *elasticPassword,
-		ElasticClient: *es,
-		SearchTerm: "greek",
+		ElasticClient:   *es,
+		SearchTerm:      "greek",
 	}
 
 	return config

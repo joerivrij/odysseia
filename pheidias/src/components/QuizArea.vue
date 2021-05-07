@@ -135,6 +135,9 @@ export default {
     this.correctlyAnswered = 0
     this.answered = 0
     this.percentage = 100
+  },
+  created() {
+    this.$root.$refs.quizarea = this;
   }
 
 }

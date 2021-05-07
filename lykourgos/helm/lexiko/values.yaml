@@ -11,11 +11,13 @@ config:
     high: 5
 
 images:
-  tag: 39b6ad6
+  tag: d07992c
   pheidias:
     repo: pheidias
   sokrates:
     repo: sokrates
+  parmenides:
+    repo: parmenides
 
 envVariables:
   pheidias:
@@ -23,4 +25,7 @@ envVariables:
     port: 3000
   sokrates:
     port: 5000
+  elastic:
     elasticService: http://elasticsearch-master:9200
+    elasticUser: elastic
+    elasticPassword: lexiko
