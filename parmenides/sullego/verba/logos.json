@@ -422,7 +422,7 @@
     },
     {
       "greek": "φιλέω + inf.",
-      "dutch": "gewoon zijn te",
+      "dutch": "gewoon zijn te/gewend zijn te",
       "chapter": 9
     },
     {
@@ -594,6 +594,56 @@
       "greek": "ὑβρίζω",
       "dutch": "1. agressief/overmoedig handelen; 2. mishandelen",
       "chapter": 12
+    },
+    {
+      "greek": "ἀξιόω",
+      "dutch": "wensen, bilijk achten, verwachten",
+      "chapter": 13
+    },
+    {
+      "greek": "ἄρχω",
+      "dutch": "beginnen",
+      "chapter": 13
+    },
+    {
+      "greek": "δεῖ + AcI/inf.",
+      "dutch": "het is nodig dat, het/men moet",
+      "chapter": 13
+    },
+    {
+      "greek": "δεῖ με λέγειν",
+      "dutch": "ik moet zeggen",
+      "chapter": 13
+    },
+    {
+      "greek": "δράω",
+      "dutch": "doen, handelen",
+      "chapter": 13
+    },
+    {
+      "greek": "καθεύδω",
+      "dutch": "slapen",
+      "chapter": 13
+    },
+    {
+      "greek": "μέλλω",
+      "dutch": "1. aarzelen 2. zullen, op het punt staan",
+      "chapter": 13
+    },
+    {
+      "greek": "φράζω",
+      "dutch": "meedelen",
+      "chapter": 13
+    },
+    {
+      "greek": "χρή",
+      "dutch": "het is nodig/wenselijk dat, het/men moet",
+      "chapter": 13
+    },
+    {
+      "greek": "χρή με λέγειν",
+      "dutch": "ik moet zeggen",
+      "chapter": 13
     }
   ]
 }
