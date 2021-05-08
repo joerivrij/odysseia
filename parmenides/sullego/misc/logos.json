@@ -459,6 +459,16 @@
       "greek": "πῶς;",
       "dutch": "hoe?",
       "chapter": 12
+    },
+    {
+      "greek": "κατά + acc.",
+      "dutch": "1. verspreid over, ter hoogte van; 2. volgens, wat betreft",
+      "chapter": 13
+    },
+    {
+      "greek": "μεταξύ + gen.",
+      "dutch": "tussen",
+      "chapter": 13
     }
   ]
 }
