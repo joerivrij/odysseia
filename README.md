@@ -5,6 +5,7 @@ Lexiko (λεξικο) is the greek word for a dictionary. It is a hobby project 
 # Table of contents <!-- omit in toc -->
 - [BACKEND APIS](#backend-apis)
   - [Sokrates - Σωκράτης](#sokrates---σωκράτης)
+  - [Herodotos - Ἡρόδοτος](#herodotos---ἡρόδοτος)
 - [HELPERS](#helpers)
   - [Parmenides - Παρμενίδης](#parmenides---παρμενίδης)
   - [Plato - Πλάτων](#plato---πλάτων)
@@ -23,6 +24,14 @@ Lexiko (λεξικο) is the greek word for a dictionary. It is a hobby project 
 
 Sokrates (on the right) is a figure of mythical propertions. He could stare at the sky for days, weather cold in nothing but a simple cloak. Truly one of the greatest philosophers and a big influence on Plato which is why we know so much about him at all. A sokratic dialogue is a game of wits were the back and forth between Sokrates and whoever was unlucky (or lucky) to be part of the dialogue would end in frustration. Sokrates was known to question anyone until he had proven they truly knew nothing. As the API responsible for creating and asking questions he was the obvious choice.
 
+### Herodotos - Ἡρόδοτος
+
+Ἡροδότου Ἁλικαρνησσέος ἱστορίης ἀπόδεξις ἥδε - This is the display of the inquiry of Herodotos of Halikarnassos
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Marble_bust_of_Herodotos_MET_DT11742.jpg" alt="Sokrates" width="200"/>
+
+Herodotos is often hailed as the father of history. I name he lives up to. His work (the histories) is a lively account of the histories of the Greeks and Persians and how they came into conflict. This API is responsible for passing along sentences you need to translate. They are then checked for accuracy.
+ 
 ## HELPERS
 
 ### Parmenides - Παρμενίδης
