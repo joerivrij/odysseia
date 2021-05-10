@@ -8,12 +8,12 @@ import (
 	"log"
 )
 
-type SokratesConfig struct {
+type HerodotosConfig struct {
 	ElasticClient   elasticsearch.Client
-	SearchTerm      string
+	ElasticIndex string
 }
 
-func Get() *SokratesConfig {
+func Get() *HerodotosConfig {
 	elasticService := envflag.String("ELASTIC_SEARCH_SERVICE", "http://127.0.0.1:9200", "location of the es service")
 	elasticUser := envflag.String("ELASTIC_SEARCH_USER", "sokrates", "es username")
 	elasticPassword := envflag.String("ELASTIC_SEARCH_PASSWORD", "sokrates", "es password")
@@ -34,9 +34,9 @@ func Get() *SokratesConfig {
 		glg.Fatal("death has found me")
 	}
 
-	config := &SokratesConfig{
+	config := &HerodotosConfig{
 		ElasticClient:   *es,
-		SearchTerm:      "greek",
+		ElasticIndex: "rhema",
 	}
 
 	return config
