@@ -644,6 +644,122 @@
       "greek": "χρή με λέγειν",
       "dutch": "ik moet zeggen",
       "chapter": 13
+    },
+    {
+      "greek": "ἄπειμι (< εἰμί)",
+      "dutch": "afwezig zijn",
+      "chapter": 14
+    },
+    {
+      "greek": "ἄπειμι (< εἶμι)",
+      "dutch": "weggaan",
+      "chapter": 14
+    },
+    {
+      "greek": "ἀφίημι",
+      "dutch": "(weg)sturen, vrijlaten",
+      "chapter": 14
+    },
+    {
+      "greek": "βοάω",
+      "dutch": "roepen, schreeuwen",
+      "chapter": 14
+    },
+    {
+      "greek": "δείκνυμι",
+      "dutch": "aanwijzen, (aan)tonen",
+      "chapter": 14
+    },
+    {
+      "greek": "διαφέρω + gen.",
+      "dutch": "1. verschillen van; 2. uitmunten boven",
+      "chapter": 14
+    },
+    {
+      "greek": "δίδωμι",
+      "dutch": "geven",
+      "chapter": 14
+    },
+    {
+      "greek": "εἶμι",
+      "dutch": "1. gaan, komen; 2. zullen gaan, zullen komen",
+      "chapter": 14
+    },
+    {
+      "greek": "ἔξεστι(ν)",
+      "dutch": "het is mogelijk, het is geoorloofd",
+      "chapter": 14
+    },
+    {
+      "greek": "ἐράω + gen.",
+      "dutch": "verliefd zijn op, verlangen naar",
+      "chapter": 14
+    },
+    {
+      "greek": "ἵημι",
+      "dutch": "1. laten gaan; 2. zenden",
+      "chapter": 14
+    },
+    {
+      "greek": "ἵστημι",
+      "dutch": "doen staan, oprichten, tot staan brengen",
+      "chapter": 14
+    },
+    {
+      "greek": "καθίστημι",
+      "dutch": "neerzetten, neerleggen",
+      "chapter": 14
+    },
+    {
+      "greek": "μανθάνω",
+      "dutch": "leren kennen, begrijpen, vernemen",
+      "chapter": 14
+    },
+    {
+      "greek": "μέλει μοι + gen.",
+      "dutch": "mij gaat ... ter harte, ik heb interesse in",
+      "chapter": 14
+    },
+    {
+      "greek": "οὐδὲν μέλει μοι τούτων τῶν λόγων",
+      "dutch": "ik ben helemaal niet geïnteresseerd in die woorden",
+      "chapter": 14
+    },
+    {
+      "greek": "νικάω",
+      "dutch": "(over)winnen, overwinnaar zijn",
+      "chapter": 14
+    },
+    {
+      "greek": "πάρειμι (< εἶμι)",
+      "dutch": "voorbijgaan",
+      "chapter": 14
+    },
+    {
+      "greek": "παρίημι",
+      "dutch": "1. voorbij laten gaan; 2. toelaten, binnen laten, toestaan",
+      "chapter": 14
+    },
+
+    {
+      "greek": "πίμπλημι",
+      "dutch": "vullen",
+      "chapter": 14
+    },
+    {
+      "greek": "τίθημι",
+      "dutch": "leggen, plaatsen",
+      "chapter": 14
+    },
+    {
+      "greek": "φημί",
+      "dutch": "zeggen, beweren, ja zeggen",
+      "chapter": 14
+    },
+    {
+      "greek": "χαῖρε/χαίρετε imperat. van χαίρω",
+      "dutch": "gegroet",
+      "chapter": 14
     }
   ]
 }
