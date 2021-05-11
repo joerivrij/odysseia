@@ -3,18 +3,19 @@
 Lexiko (λεξικο) is the greek word for a dictionary. It is a hobby project that combines a few of my passions, both ancient Greek (history) and finding technical solutions for problems. As This is a hobby project first and foremost any mistakes are my own, either in translation or in interpation of text.
 
 # Table of contents <!-- omit in toc -->
-- [BACKEND APIS](#backend-apis)
+- [Backend](#backend)
   - [Sokrates - Σωκράτης](#sokrates---σωκράτης)
   - [Herodotos - Ἡρόδοτος](#herodotos---ἡρόδοτος)
-- [HELPERS](#helpers)
+- [Dataseeders](#dataseeders)
+  - [Herakleitos - Ἡράκλειτος](#herakleitos---ἡράκλειτος)
   - [Parmenides - Παρμενίδης](#parmenides---παρμενίδης)
-  - [Plato - Πλάτων](#plato---πλάτων)
-- [FRONTEND](#frontend)
+- [Frontend](#frontend)
   - [Pheidias - Φειδίας](#pheidias---φειδίας)
-- [OPS](#ops)
+- [Ops](#ops)
   - [Lykourgos - Λυκοῦργος](#lykourgos---λυκοῦργος)
+  - [Plato - Πλάτων](#plato---πλάτων)
 
-## BACKEND APIS
+## Backend
 
 ### Sokrates - Σωκράτης
 
@@ -32,7 +33,15 @@ Sokrates (on the right) is a figure of mythical propertions. He could stare at t
 
 Herodotos is often hailed as the father of history. I name he lives up to. His work (the histories) is a lively account of the histories of the Greeks and Persians and how they came into conflict. This API is responsible for passing along sentences you need to translate. They are then checked for accuracy.
  
-## HELPERS
+## Dataseeders
+
+### Herakleitos - Ἡράκλειτος
+
+πάντα ῥεῖ - everything flows
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/6/67/Raphael_School_of_Athens_Michelangelo.jpg" alt="Parmenides" width="200"/>
+
+Herakleitos is one of the so-called pre-socratics. Philosophers that laid the foundation for the future generations. One of his most famous sayings is "No man ever steps in the same river twice". Meaning everything constantly changes. Compare that to Parmenides. He is said to be a somber man, perhaps best reflected in the School of Athens painting where his likeness is taken from non other than Michelangelo.
 
 ### Parmenides - Παρμενίδης
 
@@ -42,6 +51,22 @@ Herodotos is often hailed as the father of history. I name he lives up to. His w
 
 Parmenides is one of the so-called pre-socratics. Philosophers that laid the foundation for the future generations. One of the key elements in his work is the fact that everything is one never changing thing. Therefor he is a good fit for the dataseeder. Making it like nothing every changed.
 
+## Frontend
+
+### Pheidias - Φειδίας
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Charles_B%C3%A9ranger_-_Replica_of_The_H%C3%A9micycle_-_Walters_3783.jpg" alt="Pheidias" width="400"/>
+
+Pheidias (or Phidias) is one of the great artists of the Greek world, most famous for his work on the Athenian Akropolis. An apt choice for the frontend of the app.
+
+## Ops
+
+### Lykourgos - Λυκοῦργος
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/57/Lycurgus.jpg" alt="Lykourgos" width="200"/>
+
+Lykourgos (or Lycurgus) is a semi mythical lawmaker that laid the foundation for the Spartan society with strict rules. As a deployment abides by strict rules this is a great fit.
+
 ### Plato - Πλάτων
 
 χαλεπὰ τὰ καλά - good things are difficult to attain
@@ -50,20 +75,4 @@ Parmenides is one of the so-called pre-socratics. Philosophers that laid the fou
 
 
 Perhaps the most famous Western philosopher, his thoughts have been an influence on Western culture for generations and as he is the rock upon which many philosophers have build there church. It is only fitting that shared code is maintained within the Plato API. Raphael has painted him with Leonardo da Vinci as inspiration.
-
-## FRONTEND
-
-### Pheidias - Φειδίας
-
-<img src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Charles_B%C3%A9ranger_-_Replica_of_The_H%C3%A9micycle_-_Walters_3783.jpg" alt="Pheidias" width="400"/>
-
-Pheidias (or Phidias) is one of the great artists of the Greek world, most famous for his work on the Athenian Akropolis. An apt choice for the frontend of the app.
-
-## OPS
-
-### Lykourgos - Λυκοῦργος
-
-<img src="https://upload.wikimedia.org/wikipedia/commons/5/57/Lycurgus.jpg" alt="Lykourgos" width="200"/>
-
-Lykourgos (or Lycurgus) is a semi mythical lawmaker that laid the foundation for the Spartan society with strict rules. As a deployment abides by strict rules this is a great fit.
 

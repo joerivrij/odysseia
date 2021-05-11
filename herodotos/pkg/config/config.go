@@ -9,8 +9,7 @@ import (
 )
 
 type HerodotosConfig struct {
-	ElasticClient   elasticsearch.Client
-	ElasticIndex string
+	ElasticClient elasticsearch.Client
 }
 
 func Get() *HerodotosConfig {
@@ -35,8 +34,7 @@ func Get() *HerodotosConfig {
 	}
 
 	config := &HerodotosConfig{
-		ElasticClient:   *es,
-		ElasticIndex: "rhema",
+		ElasticClient: *es,
 	}
 
 	return config

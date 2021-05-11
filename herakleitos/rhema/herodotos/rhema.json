@@ -1,0 +1,17 @@
+{
+  "rhemai": [
+    {
+      "author": "Herodotos",
+      "greek": "ἀπικομένους δὲ τούς Φοίνικας ἐς δὴ τὸ Ἄργος τοῦτο διατίθεσθαι τὸν φόρτον",
+      "translations": ["The Phoenicians came to Argos, and set out their cargo"]
+    },
+    {
+      "author": "Herodotos",
+      "greek" : "Ἡροδότου Ἁλικαρνησσέος ἱστορίης ἀπόδεξις ἥδε",
+      "translations" : [
+        "This is the display of the inquiry of Herodotus of Halicarnassus",
+        "This is the display of the inquiry of Herodotos of Halicarnassos"
+        ]
+    }
+  ]
+}

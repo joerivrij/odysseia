@@ -26,7 +26,23 @@ func (h *HerodotosHandler) pingPong(w http.ResponseWriter, req *http.Request) {
 
 // creates a new sentence for questions
 func (h *HerodotosHandler) createQuestion(w http.ResponseWriter, req *http.Request) {
-	response, _ := elastic.QueryWithMatchAll(h.Config.ElasticClient, h.Config.ElasticIndex)
+	author := req.URL.Query().Get("author")
+
+	if author == "" {
+		e := models.ValidationError{
+			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
+			Messages: []models.ValidationMessages{
+				{
+					Field:   "author",
+					Message: "cannot be empty",
+				},
+			},
+		}
+		middleware.ResponseWithJson(w, e)
+		return
+	}
+
+	response, _ := elastic.QueryWithMatchAll(h.Config.ElasticClient, author)
 	randNumber := helpers.GenerateRandomNumber(len(response.Hits.Hits))
 	questionItem := response.Hits.Hits[randNumber]
 	id := questionItem.ID
@@ -36,7 +52,7 @@ func (h *HerodotosHandler) createQuestion(w http.ResponseWriter, req *http.Reque
 	if err != nil {
 		e := models.ValidationError{
 			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
-			Messages:   []models.ValidationMessages{
+			Messages: []models.ValidationMessages{
 				{
 					Field:   "",
 					Message: "something went wrong",
@@ -62,22 +78,64 @@ func (h *HerodotosHandler) checkSentence(w http.ResponseWriter, req *http.Reques
 		glg.Error(err)
 	}
 
-	matchingWords, matchingWordsWithAllowance := findMatchingWordsWithSpellingAllowance(checkSentenceRequest.QuizSentence, checkSentenceRequest.ProvidedSentence)
+	elasticResult, err := elastic.QueryOnId(h.Config.ElasticClient, strings.ToLower(checkSentenceRequest.Author), checkSentenceRequest.SentenceId)
+	if err != nil {
+		e := models.ValidationError{
+			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
+			Messages: []models.ValidationMessages{
+				{
+					Field:   "s",
+					Message: err.Error(),
+				},
+			},
+		}
+		middleware.ResponseWithJson(w, e)
+		return
+	}
 
-	levenshteinDist := levenshteinDistance(checkSentenceRequest.QuizSentence, checkSentenceRequest.ProvidedSentence)
-	lenOfLongestSentence := longestStringOfTwo(checkSentenceRequest.QuizSentence, checkSentenceRequest.ProvidedSentence)
-	percentage := levenshteinDistanceInPercentage(levenshteinDist, lenOfLongestSentence)
+	elasticJson, _ := json.Marshal(elasticResult.Hits.Hits[0].Source)
+	original, err := models.UnmarshalRhema(elasticJson)
+	if err != nil {
+		e := models.ValidationError{
+			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
+			Messages: []models.ValidationMessages{
+				{
+					Field:   "s",
+					Message: err.Error(),
+				},
+			},
+		}
+		middleware.ResponseWithJson(w, e)
+		return
+	}
+
+	var sentence string
+	var percentage float64
+	for _, solution := range original.Translations {
+		levenshteinDist := levenshteinDistance(solution, checkSentenceRequest.ProvidedSentence)
+		lenOfLongestSentence := longestStringOfTwo(solution, checkSentenceRequest.ProvidedSentence)
+		levenshteinPerc := levenshteinDistanceInPercentage(levenshteinDist, lenOfLongestSentence)
+		if levenshteinPerc > percentage {
+			sentence = solution
+			percentage = levenshteinPerc
+		}
+	}
+
 	roundedPercentage := fmt.Sprintf("%.2f", percentage)
 	glg.Infof("levenshtein percentage: %s", roundedPercentage)
 
+
+
+	model := findMatchingWordsWithSpellingAllowance(sentence, checkSentenceRequest.ProvidedSentence)
+
 	response := apiModels.CheckSentenceResponse{
-		LevenshteinDistance:   levenshteinDist,
-		LevenshteinPercentage: roundedPercentage,
-		QuizSentence:              checkSentenceRequest.QuizSentence,
-		AnswerSentence: checkSentenceRequest.ProvidedSentence,
-		MatchingWords: matchingWords,
-		MatchingWordsWithTypoAllowance: matchingWordsWithAllowance,
+		LevenshteinPercentage:          roundedPercentage,
+		QuizSentence:                   sentence,
+		AnswerSentence:                 checkSentenceRequest.ProvidedSentence,
+		MatchingWords:                  model.MatchingWords,
+		NonMatchingWords:				model.NonMatchingWords,
 	}
+
 	middleware.ResponseWithJson(w, response)
 }
 
@@ -109,8 +167,8 @@ func levenshteinDistance(question, answer string) int {
 }
 
 // creates a percentage based on the levenshtein and the longest string
-func levenshteinDistanceInPercentage(levenshteinDistance int, longestString int) float32 {
-	return (1.00 - float32(levenshteinDistance)/float32(longestString)) * 100.00
+func levenshteinDistanceInPercentage(levenshteinDistance int, longestString int) float64 {
+	return (1.00 - float64(levenshteinDistance)/float64(longestString)) * 100.00
 }
 
 func minimum(a, b, c int) int {
@@ -134,34 +192,53 @@ func longestStringOfTwo(a, b string) int {
 }
 
 // take two sentences and creates a list of matching words and words with a typo (1 levenshtein)
-func findMatchingWordsWithSpellingAllowance(source, target string) (matchingWords []string, matchingWordsWithAllowance[]string) {
+func findMatchingWordsWithSpellingAllowance(source, target string)  (response apiModels.CheckSentenceResponse){
 	sourceSentence := strings.Split(source, " ")
 	targetSentence := strings.Split(target, " ")
 
-	for _, wordInSource := range sourceSentence {
-		for _, wordInTarget := range targetSentence {
-			sourceWord := strings.ToLower(wordInSource)
-			targetWord := strings.ToLower(wordInTarget)
-			wordInSlice := checkSliceForItem(matchingWords, wordInSource)
-			wordInLevenshteinSlice := checkSliceForItem(matchingWordsWithAllowance, wordInSource)
-			if wordInSlice {
-				continue
-			} else if sourceWord == targetWord {
-				matchingWords = append(matchingWords, wordInSource)
+	for i, wordInSource := range sourceSentence {
+		for j, wordInTarget := range targetSentence {
+			if i <= j {
+				sourceWord := strings.ToLower(wordInSource)
+				targetWord := strings.ToLower(wordInTarget)
+				if sourceWord == targetWord {
+					wordModel := apiModels.MatchingWord{
+						Word:  wordInSource,
+						Index: int64(i),
+					}
+					response.MatchingWords = append(response.MatchingWords, wordModel)
+					break
+				}
+
+				levenshteinModel := apiModels.NonMatchingWord{
+					Word:    wordInSource,
+					Index:   int64(i),
+					Matches: nil,
+				}
+				for k, word := range targetSentence {
+					levenshtein := levenshteinDistance(sourceWord, word)
+					percentage := levenshteinDistanceInPercentage(levenshtein, longestStringOfTwo(sourceWord, word))
+
+					matchModel := apiModels.Match{
+						Match:       word,
+						Levenshtein: int64(levenshtein),
+						Index:       int64(k),
+						Percentage:  percentage,
+					}
+
+					levenshteinModel.Matches = append(levenshteinModel.Matches, matchModel)
+				}
+
+				response.NonMatchingWords = append(response.NonMatchingWords, levenshteinModel)
 				break
-			}
-			if wordInLevenshteinSlice {
-				continue
-			}
-			levenshtein := levenshteinDistance(sourceWord, targetWord)
-			if levenshtein == 1 {
-				matchingWordsWithAllowance = append(matchingWordsWithAllowance, wordInTarget)
 			}
 		}
 	}
 
-	return matchingWords, matchingWordsWithAllowance
+	return
 }
+
+
 
 // takes a slice and returns a bool if value is part of the slice
 func checkSliceForItem(slice []string, sourceWord string) bool {
@@ -174,7 +251,7 @@ func checkSliceForItem(slice []string, sourceWord string) bool {
 	return false
 }
 
-func streamlineSentenceBeforeCompare(matchingWords []string, sentence string) (string) {
+func streamlineSentenceBeforeCompare(matchingWords []string, sentence string) string {
 	newSentence := ""
 
 	sourceSentence := strings.Split(sentence, " ")

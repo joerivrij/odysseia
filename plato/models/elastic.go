@@ -20,16 +20,16 @@ type ElasticResponse struct {
 }
 
 type Hits struct {
-	Total    Total `json:"total"`
+	Total    Total   `json:"total"`
 	MaxScore float64 `json:"max_score"`
-	Hits     []Hit `json:"hits"`
+	Hits     []Hit   `json:"hits"`
 }
 
 type Hit struct {
-	Index  string `json:"_index"`
-	Type   string `json:"_type"`
-	ID     string `json:"_id"`
-	Score  float64  `json:"_score"`
+	Index  string                 `json:"_index"`
+	Type   string                 `json:"_type"`
+	ID     string                 `json:"_id"`
+	Score  float64                `json:"_score"`
 	Source map[string]interface{} `json:"_source"`
 }
 

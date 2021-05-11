@@ -9,8 +9,8 @@ import (
 )
 
 type SokratesConfig struct {
-	ElasticClient   elasticsearch.Client
-	SearchTerm      string
+	ElasticClient elasticsearch.Client
+	SearchTerm    string
 }
 
 func Get() *SokratesConfig {
@@ -35,8 +35,8 @@ func Get() *SokratesConfig {
 	}
 
 	config := &SokratesConfig{
-		ElasticClient:   *es,
-		SearchTerm:      "greek",
+		ElasticClient: *es,
+		SearchTerm:    "greek",
 	}
 
 	return config

@@ -13,6 +13,11 @@ func (r *RhemaSource) Marshal() ([]byte, error) {
 }
 
 type RhemaSource struct {
+	Author       string   `json:"author"`
 	Greek        string   `json:"greek"`
 	Translations []string `json:"translations"`
+}
+
+type Rhema struct {
+	Rhemai []RhemaSource `json:"rhemai"`
 }
