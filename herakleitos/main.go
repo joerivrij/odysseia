@@ -10,7 +10,6 @@ import (
 	"github.com/lexiko/plato/elastic"
 	"github.com/lexiko/plato/models"
 	"io/ioutil"
-	"log"
 	"os"
 	"path"
 	"strconv"
@@ -45,7 +44,7 @@ func main() {
 
 	elasticClient, err := elastic.CreateElasticClient(*elasticPassword, *elasticUser, []string{*elasticService})
 	if err != nil {
-		log.Fatalf("Error creating the client: %s", err)
+		glg.Fatal("failed to create client")
 	}
 	healthy := elastic.CheckHealthyStatusElasticSearch(elasticClient, 180)
 	if !healthy {
@@ -121,13 +120,13 @@ func main() {
 	elastic.DeleteIndex(elasticClient, authorIndex)
 
 	for _, author := range authors.Authors {
-	jsonifiedAuthor, _ := author.Marshal()
-	esRequest := esapi.IndexRequest{
-		Body:       strings.NewReader(string(jsonifiedAuthor)),
-		Refresh:    "true",
-		Index:      authorIndex,
-		DocumentID: "",
-	}
+		jsonifiedAuthor, _ := author.Marshal()
+		esRequest := esapi.IndexRequest{
+			Body:       strings.NewReader(string(jsonifiedAuthor)),
+			Refresh:    "true",
+			Index:      authorIndex,
+			DocumentID: "",
+		}
 
 		// Perform the request with the client.
 		res, err := esRequest.Do(context.Background(), elasticClient)
@@ -147,7 +146,8 @@ func main() {
 				// Print the response status and indexed document version.
 				created++
 			}
-		}}
+		}
+	}
 
 	glg.Infof("created: %s", strconv.Itoa(created))
 	glg.Infof("words found in rhema: %s", strconv.Itoa(documents))

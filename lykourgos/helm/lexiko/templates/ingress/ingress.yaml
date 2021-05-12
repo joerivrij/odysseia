@@ -29,3 +29,10 @@ spec:
                 name: sokrates-service
                 port:
                   number: {{ .Values.envVariables.sokrates.port }}
+          - pathType: Prefix
+            path: /herodotos/v1
+            backend:
+              service:
+                name: herodotos-service
+                port:
+                  number: {{ .Values.envVariables.herodotos.port }}

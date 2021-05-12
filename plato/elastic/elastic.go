@@ -10,7 +10,6 @@ import (
 	"io/ioutil"
 	"log"
 	"strconv"
-	"strings"
 	"time"
 )
 
@@ -25,30 +24,9 @@ func CreateElasticClient(password, username string, elasticService []string) (*e
 	}
 	es, err := elasticsearch.NewClient(cfg)
 	if err != nil {
-		glg.Fatalf("Error creating the client: %s", err)
+		glg.Errorf("Error creating the client: %s", err)
 		return nil, err
 	}
-
-	res, err := es.Info()
-	if err != nil {
-		log.Fatalf("Error getting response: %s", err)
-	}
-	defer res.Body.Close()
-	// Check response status
-	if res.IsError() {
-		log.Fatalf("Error: %s", res.String())
-	}
-
-	var r map[string]interface{}
-
-	// Deserialize the response into a map.
-	if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
-		glg.Fatalf("Error parsing the response body: %s", err)
-	}
-	// Print client and server version numbers.
-	glg.Infof("Client: %s", elasticsearch.Version)
-	glg.Infof("Server: %s", r["version"].(map[string]interface{})["number"])
-	glg.Infof(strings.Repeat("~", 37))
 
 	return es, nil
 }

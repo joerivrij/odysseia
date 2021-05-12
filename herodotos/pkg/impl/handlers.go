@@ -163,6 +163,7 @@ func (h *HerodotosHandler) queryAuthors(w http.ResponseWriter, req *http.Request
 
 	middleware.ResponseWithJson(w, authors)
 }
+
 // calculates the amount of changes needed to have two sentences match
 // example: Distance from Python to Peithen is 3
 func levenshteinDistance(question, answer string) int {

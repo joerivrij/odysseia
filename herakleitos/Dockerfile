@@ -7,7 +7,7 @@ RUN mkdir /app
 WORKDIR /
 
 COPY herakleitos /app/herakleitos
-COPY sullego /sullego
+COPY rhema /rhema
 
 ENV TMPDIR=/tmp
 ENV GOMAXPROCS=8

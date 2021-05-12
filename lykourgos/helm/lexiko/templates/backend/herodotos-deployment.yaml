@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sokrates
+  name: herodotos
   labels:
-    app: sokrates
+    app: herodotos
 spec:
-  replicas: {{ int .Values.config.replicas.medium }}
+  replicas: {{ int .Values.config.replicas.low }}
   selector:
     matchLabels:
-      app: sokrates
+      app: herodotos
   template:
     metadata:
       labels:
-        app: sokrates
+        app: herodotos
         release: {{ .Release.Name }}
         version: {{ .Values.images.tag }}
     spec:
       containers:
-        - image: {{ .Values.images.sokrates.repo }}:{{ .Values.images.tag }}
+        - image: {{ .Values.images.herodotos.repo }}:{{ .Values.images.tag }}
           name: sokrates
           env:
             - name: ELASTIC_SEARCH_SERVICE
@@ -28,4 +28,4 @@ spec:
               value: {{ .Values.envVariables.elastic.elasticPassword }}
           imagePullPolicy: {{ .Values.config.pullPolicy }}
           ports:
-            - containerPort: {{ .Values.envVariables.sokrates.port }}
+            - containerPort: {{ .Values.envVariables.herodotos.port }}

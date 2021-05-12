@@ -11,19 +11,25 @@ config:
     high: 5
 
 images:
-  tag: d07992c
+  tag: 0f7175f
   pheidias:
     repo: pheidias
   sokrates:
     repo: sokrates
   parmenides:
     repo: parmenides
+  herodotos:
+    repo: herodotos
+  herakleitos:
+    repo: herakleitos
 
 envVariables:
   pheidias:
     nodeEnv: production
     port: 3000
   sokrates:
+    port: 5000
+  herodotos:
     port: 5000
   elastic:
     elasticService: http://elasticsearch-master:9200

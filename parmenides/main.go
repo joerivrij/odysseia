@@ -10,7 +10,6 @@ import (
 	"github.com/lexiko/plato/elastic"
 	"github.com/lexiko/plato/models"
 	"io/ioutil"
-	"log"
 	"os"
 	"path"
 	"strconv"
@@ -45,7 +44,7 @@ func main() {
 
 	elasticClient, err := elastic.CreateElasticClient(*elasticPassword, *elasticUser, []string{*elasticService})
 	if err != nil {
-		log.Fatalf("Error creating the client: %s", err)
+		glg.Fatal("failed to create client")
 	}
 	healthy := elastic.CheckHealthyStatusElasticSearch(elasticClient, 180)
 	if !healthy {

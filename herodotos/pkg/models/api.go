@@ -15,8 +15,8 @@ type CheckSentenceResponse struct {
 	LevenshteinPercentage string            `json:"levenshteinPercentage"`
 	QuizSentence          string            `json:"quizSentence"`
 	AnswerSentence        string            `json:"answerSentence"`
-	SplitQuizSentence     []string           `json:"splitQuizSentence"`
-	SplitAnswerSentence   []string           `json:"splitAnswerSentence"`
+	SplitQuizSentence     []string          `json:"splitQuizSentence"`
+	SplitAnswerSentence   []string          `json:"splitAnswerSentence"`
 	MatchingWords         []MatchingWord    `json:"matchingWords,omitempty"`
 	NonMatchingWords      []NonMatchingWord `json:"nonMatchingWords,omitempty"`
 }
