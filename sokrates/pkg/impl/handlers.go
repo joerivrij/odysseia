@@ -5,13 +5,12 @@ import (
 	"fmt"
 	"github.com/gorilla/mux"
 	"github.com/kpango/glg"
+	"github.com/lexiko/plato/helpers"
 	"github.com/lexiko/plato/models"
 	"github.com/lexiko/sokrates/pkg/config"
 	"github.com/lexiko/sokrates/pkg/middleware"
 	apiModels "github.com/lexiko/sokrates/pkg/models"
-	"math/rand"
 	"net/http"
-	"time"
 )
 
 type SokratesHandler struct {
@@ -74,7 +73,7 @@ func (s *SokratesHandler) CreateQuestion(w http.ResponseWriter, req *http.Reques
 	var quiz apiModels.QuizResponse
 
 	questionSet, _ := QueryWithScroll(s.Config.ElasticClient, category, "chapter", chapter)
-	randNumber := generateRandomNumber(len(questionSet.Logos))
+	randNumber := helpers.GenerateRandomNumber(len(questionSet.Logos))
 
 	question := questionSet.Logos[randNumber]
 	quiz = append(quiz, question.Greek)
@@ -87,7 +86,7 @@ func (s *SokratesHandler) CreateQuestion(w http.ResponseWriter, req *http.Reques
 	}
 
 	for len(quiz) != numberOfNeededAnswers {
-		randNumber = generateRandomNumber(len(questionSet.Logos))
+		randNumber = helpers.GenerateRandomNumber(len(questionSet.Logos))
 		randEntry := questionSet.Logos[randNumber]
 
 		exists := findQuizWord(quiz, randEntry.Dutch)
@@ -97,12 +96,6 @@ func (s *SokratesHandler) CreateQuestion(w http.ResponseWriter, req *http.Reques
 	}
 
 	middleware.ResponseWithJson(w, quiz)
-}
-
-func generateRandomNumber(length int) int {
-	localRandomizer := rand.NewSource(time.Now().UnixNano())
-	r1 := rand.New(localRandomizer)
-	return r1.Intn(length)
 }
 
 // findQuizWord takes a slice and looks for an element in it

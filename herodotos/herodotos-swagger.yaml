@@ -1,0 +1,259 @@
+swagger: "2.0"
+info:
+  description: "This is a sample Herodotos server which is part of lexiko.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net"
+  version: "0.1.0"
+  title: "Swagger Herodotos"
+  termsOfService: "https://github.com/joerivrij/lexiko"
+  contact:
+    email: "joerivrijaldenhoven@lexiko.io"
+  license:
+    name: "MIT License"
+    url: "https://opensource.org/licenses/MIT"
+host: "localhost:5000"
+basePath: "/Herodotos/v1"
+tags:
+  - name: "health"
+    description: "Endpoints relating to health and checks"
+  - name: "text"
+    description: "Endpoints relating to getting text based questions"
+  - name: "author"
+    description: "Endpoints relating to authors"
+schemes:
+  - "http"
+paths:
+  /ping:
+    get:
+      tags:
+        - "health"
+      summary: "Standard ping pong"
+      description: ""
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Ping"
+        "405":
+          description: "method not allowed"
+          schema:
+            $ref: "#/definitions/MethodNotAllowedError"
+  /health:
+    get:
+      tags:
+        - "health"
+      summary: "Health endpoint"
+      description: "To check whether calls can be made"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Ping"
+  /createQuestion:
+    get:
+      tags:
+        - "text"
+      parameters:
+        - name: "author"
+          in: "query"
+          description: "author to use"
+          required: true
+          type: "string"
+      summary: "Get a new sentence"
+      description: "Based on an author this endpoint returns a setence"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/CreateSentenceResponse"
+        "400":
+          description: "method not allowed"
+          schema:
+            $ref: "#/definitions/ValidationError"
+        "405":
+          description: "method not allowed"
+          schema:
+            $ref: "#/definitions/MethodNotAllowedError"
+  /authors:
+    get:
+      tags:
+        - "author"
+      summary: "Return the stored authors"
+      description: "Returns an array of authors that have sentences attached"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Authors"
+        "405":
+          description: "method not allowed"
+          schema:
+            $ref: "#/definitions/MethodNotAllowedError"
+  /checkSentence:
+    post:
+      tags:
+        - "text"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Sentence that needs to be checked"
+          required: true
+          schema:
+            $ref: "#/definitions/CheckSentenceRequest"
+      summary: "Check the sentence"
+      description: "Takes the given sentence and checks the levenshtein distance for the sentence and per word"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/CheckSentenceResponse"
+        "400":
+          description: "method not allowed"
+          schema:
+            $ref: "#/definitions/ValidationError"
+        "405":
+          description: "method not allowed"
+          schema:
+            $ref: "#/definitions/MethodNotAllowedError"
+
+
+definitions:
+  Ping:
+    type: "object"
+    properties:
+      result:
+        type: "string"
+        example: "pong"
+  CreateSentenceResponse:
+    type: "object"
+    properties:
+      sentence:
+        type: "string"
+        example: "Ἡροδότου Ἁλικαρνησσέος ἱστορίης ἀπόδεξις ἥδε"
+      sentenceId:
+        type: "string"
+        description: "elastic _id"
+        example: "LzxmXHkB8kAluuS8mCqs"
+  Authors:
+    type: "array"
+    items:
+      $ref: "#/definitions/Author"
+  Author:
+    type: "object"
+    properties:
+      author:
+        type: "string"
+        example: "herodotos"
+  CheckSentenceRequest:
+    type: "object"
+    properties:
+      answerSentence:
+        type: "string"
+        example: "The Foenicians. ;came to Argos,,.;:'' af"
+      sentenceId:
+        type: "string"
+        example: "LjxmXHkB8kAluuS8mCoN"
+      author:
+        type: "string"
+        example: "herodotos"
+  CheckSentenceResponse:
+    type: "object"
+    properties:
+      levenshteinPercentage:
+        type: "string"
+        example: "51.85"
+      quizSentence:
+        type: "string"
+        example: "The Phoenicians came to Argos, and set out their cargo"
+      answerSentence:
+        type: "string"
+        example: "The Foenicians. ;came to Argos,,.;:'' af"
+      splitQuizSentence:
+        type: "array"
+        items:
+          type: "string"
+        example: ["one", "two"]
+      splitAnswerSentence:
+        type: "array"
+        items:
+          type: "string"
+        example: ["one", "two"]
+      matchingWords:
+        type: "array"
+        items:
+          $ref: "#/definitions/MatchingWord"
+      nonMatchingWords:
+        type: "array"
+        items:
+          $ref: "#/definitions/NonMatchingWord"
+  MatchingWord:
+    type: "object"
+    properties:
+      word:
+        type: "string"
+        example: "Phoenicians"
+      sourceIndex:
+        type: "number"
+        example: 1
+  NonMatchingWord:
+    type: "object"
+    properties:
+      match:
+        type: "string"
+        example: "Foenicians"
+      Levenshtein:
+        type: "number"
+        example: 3
+      AnswerIndex:
+        type: "number"
+        example: 1
+      percentage:
+        type: "string"
+        example: "51.85"
+
+  ValidationError:
+    type: "object"
+    properties:
+      uniqueCode:
+        type: "string"
+      errorModel:
+        type: "object"
+        properties:
+          validationField:
+            type: "string"
+          validationMessage:
+            type: "string"
+  MethodNotAllowedError:
+    type: "object"
+    properties:
+      uniqueCode:
+        type: "string"
+      errorModel:
+        type: "object"
+        properties:
+          allowedMethods:
+            type: "string"
+          methodError:
+            type: "string"
+
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
