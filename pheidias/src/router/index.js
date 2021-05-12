@@ -10,6 +10,11 @@ export default new Router({
             path: '/',
             name: 'homepage',
             component: () => import("../views/HomePage")
-        }
+        },
+        {
+            path: '/herodotos/',
+            name: 'sentence-area',
+            component: () => import("../views/Herodotos")
+        },
     ]
 })
