@@ -27,8 +27,8 @@ export default {
   },
   methods: {
     getChapters : function () {
-      console.log(this.$proxyUrl)
-      let url = `${this.$proxyUrl}/chapters/${this.$parent.selectedCategorie}`
+      console.log(this.$sokratesUrl)
+      let url = `${this.$sokratesUrl}/chapters/${this.$parent.selectedCategorie}`
       this.$apiClient.get(url)
           .then((response) => {
             this.chapters = response.data['lastChapter']

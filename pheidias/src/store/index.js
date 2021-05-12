@@ -5,6 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        proxyUrl: document.location.origin
+        SokratesUrl: document.location.origin + "/sokrates/v1",
+        HerodotosUrl: document.location.origin + "/herodotos/v1"
     },
 })

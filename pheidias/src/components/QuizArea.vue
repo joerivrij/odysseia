@@ -72,7 +72,7 @@ export default {
   },
   methods: {
     getQuestion: function () {
-      let url = `${this.$proxyUrl}/createQuestion?category=${this.categorie}`
+      let url = `${this.$sokratesUrl}/createQuestion?category=${this.categorie}`
       if (this.$parent.selectedChapter !== "") {
         url = url + `&chapter=${this.$parent.selectedChapter}`
       }
@@ -102,7 +102,7 @@ export default {
       this.answered++
       this.$apiClient({
         method: 'post',
-        url: `${this.$proxyUrl}/answer`,
+        url: `${this.$sokratesUrl}/answer`,
         data: {
           "answerProvided" : this.selectedAnswer,
           "quizWord": this.quizWord,
