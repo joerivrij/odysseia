@@ -76,13 +76,15 @@ func ResponseWithJson(w http.ResponseWriter, payload interface{}) {
 		code = 200
 	case models.Word:
 		code = 200
+	case models.Authors:
+		code = 200
 	case sokratesModels.CheckAnswerResponse:
 		code = 200
 	case sokratesModels.LastChapterResponse:
 		code = 200
 	case sokratesModels.QuizResponse:
 		code = 200
-	case herodotsModels.CreateQuestionResponse:
+	case herodotsModels.CreateSentenceResponse:
 		code = 200
 	case herodotsModels.CheckSentenceResponse:
 		code = 200

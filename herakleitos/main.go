@@ -60,9 +60,13 @@ func main() {
 
 	created := 0
 	documents := 0
+	var authors models.Authors
 	for _, dir := range rootDir {
 		glg.Debug("working on the following directory: " + dir.Name())
 		if dir.IsDir() {
+			authors.Authors = append(authors.Authors, models.Author{
+				Author: dir.Name(),
+			})
 			filePath := path.Join(root, dir.Name())
 			files, err := ioutil.ReadDir(filePath)
 			if err != nil {
@@ -112,7 +116,42 @@ func main() {
 			}
 		}
 	}
+
+	authorIndex := "authors"
+	elastic.DeleteIndex(elasticClient, authorIndex)
+
+	for _, author := range authors.Authors {
+	jsonifiedAuthor, _ := author.Marshal()
+	esRequest := esapi.IndexRequest{
+		Body:       strings.NewReader(string(jsonifiedAuthor)),
+		Refresh:    "true",
+		Index:      authorIndex,
+		DocumentID: "",
+	}
+
+		// Perform the request with the client.
+		res, err := esRequest.Do(context.Background(), elasticClient)
+		if err != nil {
+			glg.Fatalf("Error getting response: %s", err)
+		}
+		defer res.Body.Close()
+
+		if res.IsError() {
+			glg.Debugf("[%s]", res.Status())
+		} else {
+			// Deserialize the response into a map.
+			var r map[string]interface{}
+			if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
+				glg.Errorf("Error parsing the response body: %s", err)
+			} else {
+				// Print the response status and indexed document version.
+				created++
+			}
+		}}
+
 	glg.Infof("created: %s", strconv.Itoa(created))
-	glg.Infof("words found in sullego: %s", strconv.Itoa(documents))
+	glg.Infof("words found in rhema: %s", strconv.Itoa(documents))
+	glg.Infof("authors added: %s", strconv.Itoa(len(authors.Authors)))
+
 	os.Exit(0)
 }

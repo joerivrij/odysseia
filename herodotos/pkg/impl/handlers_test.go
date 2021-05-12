@@ -1,7 +1,6 @@
 package impl
 
 import (
-	apiModels "github.com/lexiko/herodotos/pkg/models"
 	"testing"
 )
 import "github.com/stretchr/testify/assert"
@@ -60,21 +59,12 @@ func TestFindMatchingWords(t *testing.T) {
 	sourceString := "This inquiry the Herodotos of Halikarnassos"
 	targetString := "This inquiry tHe Herodotus of Halikarnassus"
 
-	response := apiModels.CheckSentenceResponse{
-		LevenshteinPercentage:          "",
-		QuizSentence:                   "",
-		AnswerSentence:                 "",
-		MatchingWords:                  []string{},
-		MatchingWordsWithOneTypoAllowance: []string{},
-		MatchingWordsWithTwoTypoAllowance: []string{},
-	}
-
-	findMatchingWordsWithSpellingAllowance(sourceString, targetString, &response)
+	response := findMatchingWordsWithSpellingAllowance(sourceString, targetString)
 
 	expectedSame := 4
 	expectedSameWithSpelling := 2
 	assert.Equal(t, expectedSame, len(response.MatchingWords))
-	assert.Equal(t, expectedSameWithSpelling, len(response.MatchingWordsWithOneTypoAllowance))
+	assert.Equal(t, expectedSameWithSpelling, len(response.NonMatchingWords))
 }
 
 func TestStreamlineString(t *testing.T) {

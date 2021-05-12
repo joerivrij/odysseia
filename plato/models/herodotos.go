@@ -21,3 +21,23 @@ type RhemaSource struct {
 type Rhema struct {
 	Rhemai []RhemaSource `json:"rhemai"`
 }
+
+func UnmarshalAuthors(data []byte) (Author, error) {
+	var r Author
+	err := json.Unmarshal(data, &r)
+	return r, err
+}
+
+func (r *Author) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+type Authors struct {
+	Authors []Author `json:"authors"`
+}
+
+type Author struct {
+	Author string `json:"author"`
+}
+
+

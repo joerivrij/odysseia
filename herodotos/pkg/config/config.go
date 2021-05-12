@@ -10,6 +10,8 @@ import (
 
 type HerodotosConfig struct {
 	ElasticClient elasticsearch.Client
+	AuthorIndex string
+
 }
 
 func Get() *HerodotosConfig {
@@ -35,6 +37,7 @@ func Get() *HerodotosConfig {
 
 	config := &HerodotosConfig{
 		ElasticClient: *es,
+		AuthorIndex: "authors",
 	}
 
 	return config
