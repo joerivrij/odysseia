@@ -9,6 +9,8 @@ Lexiko (λεξικο) is the greek word for a dictionary. It is a hobby project 
 - [Dataseeders](#dataseeders)
   - [Herakleitos - Ἡράκλειτος](#herakleitos---ἡράκλειτος)
   - [Parmenides - Παρμενίδης](#parmenides---παρμενίδης)
+- [Docs](#docs)
+  - [Ploutarchos - Πλούταρχος](#ploutarchos---πλούταρχος)
 - [Frontend](#frontend)
   - [Pheidias - Φειδίας](#pheidias---φειδίας)
 - [Ops](#ops)
@@ -50,6 +52,13 @@ Herakleitos is one of the so-called pre-socratics. Philosophers that laid the fo
 <img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Sanzio_01_Parmenides.jpg" alt="Parmenides" width="200"/>
 
 Parmenides is one of the so-called pre-socratics. Philosophers that laid the foundation for the future generations. One of the key elements in his work is the fact that everything is one never changing thing. Therefor he is a good fit for the dataseeder. Making it like nothing every changed.
+
+## Docs
+
+### Ploutarchos - Πλούταρχος
+<img src="https://upload.wikimedia.org/wikipedia/commons/0/02/Plutarch_of_Chaeronea-03-removebg-preview.png" alt="Ploutarchos" width="400"/>
+
+Ploutarchos (or Plutarch) is most well known for his Parallel Lives, a series of books where he compares a well known Roman to a Greek counterpart.
 
 ## Frontend
 

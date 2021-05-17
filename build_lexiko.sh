@@ -1,4 +1,16 @@
 #!/bin/bash
+
+for openApi in `ls`;
+do
+  if [[ -f "./$openApi/$openApi-swagger.yaml" ]]; then
+     echo "****** 📗 Getting OpenApi Doc 📗 ******"
+     echo $openApi
+     cd "./$openApi" && cp "$openApi-swagger.yaml" "../ploutarchos/yaml/"
+     echo "****** 📋 Copied OpenApi Doc 📋 ******"
+     cd ..
+  fi
+done
+
 for buildableBlock in `ls`;
 do
   if [[ -f "./$buildableBlock/Makefile" ]]; then

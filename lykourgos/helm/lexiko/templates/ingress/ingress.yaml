@@ -36,3 +36,17 @@ spec:
                 name: herodotos-service
                 port:
                   number: {{ .Values.envVariables.herodotos.port }}
+          - pathType: Prefix
+            path: /ploutarchos
+            backend:
+              service:
+                name: ploutarchos-service
+                port:
+                  number: {{ .Values.envVariables.ploutarchos.port }}
+          - pathType: Prefix
+            path: /swagger
+            backend:
+              service:
+                name: ploutarchos-service
+                port:
+                  number: {{ .Values.envVariables.ploutarchos.port }}
