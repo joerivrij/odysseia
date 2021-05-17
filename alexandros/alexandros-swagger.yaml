@@ -1,0 +1,156 @@
+openapi: 3.0.0
+info:
+  description: |
+    This is a sample Alexandros server which is part of lexiko.
+
+    # Introduction
+    This API is documented in **OpenAPI format** and is using [ReDoc](https://github.com/Redocly/redoc)
+
+    # Herodotos in Greek
+
+    Ἡροδότου Ἁλικαρνησσέος ἱστορίης ἀπόδεξις ἥδε, ὡς μήτε τὰ γενόμενα ἐξ ἀνθρώπων τῷ χρόνῳ ἐξίτηλα γένηται, μήτε ἔργα μεγάλα τε καὶ θωμαστά, τὰ μὲν Ἕλλησι τὰ δὲ βαρβάροισι ἀποδεχθέντα, ἀκλεᾶ γένηται, τά τε ἄλλα καὶ δι᾽ ἣν αἰτίην ἐπολέμησαν ἀλλήλοισι.
+    
+    # Herodotos in English
+
+    This is the display of the inquiry of Herodotus of Halicarnassus, so that things done by man not be forgotten in time, and that great and marvelous deeds, some displayed by the Hellenes, some by the barbarians, not lose their glory, including among others what was the cause of their waging war on each other.
+
+    # Note on text
+
+    [Text can be found here](http://www.perseus.tufts.edu/hopper/text?doc=Perseus%3atext%3a1999.01.0125)  
+
+  termsOfService: https://github.com/joerivrij/lexiko
+  contact:
+    email: joerivrijaldenhoven@lexiko.io
+  license:
+    name: MIT License
+    url: https://opensource.org/licenses/MIT
+host: localhost:5000
+basePath: /alexandros/v1
+tags:
+  - name: health
+    description: Endpoints relating to health and checks
+  - name: text
+    description: Endpoints relating to getting text based questions
+  - name: author
+    description: Endpoints relating to authors
+schemes:
+  - http
+paths:
+  /ping:
+    get:
+      tags:
+        - health
+      x-code-samples:
+        - lang: 'Golang'
+          source: |
+            resp, err := http.Get("http://localhost:5000/herodotos/v1/ping")
+            if err != nil {
+              // handle error
+            }
+            defer resp.Body.Close()
+            body, err := io.ReadAll(resp.Body)
+            response, err := models.UnmarshalPing(body)
+      summary: PingPong
+      description: Returns a pong when pinged
+      operationId: getPing
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ping'
+        '405':
+          description: method not allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MethodNotAllowedError'
+  /health:
+    get:
+      tags:
+        - health
+      x-code-samples:
+        - lang: 'Golang'
+          source: |
+            resp, err := http.Get("http://localhost:5000/herodotos/v1/health")
+            if err != nil {
+              // handle error
+            }
+            defer resp.Body.Close()
+            body, err := io.ReadAll(resp.Body)
+            response, err := models.UnmarshalHealth(body)
+      summary: Health
+      description: See the liveliness of the api
+      operationId: getHealth
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+        '405':
+          description: method not allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MethodNotAllowedError'
+
+components:
+  schemas:
+    Ping:
+      type: object
+      properties:
+        result:
+          type: string
+          example: pong
+    Health:
+      type: object
+      properties:
+        result:
+          type: string
+          example: pong
+    ValidationError:
+      type: object
+      properties:
+        uniqueCode:
+          type: string
+        errorModel:
+          type: object
+          properties:
+            validationField:
+              type: string
+            validationMessage:
+              type: string
+    MethodNotAllowedError:
+      type: object
+      properties:
+        uniqueCode:
+          type: string
+        errorModel:
+          type: object
+          properties:
+            allowedMethods:
+              type: string
+            methodError:
+              type: string
+  requestBodies:
+    CheckSentence:
+      content:
+        application/json:
+          schema:
+            allOf:
+              - description: SentenceCorrectnessCheck
+                title: Sentence
+              - $ref: '#/components/schemas/CheckSentenceRequest'
+      description: Query to see correctness of sentence
+      required: true
