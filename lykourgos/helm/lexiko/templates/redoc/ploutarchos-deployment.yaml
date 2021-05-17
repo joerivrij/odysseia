@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ploutarchos
+  labels:
+    app: ploutarchos
+spec:
+  replicas: {{ int .Values.config.replicas.low }}
+  selector:
+    matchLabels:
+      app: ploutarchos
+  template:
+    metadata:
+      labels:
+        app: ploutarchos
+        release: {{ .Release.Name }}
+        version: {{ .Values.images.tag }}
+    spec:
+      containers:
+        - image: {{ .Values.images.ploutarchos.repo }}:{{ .Values.images.tag }}
+          name: ploutarchos
+          imagePullPolicy: {{ .Values.config.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.envVariables.ploutarchos.port }}
