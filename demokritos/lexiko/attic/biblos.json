@@ -1,0 +1,83 @@
+{
+  "biblos": [
+    {
+      "greek": "ἀγαθός -ή -όν",
+      "english": "good"
+    },
+    {
+      "greek": "ἄγαλμα –ατος, τό",
+      "english": "glory, statue"
+    },
+    {
+      "greek": "ἄγαν",
+      "english": "too much"
+    },
+    {
+      "greek": "ἀγανακτέω",
+      "english": "be annoyed with"
+    },
+    {
+      "greek": "ἀγάπη –ης, ἡ",
+      "english": "love, charity"
+    },
+    {
+      "greek": "ἀγγέλλω",
+      "english": "announce"
+    },
+    {
+      "greek": "ἀνά + gen, dat, acc",
+      "english": "up, on"
+    },
+    {
+      "greek": "ἀνάγω",
+      "english": "lead up",
+      "linkedWord": "ἀνά"
+    },
+    {
+      "greek": "ἀναιρέω",
+      "english": "raise",
+      "linkedWord": "ἀνά"
+    },
+    {
+      "greek": "ἀναλαμβάνω",
+      "english": "pick up",
+      "linkedWord": "ἀνά"
+    },
+    {
+      "greek": "ἀναβαίνω",
+      "english": "board, cross",
+      "linkedWord": "ἀνά"
+    },
+    {
+      "greek": "ἀναγιγνώσκω",
+      "english": "recognize",
+      "linkedWord": "ἀνά"
+    },
+    {
+      "greek": "ἀνέχω",
+      "english": "hold up",
+      "linkedWord": "ἀνά"
+    },
+    {
+      "greek": "ἀνίστημι",
+      "english": "stand up",
+      "linkedWord": "ἀνά"
+    },
+    {
+      "greek": "ἀνατίθημι",
+      "english": "put up, set on",
+      "linkedWord": "ἀνά"
+    },
+    {
+      "greek": "ἀναχωρέω",
+      "english": "go back",
+      "linkedWord": "ἀνά"
+    },
+    {
+      "greek": "αναχωρεω",
+      "english": "go back",
+      "linkedWord": "ἀνά",
+      "original": "ἀναχωρέω"
+    }
+  ]
+}

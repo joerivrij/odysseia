@@ -17,4 +17,3 @@ func InitRoutes(config config.AlexandrosConfig) *mux.Router {
 
 	return serveMux
 }
-

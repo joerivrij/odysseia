@@ -29,7 +29,10 @@ func main() {
 	glg.Info("starting up.....")
 	glg.Debug("starting up and getting env variables")
 
-	config := config.Get()
+	healthy, config := config.Get(200)
+	if !healthy {
+		glg.Fatal("death has found me")
+	}
 
 	srv := impl.InitRoutes(*config)
 

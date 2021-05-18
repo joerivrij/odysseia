@@ -6,13 +6,14 @@ import (
 	"github.com/kpango/glg"
 	"github.com/lexiko/plato/elastic"
 	"log"
+	"time"
 )
 
 type AlexandrosConfig struct {
 	ElasticClient elasticsearch.Client
 }
 
-func Get() *AlexandrosConfig {
+func Get(ticks time.Duration) (bool, *AlexandrosConfig) {
 	elasticService := envflag.String("ELASTIC_SEARCH_SERVICE", "http://127.0.0.1:9200", "location of the es service")
 	elasticUser := envflag.String("ELASTIC_SEARCH_USER", "sokrates", "es username")
 	elasticPassword := envflag.String("ELASTIC_SEARCH_PASSWORD", "sokrates", "es password")
@@ -28,14 +29,15 @@ func Get() *AlexandrosConfig {
 		log.Fatalf("Error creating the client: %s", err)
 	}
 
-	healthy := elastic.CheckHealthyStatusElasticSearch(es, 200)
+	healthy := elastic.CheckHealthyStatusElasticSearch(es, ticks)
 	if !healthy {
-		glg.Fatal("death has found me")
+		glg.Errorf("elasticClient unhealthy after %s ticks", ticks)
+		return healthy, nil
 	}
 
 	config := &AlexandrosConfig{
 		ElasticClient: *es,
 	}
 
-	return config
+	return healthy, config
 }

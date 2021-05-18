@@ -8,7 +8,10 @@ dist:
 	mkdir -p ./dist
 	mkdir -p ./dist/linux/bin
 
-build: setup dist
+test:
+	go test ./... -cover
+
+build: test setup dist
 	@echo $(project_name)
 	go fmt ./...
 	cd ..; GO111MODULE=on GOOS=linux CGO_ENABLED=0 go build $(project_name)/cmd/main.go;mv main ./$(project_name)/dist/linux/bin/$(project_name)

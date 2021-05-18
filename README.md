@@ -47,6 +47,10 @@ Herodotos is often hailed as the father of history. I name he lives up to. His w
 
 ### Demokritos - Δημόκριτος
 
+νόμωι (γάρ φησι) γλυκὺ καὶ νόμωι πικρόν, νόμωι θερμόν, νόμωι ψυχρόν, νόμωι χροιή, ἐτεῆι δὲ ἄτομα καὶ κενόν 
+
+By convention sweet is sweet, bitter is bitter, hot is hot, cold is cold, color is color; but in truth there are only atoms and the void.
+
 <img src="https://upload.wikimedia.org/wikipedia/commons/5/58/Rembrandt_laughing_1628.jpg" alt="Pheidias" width="200"/>
 
 Most famous for his theory on atoms, everything can be broken down into smaller parts.
