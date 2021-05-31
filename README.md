@@ -88,6 +88,15 @@ Pheidias (or Phidias) is one of the great artists of the Greek world, most famou
 
 ## Ops
 
+### Archimedes - Ἀρχιμήδης
+
+εὕρηκα - I found it!
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/c/c5/Archimedes_The_School_of_Athens.png" alt="Archimedes" width="200"/>
+
+Archimedes is one of the greatest mathematicians of all time. He is also known for some nifty inventions which is why his
+name has been chosen for the `ctl` tooling.
+
 ### Lykourgos - Λυκοῦργος
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/5/57/Lycurgus.jpg" alt="Lykourgos" width="200"/>
