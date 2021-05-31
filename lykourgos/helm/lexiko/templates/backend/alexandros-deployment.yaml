@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: herodotos
+  name: alexandros
   labels:
-    app: herodotos
+    app: alexandros
 spec:
-  replicas: {{ int .Values.config.replicas.low }}
+  replicas: {{ int .Values.config.replicas.high }}
   selector:
     matchLabels:
-      app: herodotos
+      app: alexandros
   template:
     metadata:
       labels:
-        app: herodotos
+        app: alexandros
         release: {{ .Release.Name }}
         version: {{ .Values.images.tag }}
     spec:
       containers:
-        - image: {{ .Values.images.herodotos.repo }}:{{ .Values.images.tag }}
-          name: herodotos
+        - image: {{ .Values.images.alexandros.repo }}:{{ .Values.images.tag }}
+          name: alexandros
           env:
             - name: ELASTIC_SEARCH_SERVICE
               value: {{ .Values.envVariables.elastic.elasticService }}
@@ -28,4 +28,4 @@ spec:
               value: {{ .Values.envVariables.elastic.elasticPassword }}
           imagePullPolicy: {{ .Values.config.pullPolicy }}
           ports:
-            - containerPort: {{ .Values.envVariables.herodotos.port }}
+            - containerPort: {{ .Values.envVariables.alexandros.port }}

@@ -4,9 +4,11 @@ Lexiko (λεξικο) is the greek word for a dictionary. It is a hobby project 
 
 # Table of contents <!-- omit in toc -->
 - [Backend](#backend)
+  - [Alexandros - Αλέξανδρος](#alexandros---αλέξανδρος)
   - [Sokrates - Σωκράτης](#sokrates---σωκράτης)
   - [Herodotos - Ἡρόδοτος](#herodotos---ἡρόδοτος)
 - [Dataseeders](#dataseeders)
+  - [Demokritos - Δημόκριτος](#demokritos---δημόκριτος)
   - [Herakleitos - Ἡράκλειτος](#herakleitos---ἡράκλειτος)
   - [Parmenides - Παρμενίδης](#parmenides---παρμενίδης)
 - [Docs](#docs)
@@ -18,6 +20,12 @@ Lexiko (λεξικο) is the greek word for a dictionary. It is a hobby project 
   - [Plato - Πλάτων](#plato---πλάτων)
 
 ## Backend
+
+### Alexandros - Αλέξανδρος
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/Alexander_and_Bucephalus_-_Battle_of_Issus_mosaic_-_Museo_Archeologico_Nazionale_-_Naples_BW.jpg" alt="Alexandros" width="200"/>
+
+What could I ever say in a few lines that would do justice to one of the most influential people of all time? Alexandros's energy and search for the end of the world was relentless, so too is his search for Greek words within Lexiko.
 
 ### Sokrates - Σωκράτης
 
@@ -36,6 +44,16 @@ Sokrates (on the right) is a figure of mythical propertions. He could stare at t
 Herodotos is often hailed as the father of history. I name he lives up to. His work (the histories) is a lively account of the histories of the Greeks and Persians and how they came into conflict. This API is responsible for passing along sentences you need to translate. They are then checked for accuracy.
  
 ## Dataseeders
+
+### Demokritos - Δημόκριτος
+
+νόμωι (γάρ φησι) γλυκὺ καὶ νόμωι πικρόν, νόμωι θερμόν, νόμωι ψυχρόν, νόμωι χροιή, ἐτεῆι δὲ ἄτομα καὶ κενόν 
+
+By convention sweet is sweet, bitter is bitter, hot is hot, cold is cold, color is color; but in truth there are only atoms and the void.
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/58/Rembrandt_laughing_1628.jpg" alt="Pheidias" width="200"/>
+
+Most famous for his theory on atoms, everything can be broken down into smaller parts.
 
 ### Herakleitos - Ἡράκλειτος
 
@@ -69,6 +87,15 @@ Ploutarchos (or Plutarch) is most well known for his Parallel Lives, a series of
 Pheidias (or Phidias) is one of the great artists of the Greek world, most famous for his work on the Athenian Akropolis. An apt choice for the frontend of the app.
 
 ## Ops
+
+### Archimedes - Ἀρχιμήδης
+
+εὕρηκα - I found it!
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/c/c5/Archimedes_The_School_of_Athens.png" alt="Archimedes" width="200"/>
+
+Archimedes is one of the greatest mathematicians of all time. He is also known for some nifty inventions which is why his
+name has been chosen for the `ctl` tooling.
 
 ### Lykourgos - Λυκοῦργος
 

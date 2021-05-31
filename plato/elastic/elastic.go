@@ -154,6 +154,64 @@ func QueryWithMatchAll(elasticClient elasticsearch.Client, index string) (models
 	return elasticResult, nil
 }
 
+func QueryMultiMatchWithGrams(elasticClient elasticsearch.Client, index, queryWord string) (models.ElasticResponse, error) {
+	var elasticResult models.ElasticResponse
+	var buf bytes.Buffer
+	query := map[string]interface{}{
+		"size": 10,
+		"query": map[string]interface{}{
+			"multi_match": map[string]interface{}{
+				"query": queryWord,
+				"type": "bool_prefix",
+				"fields": [3]string{
+					"greek", "greek._2gram", "greek._3gram",
+				},
+			},
+		},
+	}
+
+	if err := json.NewEncoder(&buf).Encode(query); err != nil {
+		log.Fatalf("Error encoding query: %s", err)
+	}
+
+	res, err := elasticClient.Search(
+		elasticClient.Search.WithContext(context.Background()),
+		elasticClient.Search.WithIndex(index),
+		elasticClient.Search.WithBody(&buf),
+		elasticClient.Search.WithTrackTotalHits(true),
+		elasticClient.Search.WithPretty(),
+	)
+
+	if err != nil {
+		log.Fatalf("Error getting response: %s", err)
+	}
+	defer res.Body.Close()
+
+	if res.IsError() {
+		var e map[string]interface{}
+		if err := json.NewDecoder(res.Body).Decode(&e); err != nil {
+			glg.Error(err)
+		} else {
+			// Print the response status and error information.
+			glg.Errorf("[%s] %s: %s",
+				res.Status(),
+				e["error"].(map[string]interface{})["type"],
+				e["error"].(map[string]interface{})["reason"],
+			)
+		}
+
+		return elasticResult, err
+	}
+
+	body, _ := ioutil.ReadAll(res.Body)
+	elasticResult, err = models.UnmarshalElasticResponse(body)
+	if err != nil {
+		return elasticResult, err
+	}
+
+	return elasticResult, nil
+}
+
 func QueryOnId(elasticClient elasticsearch.Client, index, id string) (models.ElasticResponse, error) {
 	var elasticResult models.ElasticResponse
 	var buf bytes.Buffer

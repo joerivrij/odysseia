@@ -1,24 +1,20 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: batch/v1
+kind: Job
 metadata:
-  name: herodotos
+  name: demokritos
   labels:
-    app: herodotos
+    app: demokritos
 spec:
-  replicas: {{ int .Values.config.replicas.low }}
-  selector:
-    matchLabels:
-      app: herodotos
   template:
     metadata:
       labels:
-        app: herodotos
+        app: demokritos
         release: {{ .Release.Name }}
         version: {{ .Values.images.tag }}
     spec:
       containers:
-        - image: {{ .Values.images.herodotos.repo }}:{{ .Values.images.tag }}
-          name: herodotos
+        - image: {{ .Values.images.demokritos.repo }}:{{ .Values.images.tag }}
+          name: demokritos
           env:
             - name: ELASTIC_SEARCH_SERVICE
               value: {{ .Values.envVariables.elastic.elasticService }}
@@ -27,5 +23,5 @@ spec:
             - name: ELASTIC_SEARCH_PASSWORD
               value: {{ .Values.envVariables.elastic.elasticPassword }}
           imagePullPolicy: {{ .Values.config.pullPolicy }}
-          ports:
-            - containerPort: {{ .Values.envVariables.herodotos.port }}
+      restartPolicy: Never
+  backoffLimit: 3
