@@ -70,6 +70,46 @@ func main() {
 		glg.Fatal(err)
 	}
 
+	elastic.DeleteIndex(elasticClient, indexName)
+	var buf bytes.Buffer
+	indexMapping := map[string]interface{}{
+		"mappings": map[string]interface{}{
+			"properties": map[string]interface{}{
+				searchWord: map[string]interface{}{
+					"type": "search_as_you_type",
+				},
+			},
+		},
+	}
+
+	if err := json.NewEncoder(&buf).Encode(indexMapping); err != nil {
+		log.Fatalf("Error encoding query: %s", err)
+	}
+
+	indexRequest := esapi.IndicesCreateRequest{
+		Index: indexName,
+		Body:  &buf,
+	}
+	// Perform the request with the client.
+	res, err := indexRequest.Do(context.Background(), elasticClient)
+	if err != nil {
+		glg.Fatalf("Error getting response: %s", err)
+	}
+	defer res.Body.Close()
+
+	if res.IsError() {
+		glg.Debugf("[%s]", res.Status())
+	} else {
+		// Deserialize the response into a map.
+		var r map[string]interface{}
+		if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
+			glg.Errorf("Error parsing the response body: %s", err)
+		} else {
+			// Print the response status and indexed document version.
+			glg.Info("created index: %s", r)
+		}
+	}
+
 	for _, dir := range rootDir {
 		glg.Debug("working on the following directory: " + dir.Name())
 		if dir.IsDir() {
@@ -88,47 +128,6 @@ func main() {
 				}
 
 				documents += len(biblos.Biblos)
-
-				elastic.DeleteIndex(elasticClient, indexName)
-				var buf bytes.Buffer
-				indexMapping := map[string]interface{}{
-					"mappings": map[string]interface{}{
-						"properties": map[string]interface{}{
-							searchWord: map[string]interface{}{
-								"type": "search_as_you_type",
-							},
-						},
-					},
-				}
-
-				if err := json.NewEncoder(&buf).Encode(indexMapping); err != nil {
-					log.Fatalf("Error encoding query: %s", err)
-				}
-
-				indexRequest := esapi.IndicesCreateRequest{
-					Index:               indexName,
-					Body:                &buf,
-				}
-				// Perform the request with the client.
-				res, err := indexRequest.Do(context.Background(), elasticClient)
-				if err != nil {
-					glg.Fatalf("Error getting response: %s", err)
-				}
-				defer res.Body.Close()
-
-				if res.IsError() {
-					glg.Debugf("[%s]", res.Status())
-				} else {
-					// Deserialize the response into a map.
-					var r map[string]interface{}
-					if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
-						glg.Errorf("Error parsing the response body: %s", err)
-					} else {
-						// Print the response status and indexed document version.
-						glg.Info("created index: %s", r)
-					}
-				}
-
 
 				for _, word := range biblos.Biblos {
 					jsonifiedLogos, _ := word.Marshal()

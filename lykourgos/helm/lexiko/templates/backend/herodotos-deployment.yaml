@@ -15,10 +15,12 @@ spec:
         app: herodotos
         release: {{ .Release.Name }}
         version: {{ .Values.images.tag }}
+      annotations:
+        'consul.hashicorp.com/connect-inject': 'true'
     spec:
       containers:
         - image: {{ .Values.images.herodotos.repo }}:{{ .Values.images.tag }}
-          name: sokrates
+          name: herodotos
           env:
             - name: ELASTIC_SEARCH_SERVICE
               value: {{ .Values.envVariables.elastic.elasticService }}

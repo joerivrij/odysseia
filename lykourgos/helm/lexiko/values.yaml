@@ -11,7 +11,7 @@ config:
     high: 5
 
 images:
-  tag: a10dc48
+  tag: e35af5f
   pheidias:
     repo: pheidias
   sokrates:
