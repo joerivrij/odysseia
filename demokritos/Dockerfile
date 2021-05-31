@@ -6,8 +6,8 @@ RUN rm -rf /var/cache/apk/*
 RUN mkdir /app
 WORKDIR /
 
-COPY parmenides /app/demokritos
-COPY sullego /sullego
+COPY demokritos /app/demokritos
+COPY lexiko /lexiko
 
 ENV TMPDIR=/tmp
 ENV GOMAXPROCS=8

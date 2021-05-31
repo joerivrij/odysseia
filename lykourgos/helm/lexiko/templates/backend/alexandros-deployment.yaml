@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sokrates
+  name: alexandros
   labels:
-    app: sokrates
+    app: alexandros
 spec:
-  replicas: {{ int .Values.config.replicas.medium }}
+  replicas: {{ int .Values.config.replicas.high }}
   selector:
     matchLabels:
-      app: sokrates
+      app: alexandros
   template:
     metadata:
       labels:
-        app: sokrates
+        app: alexandros
         release: {{ .Release.Name }}
         version: {{ .Values.images.tag }}
     spec:
       containers:
-        - image: {{ .Values.images.sokrates.repo }}:{{ .Values.images.tag }}
-          name: sokrates
+        - image: {{ .Values.images.alexandros.repo }}:{{ .Values.images.tag }}
+          name: alexandros
           env:
             - name: ELASTIC_SEARCH_SERVICE
               value: {{ .Values.envVariables.elastic.elasticService }}
@@ -28,4 +28,4 @@ spec:
               value: {{ .Values.envVariables.elastic.elasticPassword }}
           imagePullPolicy: {{ .Values.config.pullPolicy }}
           ports:
-            - containerPort: {{ .Values.envVariables.sokrates.port }}
+            - containerPort: {{ .Values.envVariables.alexandros.port }}

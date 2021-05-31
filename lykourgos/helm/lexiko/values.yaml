@@ -11,13 +11,17 @@ config:
     high: 5
 
 images:
-  tag: e35af5f
+  tag: bc44aa9
+  alexandros:
+    repo: alexandros
   pheidias:
     repo: pheidias
   sokrates:
     repo: sokrates
   parmenides:
     repo: parmenides
+  demokritos:
+    repo: demokritos
   herodotos:
     repo: herodotos
   herakleitos:
@@ -29,6 +33,8 @@ envVariables:
   pheidias:
     nodeEnv: production
     port: 3000
+  alexandros:
+    port: 5000
   sokrates:
     port: 5000
   herodotos:

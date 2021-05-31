@@ -14,6 +14,7 @@ func InitRoutes(config config.AlexandrosConfig) *mux.Router {
 
 	serveMux.HandleFunc("/alexandros/v1/ping", middleware.Adapt(alexandrosHandler.pingPong, middleware.ValidateRestMethod("GET"), middleware.LogRequestDetails(), middleware.SetCorsHeaders()))
 	serveMux.HandleFunc("/alexandros/v1/health", middleware.Adapt(alexandrosHandler.pingPong, middleware.ValidateRestMethod("GET"), middleware.LogRequestDetails(), middleware.SetCorsHeaders()))
+	serveMux.HandleFunc("/alexandros/v1/search", middleware.Adapt(alexandrosHandler.searchWord, middleware.ValidateRestMethod("GET"), middleware.LogRequestDetails(), middleware.SetCorsHeaders()))
 
 	return serveMux
 }

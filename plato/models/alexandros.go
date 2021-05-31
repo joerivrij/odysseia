@@ -17,6 +17,12 @@ func UnmarshalBiblos(data []byte) (Biblos, error) {
 	return r, err
 }
 
+func UnmarshalMeros(data []byte) (Meros, error) {
+	var r Meros
+	err := json.Unmarshal(data, &r)
+	return r, err
+}
+
 type Biblos struct {
 	Biblos []Meros `json:"biblos"`
 }
@@ -24,6 +30,6 @@ type Biblos struct {
 type Meros struct {
 	Greek      string      `json:"greek"`
 	English    string      `json:"english"`
-	LinkedWord string 	    `json:"linkedWord,omitempty"`
+	LinkedWord string 	   `json:"linkedWord,omitempty"`
 	Original   string      `json:"original,omitempty"`
 }

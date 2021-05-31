@@ -6,7 +6,7 @@ RUN rm -rf /var/cache/apk/*
 RUN mkdir /app
 WORKDIR /
 
-COPY herodotos /app/alexandros
+COPY alexandros /app/alexandros
 
 ENV TMPDIR=/tmp
 ENV GOMAXPROCS=8

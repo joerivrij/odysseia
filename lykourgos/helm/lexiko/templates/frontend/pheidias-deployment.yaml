@@ -15,8 +15,6 @@ spec:
         app: pheidias
         release: {{ .Release.Name }}
         version: {{ .Values.images.tag }}
-      annotations:
-        'consul.hashicorp.com/connect-inject': 'true'
     spec:
       containers:
         - image: {{ .Values.images.pheidias.repo }}:{{ .Values.images.tag }}

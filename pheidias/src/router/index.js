@@ -16,5 +16,10 @@ export default new Router({
             name: 'sentence-area',
             component: () => import("../views/Herodotos")
         },
+        {
+            path: '/search/',
+            name: 'sentence-area',
+            component: () => import("../views/SearchPage")
+        },
     ]
 })

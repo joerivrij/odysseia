@@ -1,24 +1,20 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: batch/v1
+kind: Job
 metadata:
-  name: sokrates
+  name: demokritos
   labels:
-    app: sokrates
+    app: demokritos
 spec:
-  replicas: {{ int .Values.config.replicas.medium }}
-  selector:
-    matchLabels:
-      app: sokrates
   template:
     metadata:
       labels:
-        app: sokrates
+        app: demokritos
         release: {{ .Release.Name }}
         version: {{ .Values.images.tag }}
     spec:
       containers:
-        - image: {{ .Values.images.sokrates.repo }}:{{ .Values.images.tag }}
-          name: sokrates
+        - image: {{ .Values.images.demokritos.repo }}:{{ .Values.images.tag }}
+          name: demokritos
           env:
             - name: ELASTIC_SEARCH_SERVICE
               value: {{ .Values.envVariables.elastic.elasticService }}
@@ -27,5 +23,5 @@ spec:
             - name: ELASTIC_SEARCH_PASSWORD
               value: {{ .Values.envVariables.elastic.elasticPassword }}
           imagePullPolicy: {{ .Values.config.pullPolicy }}
-          ports:
-            - containerPort: {{ .Values.envVariables.sokrates.port }}
+      restartPolicy: Never
+  backoffLimit: 3

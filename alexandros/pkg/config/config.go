@@ -11,6 +11,7 @@ import (
 
 type AlexandrosConfig struct {
 	ElasticClient elasticsearch.Client
+	Index         string
 }
 
 func Get(ticks time.Duration) (bool, *AlexandrosConfig) {
@@ -37,6 +38,7 @@ func Get(ticks time.Duration) (bool, *AlexandrosConfig) {
 
 	config := &AlexandrosConfig{
 		ElasticClient: *es,
+		Index:         "alexandros",
 	}
 
 	return healthy, config

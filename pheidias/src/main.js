@@ -9,14 +9,17 @@ Vue.config.productionTip = false
 Vue.http = Vue.prototype.$apiClient = axios;
 Vue.prototype.$sokratesUrl = store.state.SokratesUrl
 Vue.prototype.$herodotosUrl = store.state.HerodotosUrl
+Vue.prototype.$alexandrosUrl = store.state.AlexandrosUrl
+
 if (process.env.NODE_ENV === 'development') {
   Vue.prototype.$sokratesUrl = "http://minikube-lexiko.test/sokrates/v1"
   Vue.prototype.$herodotosUrl = "http://minikube-lexiko.test/herodotos/v1"
+  Vue.prototype.$alexandrosUrl = "http://minikube-lexiko.test/alexandros/v1"
 }
 
 console.log(`sokrates proxy found at: ${Vue.prototype.$sokratesUrl}`)
 console.log(`herodotos proxy found at: ${Vue.prototype.$herodotosUrl}`)
-
+console.log(`alexandros proxy found at: ${Vue.prototype.$alexandrosUrl}`)
 
 new Vue({
   el: '#app',

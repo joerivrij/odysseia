@@ -88,6 +88,8 @@ func ResponseWithJson(w http.ResponseWriter, payload interface{}) {
 		code = 200
 	case herodotsModels.CheckSentenceResponse:
 		code = 200
+	case []models.Meros:
+		code = 200
 	case map[string]interface{}:
 		code = 200
 	case models.ValidationError:
