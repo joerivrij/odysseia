@@ -70,10 +70,14 @@ func (s *SokratesHandler) CreateQuestion(w http.ResponseWriter, req *http.Reques
 	chapter := req.URL.Query().Get("chapter")
 	category := req.URL.Query().Get("category")
 
+	glg.Debugf("category: %s chapter: %s", category, chapter)
+
 	var quiz apiModels.QuizResponse
 
 	questionSet, _ := QueryWithScroll(s.Config.ElasticClient, category, "chapter", chapter)
 	randNumber := helpers.GenerateRandomNumber(len(questionSet.Logos))
+
+	glg.Debugf("randomNumber: %d", randNumber)
 
 	question := questionSet.Logos[randNumber]
 	quiz = append(quiz, question.Greek)

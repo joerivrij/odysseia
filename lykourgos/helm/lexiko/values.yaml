@@ -5,13 +5,23 @@
 config:
   environment: development
   pullPolicy: Never
+  inClusterElastic: true
   replicas:
     low: 1
-    medium: 3
-    high: 5
+    medium: 2
+    high: 4
+
+services:
+  hippokrates:
+    testing: true
+    name: "hippokrates"
+    # additionals labels
+    labels: {
+              domain: testing
+    }
 
 images:
-  tag: bc44aa9
+  tag: b7fccf8
   alexandros:
     repo: alexandros
   pheidias:
@@ -28,6 +38,8 @@ images:
     repo: herakleitos
   ploutarchos:
     repo: ploutarchos
+  hippokrates:
+    repo: hippokrates
 
 envVariables:
   pheidias:
