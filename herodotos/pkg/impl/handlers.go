@@ -42,7 +42,32 @@ func (h *HerodotosHandler) createQuestion(w http.ResponseWriter, req *http.Reque
 		return
 	}
 
-	response, _ := elastic.QueryWithMatchAll(h.Config.ElasticClient, author)
+	response, elasticErr, err := elastic.QueryWithMatchAll(h.Config.ElasticClient, author)
+	if elasticErr != nil {
+
+		notFoundErr := models.NotFoundMessage{
+			Type:   fmt.Sprintf("%v", elasticErr["error"].(map[string]interface{})["type"]),
+			Reason: fmt.Sprintf("%v", elasticErr["error"].(map[string]interface{})["reason"]),
+		}
+		e := models.NotFoundError{ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()}, Message: notFoundErr}
+		middleware.ResponseWithJson(w, e)
+		return
+	}
+
+	if err != nil {
+		e := models.ValidationError{
+			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
+			Messages: []models.ValidationMessages{
+				{
+					Field:   "",
+					Message: "something went wrong",
+				},
+			},
+		}
+		middleware.ResponseWithJson(w, e)
+		return
+	}
+
 	randNumber := helpers.GenerateRandomNumber(len(response.Hits.Hits))
 	questionItem := response.Hits.Hits[randNumber]
 	id := questionItem.ID
@@ -140,7 +165,7 @@ func (h *HerodotosHandler) checkSentence(w http.ResponseWriter, req *http.Reques
 }
 
 func (h *HerodotosHandler) queryAuthors(w http.ResponseWriter, req *http.Request) {
-	elasticResult, _ := elastic.QueryWithMatchAll(h.Config.ElasticClient, h.Config.AuthorIndex)
+	elasticResult, _, _ := elastic.QueryWithMatchAll(h.Config.ElasticClient, h.Config.AuthorIndex)
 	var authors models.Authors
 	for _, hit := range elasticResult.Hits.Hits {
 		elasticJson, _ := json.Marshal(hit.Source)

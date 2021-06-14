@@ -6,22 +6,48 @@ import (
 
 const version = "v1"
 
-type SokratesFixture struct {
+type LexikoFixture struct {
 	ctx		 context.Context
 	sokrates Sokrates
+	herodotos Herodotos
+	alexandros Alexandros
 }
 
-func New(baseUrl, apiName string) (*SokratesFixture, error) {
-
+func New(baseUrl, sokratesName, herodotosName, alexandrosName string) (*LexikoFixture, error) {
 	sokratesApi := Sokrates{
-		BaseUrl:   baseUrl,
-		ApiName:   apiName,
-		Version: 	version,
-		Endpoints: GenerateEndpoints(),
+		BaseApi: BaseApi{
+			BaseUrl:   baseUrl,
+			ApiName:   sokratesName,
+			Version: 	version,
+		},
+		Endpoints: SokratesEndpoints{},
 	}
+	sokratesApi.Endpoints = sokratesApi.GenerateEndpoints()
 
-	return &SokratesFixture{
+	herodotosApi := Herodotos{
+		BaseApi: BaseApi{
+			BaseUrl:   baseUrl,
+			ApiName:   herodotosName,
+			Version: 	version,
+		},
+		Endpoints: HerodotosEndpoints{},
+	}
+	herodotosApi.Endpoints = herodotosApi.GenerateEndpoints()
+
+	alexandrosApi := Alexandros{
+		BaseApi: BaseApi{
+			BaseUrl:   baseUrl,
+			ApiName:   alexandrosName,
+			Version: 	version,
+		},
+		Endpoints: AlexandrosEndpoints{},
+	}
+	alexandrosApi.Endpoints = alexandrosApi.GenerateEndpoints()
+
+	return &LexikoFixture{
 		sokrates:                    sokratesApi,
+		herodotos: herodotosApi,
+		alexandros: alexandrosApi,
 		ctx:                         context.Background(),
 	}, nil
 }
