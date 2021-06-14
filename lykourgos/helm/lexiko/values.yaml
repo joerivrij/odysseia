@@ -21,7 +21,7 @@ services:
     }
 
 images:
-  tag: fa40e7f
+  tag: c80580f
   alexandros:
     repo: alexandros
   pheidias:
