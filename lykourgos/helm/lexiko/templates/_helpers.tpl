@@ -60,3 +60,11 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{- define "hippokrates.uname" -}}
+{{- if empty .Values.services.hippokrates.name -}}
+{{ .Values.images.hippokrates }}
+{{- else -}}
+{{ .Values.services.hippokrates.name }}
+{{- end -}}
+{{- end -}}

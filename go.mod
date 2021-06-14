@@ -3,6 +3,7 @@ module github.com/lexiko
 go 1.15
 
 require (
+	github.com/cucumber/godog v0.11.0 // indirect
 	github.com/elastic/go-elasticsearch/v7 v7.12.0
 	github.com/gorilla/mux v1.8.0
 	github.com/ianschenck/envflag v0.0.0-20140720210342-9111d830d133

@@ -2,6 +2,8 @@
 
 Lexiko (λεξικο) is the greek word for a dictionary. It is a hobby project that combines a few of my passions, both ancient Greek (history) and finding technical solutions for problems. As This is a hobby project first and foremost any mistakes are my own, either in translation or in interpation of text.
 
+The goal is for people to learn or rehearse ancient Greek. Some of it is in Dutch but most of it is in English. There is also a dictionary that you can search through. Most of it is still very much a work in progress.
+
 # Table of contents <!-- omit in toc -->
 - [Backend](#backend)
   - [Alexandros - Αλέξανδρος](#alexandros---αλέξανδρος)
@@ -16,8 +18,11 @@ Lexiko (λεξικο) is the greek word for a dictionary. It is a hobby project 
 - [Frontend](#frontend)
   - [Pheidias - Φειδίας](#pheidias---φειδίας)
 - [Ops](#ops)
+  - [Archimedes - Ἀρχιμήδης](#archimedes---ἀρχιμήδης)
   - [Lykourgos - Λυκοῦργος](#lykourgos---λυκοῦργος)
   - [Plato - Πλάτων](#plato---πλάτων)
+- [Tests](#tests)
+  - [Hippokrates - Ἱπποκράτης](#hippokrates---ἱπποκράτης)
 
 ## Backend
 
@@ -112,3 +117,12 @@ Lykourgos (or Lycurgus) is a semi mythical lawmaker that laid the foundation for
 
 Perhaps the most famous Western philosopher, his thoughts have been an influence on Western culture for generations and as he is the rock upon which many philosophers have build there church. It is only fitting that shared code is maintained within the Plato API. Raphael has painted him with Leonardo da Vinci as inspiration.
 
+
+## Tests
+
+### Hippokrates - Ἱπποκράτης
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Hippocrates.jpg" alt="Hippokrates" width="200"/>
+
+
+The most well known medical professional in history. Hippokrates houses tests to see whether the other services are in good health.

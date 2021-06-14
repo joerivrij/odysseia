@@ -104,7 +104,7 @@ func DeleteIndex(es *elasticsearch.Client, index string) {
 	return
 }
 
-func QueryWithMatchAll(elasticClient elasticsearch.Client, index string) (models.ElasticResponse, error) {
+func QueryWithMatchAll(elasticClient elasticsearch.Client, index string) (models.ElasticResponse, map[string]interface{}, error) {
 	var elasticResult models.ElasticResponse
 	var buf bytes.Buffer
 	query := map[string]interface{}{
@@ -142,16 +142,16 @@ func QueryWithMatchAll(elasticClient elasticsearch.Client, index string) (models
 			)
 		}
 
-		return elasticResult, err
+		return elasticResult, e, nil
 	}
 
 	body, _ := ioutil.ReadAll(res.Body)
 	elasticResult, err = models.UnmarshalElasticResponse(body)
 	if err != nil {
-		return elasticResult, err
+		return elasticResult, nil, err
 	}
 
-	return elasticResult, nil
+	return elasticResult, nil, nil
 }
 
 func QueryMultiMatchWithGrams(elasticClient elasticsearch.Client, index, queryWord string) (models.ElasticResponse, error) {
