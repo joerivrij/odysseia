@@ -12,7 +12,7 @@ metadata:
     {{ $key }}: {{ $value | quote }}
   {{- end }}
 spec:
-  schedule: "*/10 * * * *"
+  schedule: "*/1 * * * *"
   jobTemplate:
     metadata:
       labels:
@@ -29,6 +29,10 @@ spec:
               env:
                 - name: SOKRATES_URL
                   value: http://sokrates-service:5000
+                - name: ALEXANDROS_URL
+                  value: http://alexandros-service:5000
+                - name: HERODOTOS_URL
+                  value: http://herodotos-service:5000
               imagePullPolicy: {{ .Values.config.pullPolicy }}
               command:
               - /bin/sh

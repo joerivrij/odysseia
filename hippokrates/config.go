@@ -13,10 +13,10 @@ type LexikoFixture struct {
 	alexandros Alexandros
 }
 
-func New(baseUrl, sokratesName, herodotosName, alexandrosName string) (*LexikoFixture, error) {
+func New(alexandrosUrl, herodotosUrl, sokratesUrl, sokratesName, herodotosName, alexandrosName string) (*LexikoFixture, error) {
 	sokratesApi := Sokrates{
 		BaseApi: BaseApi{
-			BaseUrl:   baseUrl,
+			BaseUrl:   sokratesUrl,
 			ApiName:   sokratesName,
 			Version: 	version,
 		},
@@ -26,7 +26,7 @@ func New(baseUrl, sokratesName, herodotosName, alexandrosName string) (*LexikoFi
 
 	herodotosApi := Herodotos{
 		BaseApi: BaseApi{
-			BaseUrl:   baseUrl,
+			BaseUrl:   herodotosUrl,
 			ApiName:   herodotosName,
 			Version: 	version,
 		},
@@ -36,7 +36,7 @@ func New(baseUrl, sokratesName, herodotosName, alexandrosName string) (*LexikoFi
 
 	alexandrosApi := Alexandros{
 		BaseApi: BaseApi{
-			BaseUrl:   baseUrl,
+			BaseUrl:   alexandrosUrl,
 			ApiName:   alexandrosName,
 			Version: 	version,
 		},

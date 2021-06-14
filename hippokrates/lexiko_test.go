@@ -21,7 +21,9 @@ const (
 	QueryWordStatusCode = "queryWordStatusCode"
 )
 
-var BASE_URL string
+var ALEXANDROS_URL string
+var HERODOTOS_URL string
+var SOKRATES_URL string
 
 var opts = godog.Options{
 	Output: colors.Colored(os.Stdout),
@@ -75,12 +77,16 @@ func (l *LexikoFixture)theResponseCodeShouldBe(code int) error {
 
 func InitializeTestSuite(ctx *godog.TestSuiteContext) {
 	ctx.BeforeSuite(func() {
-		baseUrl := envflag.String("BASE_URL", "http://minikube-lexiko.test", "Lexiko base url")
+		alexandrosUrl := envflag.String("ALEXANDROS_URL", "http://minikube-lexiko.test", "alexandros base url")
+		herodotosUrl := envflag.String("HERODOTOS_URL", "http://minikube-lexiko.test", "herodotos base url")
+		sokratesUrl := envflag.String("SOKRATES_URL", "http://minikube-lexiko.test", "sokrates base url")
 
 		envflag.Parse()
 		flag.Parse()
 
-		BASE_URL = *baseUrl
+		ALEXANDROS_URL = *alexandrosUrl
+		HERODOTOS_URL = *herodotosUrl
+		SOKRATES_URL = *sokratesUrl
 	})
 }
 
@@ -88,7 +94,7 @@ func InitializeScenario(ctx *godog.ScenarioContext) {
 	ctx.BeforeScenario(func(*godog.Scenario) {
 	})
 
-	lexiko, err := New(BASE_URL, sokratesApi, herodotosApi, alexandrosApi)
+	lexiko, err := New(ALEXANDROS_URL, HERODOTOS_URL, SOKRATES_URL, sokratesApi, herodotosApi, alexandrosApi)
 	if err != nil {
 		os.Exit(1)
 	}
