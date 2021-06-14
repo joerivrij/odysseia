@@ -104,7 +104,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/MethodNotAllowedError'
 
-  /serach:
+  /search:
     get:
       tags:
         - search
