@@ -4,7 +4,7 @@ import (
 	"github.com/elastic/go-elasticsearch/v7"
 	"github.com/ianschenck/envflag"
 	"github.com/kpango/glg"
-	"github.com/lexiko/plato/elastic"
+	"github.com/odysseia/plato/elastic"
 	"log"
 	"time"
 )

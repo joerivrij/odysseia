@@ -2,8 +2,8 @@ package impl
 
 import (
 	"github.com/gorilla/mux"
-	"github.com/lexiko/alexandros/pkg/config"
-	"github.com/lexiko/plato/middleware"
+	"github.com/odysseia/alexandros/pkg/config"
+	"github.com/odysseia/plato/middleware"
 )
 
 // InitRoutes to start up a mux router and return the routes

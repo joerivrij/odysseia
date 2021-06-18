@@ -128,3 +128,12 @@ dmypy.json
 # Pyre type checker
 .pyre/
 /*/dist/
+
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+outfile
+secret.tfvars

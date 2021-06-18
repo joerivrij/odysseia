@@ -1,2 +1,2 @@
 build:
-	./build_lexiko.sh
+	./build_odysseia.sh

@@ -1,4 +1,4 @@
-module github.com/lexiko/hippokrates
+module github.com/odysseia/hippokrates
 
 go 1.15
 

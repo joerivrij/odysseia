@@ -4,7 +4,7 @@ import (
 	"context"
 )
 
-func (l *LexikoFixture)aNewQuestionIsRequestedWithCategoryAndChapter(category, chapter string) error {
+func (l *odysseiaFixture)aNewQuestionIsRequestedWithCategoryAndChapter(category, chapter string) error {
 	response, err := l.sokrates.CreateQuestion(category, chapter)
 	if err != nil {
 		return err

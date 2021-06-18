@@ -3,8 +3,8 @@ package main
 import (
 	"github.com/ianschenck/envflag"
 	"github.com/kpango/glg"
-	"github.com/lexiko/sokrates/pkg/config"
-	"github.com/lexiko/sokrates/pkg/impl"
+	"github.com/odysseia/sokrates/pkg/config"
+	"github.com/odysseia/sokrates/pkg/impl"
 	"net/http"
 )
 

@@ -1,4 +1,4 @@
-module github.com/lexiko
+module github.com/odysseia
 
 go 1.15
 

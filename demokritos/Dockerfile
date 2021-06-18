@@ -7,7 +7,7 @@ RUN mkdir /app
 WORKDIR /
 
 COPY demokritos /app/demokritos
-COPY lexiko /lexiko
+COPY odysseia /odysseia
 
 ENV TMPDIR=/tmp
 ENV GOMAXPROCS=8

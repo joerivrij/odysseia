@@ -3,7 +3,7 @@ package command
 import (
 	"fmt"
 	"github.com/kpango/glg"
-	handler "github.com/lexiko/archimedes/pkg/impl"
+	handler "github.com/odysseia/archimedes/pkg/impl"
 	"github.com/spf13/cobra"
 	"os"
 )
@@ -30,7 +30,7 @@ func ParseListToWords() *cobra.Command {
 			if outDir == "" {
 				glg.Debug(fmt.Sprintf("no outdir set assuming one"))
 				homeDir, _ := os.UserHomeDir()
-				outDir = fmt.Sprintf("%s/go/src/github.com/lexiko/demokritos/lexiko/perseus", homeDir)
+				outDir = fmt.Sprintf("%s/go/src/github.com/odysseia/demokritos/odysseia/perseus", homeDir)
 			}
 
 			handler.ParseLines(filePath, outDir)

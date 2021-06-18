@@ -1,6 +1,6 @@
 FROM nginx:stable-alpine
 
-ENV PAGE_TITLE=Lexiko
+ENV PAGE_TITLE=odysseia
 RUN rm -rf /etc/nginx/conf.d
 COPY conf /etc/nginx
 

@@ -9,8 +9,8 @@ import (
 	"github.com/elastic/go-elasticsearch/v7/esapi"
 	"github.com/ianschenck/envflag"
 	"github.com/kpango/glg"
-	"github.com/lexiko/plato/elastic"
-	"github.com/lexiko/plato/models"
+	"github.com/odysseia/plato/elastic"
+	"github.com/odysseia/plato/models"
 	"golang.org/x/text/runes"
 	"golang.org/x/text/transform"
 	"golang.org/x/text/unicode/norm"
@@ -44,7 +44,7 @@ func main() {
 
 	elasticService := envflag.String("ELASTIC_SEARCH_SERVICE", "http://127.0.0.1:9200", "location of the es service")
 	elasticUser := envflag.String("ELASTIC_SEARCH_USER", "elastic", "es username")
-	elasticPassword := envflag.String("ELASTIC_SEARCH_PASSWORD", "lexiko", "es password")
+	elasticPassword := envflag.String("ELASTIC_SEARCH_PASSWORD", "odysseia", "es password")
 
 	envflag.Parse()
 

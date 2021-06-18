@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   description: |
-    This is a sample Sokrates server which is part of lexiko.
+    This is a sample Sokrates server which is part of odysseia.
 
     # Introduction
     This API is documented in **OpenAPI format** and is using [ReDoc](https://github.com/Redocly/redoc)
@@ -18,9 +18,9 @@ info:
 
     Translation is mine
     
-  termsOfService: https://github.com/joerivrij/lexiko
+  termsOfService: https://github.com/joerivrij/odysseia
   contact:
-    email: joerivrijaldenhoven@lexiko.io
+    email: joerivrijaldenhoven@odysseia.io
   license:
     name: MIT License
     url: https://opensource.org/licenses/MIT

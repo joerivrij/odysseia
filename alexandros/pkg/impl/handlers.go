@@ -3,10 +3,10 @@ package impl
 import (
 	"encoding/json"
 	"github.com/kpango/glg"
-	"github.com/lexiko/alexandros/pkg/config"
-	"github.com/lexiko/plato/elastic"
-	"github.com/lexiko/plato/middleware"
-	"github.com/lexiko/plato/models"
+	"github.com/odysseia/alexandros/pkg/config"
+	"github.com/odysseia/plato/elastic"
+	"github.com/odysseia/plato/middleware"
+	"github.com/odysseia/plato/models"
 	"net/http"
 )
 

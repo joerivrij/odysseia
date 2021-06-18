@@ -3,7 +3,7 @@ package impl
 import (
 	"fmt"
 	"github.com/kpango/glg"
-	"github.com/lexiko/plato/models"
+	"github.com/odysseia/plato/models"
 	"golang.org/x/text/runes"
 	"golang.org/x/text/transform"
 	"golang.org/x/text/unicode/norm"

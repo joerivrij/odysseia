@@ -3,8 +3,8 @@ package main
 import (
 	"github.com/ianschenck/envflag"
 	"github.com/kpango/glg"
-	"github.com/lexiko/alexandros/pkg/config"
-	"github.com/lexiko/alexandros/pkg/impl"
+	"github.com/odysseia/alexandros/pkg/config"
+	"github.com/odysseia/alexandros/pkg/impl"
 	"net/http"
 )
 
