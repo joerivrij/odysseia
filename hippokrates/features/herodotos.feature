@@ -1,5 +1,5 @@
 Feature: herodotos
-  In order to test Lexiko
+  In order to test odysseia
   As a developer
   We need to be able to validate the functioning of the Herodotos api
 

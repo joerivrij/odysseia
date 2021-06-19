@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"github.com/elastic/go-elasticsearch/v7"
 	"github.com/kpango/glg"
-	"github.com/lexiko/plato/models"
+	"github.com/odysseia/plato/models"
 	"io/ioutil"
 	"log"
 	"strconv"

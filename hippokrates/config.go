@@ -6,14 +6,14 @@ import (
 
 const version = "v1"
 
-type LexikoFixture struct {
+type odysseiaFixture struct {
 	ctx		 context.Context
 	sokrates Sokrates
 	herodotos Herodotos
 	alexandros Alexandros
 }
 
-func New(alexandrosUrl, herodotosUrl, sokratesUrl, sokratesName, herodotosName, alexandrosName string) (*LexikoFixture, error) {
+func New(alexandrosUrl, herodotosUrl, sokratesUrl, sokratesName, herodotosName, alexandrosName string) (*odysseiaFixture, error) {
 	sokratesApi := Sokrates{
 		BaseApi: BaseApi{
 			BaseUrl:   sokratesUrl,
@@ -44,7 +44,7 @@ func New(alexandrosUrl, herodotosUrl, sokratesUrl, sokratesName, herodotosName, 
 	}
 	alexandrosApi.Endpoints = alexandrosApi.GenerateEndpoints()
 
-	return &LexikoFixture{
+	return &odysseiaFixture{
 		sokrates:                    sokratesApi,
 		herodotos: herodotosApi,
 		alexandros: alexandrosApi,

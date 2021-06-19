@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/kpango/glg"
-	"github.com/lexiko/archimedes/cmd/command"
+	"github.com/odysseia/archimedes/cmd/command"
 	"github.com/spf13/cobra"
 	"strings"
 )
@@ -10,8 +10,8 @@ import (
 var (
 	rootCmd = &cobra.Command{
 		Use:   "archimedes",
-		Short: "Deploy everything related to lexiko",
-		Long: `Deploy everything related to lexiko.
+		Short: "Deploy everything related to odysseia",
+		Long: `Deploy everything related to odysseia.
 Allows you to parse words from a txt file`,
 	}
 )
@@ -25,6 +25,7 @@ func main() {
 
 	rootCmd.AddCommand(
 		command.ParseListToWords(),
+		command.BuildProject(),
 	)
 
 	err := rootCmd.Execute()

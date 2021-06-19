@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   description: |
-    This is a sample Alexandros server which is part of lexiko.
+    This is a sample Alexandros server which is part of odysseia.
 
     # Introduction
     This API is documented in **OpenAPI format** and is using [ReDoc](https://github.com/Redocly/redoc)
@@ -17,9 +17,9 @@ info:
 
     [Text can be found here](http://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A2008.01.0129%3Achapter%3D2%3Asection%3D1)
 
-  termsOfService: https://github.com/joerivrij/lexiko
+  termsOfService: https://github.com/joerivrij/odysseia
   contact:
-    email: joerivrijaldenhoven@lexiko.io
+    email: joerivrijaldenhoven@odysseia.io
   license:
     name: MIT License
     url: https://opensource.org/licenses/MIT

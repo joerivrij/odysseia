@@ -34,7 +34,7 @@ func init() {
 	godog.BindCommandLineFlags("godog.", &opts)
 }
 
-func (l *LexikoFixture)theIsRunning(service string) error {
+func (l *odysseiaFixture)theIsRunning(service string) error {
 	var response *http.Response
 	var err error
 	expectedCode := 200
@@ -65,7 +65,7 @@ func (l *LexikoFixture)theIsRunning(service string) error {
 	return nil
 }
 
-func (l *LexikoFixture)theResponseCodeShouldBe(code int) error {
+func (l *odysseiaFixture)theResponseCodeShouldBe(code int) error {
 	statusCode := l.ctx.Value(StatusCode).(int)
 	if statusCode != code {
 		return fmt.Errorf("code was %d where %d was expected", statusCode, code)
@@ -77,9 +77,9 @@ func (l *LexikoFixture)theResponseCodeShouldBe(code int) error {
 
 func InitializeTestSuite(ctx *godog.TestSuiteContext) {
 	ctx.BeforeSuite(func() {
-		alexandrosUrl := envflag.String("ALEXANDROS_URL", "http://minikube-lexiko.test", "alexandros base url")
-		herodotosUrl := envflag.String("HERODOTOS_URL", "http://minikube-lexiko.test", "herodotos base url")
-		sokratesUrl := envflag.String("SOKRATES_URL", "http://minikube-lexiko.test", "sokrates base url")
+		alexandrosUrl := envflag.String("ALEXANDROS_URL", "http://minikube-odysseia.test", "alexandros base url")
+		herodotosUrl := envflag.String("HERODOTOS_URL", "http://minikube-odysseia.test", "herodotos base url")
+		sokratesUrl := envflag.String("SOKRATES_URL", "http://minikube-odysseia.test", "sokrates base url")
 
 		envflag.Parse()
 		flag.Parse()
@@ -94,23 +94,23 @@ func InitializeScenario(ctx *godog.ScenarioContext) {
 	ctx.BeforeScenario(func(*godog.Scenario) {
 	})
 
-	lexiko, err := New(ALEXANDROS_URL, HERODOTOS_URL, SOKRATES_URL, sokratesApi, herodotosApi, alexandrosApi)
+	odysseia, err := New(ALEXANDROS_URL, HERODOTOS_URL, SOKRATES_URL, sokratesApi, herodotosApi, alexandrosApi)
 	if err != nil {
 		os.Exit(1)
 	}
 
 	//general
-	ctx.Step(`^the "([^"]*)" is running$`, lexiko.theIsRunning)
-	ctx.Step(`^the responseCode should be "([^"]*)"$`, lexiko.theResponseCodeShouldBe)
+	ctx.Step(`^the "([^"]*)" is running$`, odysseia.theIsRunning)
+	ctx.Step(`^the responseCode should be "([^"]*)"$`, odysseia.theResponseCodeShouldBe)
 
 	//alexandros
-	ctx.Step(`^the word "([^"]*)" is queried$`, lexiko.theWordIsQueried)
+	ctx.Step(`^the word "([^"]*)" is queried$`, odysseia.theWordIsQueried)
 
 	//herodotos
-	ctx.Step(`^a new sentence is requested for author "([^"]*)"$`, lexiko.aNewSentenceIsRequestedForAuthor)
+	ctx.Step(`^a new sentence is requested for author "([^"]*)"$`, odysseia.aNewSentenceIsRequestedForAuthor)
 
 	//sokrates
-	ctx.Step(`^a new question is requested with category "([^"]*)" and chapter "([^"]*)"$`, lexiko.aNewQuestionIsRequestedWithCategoryAndChapter)
+	ctx.Step(`^a new question is requested with category "([^"]*)" and chapter "([^"]*)"$`, odysseia.aNewQuestionIsRequestedWithCategoryAndChapter)
 }
 
 func TestMain(m *testing.M) {

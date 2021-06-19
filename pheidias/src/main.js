@@ -12,9 +12,9 @@ Vue.prototype.$herodotosUrl = store.state.HerodotosUrl
 Vue.prototype.$alexandrosUrl = store.state.AlexandrosUrl
 
 if (process.env.NODE_ENV === 'development') {
-  Vue.prototype.$sokratesUrl = "http://minikube-lexiko.test/sokrates/v1"
-  Vue.prototype.$herodotosUrl = "http://minikube-lexiko.test/herodotos/v1"
-  Vue.prototype.$alexandrosUrl = "http://minikube-lexiko.test/alexandros/v1"
+  Vue.prototype.$sokratesUrl = "http://minikube-odysseia.test/sokrates/v1"
+  Vue.prototype.$herodotosUrl = "http://minikube-odysseia.test/herodotos/v1"
+  Vue.prototype.$alexandrosUrl = "http://minikube-odysseia.test/alexandros/v1"
 }
 
 console.log(`sokrates proxy found at: ${Vue.prototype.$sokratesUrl}`)

@@ -4,7 +4,7 @@ import (
 	"context"
 )
 
-func (l *LexikoFixture)theWordIsQueried(word string) error {
+func (l *odysseiaFixture)theWordIsQueried(word string) error {
 	response, err := l.alexandros.QueryWord(word)
 	if err != nil {
 		return err

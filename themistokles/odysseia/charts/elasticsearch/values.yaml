@@ -34,7 +34,7 @@ esConfig: {}
 # syntax here
 extraEnvs:
   - name: ELASTIC_PASSWORD
-    value: lexiko
+    value: odysseia
 
 # Allows you to load environment variables from kubernetes secret or config map
 envFrom: []

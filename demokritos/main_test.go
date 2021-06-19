@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/lexiko/plato/models"
+	"github.com/odysseia/plato/models"
 	"testing"
 )
 import "github.com/stretchr/testify/assert"

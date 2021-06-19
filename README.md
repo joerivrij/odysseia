@@ -1,6 +1,6 @@
-# LEXIKO <!-- omit in toc -->
+# Odysseia <!-- omit in toc -->
 
-Lexiko (λεξικο) is the greek word for a dictionary. It is a hobby project that combines a few of my passions, both ancient Greek (history) and finding technical solutions for problems. As This is a hobby project first and foremost any mistakes are my own, either in translation or in interpation of text.
+Odysseia (Ὀδύσσεια) is one of the two famous poems bij Homeros. It describes the journey of Odysseus and his crew to get home. Learning Greek is a bit like that - a odyssey. It is a hobby project that combines a few of my passions, both ancient Greek (history) and finding technical solutions for problems. As This is a hobby project first and foremost any mistakes are my own, either in translation or in interpation of text.
 
 The goal is for people to learn or rehearse ancient Greek. Some of it is in Dutch but most of it is in English. There is also a dictionary that you can search through. Most of it is still very much a work in progress.
 
@@ -9,6 +9,8 @@ The goal is for people to learn or rehearse ancient Greek. Some of it is in Dutc
   - [Alexandros - Αλέξανδρος](#alexandros---αλέξανδρος)
   - [Sokrates - Σωκράτης](#sokrates---σωκράτης)
   - [Herodotos - Ἡρόδοτος](#herodotos---ἡρόδοτος)
+- [Common](#common)
+  - [Plato - Πλάτων](#plato---πλάτων)
 - [Dataseeders](#dataseeders)
   - [Demokritos - Δημόκριτος](#demokritos---δημόκριτος)
   - [Herakleitos - Ἡράκλειτος](#herakleitos---ἡράκλειτος)
@@ -20,7 +22,7 @@ The goal is for people to learn or rehearse ancient Greek. Some of it is in Dutc
 - [Ops](#ops)
   - [Archimedes - Ἀρχιμήδης](#archimedes---ἀρχιμήδης)
   - [Lykourgos - Λυκοῦργος](#lykourgos---λυκοῦργος)
-  - [Plato - Πλάτων](#plato---πλάτων)
+  - [Themistokles - Θεμιστοκλῆς](#themistokles---θεμιστοκλῆς)
 - [Tests](#tests)
   - [Hippokrates - Ἱπποκράτης](#hippokrates---ἱπποκράτης)
 
@@ -30,7 +32,7 @@ The goal is for people to learn or rehearse ancient Greek. Some of it is in Dutc
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/5/59/Alexander_and_Bucephalus_-_Battle_of_Issus_mosaic_-_Museo_Archeologico_Nazionale_-_Naples_BW.jpg" alt="Alexandros" width="200"/>
 
-What could I ever say in a few lines that would do justice to one of the most influential people of all time? Alexandros's energy and search for the end of the world was relentless, so too is his search for Greek words within Lexiko.
+What could I ever say in a few lines that would do justice to one of the most influential people of all time? Alexandros's energy and search for the end of the world was relentless, so too is his search for Greek words within odysseia.
 
 ### Sokrates - Σωκράτης
 
@@ -47,7 +49,18 @@ Sokrates (on the right) is a figure of mythical propertions. He could stare at t
 <img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Marble_bust_of_Herodotos_MET_DT11742.jpg" alt="Sokrates" width="200"/>
 
 Herodotos is often hailed as the father of history. I name he lives up to. His work (the histories) is a lively account of the histories of the Greeks and Persians and how they came into conflict. This API is responsible for passing along sentences you need to translate. They are then checked for accuracy.
- 
+
+## Common
+
+### Plato - Πλάτων
+
+χαλεπὰ τὰ καλά - good things are difficult to attain
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Platon.png" alt="Plato" width="200"/>
+
+
+Perhaps the most famous Western philosopher, his thoughts have been an influence on Western culture for generations and as he is the rock upon which many philosophers have build there church. It is only fitting that shared code is maintained within the Plato API. Raphael has painted him with Leonardo da Vinci as inspiration.
+
 ## Dataseeders
 
 ### Demokritos - Δημόκριτος
@@ -108,14 +121,11 @@ name has been chosen for the `ctl` tooling.
 
 Lykourgos (or Lycurgus) is a semi mythical lawmaker that laid the foundation for the Spartan society with strict rules. As a deployment abides by strict rules this is a great fit.
 
-### Plato - Πλάτων
+### Themistokles - Θεμιστοκλῆς
 
-χαλεπὰ τὰ καλά - good things are difficult to attain
+<img src="https://upload.wikimedia.org/wikipedia/commons/8/86/Illustrerad_Verldshistoria_band_I_Ill_116.png" alt="Themistokles" width="200"/>
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Platon.png" alt="Plato" width="200"/>
-
-
-Perhaps the most famous Western philosopher, his thoughts have been an influence on Western culture for generations and as he is the rock upon which many philosophers have build there church. It is only fitting that shared code is maintained within the Plato API. Raphael has painted him with Leonardo da Vinci as inspiration.
+Themistokles is argueably the greatest Greek admiral. His victory at Salamis is most well-known. As an admiral he held sway over many ships and thus over many pilots (kubernetes).
 
 
 ## Tests

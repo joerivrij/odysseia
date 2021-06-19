@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"github.com/gorilla/mux"
 	"github.com/kpango/glg"
-	"github.com/lexiko/plato/helpers"
-	"github.com/lexiko/plato/models"
-	"github.com/lexiko/sokrates/pkg/config"
-	"github.com/lexiko/sokrates/pkg/middleware"
-	apiModels "github.com/lexiko/sokrates/pkg/models"
+	"github.com/odysseia/plato/helpers"
+	"github.com/odysseia/plato/models"
+	"github.com/odysseia/sokrates/pkg/config"
+	"github.com/odysseia/sokrates/pkg/middleware"
+	apiModels "github.com/odysseia/sokrates/pkg/models"
 	"net/http"
 )
 

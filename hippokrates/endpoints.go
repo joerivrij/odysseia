@@ -6,7 +6,7 @@ import (
 	"path"
 )
 
-type LexikoApi interface {
+type odysseiaApi interface {
 	Sokrates()
 	Herodotos()
 	Alexandros()

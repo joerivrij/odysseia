@@ -1,7 +1,7 @@
 package impl
 
 import (
-	"github.com/lexiko/alexandros/pkg/config"
+	"github.com/odysseia/alexandros/pkg/config"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/http/httptest"
