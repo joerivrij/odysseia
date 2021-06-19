@@ -9,6 +9,7 @@ import (
 	"golang.org/x/text/unicode/norm"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 	"regexp"
 	"strings"
 	"unicode"
@@ -96,4 +97,53 @@ func writeFile(jsonBiblos []byte, outputFile string) {
 
 	glg.Info(fmt.Sprintf("finished writing %d bytes", outputFromWrite))
 	glg.Info(fmt.Sprintf("file written to %s", outputFile))
+}
+
+func BuildProject(odysseiaPath string) {
+	var ploutarchosPath string
+	directories, err := ioutil.ReadDir(odysseiaPath)
+	if err != nil {
+		glg.Fatal(err)
+	}
+
+	for _, dir := range directories {
+		fi, err := os.Stat(dir.Name())
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+
+		switch mode := fi.Mode(); {
+		case mode.IsDir():
+			charOne := dir.Name()[0]
+			if string(charOne) == "." {
+				continue
+			}
+			if dir.Name() == "ploutarchos" {
+				ploutarchosPath = fmt.Sprintf("%s/%s/yaml", odysseiaPath, dir.Name())
+			}
+			absolutePath, _ := filepath.Abs(dir.Name())
+			lookForYamlFile(absolutePath, ploutarchosPath)
+			lookForMakeFile(absolutePath)
+		case mode.IsRegular():
+		}
+	}
+}
+
+func lookForYamlFile(absolutePath, ploutarchosPath string) {
+	files, err := ioutil.ReadDir(absolutePath)
+	if err != nil {
+		glg.Fatal(err)
+	}
+
+	for _, f := range files {
+		re := regexp.MustCompile(`.yaml`)
+
+		if re.Match([]byte(f.Name())) {
+			fmt.Println(absolutePath)
+		}
+	}
+}
+func lookForMakeFile(absolutePath string) {
+
 }

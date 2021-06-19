@@ -25,6 +25,7 @@ func main() {
 
 	rootCmd.AddCommand(
 		command.ParseListToWords(),
+		command.BuildProject(),
 	)
 
 	err := rootCmd.Execute()
