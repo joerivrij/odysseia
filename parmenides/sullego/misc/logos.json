@@ -524,6 +524,42 @@
       "greek": "πρὸς ταῦτα",
       "dutch": "wat dat betreft, mֶet het oog hierop, in reactie hierop",
       "chapter": 14
+    },
+
+    {
+      "greek": "δῆλον ὅτι",
+      "dutch": "natuurlijk",
+      "chapter": 15
+    },
+    {
+      "greek": "ἐκποδών",
+      "dutch": "uit-de-voeten, uit de weg, weg",
+      "chapter": 15
+    },
+    {
+      "greek": "ἐπί + dat.",
+      "dutch": "aan, bij",
+      "chapter": 15
+    },
+    {
+      "greek": "καὶ δὴ καί",
+      "dutch": "en óók, en vooral, en in het bijzonder",
+      "chapter": 15
+    },
+    {
+      "greek": "μὲν οὖν",
+      "dutch": "welnu, nu (geeft een overgang naar een ander onderwerp)",
+      "chapter": 15
+    },
+    {
+      "greek": "πάλαι",
+      "dutch": "lang geleden, vroeger, allang",
+      "chapter": 15
+    },
+    {
+      "greek": "προ + gen.",
+      "dutch": "voor (van tijd en plaats), liever dan",
+      "chapter": 15
     }
   ]
 }

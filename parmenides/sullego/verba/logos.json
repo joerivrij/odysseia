@@ -760,6 +760,32 @@
       "greek": "χαῖρε/χαίρετε imperat. van χαίρω",
       "dutch": "gegroet",
       "chapter": 14
+    },
+
+    {
+      "greek": "ἀποδείκνυμι",
+      "dutch": "1. laten zien, te kennen geven; 2. aantonen. benoemen",
+      "chapter": 15
+    },
+    {
+      "greek": "ἐν νῷ ἔχω",
+      "dutch": "van plan zijn",
+      "chapter": 15
+    },
+    {
+      "greek": "θαυμάζω",
+      "dutch": "1. bewonderen; 2. zich verwonderen over",
+      "chapter": 15
+    },
+    {
+      "greek": "παραδίδωμι",
+      "dutch": "overgeven, overleveren",
+      "chapter": 15
+    },
+    {
+      "greek": "συνίημι",
+      "dutch": "begrijpen",
+      "chapter": 15
     }
   ]
 }
