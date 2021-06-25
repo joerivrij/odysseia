@@ -11,6 +11,9 @@ spec:
         app: parmenides
         release: {{ .Release.Name }}
         version: {{ .Values.images.tag }}
+      annotations:
+        'consul.hashicorp.com/connect-inject': 'true'
+        'consul.hashicorp.com/transparent-proxy': 'true'
     spec:
       containers:
         - image: {{ .Values.images.parmenides.repo }}:{{ .Values.images.tag }}

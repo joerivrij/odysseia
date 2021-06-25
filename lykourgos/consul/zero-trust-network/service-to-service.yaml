@@ -1,0 +1,84 @@
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceIntentions
+metadata:
+  name: service-to-herodotos
+spec:
+  destination:
+    name: herodotos
+  sources:
+    - name: pheidias
+      action: allow
+    - name: hippokrates
+      action: allow
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceIntentions
+metadata:
+  name: service-to-sokrates
+spec:
+  destination:
+    name: sokrates
+  sources:
+    - name: pheidias
+      action: allow
+    - name: hippokrates
+      action: allow
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceIntentions
+metadata:
+  name: service-to-alexandros
+spec:
+  destination:
+    name: alexandros
+  sources:
+    - name: pheidias
+      action: allow
+    - name: hippokrates
+      action: allow
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceIntentions
+metadata:
+  name: backends-to-elastic
+spec:
+  destination:
+    name: elasticsearch-master
+  sources:
+    - name: alexandros
+      action: allow
+    - name: herodotos
+      action: allow
+    - name: sokrates
+      action: allow
+    - name: demokritos
+      action: allow
+    - name: herakleitos
+      action: allow
+    - name: parmenides
+      action: allow
+    - name: odysseia-kibana
+      action: allow
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceIntentions
+metadata:
+  name: backends-to-elastic-headless
+spec:
+  destination:
+    name: elasticsearch-master-headless
+  sources:
+    - name: alexandros
+      action: allow
+    - name: herodotos
+      action: allow
+    - name: sokrates
+      action: allow
+    - name: demokritos
+      action: allow
+    - name: herakleitos
+      action: allow
+    - name: parmenides
+      action: allow
+    - name: odysseia-kibana
+      action: allow

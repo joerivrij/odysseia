@@ -19,41 +19,41 @@ spec:
             path: /
             backend:
               service:
-                name: pheidias-service
+                name: pheidias
                 port:
                   number: {{ .Values.envVariables.pheidias.port }}
           - pathType: Prefix
             path: /sokrates/v1
             backend:
               service:
-                name: sokrates-service
+                name: sokrates
                 port:
                   number: {{ .Values.envVariables.sokrates.port }}
           - pathType: Prefix
             path: /herodotos/v1
             backend:
               service:
-                name: herodotos-service
+                name: herodotos
                 port:
                   number: {{ .Values.envVariables.herodotos.port }}
           - pathType: Prefix
             path: /alexandros/v1
             backend:
               service:
-                name: alexandros-service
+                name: alexandros
                 port:
                   number: {{ .Values.envVariables.alexandros.port }}
           - pathType: Prefix
             path: /ploutarchos
             backend:
               service:
-                name: ploutarchos-service
+                name: ploutarchos
                 port:
                   number: {{ .Values.envVariables.ploutarchos.port }}
           - pathType: Prefix
             path: /swagger
             backend:
               service:
-                name: ploutarchos-service
+                name: ploutarchos
                 port:
                   number: {{ .Values.envVariables.ploutarchos.port }}

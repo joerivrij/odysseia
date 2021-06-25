@@ -20,6 +20,8 @@ spec:
         {{ $key }}: {{ $value | quote }}
         {{- end }}
       annotations:
+        'consul.hashicorp.com/connect-inject': 'true'
+        'consul.hashicorp.com/transparent-proxy': 'true'
         {{- range $key, $value := .Values.podAnnotations }}
         {{ $key }}: {{ $value | quote }}
         {{- end }}

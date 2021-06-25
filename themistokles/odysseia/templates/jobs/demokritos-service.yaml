@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ploutarchos
+  name: demokritos
 spec:
   selector:
-    app: ploutarchos
+    app: demokritos
   ports:
     - name: "http"
       port: {{ .Values.envVariables.ploutarchos.port }}

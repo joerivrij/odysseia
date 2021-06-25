@@ -11,6 +11,9 @@ spec:
         app: demokritos
         release: {{ .Release.Name }}
         version: {{ .Values.images.tag }}
+      annotations:
+        'consul.hashicorp.com/connect-inject': 'true'
+        'consul.hashicorp.com/transparent-proxy': 'true'
     spec:
       containers:
         - image: {{ .Values.images.demokritos.repo }}:{{ .Values.images.tag }}

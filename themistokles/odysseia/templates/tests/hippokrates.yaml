@@ -12,27 +12,30 @@ metadata:
     {{ $key }}: {{ $value | quote }}
   {{- end }}
 spec:
-  schedule: "*/5 * * * *"
+  schedule: "*/3 * * * *"
   jobTemplate:
-    metadata:
-      labels:
-        app: {{ template "hippokrates.uname" . }}
-        release: {{ .Release.Name }}
-        version: {{ .Values.images.tag }}
     spec:
       backoffLimit: 5
       template:
+        metadata:
+          labels:
+            app: {{ template "hippokrates.uname" . }}
+            release: {{ .Release.Name }}
+            version: {{ .Values.images.tag }}
+          annotations:
+            'consul.hashicorp.com/connect-inject': 'true'
+            'consul.hashicorp.com/transparent-proxy': 'true'
         spec:
           containers:
             - image: {{ .Values.images.hippokrates.repo }}:{{ .Values.images.tag }}
               name: hippokrates
               env:
                 - name: SOKRATES_URL
-                  value: http://sokrates-service:5000
+                  value: http://sokrates:5000
                 - name: ALEXANDROS_URL
-                  value: http://alexandros-service:5000
+                  value: http://alexandros:5000
                 - name: HERODOTOS_URL
-                  value: http://herodotos-service:5000
+                  value: http://herodotos:5000
               imagePullPolicy: {{ .Values.config.pullPolicy }}
               command:
               - /bin/sh

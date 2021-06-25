@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: sokrates-service
+  name: sokrates
 spec:
   selector:
     app: sokrates

@@ -15,6 +15,9 @@ spec:
         app: alexandros
         release: {{ .Release.Name }}
         version: {{ .Values.images.tag }}
+      annotations:
+        'consul.hashicorp.com/connect-inject': 'true'
+        'consul.hashicorp.com/transparent-proxy': 'true'
     spec:
       containers:
         - image: {{ .Values.images.alexandros.repo }}:{{ .Values.images.tag }}
@@ -26,6 +29,8 @@ spec:
               value: {{ .Values.envVariables.elastic.elasticUser }}
             - name: ELASTIC_SEARCH_PASSWORD
               value: {{ .Values.envVariables.elastic.elasticPassword }}
+            - name: PORT
+              value: {{ .Values.envVariables.alexandros.bind_addr }}
           imagePullPolicy: {{ .Values.config.pullPolicy }}
           ports:
             - containerPort: {{ .Values.envVariables.alexandros.port }}

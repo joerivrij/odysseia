@@ -36,7 +36,6 @@ spec:
         {{- end }}
     {{- end }}
     {{- with .Values.persistence.annotations  }}
-      annotations:
 {{ toYaml . | indent 8 }}
     {{- end }}
     spec:
@@ -53,6 +52,8 @@ spec:
         {{ $key }}: {{ $value | quote }}
         {{- end }}
       annotations:
+        'consul.hashicorp.com/connect-inject': 'true'
+        'consul.hashicorp.com/transparent-proxy': 'false'
         {{- range $key, $value := .Values.podAnnotations }}
         {{ $key }}: {{ $value | quote }}
         {{- end }}

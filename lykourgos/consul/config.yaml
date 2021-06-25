@@ -1,0 +1,31 @@
+global:
+  name: consul
+  datacenter: dc1
+  metrics:
+    enabled: true
+    enableAgentMetrics: true
+server:
+  replicas: 1
+ui:
+  enabled: true
+  metrics:
+    enabled: true # by default, this inherits from the value global.metrics.enabled
+    provider: "prometheus"
+    baseURL: http://prometheus-server
+connectInject:
+  transparentProxy:
+    defaultEnabled: false
+    DialedDirectly: true
+  enabled: true
+  default: false
+  metrics:
+    defaultEnabled: true
+    defaultPrometheusScrapePort: 20200
+    defaultPrometheusScrapePath: "/metrics"
+    defaultMergedMetricsPort: 20100
+controller:
+  enabled: true
+prometheus:
+  enabled: true
+grafana:
+  enabled: true

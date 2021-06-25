@@ -11,6 +11,9 @@ spec:
         app: herakleitos
         release: {{ .Release.Name }}
         version: {{ .Values.images.tag }}
+      annotations:
+        'consul.hashicorp.com/connect-inject': 'true'
+        'consul.hashicorp.com/transparent-proxy': 'true'
     spec:
       containers:
         - image: {{ .Values.images.herakleitos.repo }}:{{ .Values.images.tag }}
