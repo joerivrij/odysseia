@@ -1094,6 +1094,92 @@
       "greek": "φωνή, ἡ",
       "dutch": "stem, geluid",
       "chapter": 14
+    },
+
+    {
+      "greek": "αἴτιος + gen.",
+      "dutch": "verantwoordelijk voor, schuldig aan",
+      "chapter": 15
+    },
+    {
+      "greek": "ἀληθής, ἀληθοῦς",
+      "dutch": "waar, werkelijk",
+      "chapter": 15
+    },
+    {
+      "greek": "ἀλλήλους acc. plur.",
+      "dutch": "elkaar",
+      "chapter": 15
+    },
+    {
+      "greek": "ἅπας/ἅπασα/ἅπαν, ἅπαντος",
+      "dutch": "1. (ge)heel, al, ieder; 2. (plur.) alle(n), alle(s)",
+      "chapter": 15
+    },
+    {
+      "greek": "ἀρχαῖος",
+      "dutch": "oud, van vroeger",
+      "chapter": 15
+    },
+    {
+      "greek": "γένος, γένους, τό",
+      "dutch": "1. geslacht, afkomst; 2. soort, klasse",
+      "chapter": 15
+    },
+    {
+      "greek": "γλυκύς/γλυκεῖα/γλυκύ, γλυκέος",
+      "dutch": "zoet, lief, aangenaam",
+      "chapter": 15
+    },
+    {
+      "greek": "ἑκών/ἑκοῦσα/ἑκον, ἑκόντος",
+      "dutch": "vrijwillig, expres",
+      "chapter": 15
+    },
+    {
+      "greek": "ἐνδεής, ἐνδεοῦς + gen.",
+      "dutch": "behoeftig, arm aan, gebrekking",
+      "chapter": 15
+    },
+    {
+      "greek": "ἡδονή, ἡ",
+      "dutch": "genot, vreugde",
+      "chapter": 15
+    },
+    {
+      "greek": "ἡδύς/ἡδεῖα/ἡδύ, ἡδέος",
+      "dutch": "aangenaam, fijn",
+      "chapter": 15
+    },
+    {
+      "greek": "θρασύς/θρασεῖα/θρασύ, θρασέος",
+      "dutch": "onverschrokken, vermetel",
+      "chapter": 15
+    },
+    {
+      "greek": "νόμος, ὁ",
+      "dutch": "1. gewoonte, gebruik; 2. wet",
+      "chapter": 15
+    },
+    {
+      "greek": "πᾶς/πᾶσα/πᾶν, παντός",
+      "dutch": "1. (ge)heel, al, ieder; 2. (plur.) alle(n), alle(s)",
+      "chapter": 15
+    },
+    {
+      "greek": "πλήρης, πλήρους + gen.",
+      "dutch": "vol met",
+      "chapter": 15
+    },
+    {
+      "greek": "σαφής, σαφοῦς",
+      "dutch": "duidelijk",
+      "chapter": 15
+    },
+    {
+      "greek": "σώφρων, σώφρονος",
+      "dutch": "verstanding, wijs, bezonnen, beheerst, ingetogen",
+      "chapter": 15
     }
   ]
 }
