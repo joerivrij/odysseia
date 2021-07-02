@@ -7,24 +7,24 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func BuildProject() *cobra.Command {
+func CreateImages() *cobra.Command {
 	var (
-		filePath  string
+		filePath string
 	)
 	cmd := &cobra.Command{
-		Use:   "build",
-		Short: "build all projects",
-		Long: `Allows you build odysseia
+		Use:   "images",
+		Short: "create images for all apis",
+		Long: `Allows you to create images for all apis
 - Filepath
 `,
 		Run: func(cmd *cobra.Command, args []string) {
-			glg.Green("building")
+			glg.Green("creating")
 			if filePath == "" {
 				glg.Error(fmt.Sprintf("filepath is empty"))
 				return
 			}
 
-			handler.BuildProject(filePath)
+			handler.CreateImages(filePath)
 		},
 	}
 	cmd.PersistentFlags().StringVarP(&filePath, "filepath", "f", "", "where to find the source code")

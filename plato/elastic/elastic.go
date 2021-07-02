@@ -162,7 +162,7 @@ func QueryMultiMatchWithGrams(elasticClient elasticsearch.Client, index, queryWo
 		"query": map[string]interface{}{
 			"multi_match": map[string]interface{}{
 				"query": queryWord,
-				"type": "bool_prefix",
+				"type":  "bool_prefix",
 				"fields": [3]string{
 					"greek", "greek._2gram", "greek._3gram",
 				},

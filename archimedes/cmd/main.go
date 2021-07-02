@@ -11,8 +11,9 @@ var (
 	rootCmd = &cobra.Command{
 		Use:   "archimedes",
 		Short: "Deploy everything related to odysseia",
-		Long: `Deploy everything related to odysseia.
-Allows you to parse words from a txt file`,
+		Long: `Create and script everything odysseia related.
+Allows you to parse words from a txt file,
+build all container images`,
 	}
 )
 
@@ -25,7 +26,7 @@ func main() {
 
 	rootCmd.AddCommand(
 		command.ParseListToWords(),
-		command.BuildProject(),
+		command.CreateImages(),
 	)
 
 	err := rootCmd.Execute()

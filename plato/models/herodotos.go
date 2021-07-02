@@ -39,5 +39,3 @@ type Authors struct {
 type Author struct {
 	Author string `json:"author"`
 }
-
-

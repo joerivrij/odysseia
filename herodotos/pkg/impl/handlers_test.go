@@ -20,7 +20,7 @@ func TestLevenshteinToPercentageZero(t *testing.T) {
 	longestWord := 2
 	percentage := levenshteinDistanceInPercentage(source, longestWord)
 
-	expected := float32(0)
+	expected := float64(0)
 
 	assert.Equal(t, expected, percentage)
 }
@@ -30,7 +30,7 @@ func TestLevenshteinToPercentageHunderd(t *testing.T) {
 	longestWord := 20
 	percentage := levenshteinDistanceInPercentage(source, longestWord)
 
-	expected := float32(100)
+	expected := float64(100)
 
 	assert.Equal(t, expected, percentage)
 }
@@ -40,7 +40,7 @@ func TestLevenshteinToPercentageMixed(t *testing.T) {
 	longestWord := 64
 	percentage := levenshteinDistanceInPercentage(source, longestWord)
 
-	expected := float32(82.8125)
+	expected := float64(82.8125)
 
 	assert.Equal(t, expected, percentage)
 }

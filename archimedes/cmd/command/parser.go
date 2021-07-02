@@ -10,8 +10,8 @@ import (
 
 func ParseListToWords() *cobra.Command {
 	var (
-		filePath  string
-		outDir string
+		filePath string
+		outDir   string
 	)
 	cmd := &cobra.Command{
 		Use:   "parse",

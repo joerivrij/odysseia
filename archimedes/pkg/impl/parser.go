@@ -16,7 +16,7 @@ import (
 
 func ParseLines(filePath, outDir string) {
 	plan, _ := ioutil.ReadFile(filePath)
-	wordList := strings.Split(string(plan),"\n")
+	wordList := strings.Split(string(plan), "\n")
 	glg.Info(fmt.Sprintf("found %d words in %s", len(wordList), filePath))
 
 	var biblos models.Biblos
@@ -46,20 +46,20 @@ func ParseLines(filePath, outDir string) {
 				glg.Error(err)
 			}
 			if matched {
-				greek = strings.TrimSpace(word[0:j-1])
+				greek = strings.TrimSpace(word[0 : j-1])
 				english = strings.TrimSpace(word[j-1:])
 				glg.Debug(fmt.Sprintf("found the greek: %s and the english %s", greek, english))
 
 				meros := models.Meros{
-					Greek:      greek,
-					English:    english,
+					Greek:   greek,
+					English: english,
 				}
 
 				biblos.Biblos = append(biblos.Biblos, meros)
 				break
 			}
 		}
-		if i == len(wordList) -1 {
+		if i == len(wordList)-1 {
 			jsonBiblos, err := biblos.Marshal()
 			if err != nil {
 				glg.Error(err)
