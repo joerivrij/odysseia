@@ -6,9 +6,9 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/kpango/glg"
 	"github.com/odysseia/plato/helpers"
+	"github.com/odysseia/plato/middleware"
 	"github.com/odysseia/plato/models"
 	"github.com/odysseia/sokrates/pkg/config"
-	"github.com/odysseia/sokrates/pkg/middleware"
 	apiModels "github.com/odysseia/sokrates/pkg/models"
 	"net/http"
 )
@@ -21,6 +21,17 @@ type SokratesHandler struct {
 func (s *SokratesHandler) PingPong(w http.ResponseWriter, req *http.Request) {
 	pingPong := models.ResultModel{Result: "pong"}
 	middleware.ResponseWithJson(w, pingPong)
+}
+
+// returns the health of the api
+func (s *SokratesHandler) health(w http.ResponseWriter, req *http.Request) {
+	health := helpers.GetHealthOfApp(s.Config.ElasticClient)
+	if !health.Healthy {
+		middleware.ResponseWithCustomCode(w, 400, health)
+		return
+	}
+
+	middleware.ResponseWithJson(w, health)
 }
 
 func (s *SokratesHandler) FindHighestChapter(w http.ResponseWriter, req *http.Request) {
