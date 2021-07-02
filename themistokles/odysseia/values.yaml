@@ -21,7 +21,7 @@ services:
     }
 
 images:
-  tag: 363d7f5
+  tag: 88992c8
   alexandros:
     repo: alexandros
   pheidias:

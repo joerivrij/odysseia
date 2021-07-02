@@ -2,7 +2,6 @@ package models
 
 import "encoding/json"
 
-
 func (r *Biblos) Marshal() ([]byte, error) {
 	return json.Marshal(r)
 }
@@ -28,8 +27,8 @@ type Biblos struct {
 }
 
 type Meros struct {
-	Greek      string      `json:"greek"`
-	English    string      `json:"english"`
-	LinkedWord string 	   `json:"linkedWord,omitempty"`
-	Original   string      `json:"original,omitempty"`
+	Greek      string `json:"greek"`
+	English    string `json:"english"`
+	LinkedWord string `json:"linkedWord,omitempty"`
+	Original   string `json:"original,omitempty"`
 }
