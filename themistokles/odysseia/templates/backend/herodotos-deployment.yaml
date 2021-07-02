@@ -29,3 +29,22 @@ spec:
           imagePullPolicy: {{ .Values.config.pullPolicy }}
           ports:
             - containerPort: {{ .Values.envVariables.herodotos.port }}
+          livenessProbe:
+            httpGet:
+              path: /herodotos/v1/health
+              port: {{ .Values.envVariables.herodotos.port }}
+            initialDelaySeconds: {{ .Values.config.initialDelayLiveness }}
+            periodSeconds: {{ .Values.config.periodSeconds }}
+          readinessProbe:
+            httpGet:
+              path: /herodotos/v1/ping
+              port: {{ .Values.envVariables.herodotos.port }}
+            initialDelaySeconds: {{ .Values.config.initialDelayReadiness }}
+            periodSeconds: {{ .Values.config.periodSeconds }}
+          resources:
+            requests:
+              memory: {{ .Values.services.herodotos.requests.memory }}
+              cpu: {{ .Values.services.herodotos.requests.cpu }}
+            limits:
+              memory: {{.Values.services.herodotos.limits.memory}}
+              cpu: {{.Values.services.herodotos.limits.memory}}

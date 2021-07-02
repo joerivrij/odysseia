@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"fmt"
 	"github.com/elastic/go-elasticsearch/v7"
 	"github.com/kpango/glg"
 	"github.com/odysseia/plato/models"
@@ -75,6 +76,39 @@ func CheckHealthyStatusElasticSearch(es *elasticsearch.Client, ticks time.Durati
 	return healthy
 }
 
+//Check if elastic connection is healthy
+func CheckHealth(es *elasticsearch.Client) (elasticHealth models.DatabaseHealth) {
+	res, err := es.Info()
+
+	if err != nil {
+		glg.Errorf("Error getting response: %s", err)
+		elasticHealth.Healthy = false
+		return elasticHealth
+	}
+	defer res.Body.Close()
+	// Check response status
+	if res.IsError() {
+		elasticHealth.Healthy = false
+		glg.Errorf("Error: %s", res.String())
+		return elasticHealth
+	}
+
+	var r map[string]interface{}
+
+	// Deserialize the response into a map.
+	if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
+		elasticHealth.Healthy = false
+		return elasticHealth
+	}
+
+	elasticHealth.ClusterName = fmt.Sprintf("%s", r["cluster_name"])
+	elasticHealth.ServerName = fmt.Sprintf("%s", r["name"])
+	elasticHealth.ServerVersion = fmt.Sprintf("%s", r["version"].(map[string]interface{})["number"])
+	elasticHealth.Healthy = true
+
+	return elasticHealth
+}
+
 // delete an index without checking for success
 func DeleteIndex(es *elasticsearch.Client, index string) {
 	glg.Warnf("deleting index: %s", index)
@@ -82,6 +116,7 @@ func DeleteIndex(es *elasticsearch.Client, index string) {
 	res, err := es.Indices.Delete([]string{index})
 	if err != nil {
 		glg.Errorf("Error getting response: %s", err)
+		return
 	}
 
 	glg.Infof("status: %s", strconv.Itoa(res.StatusCode))

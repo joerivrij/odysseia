@@ -29,3 +29,22 @@ spec:
           imagePullPolicy: {{ .Values.config.pullPolicy }}
           ports:
             - containerPort: {{ .Values.envVariables.alexandros.port }}
+          livenessProbe:
+            httpGet:
+              path: /alexandros/v1/health
+              port: {{ .Values.envVariables.alexandros.port }}
+            initialDelaySeconds: {{ .Values.config.initialDelayLiveness }}
+            periodSeconds: {{ .Values.config.periodSeconds }}
+          readinessProbe:
+            httpGet:
+              path: /alexandros/v1/ping
+              port: {{ .Values.envVariables.alexandros.port }}
+            initialDelaySeconds: {{ .Values.config.initialDelayReadiness }}
+            periodSeconds: {{ .Values.config.periodSeconds }}
+          resources:
+            requests:
+              memory: {{ .Values.services.alexandros.requests.memory }}
+              cpu: {{ .Values.services.alexandros.requests.cpu }}
+            limits:
+              memory: {{.Values.services.alexandros.limits.memory}}
+              cpu: {{.Values.services.alexandros.limits.memory}}

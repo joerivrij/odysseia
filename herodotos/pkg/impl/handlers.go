@@ -24,6 +24,17 @@ func (h *HerodotosHandler) pingPong(w http.ResponseWriter, req *http.Request) {
 	middleware.ResponseWithJson(w, pingPong)
 }
 
+// returns the health of the api
+func (h *HerodotosHandler) health(w http.ResponseWriter, req *http.Request) {
+	health := helpers.GetHealthOfApp(h.Config.ElasticClient)
+	if !health.Healthy {
+		middleware.ResponseWithCustomCode(w, 400, health)
+		return
+	}
+
+	middleware.ResponseWithJson(w, health)
+}
+
 // creates a new sentence for questions
 func (h *HerodotosHandler) createQuestion(w http.ResponseWriter, req *http.Request) {
 	author := req.URL.Query().Get("author")

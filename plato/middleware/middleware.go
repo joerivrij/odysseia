@@ -90,6 +90,8 @@ func ResponseWithJson(w http.ResponseWriter, payload interface{}) {
 		code = 200
 	case []models.Meros:
 		code = 200
+	case models.Health:
+		code = 200
 	case map[string]interface{}:
 		code = 200
 	case models.ValidationError:
@@ -101,6 +103,21 @@ func ResponseWithJson(w http.ResponseWriter, payload interface{}) {
 	default:
 		code = 500
 	}
+
+	response, _ := json.Marshal(payload)
+	resp := string(response)
+	if code != 200 {
+		glg.Errorf("responseCode: %s body: %s", strconv.Itoa(code), resp)
+	} else {
+		glg.Infof("responseCode: %s body: %s", strconv.Itoa(code), resp)
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(code)
+	w.Write([]byte(resp))
+}
+
+// ResponseWithJson returns formed JSON
+func ResponseWithCustomCode(w http.ResponseWriter, code int, payload interface{}) {
 
 	response, _ := json.Marshal(payload)
 	resp := string(response)

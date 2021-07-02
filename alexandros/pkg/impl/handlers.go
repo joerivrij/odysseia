@@ -5,6 +5,7 @@ import (
 	"github.com/kpango/glg"
 	"github.com/odysseia/alexandros/pkg/config"
 	"github.com/odysseia/plato/elastic"
+	"github.com/odysseia/plato/helpers"
 	"github.com/odysseia/plato/middleware"
 	"github.com/odysseia/plato/models"
 	"net/http"
@@ -18,6 +19,17 @@ type AlexandrosHandler struct {
 func (a *AlexandrosHandler) pingPong(w http.ResponseWriter, req *http.Request) {
 	pingPong := models.ResultModel{Result: "pong"}
 	middleware.ResponseWithJson(w, pingPong)
+}
+
+// returns the health of the api
+func (a *AlexandrosHandler) health(w http.ResponseWriter, req *http.Request) {
+	health := helpers.GetHealthOfApp(a.Config.ElasticClient)
+	if !health.Healthy {
+		middleware.ResponseWithCustomCode(w, 400, health)
+		return
+	}
+
+	middleware.ResponseWithJson(w, health)
 }
 
 // Search a word based on part of that word

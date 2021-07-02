@@ -10,6 +10,10 @@ config:
     low: 1
     medium: 2
     high: 4
+  initialDelayLiveness: 20
+  initialDelayReadiness: 1
+  periodSeconds: 20
+
 
 services:
   hippokrates:
@@ -19,9 +23,30 @@ services:
     labels: {
               domain: testing
     }
+  alexandros:
+    requests:
+      memory: "64Mi"
+      cpu: "100m"
+    limits:
+      memory: "128Mi"
+      cpu: "250m"
+  herodotos:
+    requests:
+      memory: "64Mi"
+      cpu: "250m"
+    limits:
+      memory: "128Mi"
+      cpu: "500m"
+  sokrates:
+    requests:
+      memory: "64Mi"
+      cpu: "100m"
+    limits:
+      memory: "128Mi"
+      cpu: "250m"
 
 images:
-  tag: 88992c8
+  tag: 8fd310b
   alexandros:
     repo: alexandros
   pheidias:

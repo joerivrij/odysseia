@@ -12,7 +12,7 @@ metadata:
     {{ $key }}: {{ $value | quote }}
   {{- end }}
 spec:
-  schedule: "*/5 * * * *"
+  schedule: "*/2 * * * *"
   jobTemplate:
     metadata:
       labels:
