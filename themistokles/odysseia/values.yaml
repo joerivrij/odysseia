@@ -4,6 +4,7 @@
 
 config:
   environment: development
+  inClusterConsul: true
   pullPolicy: Never
   inClusterElastic: true
   replicas:
@@ -44,7 +45,7 @@ images:
 envVariables:
   pheidias:
     nodeEnv: production
-    port: 3000
+    port: 8080
   alexandros:
     port: 5000
     bind_addr: :5000

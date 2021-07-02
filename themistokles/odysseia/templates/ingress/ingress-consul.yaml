@@ -1,0 +1,30 @@
+{{- if .Values.config.inClusterConsul}}
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: IngressGateway
+metadata:
+  name: ingress-gateway
+spec:
+  listeners:
+    - port: 8080
+      protocol: http
+      services:
+        - name: pheidias
+
+{{/*---*/}}
+{{/*apiVersion: consul.hashicorp.com/v1alpha1*/}}
+{{/*kind: ServiceRouter*/}}
+{{/*metadata:*/}}
+{{/*  name: ingress-gateway*/}}
+{{/*spec:*/}}
+{{/*  routes:*/}}
+{{/*    - match:*/}}
+{{/*        http:*/}}
+{{/*          pathPrefix: '/'*/}}
+{{/*      destination:*/}}
+{{/*        service: pheidias*/}}
+{{/*    - match:*/}}
+{{/*        http:*/}}
+{{/*          pathPrefix: '/sokrates/v1'*/}}
+{{/*      destination:*/}}
+{{/*        service: sokrates*/}}
+{{- end }}

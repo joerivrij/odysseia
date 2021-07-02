@@ -28,3 +28,10 @@ spec:
           imagePullPolicy: {{ .Values.config.pullPolicy }}
           ports:
             - containerPort: {{ .Values.envVariables.pheidias.port }}
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceDefaults
+metadata:
+  name: pheidias
+spec:
+  protocol: http

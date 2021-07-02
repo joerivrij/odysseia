@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: dns
+spec:
+  template:
+    metadata:
+      annotations:
+        'consul.hashicorp.com/connect-inject': 'false'
+        'consul.hashicorp.com/transparent-proxy': 'false'
+    spec:
+      containers:
+        - name: dns
+          image: anubhavmishra/tiny-tools
+          command: ['dig', 'consul.service.consul']
+      restartPolicy: Never
+  backoffLimit: 4

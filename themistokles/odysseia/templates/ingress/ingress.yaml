@@ -1,3 +1,4 @@
+{{- if not .Values.config.inClusterConsul}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -9,7 +10,7 @@ metadata:
 spec:
   defaultBackend:
     service:
-      name: sokrates-service
+      name: sokrates
       port:
         number: {{ .Values.envVariables.sokrates.port }}
   rules:
@@ -57,3 +58,4 @@ spec:
                 name: ploutarchos
                 port:
                   number: {{ .Values.envVariables.ploutarchos.port }}
+{{- end }}

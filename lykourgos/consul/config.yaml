@@ -14,10 +14,10 @@ ui:
     baseURL: http://prometheus-server
 connectInject:
   transparentProxy:
-    defaultEnabled: false
+    defaultEnabled: true
     DialedDirectly: true
   enabled: true
-  default: false
+  default: true
   metrics:
     defaultEnabled: true
     defaultPrometheusScrapePort: 20200
@@ -29,3 +29,11 @@ prometheus:
   enabled: true
 grafana:
   enabled: true
+ingressGateways:
+  enabled: true
+  defaults:
+    replicas: 1
+    service:
+      type: ClusterIP
+  gateways:
+    - name: ingress-gateway

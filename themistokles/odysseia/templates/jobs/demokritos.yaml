@@ -12,8 +12,8 @@ spec:
         release: {{ .Release.Name }}
         version: {{ .Values.images.tag }}
       annotations:
-        'consul.hashicorp.com/connect-inject': 'true'
-        'consul.hashicorp.com/transparent-proxy': 'true'
+        'consul.hashicorp.com/connect-inject': 'false'
+        'consul.hashicorp.com/transparent-proxy': 'false'
     spec:
       containers:
         - image: {{ .Values.images.demokritos.repo }}:{{ .Values.images.tag }}
