@@ -57,10 +57,3 @@ spec:
                 name: ploutarchos-service
                 port:
                   number: {{ .Values.envVariables.ploutarchos.port }}
-          - pathType: Prefix
-            path: /xerxes/alexandros
-            backend:
-              service:
-                name: xerxes-alexandros-service
-                port:
-                  number: {{ .Values.envVariables.xerxes.port }}
