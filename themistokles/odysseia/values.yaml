@@ -46,7 +46,7 @@ services:
       cpu: "250m"
 
 images:
-  tag: 8fd310b
+  tag: 45c13ae
   alexandros:
     repo: alexandros
   pheidias:
@@ -65,6 +65,8 @@ images:
     repo: ploutarchos
   hippokrates:
     repo: hippokrates
+  xerxes:
+    repo: xerxes
 
 envVariables:
   pheidias:
@@ -78,6 +80,16 @@ envVariables:
     port: 5000
   ploutarchos:
     port: 8080
+  xerxes:
+    herodotosHost: http://herodotos-service:5000
+    herodotosPort: 8088
+    alexandrosHost: http://alexandros-service:5000
+    alexandrosPort: 8087
+    sokratesHost: http://sokrates-service:5000
+    sokratesPort: 8089
+    port: 8089
+    locustUsers: 100
+    spawnRate: 5
   elastic:
     elasticService: http://elasticsearch-master:9200
     elasticUser: elastic

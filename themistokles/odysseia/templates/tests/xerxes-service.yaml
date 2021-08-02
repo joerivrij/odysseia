@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: xerxes-service
+spec:
+  selector:
+    app: xerxes
+  ports:
+    - name: "alexandros"
+      port: {{ .Values.envVariables.xerxes.alexandrosPort }}
+      targetPort: {{ .Values.envVariables.xerxes.alexandrosPort }}
+    - name: "herodotos"
+      port: {{ .Values.envVariables.xerxes.herodotosPort }}
+      targetPort: {{ .Values.envVariables.xerxes.herodotosPort }}
+    - name: "sokrates"
+      port: {{ .Values.envVariables.xerxes.sokratesPort }}
+      targetPort: {{ .Values.envVariables.xerxes.sokratesPort }}
