@@ -15,7 +15,7 @@ roles:
   remote_cluster_client: "true"
   ml: "true"
 
-replicas: 3
+replicas: 4
 minimumMasterNodes: 2
 
 esMajorVersion: ""
@@ -68,15 +68,17 @@ podAnnotations: {}
 # additionals labels
 labels: {}
 
-esJavaOpts: "-Xmx128m -Xms128m"
+#custom value based on docs
+esJavaOpts: "-Xmx512m -Xms512m"
 
+#custom value based on docs
 resources:
   requests:
-    cpu: "100m"
-    memory: "512M"
+    cpu: "500m"
+    memory: "1Gi"
   limits:
     cpu: "1000m"
-    memory: "512M"
+    memory: "2Gi"
 
 initResources: {}
   # limits:

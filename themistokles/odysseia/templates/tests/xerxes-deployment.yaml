@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: xerxes
+  labels:
+    app: xerxes
+spec:
+  replicas: {{ int .Values.config.replicas.low }}
+  selector:
+    matchLabels:
+      app: xerxes
+  template:
+    metadata:
+      labels:
+        app: xerxes
+        release: {{ .Release.Name }}
+        version: {{ .Values.images.tag }}
+    spec:
+      containers:
+        - image: {{ .Values.images.xerxes.repo }}:{{ .Values.images.tag }}
+          name: xerxes-alexandros
+          command: ["/bin/sh"]
+          args: ["-c", "locust -r $(SPAWN_RATE)"]
+          env:
+            - name: LOCUST_HOST
+              value: {{ .Values.envVariables.xerxes.alexandrosHost }}
+            - name: LOCUST_WEB_PORT
+              value: {{ .Values.envVariables.xerxes.alexandrosPort | quote }}
+            - name: LOCUST_LOCUSTFILE
+              value: locustfiles/alexandros-locustfile.py
+            - name: LOCUST_USERS
+              value: {{ .Values.envVariables.xerxes.locustUsers | quote }}
+            - name: SPAWN_RATE
+              value: {{ .Values.envVariables.xerxes.spawnRate | quote }}
+          imagePullPolicy: {{ .Values.config.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.envVariables.xerxes.alexandrosPort }}
+        - image: {{ .Values.images.xerxes.repo }}:{{ .Values.images.tag }}
+          name: xerxes-herodotos
+          command: ["/bin/sh"]
+          args: ["-c", "locust -r $(SPAWN_RATE)"]
+          env:
+            - name: LOCUST_HOST
+              value: {{ .Values.envVariables.xerxes.herodotosHost }}
+            - name: LOCUST_WEB_PORT
+              value: {{ .Values.envVariables.xerxes.herodotosPort | quote }}
+            - name: LOCUST_LOCUSTFILE
+              value: locustfiles/herodotos-locustfile.py
+            - name: LOCUST_USERS
+              value: {{ .Values.envVariables.xerxes.locustUsers | quote }}
+            - name: SPAWN_RATE
+              value: {{ .Values.envVariables.xerxes.spawnRate | quote }}
+          imagePullPolicy: {{ .Values.config.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.envVariables.xerxes.herodotosPort }}
+        - image: {{ .Values.images.xerxes.repo }}:{{ .Values.images.tag }}
+          name: xerxes-sokrates
+          command: ["/bin/sh"]
+          args: ["-c", "locust -r $(SPAWN_RATE)"]
+          env:
+            - name: LOCUST_HOST
+              value: {{ .Values.envVariables.xerxes.sokratesHost }}
+            - name: LOCUST_WEB_PORT
+              value: {{ .Values.envVariables.xerxes.sokratesPort | quote }}
+            - name: LOCUST_LOCUSTFILE
+              value: locustfiles/sokrates-locustfile.py
+            - name: LOCUST_USERS
+              value: {{ .Values.envVariables.xerxes.locustUsers | quote }}
+            - name: SPAWN_RATE
+              value: {{ .Values.envVariables.xerxes.spawnRate | quote }}
+          imagePullPolicy: {{ .Values.config.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.envVariables.xerxes.sokratesPort }}
+
+
