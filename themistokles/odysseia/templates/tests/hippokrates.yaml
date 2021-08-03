@@ -1,3 +1,4 @@
+{{- if .Values.config.systemTests -}}
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
@@ -41,3 +42,4 @@ spec:
           restartPolicy: OnFailure
   successfulJobsHistoryLimit: 5
   failedJobsHistoryLimit: 2
+{{- end }}

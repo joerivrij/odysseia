@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestPingPongRoute(t *testing.T) {
+func TestInvalidConfig(t *testing.T) {
 	healthy, _ := Get(1)
 	assert.False(t, healthy)
 }

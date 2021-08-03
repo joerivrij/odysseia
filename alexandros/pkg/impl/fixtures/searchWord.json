@@ -1,0 +1,41 @@
+{
+  "took" : 5,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 1,
+    "successful" : 1,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 2,
+      "relation" : "eq"
+    },
+    "max_score" : 1.0,
+    "hits" : [
+      {
+        "_index" : "alexandros",
+        "_type" : "_doc",
+        "_id" : "7uM7DHsBjZSpXIu1tKr9",
+        "_score" : 1.0,
+        "_source" : {
+          "greek" : "αγορευω",
+          "english" : "say, proclaim",
+          "original" : "ἀγορεύω"
+        }
+      },
+      {
+        "_index" : "alexandros",
+        "_type" : "_doc",
+        "_id" : "1xw7DHsBsdiWY9BLs1nq",
+        "_score" : 1.0,
+        "_source" : {
+          "greek" : "αγορα, -ας, η",
+          "english" : "market place",
+          "original" : "ἀγορά, -ᾶς, ἡ"
+        }
+      }
+    ]
+  }
+}
