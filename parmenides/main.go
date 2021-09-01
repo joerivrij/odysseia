@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/elastic/go-elasticsearch/v7/esapi"
-	"github.com/ianschenck/envflag"
 	"github.com/kpango/glg"
 	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/models"
@@ -26,23 +25,14 @@ func init() {
 }
 
 func main() {
-	glg.Info("\n _______  _______  ______    __   __  _______  __    _  ___   ______   _______  _______ \n|       ||   _   ||    _ |  |  |_|  ||       ||  |  | ||   | |      | |       ||       |\n|    _  ||  |_|  ||   | ||  |       ||    ___||   |_| ||   | |  _    ||    ___||  _____|\n|   |_| ||       ||   |_||_ |       ||   |___ |       ||   | | | |   ||   |___ | |_____ \n|    ___||       ||    __  ||       ||    ___||  _    ||   | | |_|   ||    ___||_____  |\n|   |    |   _   ||   |  | || ||_|| ||   |___ | | |   ||   | |       ||   |___  _____| |\n|___|    |__| |__||___|  |_||_|   |_||_______||_|  |__||___| |______| |_______||_______|\n")
+	//https://patorjk.com/software/taag/#p=display&f=Crawford2&t=PARMENIDES
+	glg.Info("\n ____   ____  ____   ___ ___    ___  ____   ____  ___      ___  _____\n|    \\ /    ||    \\ |   |   |  /  _]|    \\ |    ||   \\    /  _]/ ___/\n|  o  )  o  ||  D  )| _   _ | /  [_ |  _  | |  | |    \\  /  [_(   \\_ \n|   _/|     ||    / |  \\_/  ||    _]|  |  | |  | |  D  ||    _]\\__  |\n|  |  |  _  ||    \\ |   |   ||   [_ |  |  | |  | |     ||   [_ /  \\ |\n|  |  |  |  ||  .  \\|   |   ||     ||  |  | |  | |     ||     |\\    |\n|__|  |__|__||__|\\_||___|___||_____||__|__||____||_____||_____| \\___|\n                                                                     \n")
 	glg.Info(strings.Repeat("~", 37))
 	glg.Info("\"τό γάρ αυτο νοειν έστιν τε καί ειναι\"")
 	glg.Info("\"for it is the same thinking and being\"")
 	glg.Info(strings.Repeat("~", 37))
 
-	elasticService := envflag.String("ELASTIC_SEARCH_SERVICE", "http://127.0.0.1:9200", "location of the es service")
-	elasticUser := envflag.String("ELASTIC_SEARCH_USER", "elastic", "es username")
-	elasticPassword := envflag.String("ELASTIC_SEARCH_PASSWORD", "odysseia", "es password")
-
-	envflag.Parse()
-
-	glg.Debugf("%s : %s", "ELASTIC_SEARCH_PASSWORD", *elasticPassword)
-	glg.Debugf("%s : %s", "ELASTIC_SEARCH_USER", *elasticUser)
-	glg.Debugf("%s : %s", "ELASTIC_SEARCH_SERVICE", *elasticService)
-
-	elasticClient, err := elastic.CreateElasticClient(*elasticPassword, *elasticUser, []string{*elasticService})
+	elasticClient, err := elastic.CreateElasticClientFromEnvVariables()
 	if err != nil {
 		glg.Fatal("failed to create client")
 	}

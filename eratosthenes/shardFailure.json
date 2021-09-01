@@ -1,0 +1,25 @@
+{
+  "error" : {
+    "root_cause" : [
+      {
+        "type" : "illegal_state_exception",
+        "reason" : "node [6ELp6LOTRlqjji1mI8IlZA] is not available"
+      }
+    ],
+    "type" : "search_phase_execution_exception",
+    "reason" : "all shards failed",
+    "phase" : "query",
+    "grouped" : true,
+    "failed_shards" : [
+      {
+        "shard" : -1,
+        "index" : null,
+        "reason" : {
+          "type" : "illegal_state_exception",
+          "reason" : "node [6ELp6LOTRlqjji1mI8IlZA] is not available"
+        }
+      }
+    ]
+  },
+  "status" : 500
+}

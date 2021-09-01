@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestHealthy(t *testing.T) {
+func TestHealthyWhenElasticIsUp(t *testing.T) {
 	expected := "elasticsearch"
 	mockCode := 200
 	elasticMockClient, err := CreateMockClient("info", mockCode)
@@ -17,6 +17,26 @@ func TestHealthy(t *testing.T) {
 	assert.Equal(t, expected, sut.ClusterName)
 }
 
+func TestUnHealthyWhenElasticIsDown(t *testing.T) {
+	mockCode := 502
+	elasticMockClient, err := CreateMockClient("infoServiceDown", mockCode)
+	assert.Nil(t, err)
+
+	sut := CheckHealth(elasticMockClient)
+
+	assert.False(t, sut.Healthy)
+}
+
+func TestUnhealthyWhenUsingMalformedJson(t *testing.T) {
+	mockCode := 200
+	elasticMockClient, err := CreateMockClient("infoMalformed", mockCode)
+	assert.Nil(t, err)
+
+	sut := CheckHealth(elasticMockClient)
+
+	assert.False(t, sut.Healthy)
+}
+
 func TestQueryMatchAll(t *testing.T) {
 	index := "test"
 	mockCode := 200
@@ -24,7 +44,7 @@ func TestQueryMatchAll(t *testing.T) {
 	elasticMockClient, err := CreateMockClient("withAll", mockCode)
 	assert.Nil(t, err)
 
-	sut, _, err := QueryWithMatchAll(*elasticMockClient, index)
+	sut, err := QueryWithMatchAll(*elasticMockClient, index)
 	assert.Nil(t, err)
 	assert.Equal(t, expected, sut.Hits.Total.Value)
 }

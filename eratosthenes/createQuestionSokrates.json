@@ -1,0 +1,75 @@
+{
+  "_scroll_id" : "FGluY2x1ZGVfY29udGV4dF91dWlkDXF1ZXJ5QW5kRmV0Y2gBFjNtNXZqMXRSUmZHWXNWVEo3SVRYcFEAAAAAAAAA3hZpZ1FtTEJUSFJ6ZWYyT3E0NURoelhR",
+  "took" : 4,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 1,
+    "successful" : 1,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 5,
+      "relation" : "eq"
+    },
+    "max_score" : 1.0,
+    "hits" : [
+      {
+        "_index" : "verba",
+        "_type" : "_doc",
+        "_id" : "-I6TlnsB9QC3skjkSy86",
+        "_score" : 1.0,
+        "_source" : {
+          "greek" : "πονέω",
+          "dutch" : "1. werken, zwoegen 2. het zwaar hebben, pijn lijden",
+          "chapter" : 1
+        }
+      },
+      {
+        "_index" : "verba",
+        "_type" : "_doc",
+        "_id" : "-Y6TlnsB9QC3skjkSy-t",
+        "_score" : 1.0,
+        "_source" : {
+          "greek" : "προβαίνω",
+          "dutch" : "naar voren komen",
+          "chapter" : 1
+        }
+      },
+      {
+        "_index" : "verba",
+        "_type" : "_doc",
+        "_id" : "-46TlnsB9QC3skjkTC_G",
+        "_score" : 1.0,
+        "_source" : {
+          "greek" : "ἀναβαίνω",
+          "dutch" : "bestijgen",
+          "chapter" : 1
+        }
+      },
+      {
+        "_index" : "verba",
+        "_type" : "_doc",
+        "_id" : "946TlnsB9QC3skjkSC_t",
+        "_score" : 1.0,
+        "_source" : {
+          "greek" : "λέγω",
+          "dutch" : "zeggen, spreken",
+          "chapter" : 1
+        }
+      },
+      {
+        "_index" : "verba",
+        "_type" : "_doc",
+        "_id" : "-o6TlnsB9QC3skjkTC8A",
+        "_score" : 1.0,
+        "_source" : {
+          "greek" : "φέπω",
+          "dutch" : "dragen, brengen",
+          "chapter" : 1
+        }
+      }
+    ]
+  }
+}

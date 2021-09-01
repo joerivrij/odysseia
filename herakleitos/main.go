@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/elastic/go-elasticsearch/v7/esapi"
-	"github.com/ianschenck/envflag"
 	"github.com/kpango/glg"
 	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/models"
@@ -26,23 +25,14 @@ func init() {
 }
 
 func main() {
+	//https://patorjk.com/software/taag/#p=display&f=Crawford2&t=HERAKLEITOS
 	glg.Info("\n __ __    ___  ____    ____  __  _  _        ___  ____  ______   ___   _____\n|  |  |  /  _]|    \\  /    ||  |/ ]| |      /  _]|    ||      | /   \\ / ___/\n|  |  | /  [_ |  D  )|  o  ||  ' / | |     /  [_  |  | |      ||     (   \\_ \n|  _  ||    _]|    / |     ||    \\ | |___ |    _] |  | |_|  |_||  O  |\\__  |\n|  |  ||   [_ |    \\ |  _  ||     ||     ||   [_  |  |   |  |  |     |/  \\ |\n|  |  ||     ||  .  \\|  |  ||  .  ||     ||     | |  |   |  |  |     |\\    |\n|__|__||_____||__|\\_||__|__||__|\\_||_____||_____||____|  |__|   \\___/  \\___|\n                                                                            \n")
 	glg.Info(strings.Repeat("~", 37))
 	glg.Info("\"πάντα ῥεῖ\"")
 	glg.Info("\"everything flows\"")
 	glg.Info(strings.Repeat("~", 37))
 
-	elasticService := envflag.String("ELASTIC_SEARCH_SERVICE", "http://127.0.0.1:9200", "location of the es service")
-	elasticUser := envflag.String("ELASTIC_SEARCH_USER", "elastic", "es username")
-	elasticPassword := envflag.String("ELASTIC_SEARCH_PASSWORD", "odysseia", "es password")
-
-	envflag.Parse()
-
-	glg.Debugf("%s : %s", "ELASTIC_SEARCH_PASSWORD", *elasticPassword)
-	glg.Debugf("%s : %s", "ELASTIC_SEARCH_USER", *elasticUser)
-	glg.Debugf("%s : %s", "ELASTIC_SEARCH_SERVICE", *elasticService)
-
-	elasticClient, err := elastic.CreateElasticClient(*elasticPassword, *elasticUser, []string{*elasticService})
+	elasticClient, err := elastic.CreateElasticClientFromEnvVariables()
 	if err != nil {
 		glg.Fatal("failed to create client")
 	}

@@ -42,10 +42,10 @@ func GetMemoryUsage() models.Memory {
 	// For info on each, see: https://golang.org/pkg/runtime/#MemStats
 
 	return models.Memory{
-		Free:       bToMb(m.Frees), //Frees is the cumulative count of heap objects freed.
-		Alloc:      bToMb(m.Alloc), //Alloc is bytes of allocated heap objects.
+		Free:       bToMb(m.Frees),      //Frees is the cumulative count of heap objects freed.
+		Alloc:      bToMb(m.Alloc),      //Alloc is bytes of allocated heap objects.
 		TotalAlloc: bToMb(m.TotalAlloc), //TotalAlloc is cumulative bytes allocated for heap objects.
-		Sys:        bToMb(m.Sys), //Sys is the total bytes of memory obtained from the OS.
+		Sys:        bToMb(m.Sys),        //Sys is the total bytes of memory obtained from the OS.
 		Unit:       "mb",
 	}
 }
@@ -53,7 +53,6 @@ func GetMemoryUsage() models.Memory {
 func bToMb(b uint64) uint64 {
 	return b / 1024 / 1024
 }
-
 
 func GetCPUSample() uint64 {
 	var idle uint64
@@ -64,7 +63,7 @@ func GetCPUSample() uint64 {
 		return 0
 	}
 	lines := strings.Split(string(contents), "\n")
-	for _, line := range(lines) {
+	for _, line := range lines {
 		fields := strings.Fields(line)
 		if fields[0] == "cpu" {
 			numFields := len(fields)

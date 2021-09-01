@@ -5,13 +5,13 @@ type ErrorModel struct {
 	UniqueCode string `json:"uniqueCode"`
 }
 
-// messages used in validation error
+// ValidationMessages messages used in validation error
 type ValidationMessages struct {
 	Field   string `json:"validationField"`
 	Message string `json:"validationMessage"`
 }
 
-// validation errors occur when data is malformed
+// ValidationError validation errors occur when data is malformed
 type ValidationError struct {
 	ErrorModel
 	Messages []ValidationMessages `json:"errorModel"`
@@ -27,7 +27,16 @@ type NotFoundMessage struct {
 	Reason string `json:"reason"`
 }
 
-//  messages used in method error
+type ElasticSearchError struct {
+	ErrorModel
+	Message ElasticErrorMessage `json:"errorModel"`
+}
+
+type ElasticErrorMessage struct {
+	ElasticError string `json:"elasticError"`
+}
+
+// MethodMessages messages used in method error
 type MethodMessages struct {
 	Methods string `json:"allowedMethods"`
 	Message string `json:"methodError"`

@@ -14,7 +14,7 @@ import (
 	"time"
 )
 
-// create an elasticclient and return a pointer to that client
+// CreateElasticClient Create an elasticclient and return a pointer to that client
 func CreateElasticClient(password, username string, elasticService []string) (*elasticsearch.Client, error) {
 	glg.Info("creating elasticClient")
 
@@ -32,7 +32,7 @@ func CreateElasticClient(password, username string, elasticService []string) (*e
 	return es, nil
 }
 
-// Check if elastic is ready to receive requests
+// CheckHealthyStatusElasticSearch Check if elastic is ready to receive requests
 func CheckHealthyStatusElasticSearch(es *elasticsearch.Client, ticks time.Duration) bool {
 	healthy := false
 
@@ -76,7 +76,7 @@ func CheckHealthyStatusElasticSearch(es *elasticsearch.Client, ticks time.Durati
 	return healthy
 }
 
-//Check if elastic connection is healthy
+// CheckHealth Check if elastic connection is healthy
 func CheckHealth(es *elasticsearch.Client) (elasticHealth models.DatabaseHealth) {
 	res, err := es.Info()
 
@@ -109,7 +109,7 @@ func CheckHealth(es *elasticsearch.Client) (elasticHealth models.DatabaseHealth)
 	return elasticHealth
 }
 
-// delete an index without checking for success
+// DeleteIndex delete an index without checking for success
 func DeleteIndex(es *elasticsearch.Client, index string) {
 	glg.Warnf("deleting index: %s", index)
 
@@ -139,16 +139,19 @@ func DeleteIndex(es *elasticsearch.Client, index string) {
 	return
 }
 
-func QueryWithMatchAll(elasticClient elasticsearch.Client, index string) (models.ElasticResponse, map[string]interface{}, error) {
+func QueryWithMatch(elasticClient elasticsearch.Client, index, term, word string) (*models.ElasticResponse, error) {
 	var elasticResult models.ElasticResponse
 	var buf bytes.Buffer
 	query := map[string]interface{}{
 		"query": map[string]interface{}{
-			"match_all": map[string]interface{}{},
+			"match_phrase": map[string]interface{}{
+				term: word,
+			},
 		},
 	}
 	if err := json.NewEncoder(&buf).Encode(query); err != nil {
-		log.Fatalf("Error encoding query: %s", err)
+		glg.Debug("Error encoding query: %s", err)
+		return nil, err
 	}
 
 	res, err := elasticClient.Search(
@@ -160,36 +163,67 @@ func QueryWithMatchAll(elasticClient elasticsearch.Client, index string) (models
 	)
 
 	if err != nil {
-		log.Fatalf("Error getting response: %s", err)
+		glg.Debug("Error getting response: %s", err)
+		return nil, err
 	}
 	defer res.Body.Close()
 
 	if res.IsError() {
-		var e map[string]interface{}
-		if err := json.NewDecoder(res.Body).Decode(&e); err != nil {
-			glg.Error(err)
-		} else {
-			// Print the response status and error information.
-			glg.Errorf("[%s] %s: %s",
-				res.Status(),
-				e["error"].(map[string]interface{})["type"],
-				e["error"].(map[string]interface{})["reason"],
-			)
-		}
-
-		return elasticResult, e, nil
+		glg.Errorf("Error getting response: %s", res.Status())
+		return nil, fmt.Errorf("elasticSearch returned an error: %s", res.Status())
 	}
 
 	body, _ := ioutil.ReadAll(res.Body)
 	elasticResult, err = models.UnmarshalElasticResponse(body)
 	if err != nil {
-		return elasticResult, nil, err
+		return nil, err
 	}
 
-	return elasticResult, nil, nil
+	return &elasticResult, nil
 }
 
-func QueryMultiMatchWithGrams(elasticClient elasticsearch.Client, index, queryWord string) (models.ElasticResponse, error) {
+func QueryWithMatchAll(elasticClient elasticsearch.Client, index string) (*models.ElasticResponse, error) {
+	var elasticResult models.ElasticResponse
+	var buf bytes.Buffer
+	query := map[string]interface{}{
+		"query": map[string]interface{}{
+			"match_all": map[string]interface{}{},
+		},
+	}
+	if err := json.NewEncoder(&buf).Encode(query); err != nil {
+		glg.Debug("Error encoding query: %s", err)
+		return nil, err
+	}
+
+	res, err := elasticClient.Search(
+		elasticClient.Search.WithContext(context.Background()),
+		elasticClient.Search.WithIndex(index),
+		elasticClient.Search.WithBody(&buf),
+		elasticClient.Search.WithTrackTotalHits(true),
+		elasticClient.Search.WithPretty(),
+	)
+
+	if err != nil {
+		glg.Debug("Error getting response: %s", err)
+		return nil, err
+	}
+	defer res.Body.Close()
+
+	if res.IsError() {
+		glg.Errorf("Error getting response: %s", res.Status())
+		return nil, fmt.Errorf("elasticSearch returned an error: %s", res.Status())
+	}
+
+	body, _ := ioutil.ReadAll(res.Body)
+	elasticResult, err = models.UnmarshalElasticResponse(body)
+	if err != nil {
+		return nil, err
+	}
+
+	return &elasticResult, nil
+}
+
+func QueryMultiMatchWithGrams(elasticClient elasticsearch.Client, index, queryWord string) (*models.ElasticResponse, error) {
 	var elasticResult models.ElasticResponse
 	var buf bytes.Buffer
 	query := map[string]interface{}{
@@ -206,7 +240,8 @@ func QueryMultiMatchWithGrams(elasticClient elasticsearch.Client, index, queryWo
 	}
 
 	if err := json.NewEncoder(&buf).Encode(query); err != nil {
-		log.Fatalf("Error encoding query: %s", err)
+		glg.Errorf("Error encoding query: %s", err)
+		return nil, err
 	}
 
 	res, err := elasticClient.Search(
@@ -218,36 +253,26 @@ func QueryMultiMatchWithGrams(elasticClient elasticsearch.Client, index, queryWo
 	)
 
 	if err != nil {
-		log.Fatalf("Error getting response: %s", err)
+		glg.Errorf("Error getting response: %s", err)
+		return nil, err
 	}
 	defer res.Body.Close()
 
 	if res.IsError() {
-		var e map[string]interface{}
-		if err := json.NewDecoder(res.Body).Decode(&e); err != nil {
-			glg.Error(err)
-		} else {
-			// Print the response status and error information.
-			glg.Errorf("[%s] %s: %s",
-				res.Status(),
-				e["error"].(map[string]interface{})["type"],
-				e["error"].(map[string]interface{})["reason"],
-			)
-		}
-
-		return elasticResult, err
+		glg.Errorf("Error getting response: %s", res.Status())
+		return nil, fmt.Errorf("elasticSearch returned an error: %s", res.Status())
 	}
 
 	body, _ := ioutil.ReadAll(res.Body)
 	elasticResult, err = models.UnmarshalElasticResponse(body)
 	if err != nil {
-		return elasticResult, err
+		return nil, err
 	}
 
-	return elasticResult, nil
+	return &elasticResult, nil
 }
 
-func QueryOnId(elasticClient elasticsearch.Client, index, id string) (models.ElasticResponse, error) {
+func QueryOnId(elasticClient elasticsearch.Client, index, id string) (*models.ElasticResponse, error) {
 	var elasticResult models.ElasticResponse
 	var buf bytes.Buffer
 	query := map[string]interface{}{
@@ -258,7 +283,8 @@ func QueryOnId(elasticClient elasticsearch.Client, index, id string) (models.Ela
 		},
 	}
 	if err := json.NewEncoder(&buf).Encode(query); err != nil {
-		log.Fatalf("Error encoding query: %s", err)
+		glg.Errorf("Error encoding query: %s", err)
+		return nil, err
 	}
 
 	res, err := elasticClient.Search(
@@ -270,31 +296,148 @@ func QueryOnId(elasticClient elasticsearch.Client, index, id string) (models.Ela
 	)
 
 	if err != nil {
-		log.Fatalf("Error getting response: %s", err)
+		glg.Errorf("Error getting response: %s", err)
+		return nil, err
 	}
 	defer res.Body.Close()
 
 	if res.IsError() {
-		var e map[string]interface{}
-		if err := json.NewDecoder(res.Body).Decode(&e); err != nil {
-			glg.Error(err)
-		} else {
-			// Print the response status and error information.
-			glg.Errorf("[%s] %s: %s",
-				res.Status(),
-				e["error"].(map[string]interface{})["type"],
-				e["error"].(map[string]interface{})["reason"],
-			)
-		}
-
-		return elasticResult, err
+		glg.Errorf("Error getting response: %s", res.Status())
+		return nil, fmt.Errorf("elasticSearch returned an error: %s", res.Status())
 	}
 
 	body, _ := ioutil.ReadAll(res.Body)
 	elasticResult, err = models.UnmarshalElasticResponse(body)
 	if err != nil {
-		return elasticResult, err
+		return nil, err
 	}
 
-	return elasticResult, nil
+	return &elasticResult, nil
+}
+
+func QueryWithScroll(elasticClient elasticsearch.Client, index, term, word string) (*models.ElasticResponse, error) {
+	var elasticResult models.ElasticResponse
+	var buf bytes.Buffer
+	query := map[string]interface{}{
+		"query": map[string]interface{}{
+			"match_phrase": map[string]interface{}{
+				term: word,
+			},
+		},
+	}
+	if err := json.NewEncoder(&buf).Encode(query); err != nil {
+		glg.Debug("Error encoding query: %s", err)
+		return nil, err
+	}
+
+	res, err := elasticClient.Search(
+		elasticClient.Search.WithContext(context.Background()),
+		elasticClient.Search.WithIndex(index),
+		elasticClient.Search.WithBody(&buf),
+		elasticClient.Search.WithSize(10),
+		elasticClient.Search.WithScroll(5*time.Second),
+		elasticClient.Search.WithTrackTotalHits(true),
+		elasticClient.Search.WithPretty(),
+	)
+
+	if err != nil {
+		glg.Errorf("Error getting response: %s", err)
+		return nil, err
+	}
+	defer res.Body.Close()
+
+	if res.IsError() {
+		glg.Errorf("Error getting response: %s", res.Status())
+		return nil, fmt.Errorf("elasticSearch returned an error: %s", res.Status())
+	}
+
+	body, _ := ioutil.ReadAll(res.Body)
+	firstResponse, err := models.UnmarshalElasticResponse(body)
+	if err != nil {
+		glg.Errorf("Error decoding json: %s", err)
+		return nil, err
+	}
+
+	scrollID := firstResponse.ScrollId
+
+	for _, hit := range firstResponse.Hits.Hits{
+		elasticResult.Hits.Hits = append(elasticResult.Hits.Hits, hit)
+	}
+
+	if len(firstResponse.Hits.Hits) < 10 {
+		return &elasticResult, nil
+	}
+
+	for {
+		scrollRes, err := elasticClient.Scroll(elasticClient.Scroll.WithScrollID(scrollID), elasticClient.Scroll.WithScroll(5*time.Second))
+		if err != nil {
+			glg.Errorf("Error getting response: %s", err)
+			return nil, err
+		}
+		defer scrollRes.Body.Close()
+
+		if scrollRes.IsError() {
+			glg.Errorf("Error getting response: %s", scrollRes.Status())
+			return nil, fmt.Errorf("elasticSearch returned an error: %s", scrollRes.Status())
+		}
+
+		scrollBody, _ := ioutil.ReadAll(scrollRes.Body)
+		scrollResponse, err := models.UnmarshalElasticResponse(scrollBody)
+		if err != nil {
+			glg.Errorf("Error decoding scrollResponse: %s", err)
+			return nil, err
+		}
+
+		if len(scrollResponse.Hits.Hits) == 0 {
+			break
+		}
+
+		for _, hit := range scrollResponse.Hits.Hits{
+			elasticResult.Hits.Hits = append(elasticResult.Hits.Hits, hit)
+		}
+	}
+	return &elasticResult, nil
+}
+
+func QueryWithDescendingSort(elasticClient elasticsearch.Client, index, sort string, results int) (*models.ElasticResponse, error) {
+	var elasticResult models.ElasticResponse
+	var buf bytes.Buffer
+	query := map[string]interface{}{
+		"query": map[string]interface{}{
+			"match_all": map[string]interface{}{},
+		},
+	}
+	if err := json.NewEncoder(&buf).Encode(query); err != nil {
+		glg.Errorf("Error getting response: %s", err)
+		return nil, err
+	}
+
+	res, err := elasticClient.Search(
+		elasticClient.Search.WithContext(context.Background()),
+		elasticClient.Search.WithIndex(index),
+		elasticClient.Search.WithBody(&buf),
+		elasticClient.Search.WithSize(results),
+		elasticClient.Search.WithSort(fmt.Sprintf("%s:desc", sort), "mode:max"),
+		elasticClient.Search.WithTrackTotalHits(true),
+		elasticClient.Search.WithPretty(),
+	)
+
+	if err != nil {
+		glg.Errorf("Error getting response: %s", err)
+		return nil, err
+	}
+	defer res.Body.Close()
+
+	if res.IsError() {
+		glg.Errorf("Error getting response: %s", res.Status())
+		return nil, fmt.Errorf("elasticSearch returned an error: %s", res.Status())
+	}
+
+	body, _ := ioutil.ReadAll(res.Body)
+	elasticResult, err = models.UnmarshalElasticResponse(body)
+	if err != nil {
+		return nil, err
+	}
+
+	return &elasticResult, nil
 }

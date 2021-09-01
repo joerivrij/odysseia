@@ -7,7 +7,10 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"path/filepath"
+	"runtime"
+	"strings"
 )
 
 var (
@@ -15,7 +18,21 @@ var (
 )
 
 func init() {
-	fixtureFiles, err := filepath.Glob("fixtures/*.json")
+	_, callingFile, _, _ := runtime.Caller(0)
+	callingDir := filepath.Dir(callingFile)
+	dirParts := strings.Split(callingDir, string(os.PathSeparator))
+	var odysseiaPath []string
+	for i, part := range dirParts {
+		if part == "odysseia" {
+			odysseiaPath = dirParts[0 : i+1]
+		}
+	}
+	l := "/"
+	for _, path := range odysseiaPath {
+		l = filepath.Join(l, path)
+	}
+	eratosthenesDir := filepath.Join(l, "eratosthenes", "*.json")
+	fixtureFiles, err := filepath.Glob(eratosthenesDir)
 	if err != nil {
 		panic(fmt.Sprintf("Cannot glob fixture files: %s", err))
 	}
@@ -58,6 +75,8 @@ func CreateMockClient(fixtureFile string, statusCode int) (*elasticsearch.Client
 		mockCode = http.StatusOK
 	case 404:
 		mockCode = http.StatusNotFound
+	case 500:
+		mockCode = http.StatusInternalServerError
 	case 502:
 		mockCode = http.StatusBadGateway
 	default:
