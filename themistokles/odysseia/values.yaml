@@ -6,6 +6,8 @@ config:
   environment: development
   pullPolicy: Never
   inClusterElastic: true
+  loadTests: true
+  systemTests: true
   replicas:
     low: 1
     medium: 2
@@ -13,7 +15,6 @@ config:
   initialDelayLiveness: 20
   initialDelayReadiness: 1
   periodSeconds: 20
-
 
 services:
   hippokrates:
@@ -46,7 +47,7 @@ services:
       cpu: "250m"
 
 images:
-  tag: 45c13ae
+  tag: 49a3bb1
   alexandros:
     repo: alexandros
   pheidias:

@@ -1,3 +1,4 @@
+{{- if .Values.config.loadTests -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -71,5 +72,4 @@ spec:
           imagePullPolicy: {{ .Values.config.pullPolicy }}
           ports:
             - containerPort: {{ .Values.envVariables.xerxes.sokratesPort }}
-
-
+{{- end }}

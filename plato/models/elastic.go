@@ -13,6 +13,7 @@ func (r *ElasticResponse) Marshal() ([]byte, error) {
 }
 
 type ElasticResponse struct {
+	ScrollId string `json:"_scroll_id,omitempty"`
 	Took     int64  `json:"took"`
 	TimedOut bool   `json:"timed_out"`
 	Shards   Shards `json:"_shards"`

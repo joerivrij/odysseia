@@ -4,9 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/kpango/glg"
-	herodotsModels "github.com/odysseia/herodotos/pkg/models"
 	"github.com/odysseia/plato/models"
-	sokratesModels "github.com/odysseia/sokrates/pkg/models"
 	"gopkg.in/oauth2.v3/utils/uuid"
 	"net/http"
 	"strconv"
@@ -32,7 +30,7 @@ func LogRequestDetails() Adapter {
 	}
 }
 
-// middleware to validate proper methods
+// ValidateRestMethod middleware to validate proper methods
 func ValidateRestMethod(method string) Adapter {
 
 	return func(f http.HandlerFunc) http.HandlerFunc {
@@ -78,15 +76,15 @@ func ResponseWithJson(w http.ResponseWriter, payload interface{}) {
 		code = 200
 	case models.Authors:
 		code = 200
-	case sokratesModels.CheckAnswerResponse:
+	case models.CheckAnswerResponse:
 		code = 200
-	case sokratesModels.LastChapterResponse:
+	case models.LastChapterResponse:
 		code = 200
-	case sokratesModels.QuizResponse:
+	case models.QuizResponse:
 		code = 200
-	case herodotsModels.CreateSentenceResponse:
+	case models.CreateSentenceResponse:
 		code = 200
-	case herodotsModels.CheckSentenceResponse:
+	case models.CheckSentenceResponse:
 		code = 200
 	case []models.Meros:
 		code = 200
@@ -100,6 +98,8 @@ func ResponseWithJson(w http.ResponseWriter, payload interface{}) {
 		code = 404
 	case models.MethodError:
 		code = 405
+	case models.ElasticSearchError:
+		code = 502
 	default:
 		code = 500
 	}

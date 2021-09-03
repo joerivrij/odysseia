@@ -1,0 +1,46 @@
+{
+  "took" : 2,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 1,
+    "successful" : 1,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 3,
+      "relation" : "eq"
+    },
+    "max_score" : 1.0,
+    "hits" : [
+      {
+        "_index" : "authors",
+        "_type" : "_doc",
+        "_id" : "_uM7DHsBjZSpXIu13apk",
+        "_score" : 1.0,
+        "_source" : {
+          "author" : "herodotos"
+        }
+      },
+      {
+        "_index" : "authors",
+        "_type" : "_doc",
+        "_id" : "BeM7DHsBjZSpXIu16atf",
+        "_score" : 1.0,
+        "_source" : {
+          "author" : "ploutarchos"
+        }
+      },
+      {
+        "_index" : "authors",
+        "_type" : "_doc",
+        "_id" : "BuM7DHsBjZSpXIu16quJ",
+        "_score" : 1.0,
+        "_source" : {
+          "author" : "thucydides"
+        }
+      }
+    ]
+  }
+}

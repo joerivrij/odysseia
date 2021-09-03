@@ -1,0 +1,17 @@
+{
+  "name" : "elasticsearch-master-2",
+  "cluster_name" : "elasticsearch",
+  "cluster_uuid" : "lIgbO3VcSmWboHVro1uOmg",
+  "version" : {
+    "number" : "7.12.0",
+    "build_flavor" : "default",
+    "build_type" : "docker",
+    "build_hash" : "78722783c38caa25a70982b5b042074cde5d3b3a",
+    "build_date" : "2021-03-18T06:17:15.410153305Z",
+    "build_snapshot" : false,
+    "lucene_version" : "8.8.0",
+    "minimum_wire_compatibility_version" : "6.8.0",
+    "minimum_index_compatibility_version" : "6.0.0-beta1"
+  },
+  "tagline" : "You Know, for Search"
+}

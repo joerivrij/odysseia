@@ -10,6 +10,7 @@ The goal is for people to learn or rehearse ancient Greek. Some of it is in Dutc
   - [Sokrates - Σωκράτης](#sokrates---σωκράτης)
   - [Herodotos - Ἡρόδοτος](#herodotos---ἡρόδοτος)
 - [Common](#common)
+  - [Eratosthenes - Ἐρατοσθένης](#eratosthenes---ἐρατοσθένης)
   - [Plato - Πλάτων](#plato---πλάτων)
 - [Dataseeders](#dataseeders)
   - [Demokritos - Δημόκριτος](#demokritos---δημόκριτος)
@@ -25,6 +26,7 @@ The goal is for people to learn or rehearse ancient Greek. Some of it is in Dutc
   - [Themistokles - Θεμιστοκλῆς](#themistokles---θεμιστοκλῆς)
 - [Tests](#tests)
   - [Hippokrates - Ἱπποκράτης](#hippokrates---ἱπποκράτης)
+  - [Xerxes - Ξέρξης](#xerxes---ξέρξης)
 
 ## Backend
 
@@ -52,14 +54,17 @@ Herodotos is often hailed as the father of history. I name he lives up to. His w
 
 ## Common
 
+### Eratosthenes - Ἐρατοσθένης
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/b/b3/Eratosthene.01.png" alt="Eratosthenes" width="200"/>
+
+Holds fixtures for testing. Eratosthenes was one of the librarians of Alexandria. He is most famous for calculating the circumference of the earth.
+
 ### Plato - Πλάτων
 
 χαλεπὰ τὰ καλά - good things are difficult to attain
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Platon.png" alt="Plato" width="200"/>
-
-
-Perhaps the most famous Western philosopher, his thoughts have been an influence on Western culture for generations and as he is the rock upon which many philosophers have build there church. It is only fitting that shared code is maintained within the Plato API. Raphael has painted him with Leonardo da Vinci as inspiration.
 
 ## Dataseeders
 
@@ -136,3 +141,9 @@ Themistokles is argueably the greatest Greek admiral. His victory at Salamis is 
 
 
 The most well known medical professional in history. Hippokrates houses tests to see whether the other services are in good health.
+
+### Xerxes - Ξέρξης
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Xerxes_by_Ernest_Normand.jpg" alt="Xerxes" width="200"/>
+
+Xerxes was the Persian great king and invaded Greek during the second invasion of Greece. He tested the Greeks with an army so great it was reported to drain rivers and shake the earth.

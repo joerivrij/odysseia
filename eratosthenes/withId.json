@@ -1,0 +1,32 @@
+{
+  "took" : 2,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 1,
+    "successful" : 1,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 1,
+      "relation" : "eq"
+    },
+    "max_score" : 1.0,
+    "hits" : [
+      {
+        "_index" : "herodotos",
+        "_type" : "_doc",
+        "_id" : "6OM7DHsBjZSpXIu1pqqS",
+        "_score" : 1.0,
+        "_source" : {
+          "author" : "Herodotos",
+          "greek" : "ἀπικομένους δὲ τούς Φοίνικας ἐς δὴ τὸ Ἄργος τοῦτο διατίθεσθαι τὸν φόρτον",
+          "translations" : [
+            "The Phoenicians came to Argos, and set out their cargo"
+          ]
+        }
+      }
+    ]
+  }
+}

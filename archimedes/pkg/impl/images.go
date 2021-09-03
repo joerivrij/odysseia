@@ -33,26 +33,6 @@ func CreateImages(odysseiaPath string) {
 
 			absolutePath, _ := filepath.Abs(dir.Name())
 			lookForYamlFile(absolutePath, ploutarchosPath)
-		case mode.IsRegular():
-		}
-	}
-
-	for _, dir := range directories {
-		fi, err := os.Stat(dir.Name())
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-
-		// first action is to copy over the swagger files since they are needed for the image stage
-		switch mode := fi.Mode(); {
-		case mode.IsDir():
-			charOne := dir.Name()[0]
-			if string(charOne) == "." {
-				continue
-			}
-
-			absolutePath, _ := filepath.Abs(dir.Name())
 			command := "create-image"
 			lookForMakeFile(absolutePath, command)
 		case mode.IsRegular():

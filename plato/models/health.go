@@ -23,16 +23,16 @@ type Health struct {
 }
 
 type DatabaseHealth struct {
-	Healthy       bool `json:"healthy"`
+	Healthy       bool   `json:"healthy"`
 	ClusterName   string `json:"clusterName,omitempty"`
 	ServerName    string `json:"serverName,omitempty"`
 	ServerVersion string `json:"serverVersion,omitempty"`
 }
 
 type Memory struct {
-	Free       uint64  `json:"free"`
-	Alloc      uint64  `json:"alloc"`
-	TotalAlloc uint64  `json:"totalAlloc"`
-	Sys        uint64  `json:"sys"`
+	Free       uint64 `json:"free"`
+	Alloc      uint64 `json:"alloc"`
+	TotalAlloc uint64 `json:"totalAlloc"`
+	Sys        uint64 `json:"sys"`
 	Unit       string `json:"unit"`
 }

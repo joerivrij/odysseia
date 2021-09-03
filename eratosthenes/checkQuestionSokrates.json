@@ -1,0 +1,41 @@
+{
+  "took" : 3,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 1,
+    "successful" : 1,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 2,
+      "relation" : "eq"
+    },
+    "max_score" : 4.733906,
+    "hits" : [
+      {
+        "_index" : "nomina",
+        "_type" : "_doc",
+        "_id" : "nY6SlnsB9QC3skjkpy7k",
+        "_score" : 4.733906,
+        "_source" : {
+          "greek" : "ὁ θεός",
+          "dutch" : "god",
+          "chapter" : 1
+        }
+      },
+      {
+        "_index" : "nomina",
+        "_type" : "_doc",
+        "_id" : "AI6SlnsB9QC3skjk1y-q",
+        "_score" : 4.733906,
+        "_source" : {
+          "greek" : "θεός, ἡ",
+          "dutch" : "godin",
+          "chapter" : 7
+        }
+      }
+    ]
+  }
+}

@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"github.com/elastic/go-elasticsearch/v7"
 	"github.com/elastic/go-elasticsearch/v7/esapi"
-	"github.com/ianschenck/envflag"
 	"github.com/kpango/glg"
 	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/models"
@@ -36,23 +35,14 @@ func init() {
 }
 
 func main() {
+	//https://patorjk.com/software/taag/#p=display&f=Crawford2&t=DEMOKRITOS
 	glg.Info("\n ___      ___  ___ ___   ___   __  _  ____   ____  ______   ___   _____\n|   \\    /  _]|   |   | /   \\ |  |/ ]|    \\ |    ||      | /   \\ / ___/\n|    \\  /  [_ | _   _ ||     ||  ' / |  D  ) |  | |      ||     (   \\_ \n|  D  ||    _]|  \\_/  ||  O  ||    \\ |    /  |  | |_|  |_||  O  |\\__  |\n|     ||   [_ |   |   ||     ||     ||    \\  |  |   |  |  |     |/  \\ |\n|     ||     ||   |   ||     ||  .  ||  .  \\ |  |   |  |  |     |\\    |\n|_____||_____||___|___| \\___/ |__|\\_||__|\\_||____|  |__|   \\___/  \\___|\n                                                                       \n")
 	glg.Info(strings.Repeat("~", 37))
 	glg.Info("\"νόμωι (γάρ φησι) γλυκὺ καὶ νόμωι πικρόν, νόμωι θερμόν, νόμωι ψυχρόν, νόμωι χροιή, ἐτεῆι δὲ ἄτομα καὶ κενόν\"")
 	glg.Info("\"By convention sweet is sweet, bitter is bitter, hot is hot, cold is cold, color is color; but in truth there are only atoms and the void.\"")
 	glg.Info(strings.Repeat("~", 37))
 
-	elasticService := envflag.String("ELASTIC_SEARCH_SERVICE", "http://127.0.0.1:9200", "location of the es service")
-	elasticUser := envflag.String("ELASTIC_SEARCH_USER", "elastic", "es username")
-	elasticPassword := envflag.String("ELASTIC_SEARCH_PASSWORD", "odysseia", "es password")
-
-	envflag.Parse()
-
-	glg.Debugf("%s : %s", "ELASTIC_SEARCH_PASSWORD", *elasticPassword)
-	glg.Debugf("%s : %s", "ELASTIC_SEARCH_USER", *elasticUser)
-	glg.Debugf("%s : %s", "ELASTIC_SEARCH_SERVICE", *elasticService)
-
-	elasticClient, err := elastic.CreateElasticClient(*elasticPassword, *elasticUser, []string{*elasticService})
+	elasticClient, err := elastic.CreateElasticClientFromEnvVariables()
 	if err != nil {
 		glg.Fatal("failed to create client")
 	}

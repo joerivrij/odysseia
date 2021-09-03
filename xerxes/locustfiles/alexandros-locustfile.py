@@ -4,7 +4,7 @@ from locust import HttpUser, task, between
 
 class Alexandros(HttpUser):
     """runs the loadtests for Alexandros api"""
-    wait_time = between(1, 5)
+    wait_time = between(0.5, 2.5)
 
     @task(1)
     def health(self):
