@@ -47,7 +47,7 @@ services:
       cpu: "250m"
 
 images:
-  tag: 5d0a385
+  tag: 49a3bb1
   alexandros:
     repo: alexandros
   pheidias:

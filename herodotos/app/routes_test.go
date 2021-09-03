@@ -189,6 +189,30 @@ func TestCreateQuestionMissingAuthor(t *testing.T) {
 	assert.Contains(t, searchResults.Messages[0].Message, expectedText)
 }
 
+func TestCreateQuestionMissingAuthorInElastic(t *testing.T) {
+	fixtureFile := "createQuestionHerodotos"
+	mockCode := 404
+	author := "notanauthor"
+	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
+	assert.Nil(t, err)
+
+	testConfig := HerodotosConfig{
+		ElasticClient: *mockElasticClient,
+		Index:         "test",
+	}
+
+	router := InitRoutes(testConfig)
+	response := performGetRequest(router, fmt.Sprintf("/herodotos/v1/createQuestion?author=%s", author))
+
+	var searchResults models.NotFoundError
+	err = json.NewDecoder(response.Body).Decode(&searchResults)
+
+	expectedText := "404"
+
+	assert.Equal(t, http.StatusNotFound, response.Code)
+	assert.Contains(t, searchResults.Message.Reason, expectedText)
+}
+
 func TestCreateQuestionShardFailure(t *testing.T) {
 	fixtureFile := "shardFailure"
 	mockCode := 500

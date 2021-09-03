@@ -1,5 +1,7 @@
 git_short_hash=`git rev-parse --short HEAD`
-project_name='demokritos'
+current_dir=`pwd`
+project_name := $(shell basename ${current_dir})
+base_name='odysseia'
 
 setup:
 	if [ -e ./dist ]; then rm -rf ./dist; fi
@@ -19,6 +21,9 @@ test-with-coverage:
 	go test ./... -coverprofile=coverage.out
 	go tool cover -html=coverage.out
 
-create-image: test
+create-base-image:
+	cd ..; make create-image
+
+create-image: test create-base-image
 	echo "docker build ${project_name}:$(git_short_hash)"
-	cd ..; docker build --build-arg project_name=$(project_name) -f $(project_name)/Dockerfile -t $(project_name):$(git_short_hash) . --no-cache
+	cd ..; docker build --build-arg project_name=$(project_name) --build-arg git_hash=$(git_short_hash) -f $(project_name)/Dockerfile -t $(project_name):$(git_short_hash) . --no-cache
