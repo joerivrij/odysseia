@@ -786,6 +786,121 @@
       "greek": "συνίημι",
       "dutch": "begrijpen",
       "chapter": 15
+    },
+    {
+      "greek": "ἀποστερέω + gen.",
+      "dutch": "beroven van",
+      "chapter": 16
+    },
+    {
+      "greek": "διαφθείρω",
+      "dutch": "ten gronde richten, bederven",
+      "chapter": 16
+    },
+    {
+      "greek": "ἐπιχειρέω + dat./inf.",
+      "dutch": "aanvatten, ter hand nemen, proberen",
+      "chapter": 16
+    },
+    {
+      "greek": "καταφονέω + gen.",
+      "dutch": "minachten",
+      "chapter": 16
+    },
+    {
+      "greek": "τέμνω",
+      "dutch": "snijden",
+      "chapter": 16
+    },
+    {
+      "greek": "ὠφελέω",
+      "dutch": "helpen, een dienst bewijzen",
+      "chapter": 16
+    },
+    {
+      "greek": "ἀποθνῄσκω",
+      "dutch": "sterven, gedood worden",
+      "chapter": 17
+    },
+    {
+      "greek": "ἄρχω + ptc",
+      "dutch": "de eerste zijn om te ..., beginnen met/te",
+      "chapter": 17
+    },
+    {
+      "greek": "ἡ γυνὴ ἦρχε λέγουσα",
+      "dutch": "de vrouw begon te zeggen",
+      "chapter": 17
+    },
+    {
+      "greek": "γελάω",
+      "dutch": "lachen",
+      "chapter": 17
+    },
+    {
+      "greek": "διατελέω + ptc.",
+      "dutch": "doorgaan met ..., voortdurend ...",
+      "chapter": 17
+    },
+    {
+      "greek": "καλέω",
+      "dutch": "1. roepen; 2. noemen",
+      "chapter": 17
+    },
+    {
+      "greek": "καταλείπω",
+      "dutch": "verlaten, achterlaten",
+      "chapter": 17
+    },
+    {
+      "greek": "λανθάνω + acc.",
+      "dutch": "verborgen zijn voor",
+      "chapter": 17
+    },
+    {
+      "greek": "λανθάνω + ptc.",
+      "dutch": "ongemerkt ...",
+      "chapter": 17
+    },
+    {
+      "greek": "ἡμᾶς λανθάνεις γελῶν",
+      "dutch": "jij lacht zonder dat wij het merken",
+      "chapter": 17
+    },
+    {
+      "greek": "οὐ σε λανθάνομεν χαίροντες",
+      "dutch": "je merkt heel goed dat we plezier hebben",
+      "chapter": 17
+    },
+    {
+      "greek": "σύνειμι (εἰμί) + dat.",
+      "dutch": "samen zijn met, omgaan met",
+      "chapter": 17
+    },
+    {
+      "greek": "τίκτω",
+      "dutch": "baren, ter wereld brengen, voortbrengen",
+      "chapter": 17
+    },
+    {
+      "greek": "τυγχάνω + gen.",
+      "dutch": "treffen, krijgen",
+      "chapter": 17
+    },
+    {
+      "greek": "τυγχάνω + ptc.",
+      "dutch": "het geval wil dat (ik), toevallig ..., net ..., juist ...",
+      "chapter": 17
+    },
+    {
+      "greek": "χαίρω + dat.",
+      "dutch": "blij zijn met, plezier hebben in",
+      "chapter": 17
+    },
+    {
+      "greek": "χαίρω + ptc.",
+      "dutch": "plezier hebben in, graag ...",
+      "chapter": 17
     }
   ]
 }

@@ -1181,5 +1181,155 @@
       "dutch": "verstanding, wijs, bezonnen, beheerst, ingetogen",
       "chapter": 15
     }
+    {
+      "greek": "ἀμφότεροι",
+      "dutch": "beide(n)",
+      "chapter": 16
+    },
+    {
+      "greek": "ἀπορία, ἡ",
+      "dutch": "radeloosheid, verlegenheid, moeilijkheid",
+      "chapter": 16
+    },
+    {
+      "greek": "ἀρχή, ἡ",
+      "dutch": "1. begin; 2. heerschappij",
+      "chapter": 16
+    },
+    {
+      "greek": "βέλτιστος",
+      "dutch": "best",
+      "chapter": 16
+    },
+    {
+      "greek": "εἶδος, εἴδους, τό",
+      "dutch": "gestalte, uiterlijk, vorm, soort",
+      "chapter": 16
+    },
+    {
+      "greek": "εἷς/μία/ἕν, ἑνός",
+      "dutch": "één",
+      "chapter": 16
+    },
+    {
+      "greek": "θῆλυς, θήλεος",
+      "dutch": "vrouwelijk",
+      "chapter": 16
+    },
+    {
+      "greek": "ἴσος + dat.",
+      "dutch": "gelijk aan, event groot als",
+      "chapter": 16
+    },
+    {
+      "greek": "κοινός + gen.",
+      "dutch": "gemeenschappelijk (aan), openbaar",
+      "chapter": 16
+    },
+    {
+      "greek": "κράτιστος",
+      "dutch": "sterkst, best",
+      "chapter": 16
+    },
+    {
+      "greek": "κύκλος, ὁ",
+      "dutch": "cirkel, kring",
+      "chapter": 16
+    },
+    {
+      "greek": "μέρος, μέρους, τό",
+      "dutch": "1. deel; 2. beurt",
+      "chapter": 16
+    },
+    {
+      "greek": "μηχανή, ἡ",
+      "dutch": "werktuig, (hulp)middel, list",
+      "chapter": 16
+    },
+    {
+      "greek": "μνήμη, ἡ",
+      "dutch": "herinnering, geheugen",
+      "chapter": 16
+    },
+    {
+      "greek": "πρόσωπον, τό",
+      "dutch": "gezicht",
+      "chapter": 16
+    },
+    {
+      "greek": "τέτταρες M.F./τέτταρα N., τέτταρων",
+      "dutch": "vier",
+      "chapter": 16
+    },
+    {
+      "greek": "τοσοῦτος, τοσαύτη, τοσοῦτο",
+      "dutch": "1. zo groot; 2. zoveel",
+      "chapter": 16
+    },
+    {
+      "greek": "τρεῖς M.F./τρία N., τριῶν",
+      "dutch": "drie",
+      "chapter": 16
+    },
+    {
+      "greek": "τρίτος",
+      "dutch": "derde",
+      "chapter": 16
+    },
+    {
+      "greek": "ὕβρις, ὕβρεως, ἡ",
+      "dutch": "overmoed, agressie, arrogantie",
+      "chapter": 16
+    },
+    {
+      "greek": "χείρ, χειρός, ἡ dat.plur. χερσί(ν)",
+      "dutch": "hand, arm",
+      "chapter": 16
+    },
+    {
+      "greek": "ἀνδρεῖος",
+      "dutch": "dapper",
+      "chapter": 17
+    },
+    {
+      "greek": "γῆ, ἡ",
+      "dutch": "aarde, land, grond",
+      "chapter": 17
+    },
+    {
+      "greek": "ἐπιθυμία, ἡ",
+      "dutch": "verlangen",
+      "chapter": 17
+    },
+    {
+      "greek": "μέσος",
+      "dutch": "middelste, in het midden, midden-",
+      "chapter": 17
+    },
+    {
+      "greek": "ὅσος rel.",
+      "dutch": "1. (zo groot) als; 2. (zoveel) als",
+      "chapter": 17
+    },
+    {
+      "greek": "ὅσοι ... = πάντες ... ὅσοι",
+      "dutch": "allen die (neutr. ὅσα ... = πάντα ... ὅσα);",
+      "chapter": 17
+    },
+    {
+      "greek": "πάθος, πάθους, τό",
+      "dutch": "leed, ongeluk, ramp, ervaring",
+      "chapter": 17
+    },
+    {
+      "greek": "τραῦμα, τραύματος, τό",
+      "dutch": "wond",
+      "chapter": 17
+    },
+    {
+      "greek": "φύλαξ, φύλακος, ὁ",
+      "dutch": "wachter, bewaker",
+      "chapter": 17
+    }
   ]
 }
