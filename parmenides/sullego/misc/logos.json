@@ -561,5 +561,115 @@
       "dutch": "voor (van tijd en plaats), liever dan",
       "chapter": 15
     }
+    {
+      "greek": "ἅμα bijwoord",
+      "dutch": "tegelijk",
+      "chapter": 16
+    },
+    {
+      "greek": "ἅμα + dat.",
+      "dutch": "tegelijk/samen met",
+      "chapter": 16
+    },
+    {
+      "greek": "ἅμα + ptc.",
+      "dutch": "terwijl",
+      "chapter": 16
+    },
+    {
+      "greek": "ἅτε + ptc.",
+      "dutch": "omdat (bij een objectieve reden)",
+      "chapter": 16
+    },
+    {
+      "greek": "δίς",
+      "dutch": "tweemaal",
+      "chapter": 16
+    },
+    {
+      "greek": "καίπερ + ptc.",
+      "dutch": "hoewel",
+      "chapter": 16
+    },
+    {
+      "greek": "μή",
+      "dutch": "niet",
+      "chapter": 16
+    },
+    {
+      "greek": "μή + ptc.",
+      "dutch": "als niet, indien niet",
+      "chapter": 16
+    },
+    {
+      "greek": "ὀκτώ",
+      "dutch": "acht",
+      "chapter": 16
+    },
+    {
+      "greek": "παρά + gen.",
+      "dutch": "van (de zijde van)",
+      "chapter": 16
+    },
+    {
+      "greek": "ὡς in vergelijkingen",
+      "dutch": "zoals, als",
+      "chapter": 16
+    },
+    {
+      "greek": "ὡς (als ὅτι)",
+      "dutch": "dat (eigenlijk: hoe)",
+      "chapter": 16
+    },
+    {
+      "greek": "ὡς + ptc.",
+      "dutch": "omdat, in de veronderstelling dat (bij een subjectieve reden",
+      "chapter": 16
+    },
+    {
+      "greek": "ὧσπερ",
+      "dutch": "(net) zoals",
+      "chapter": 16
+    },
+    {
+      "greek": "ὧσπερ + ptc.",
+      "dutch": "alsof",
+      "chapter": 16
+    },
+    {
+      "greek": "εἴτε ... εἴτε",
+      "dutch": "of ... of, hetzij ... hetzij",
+      "chapter": 17
+    },
+    {
+      "greek": "μάλλον",
+      "dutch": "meer, liever",
+      "chapter": 17
+    },
+    {
+      "greek": "περί + acc.",
+      "dutch": "om, rondom",
+      "chapter": 17
+    },
+    {
+      "greek": "που",
+      "dutch": "1. ergens; 2. denk ik, misschien",
+      "chapter": 17
+    },
+    {
+      "greek": "προσθε(ν)",
+      "dutch": "aan de voorkant, van voren",
+      "chapter": 17
+    },
+    {
+      "greek": "ὑπό + gen.,",
+      "dutch": "door (toedoen van)",
+      "chapter": 17
+    },
+    {
+      "greek": "χωρίς + gen.,",
+      "dutch": "apart van, zonder",
+      "chapter": 17
+    }
   ]
 }
