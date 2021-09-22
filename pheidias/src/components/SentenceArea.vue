@@ -1,32 +1,85 @@
 <template>
   <div id="herodotos">
-    <div id="navbar">
-      <main id="page-wrap" class="navbar">
-        <h2>Available Authors</h2>
-        <div v-for="author in authors" :key="author" class="buttonContainer">
-          <button class="chapterButton" v-on:click="setAuthorTo(author)">
-            <a>{{author}}</a>
-          </button>
+    <v-app id="sentencearea">
+      <v-content>
+        <div class="text-center">
+          <v-card class="mx-auto" max-width="344">
+            <v-card-text>
+              <v-menu top :close-on-content-click="closeOnContentClick">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn color="primary" dark v-bind="attrs" v-on="on" rounded>
+                    Authors
+                  </v-btn>
+                </template>
+                <v-list>
+                  <v-list-item
+                      v-for="(author, index) in authors"
+                      :key="index"
+                      v-on:click="setAuthorTo(author)"
+                  >
+                    <v-list-item-title>{{ author }}</v-list-item-title>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+              <p class="text-h4 text--primary">
+                {{ this.selectedAuthor }}
+              </p>
+              <p>RESERVED FOR CHAPTER</p>
+              <div class="text--primary">
+                {{ this.sentence }}
+              </div>
+
+              <v-container fluid>
+                <v-textarea
+                    clearable
+                    v-model="translationText"
+                    clear-icon="close"
+                    label="Type your translation here."
+                    value="Type your translation here."
+                ></v-textarea>
+              </v-container>
+            </v-card-text>
+            <v-card-actions>
+              <v-btn
+                  text
+                  color="teal accent-4"
+                  @click="reveal = true"
+                  v-on:click="checkAnswer();"
+              >
+                Check
+              </v-btn>
+              <v-btn
+                  text
+                  color="teal accent-4"
+                  @click="reveal = false"
+                  v-on:click="getNewSentence();"
+              >
+                Next
+              </v-btn>
+            </v-card-actions>
+
+            <v-expand-transition>
+              <v-card
+                  v-if="reveal"
+                  class="transition-fast-in-fast-out v-card--reveal"
+                  style="height: 100%"
+              >
+                <v-card-text class="pb-0">
+                  <p class="text-h4 text--primary">Translation</p>
+                  <p>Correctness: {{this.translationPercentage}}%</p>
+                  {{ this.databaseAnswer }}
+                </v-card-text>
+                <v-card-actions class="pt-0">
+                  <v-btn text color="teal accent-4" @click="reveal = false">
+                    Close
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-expand-transition>
+          </v-card>
         </div>
-      </main>
-    </div>
-  <div id="sentencearea" class="sentencearea">
-    <h2>Sentence to translate</h2>
-    <h3>{{sentence}}</h3>
-    <p>Official Translation:</p>
-    <h4>{{databaseAnswer}}</h4>
-    <p>Correctness:</p>
-    <a> {{translationPercentage}}%</a>
-    <p>Your Translation:</p>
-    <h4 style="white-space: pre-line;">{{ translationText }}</h4>
-    <p>Type your translation here:</p>
-    <textarea v-model="translationText" class="textbox" placeholder="Type your translation here"></textarea>
-    <br>
-    <button class="categorieButton"
-            id="translateButton"
-            v-on:click="checkAnswer">
-      <strong>Check Translation</strong></button>
-  </div>
+      </v-content>
+    </v-app>
   </div>
 </template>
 
@@ -36,17 +89,19 @@ export default {
   data() {
     return {
       authors: [],
-      chosenAuthor: "",
+      selectedAuthor: "",
       sentence: "",
       currentSentenceId: "",
       translationText: "",
       translationPercentage: "",
       databaseAnswer: "",
+      closeOnContentClick: true,
+      reveal: false,
     }
   },
   methods: {
     setAuthorTo(author) {
-      this.chosenAuthor = author
+      this.selectedAuthor = author
       this.getNewSentence()
     },
     getAuthors: function () {
@@ -65,7 +120,7 @@ export default {
           })
     },
     getNewSentence: function () {
-      const author = this.chosenAuthor.toLowerCase()
+      const author = this.selectedAuthor.toLowerCase()
       let url = `${this.$herodotosUrl}/createQuestion?author=${author}`
       this.$apiClient.get(url)
           .then((response) => {
@@ -77,7 +132,7 @@ export default {
           })
     },
     checkAnswer: function () {
-      const author = this.chosenAuthor.toLowerCase()
+      const author = this.selectedAuthor.toLowerCase()
       this.$apiClient({
         method: 'post',
         url: `${this.$herodotosUrl}/checkSentence`,
@@ -91,105 +146,38 @@ export default {
         this.translationPercentage = response.data.levenshteinPercentage
         this.databaseAnswer = response.data.quizSentence
       })
+    },
+
+    setDefaultAuthor: function () {
+      if (this.authors.length === 0) {setTimeout(() => {
+        this.selectedAuthor = this.authors[0]
+        this.getNewSentence()
+      }, 500)
+      }
+      this.selectedAuthor = this.authors[0]
+      this.getNewSentence()
+
     }
   },
-    mounted() {
-      this.getAuthors();
-    },
-    created() {
-    }
+  mounted() {
+    this.getAuthors();
+    this.setDefaultAuthor();
+  },
+  created() {
   }
-
+}
 </script>
 
 <style scoped>
-
-h4 {
-  margin-top: 2em;
+h2 {
+  margin: 1em;
 }
 
 h3 {
-  margin-top: 0.5em;
+  margin: 0.5em;
 }
 
-a {
-  cursor: pointer;
-}
-
-.textbox {
-  width: 50%;
-  height: 15em;
-}
-.sentencearea {
-  background: lightblue;
-  text-align: center;
-  width: 100%;
-  padding: 2em 0 0 0;
-}
-
-.categorieButton {
-  background-color: #f96332;
-  color: #fff;
-  border-width: 2px;
-  font-weight: 400;
-  font-size: .8571em;
-  line-height: 1.35em;
-  margin: 10px 1px;
-  border: none;
-  border-radius: .1875rem;
-  padding: 1em 2em;
-  cursor: pointer;
-  text-align: center;
-  vertical-align: middle;
-}
-
-.categorieButton:hover {
-  background: rgba(249, 99, 49, 0.71);
-}
-
-.wrongText {
-  color: red
-}
-
-.rightText {
-  margin: 0.1em;
-  color: green;
-}
-
-#navbar {
-  height: 100%;
-  background-color: cadetblue;
-  color: white;
-  cursor: pointer;
-  padding: 2em 0 2em 0;
-  width: 100%;
-  border: none;
-  outline: none;
-  font-size: 15px;
-  text-align: center;
-}
-
-.buttonContainer {
-  display: inline-block;
-}
-
-.chapterButton {
-  background-color: #f96332;
-  color: #fff;
-  border-width: 2px;
-  font-weight: 400;
-  font-size: .8571em;
-  line-height: 1.35em;
-  margin: 10px 1px;
-  border: none;
-  border-radius: .1875rem;
-  padding: 11px 22px;
-  cursor: pointer;
-  text-align: center;
-  vertical-align: middle;
-}
-
-.chapterButton:hover {
-  background: rgba(249, 99, 49, 0.71);
+h4 {
+  margin: 0.5em;
 }
 </style>

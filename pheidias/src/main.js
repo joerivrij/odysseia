@@ -3,6 +3,8 @@ import App from './App.vue'
 import axios from 'axios';
 import router from './router'
 import store from './store'
+import vuetify from '@/plugins/vuetify'
+import "vuetify/dist/vuetify.min.css";
 
 Vue.config.productionTip = false
 
@@ -21,9 +23,11 @@ console.log(`sokrates proxy found at: ${Vue.prototype.$sokratesUrl}`)
 console.log(`herodotos proxy found at: ${Vue.prototype.$herodotosUrl}`)
 console.log(`alexandros proxy found at: ${Vue.prototype.$alexandrosUrl}`)
 
+
 new Vue({
+  vuetify,
   el: '#app',
   render: h => h(App),
   router,
-  template: '<App/>'
+  template: '<App/>',
 }).$mount('#app');
