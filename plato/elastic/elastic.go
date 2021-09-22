@@ -227,7 +227,7 @@ func QueryMultiMatchWithGrams(elasticClient elasticsearch.Client, index, queryWo
 	var elasticResult models.ElasticResponse
 	var buf bytes.Buffer
 	query := map[string]interface{}{
-		"size": 10,
+		"size": 15,
 		"query": map[string]interface{}{
 			"multi_match": map[string]interface{}{
 				"query": queryWord,
