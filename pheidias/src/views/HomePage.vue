@@ -4,9 +4,8 @@
     >
       <v-parallax
           dark
-          id="opacity-parallax"
           height="800"
-          src="https://upload.wikimedia.org/wikipedia/commons/4/49/%22The_School_of_Athens%22_by_Raffaello_Sanzio_da_Urbino.jpg">
+          :src="schoolOfAthens">
 
         <v-row
             align="center"
@@ -37,12 +36,15 @@
 
 <script>
 export default {
-  name: "HomePage"
+  name: "HomePage",
+  data () {
+    return {
+      schoolOfAthens: require('@/assets/school_of_athens.jpg')
+    }
+  }
 }
 </script>
 
 <style scoped>
-#opacity-parallax {
-  opacity: 90%;
-}
+
 </style>
