@@ -1,1 +1,296 @@
-{"biblos":[{"greek":"δαίμων –ονος, ὁ","english":"spirit, god, demon"},{"greek":"δακρύω","english":"cry"},{"greek":"δέ","english":"and, but"},{"greek":"δεῖ","english":"it is necessary"},{"greek":"δείδω","english":"fear"},{"greek":"δείκνυμι","english":"show"},{"greek":"δειλός -ή -όν","english":"cowardly"},{"greek":"δεινός –ή --όν","english":"awesome"},{"greek":"δεῖπνον –ου, τό","english":"feast"},{"greek":"δέκα,","english":"ten"},{"greek":"δένδρον –ου, τό","english":"tree"},{"greek":"δεξιός -ά -όν","english":"right"},{"greek":"δέος –ους, τό","english":"fear"},{"greek":"δεσπότης -ου, ὁ","english":"master"},{"greek":"δεῦρο","english":"(to) here"},{"greek":"δεύτερος –α –ον","english":"second"},{"greek":"δέχομαι","english":"welcome"},{"greek":"δέω (1)","english":"bind (2) need"},{"greek":"δή","english":"now"},{"greek":"δῆλος -η -ον","english":"clear"},{"greek":"δηλόω","english":"show"},{"greek":"δῆμος -ου, ὁ","english":"people"},{"greek":"δήπου","english":"perhaps, maybe"},{"greek":"διά +","english":"gen , acc through"},{"greek":"διαιρέω","english":"divide, cut apart"},{"greek":"διαβαίνω","english":"step across"},{"greek":"διαβάλλω","english":"throw across"},{"greek":"διέρχομαι","english":"go through"},{"greek":"διάκειμαι","english":"be arranged (pass. of διατίθημι)"},{"greek":"διαλέγω","english":"discuss"},{"greek":"διαλύω","english":"dissolve"},{"greek":"διάνοια –ας, ἡ","english":"thought, intention"},{"greek":"διοικέω","english":"manage a house"},{"greek":"διαπράσσω","english":"pass over, accomplish"},{"greek":"διατελέω","english":"finish"},{"greek":"διατίθημι","english":"arrange"},{"greek":"διατρίβω","english":"consume, spend time"},{"greek":"διαφέρω","english":"carry on, make a difference"},{"greek":"διαφεύγω","english":"escape"},{"greek":"διαφθείρω","english":"destroy"},{"greek":"διαθήκη –ης, ἡ","english":"arrangement, last will and testament"},{"greek":"δίαιτα –ης, ἡ","english":"lifestyle"},{"greek":"διακόσιοι –αι –α","english":"two hundred"},{"greek":"διδάσκω","english":"teach"},{"greek":"δίδωμι","english":"give"},{"greek":"δικάζω","english":"judge"},{"greek":"δίκαιος –α –ον","english":"just"},{"greek":"δικαιοσύνη –ης, ἡ","english":"justice"},{"greek":"δικαστήριον –ου, τό","english":"court"},{"greek":"δικαστής –οῦ, ὁ","english":"judge, juror"},{"greek":"δίκη –ης, ἡ","english":"justice, lawsuit"},{"greek":"διό, διόπερ","english":"because of this"},{"greek":"δῖος –α –ον","english":"divine"},{"greek":"διότι","english":"since"},{"greek":"διπλοῦς -ῆ -οῦν","english":"double"},{"greek":"δισχίλιοι –αι –α","english":"two thousand"},{"greek":"δίχα","english":"apart"},{"greek":"διώκω","english":"pursue"},{"greek":"δόγμα -ατος, τό","english":"opinion, dogma"},{"greek":"δοκεῖ","english":"it seems"},{"greek":"δοκέω","english":"think"},{"greek":"δόλος –ου, ὁ","english":"trick"},{"greek":"δόξα –ης, ἡ","english":"glory, opinion"},{"greek":"δόρυ, δόρατος, τό","english":"spear"},{"greek":"δοῦλος -ου, ὁ","english":"slave"},{"greek":"δράω","english":"do"},{"greek":"δύναμαι","english":"be able, can"},{"greek":"δύναμις -εως, ἡ","english":"power"},{"greek":"δυνατός -ή -όν","english":"able"},{"greek":"δύο,","english":"two"},{"greek":"δώδεκα","english":"twelve"},{"greek":"δῶμα –ατος, τό","english":"house"},{"greek":"δῶρον –ου, τό","english":"gift"}]}
+{
+  "biblos": [
+    {
+      "greek": "δαίμων –ονος, ὁ",
+      "english": "spirit, god, demon"
+    },
+    {
+      "greek": "δακρύω",
+      "english": "cry"
+    },
+    {
+      "greek": "δέ",
+      "english": "and, but"
+    },
+    {
+      "greek": "δεῖ",
+      "english": "it is necessary"
+    },
+    {
+      "greek": "δείδω",
+      "english": "fear"
+    },
+    {
+      "greek": "δείκνυμι",
+      "english": "show"
+    },
+    {
+      "greek": "δειλός -ή -όν",
+      "english": "cowardly"
+    },
+    {
+      "greek": "δεινός –ή --όν",
+      "english": "awesome"
+    },
+    {
+      "greek": "δεῖπνον –ου, τό",
+      "english": "feast"
+    },
+    {
+      "greek": "δέκα,",
+      "english": "ten"
+    },
+    {
+      "greek": "δένδρον –ου, τό",
+      "english": "tree"
+    },
+    {
+      "greek": "δεξιός -ά -όν",
+      "english": "right"
+    },
+    {
+      "greek": "δέος –ους, τό",
+      "english": "fear"
+    },
+    {
+      "greek": "δεσπότης -ου, ὁ",
+      "english": "master"
+    },
+    {
+      "greek": "δεῦρο",
+      "english": "(to) here"
+    },
+    {
+      "greek": "δεύτερος –α –ον",
+      "english": "second"
+    },
+    {
+      "greek": "δέχομαι",
+      "english": "welcome"
+    },
+    {
+      "greek": "δέω (1)",
+      "english": "bind (2) need"
+    },
+    {
+      "greek": "δή",
+      "english": "now"
+    },
+    {
+      "greek": "δῆλος -η -ον",
+      "english": "clear"
+    },
+    {
+      "greek": "δηλόω",
+      "english": "show"
+    },
+    {
+      "greek": "δῆμος -ου, ὁ",
+      "english": "people"
+    },
+    {
+      "greek": "δήπου",
+      "english": "perhaps, maybe"
+    },
+    {
+      "greek": "διά +",
+      "english": "gen , acc through"
+    },
+    {
+      "greek": "διαιρέω",
+      "english": "divide, cut apart"
+    },
+    {
+      "greek": "διαβαίνω",
+      "english": "step across"
+    },
+    {
+      "greek": "διαβάλλω",
+      "english": "throw across"
+    },
+    {
+      "greek": "διέρχομαι",
+      "english": "go through"
+    },
+    {
+      "greek": "διάκειμαι",
+      "english": "be arranged (pass. of διατίθημι)"
+    },
+    {
+      "greek": "διαλέγω",
+      "english": "discuss"
+    },
+    {
+      "greek": "διαλύω",
+      "english": "dissolve"
+    },
+    {
+      "greek": "διάνοια –ας, ἡ",
+      "english": "thought, intention"
+    },
+    {
+      "greek": "διοικέω",
+      "english": "manage a house"
+    },
+    {
+      "greek": "διαπράσσω",
+      "english": "pass over, accomplish"
+    },
+    {
+      "greek": "διατελέω",
+      "english": "finish"
+    },
+    {
+      "greek": "διατίθημι",
+      "english": "arrange"
+    },
+    {
+      "greek": "διατρίβω",
+      "english": "consume, spend time"
+    },
+    {
+      "greek": "διαφέρω",
+      "english": "carry on, make a difference"
+    },
+    {
+      "greek": "διαφεύγω",
+      "english": "escape"
+    },
+    {
+      "greek": "διαφθείρω",
+      "english": "destroy"
+    },
+    {
+      "greek": "διαθήκη –ης, ἡ",
+      "english": "arrangement, last will and testament"
+    },
+    {
+      "greek": "δίαιτα –ης, ἡ",
+      "english": "lifestyle"
+    },
+    {
+      "greek": "διακόσιοι –αι –α",
+      "english": "two hundred"
+    },
+    {
+      "greek": "διδάσκω",
+      "english": "teach"
+    },
+    {
+      "greek": "δίδωμι",
+      "english": "give"
+    },
+    {
+      "greek": "δικάζω",
+      "english": "judge"
+    },
+    {
+      "greek": "δίκαιος –α –ον",
+      "english": "just"
+    },
+    {
+      "greek": "δικαιοσύνη –ης, ἡ",
+      "english": "justice"
+    },
+    {
+      "greek": "δικαστήριον –ου, τό",
+      "english": "court"
+    },
+    {
+      "greek": "δικαστής –οῦ, ὁ",
+      "english": "judge, juror"
+    },
+    {
+      "greek": "δίκη –ης, ἡ",
+      "english": "justice, lawsuit"
+    },
+    {
+      "greek": "διό, διόπερ",
+      "english": "because of this"
+    },
+    {
+      "greek": "δῖος –α –ον",
+      "english": "divine"
+    },
+    {
+      "greek": "διότι",
+      "english": "since"
+    },
+    {
+      "greek": "διπλοῦς -ῆ -οῦν",
+      "english": "double"
+    },
+    {
+      "greek": "δισχίλιοι –αι –α",
+      "english": "two thousand"
+    },
+    {
+      "greek": "δίχα",
+      "english": "apart"
+    },
+    {
+      "greek": "διώκω",
+      "english": "pursue"
+    },
+    {
+      "greek": "δόγμα -ατος, τό",
+      "english": "opinion, dogma"
+    },
+    {
+      "greek": "δοκεῖ",
+      "english": "it seems"
+    },
+    {
+      "greek": "δοκέω",
+      "english": "think"
+    },
+    {
+      "greek": "δόλος –ου, ὁ",
+      "english": "trick"
+    },
+    {
+      "greek": "δόξα –ης, ἡ",
+      "english": "glory, opinion"
+    },
+    {
+      "greek": "δόρυ, δόρατος, τό",
+      "english": "spear"
+    },
+    {
+      "greek": "δοῦλος -ου, ὁ",
+      "english": "slave"
+    },
+    {
+      "greek": "δράω",
+      "english": "do"
+    },
+    {
+      "greek": "δύναμαι",
+      "english": "be able, can"
+    },
+    {
+      "greek": "δύναμις -εως, ἡ",
+      "english": "power"
+    },
+    {
+      "greek": "δυνατός -ή -όν",
+      "english": "able"
+    },
+    {
+      "greek": "δύο,",
+      "english": "two"
+    },
+    {
+      "greek": "δώδεκα",
+      "english": "twelve"
+    },
+    {
+      "greek": "δῶμα –ατος, τό",
+      "english": "house"
+    },
+    {
+      "greek": "δῶρον –ου, τό",
+      "english": "gift"
+    }
+  ]
+}

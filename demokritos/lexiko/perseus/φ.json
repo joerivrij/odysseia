@@ -1,1 +1,136 @@
-{"biblos":[{"greek":"φαίνω","english":"show, appear"},{"greek":"φάλαγξ, -αγγος, ἡ","english":"phalanx, battle-array"},{"greek":"φανερός –ά -όν","english":"clear"},{"greek":"φάρμακον –ου, τό","english":"drug"},{"greek":"φάσκω","english":"claim"},{"greek":"φαῦλος –η –ον","english":"trivial"},{"greek":"φέρω","english":"carry"},{"greek":"φεύγω","english":"flee, run away"},{"greek":"φημί","english":"say"},{"greek":"φθάνω","english":"anticipate"},{"greek":"φθείρω","english":"destroy"},{"greek":"φιλέω","english":"love"},{"greek":"φιλία –ας, ἡ","english":"love, friendship"},{"greek":"φίλιος –α –ον","english":"friendly, dear"},{"greek":"φίλος –η –ον","english":"beloved, dear"},{"greek":"φοβέω","english":"terrify"},{"greek":"φόβος –ου, ὁ","english":"fear"},{"greek":"φόνος –ου, ὁ","english":"slaughter"},{"greek":"φράζω","english":"tell"},{"greek":"φρήν, φρενός, ἡ","english":"mind"},{"greek":"φρονέω","english":"think"},{"greek":"φροντίζω","english":"think"},{"greek":"φρουρά -ᾶς, ἡ","english":"guard"},{"greek":"φυγάς -άδος, ὁ","english":"or ἡ fugitive"},{"greek":"φυγή -ῆς, ἡ","english":"escape"},{"greek":"φυλακή -ῆς, ἡ","english":"guard"},{"greek":"φυλάσσω","english":"guard"},{"greek":"φυλή -ῆς, ἡ","english":"race, tribe"},{"greek":"φύσις –εως, ἡ","english":"nature"},{"greek":"φύω","english":"produce"},{"greek":"φωνέω","english":"make a sound, speak"},{"greek":"φωνή -ῆς, ἡ","english":"sound, voice"},{"greek":"φῶς, φωτός, ὁ","english":"light"}]}
+{
+  "biblos": [
+    {
+      "greek": "φαίνω",
+      "english": "show, appear"
+    },
+    {
+      "greek": "φάλαγξ, -αγγος, ἡ",
+      "english": "phalanx, battle-array"
+    },
+    {
+      "greek": "φανερός –ά -όν",
+      "english": "clear"
+    },
+    {
+      "greek": "φάρμακον –ου, τό",
+      "english": "drug"
+    },
+    {
+      "greek": "φάσκω",
+      "english": "claim"
+    },
+    {
+      "greek": "φαῦλος –η –ον",
+      "english": "trivial"
+    },
+    {
+      "greek": "φέρω",
+      "english": "carry"
+    },
+    {
+      "greek": "φεύγω",
+      "english": "flee, run away"
+    },
+    {
+      "greek": "φημί",
+      "english": "say"
+    },
+    {
+      "greek": "φθάνω",
+      "english": "anticipate"
+    },
+    {
+      "greek": "φθείρω",
+      "english": "destroy"
+    },
+    {
+      "greek": "φιλέω",
+      "english": "love"
+    },
+    {
+      "greek": "φιλία –ας, ἡ",
+      "english": "love, friendship"
+    },
+    {
+      "greek": "φίλιος –α –ον",
+      "english": "friendly, dear"
+    },
+    {
+      "greek": "φίλος –η –ον",
+      "english": "beloved, dear"
+    },
+    {
+      "greek": "φοβέω",
+      "english": "terrify"
+    },
+    {
+      "greek": "φόβος –ου, ὁ",
+      "english": "fear"
+    },
+    {
+      "greek": "φόνος –ου, ὁ",
+      "english": "slaughter"
+    },
+    {
+      "greek": "φράζω",
+      "english": "tell"
+    },
+    {
+      "greek": "φρήν, φρενός, ἡ",
+      "english": "mind"
+    },
+    {
+      "greek": "φρονέω",
+      "english": "think"
+    },
+    {
+      "greek": "φροντίζω",
+      "english": "think"
+    },
+    {
+      "greek": "φρουρά -ᾶς, ἡ",
+      "english": "guard"
+    },
+    {
+      "greek": "φυγάς -άδος, ὁ",
+      "english": "or ἡ fugitive"
+    },
+    {
+      "greek": "φυγή -ῆς, ἡ",
+      "english": "escape"
+    },
+    {
+      "greek": "φυλακή -ῆς, ἡ",
+      "english": "guard"
+    },
+    {
+      "greek": "φυλάσσω",
+      "english": "guard"
+    },
+    {
+      "greek": "φυλή -ῆς, ἡ",
+      "english": "race, tribe"
+    },
+    {
+      "greek": "φύσις –εως, ἡ",
+      "english": "nature"
+    },
+    {
+      "greek": "φύω",
+      "english": "produce"
+    },
+    {
+      "greek": "φωνέω",
+      "english": "make a sound, speak"
+    },
+    {
+      "greek": "φωνή -ῆς, ἡ",
+      "english": "sound, voice"
+    },
+    {
+      "greek": "φῶς, φωτός, ὁ",
+      "english": "light"
+    }
+  ]
+}

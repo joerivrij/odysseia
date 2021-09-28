@@ -1,1 +1,264 @@
-{"biblos":[{"greek":"τάλαντον –ου, τό","english":"an amount of silver worth 600 drachma"},{"greek":"τάξις –εως, ἡ","english":"arrangement, order"},{"greek":"τάσσω","english":"arrange"},{"greek":"ταύτῃ","english":"in this way,"},{"greek":"ταῦρος –ου, ὁ","english":"bull"},{"greek":"ταὐτό = τὸ αὐτό","english":"the same"},{"greek":"τάφος –ου, ὁ","english":"tomb"},{"greek":"τάχος –ους, τό","english":"speed"},{"greek":"ταχύς –εῖα -ύ","english":"quick"},{"greek":"τε","english":"and"},{"greek":"τείνω","english":"stretch"},{"greek":"τειχέω","english":"build walls"},{"greek":"τεῖχος –ους, τό","english":"wall"},{"greek":"τεκμήριον –ου, τό","english":"evidence"},{"greek":"τέκνον –ου, τό","english":"child"},{"greek":"τελευταῖος –α –ον","english":"last, final"},{"greek":"τελευτάω","english":"finish, die"},{"greek":"τελευτή -ῆς, ἡ","english":"completion, death"},{"greek":"τελέω","english":"fulfil"},{"greek":"τέλος –ους, τό","english":"end"},{"greek":"τέμνω","english":"cut"},{"greek":"τεσσαράκοντα","english":"forty"},{"greek":"τέσσαρες -α","english":"four"},{"greek":"τέταρτος –η –ον","english":"fourth"},{"greek":"τετρακόσιοι –αι –α","english":"four hundred"},{"greek":"τεύχω","english":"build"},{"greek":"τέχνη –ης, ἡ","english":"art, skill"},{"greek":"τῇ,","english":"here, there"},{"greek":"τηλικοῦτος –αύτη –οῦτον","english":"of such an age or size"},{"greek":"τηρέω","english":"watch for"},{"greek":"τίθημι","english":"put"},{"greek":"τίκτω","english":"give birth"},{"greek":"τιμάω","english":"honor"},{"greek":"τιμή -ῆς, ἡ","english":"value"},{"greek":"τιμωρέω","english":"help, avenge"},{"greek":"τιμωρία –ας, ἡ","english":"help, vengeance"},{"greek":"τις τι","english":"someone, something"},{"greek":"τίς τί","english":"who? what? which?"},{"greek":"τοι","english":"let me tell you, for sure"},{"greek":"τοίνυν","english":"therefore"},{"greek":"τοιόσδε, τοιάδε, τοιόνδε","english":"such a"},{"greek":"τοιοῦτος, τοιαύτη, τοιοῦτο","english":"such as this"},{"greek":"τολμάω","english":"dare"},{"greek":"τόξον –ου, τό","english":"bow"},{"greek":"τόπος –ου, ὁ","english":"place, topic"},{"greek":"τοσόσδε –ηδε –ονδε","english":"so much, so many"},{"greek":"τοσοῦτος –αύτη –οῦτο(ν)","english":"so large, so much"},{"greek":"τότε","english":"then"},{"greek":"τραῦμα –ατος, τό","english":"wound"},{"greek":"τρεῖς τρία","english":"three"},{"greek":"τρέπω","english":"turn"},{"greek":"τρέφω","english":"nourish"},{"greek":"τρέχω","english":"run"},{"greek":"τρέω","english":"flee"},{"greek":"τριάκοντα,","english":"thirty"},{"greek":"τριακόσιοι –αι –α,","english":"three hundred"},{"greek":"τρίβω","english":"rub"},{"greek":"τριήρης –ους, ἡ","english":"trireme"},{"greek":"τρίτος –η –ον","english":"third"},{"greek":"τρόπος –ου, ὁ","english":"way"},{"greek":"τροφή -ῆς, ἡ","english":"nourishment, food"},{"greek":"τυγχάνω","english":"happen (+ part .) hit, meet, have (+ gen .)"},{"greek":"τυραννίς -ίδος, ἡ","english":"tyranny"},{"greek":"τύραννος –ου, ὁ","english":"ruler, tyrant"},{"greek":"τύχη –ης, ἡ","english":"luck"}]}
+{
+  "biblos": [
+    {
+      "greek": "τάλαντον –ου, τό",
+      "english": "an amount of silver worth 600 drachma"
+    },
+    {
+      "greek": "τάξις –εως, ἡ",
+      "english": "arrangement, order"
+    },
+    {
+      "greek": "τάσσω",
+      "english": "arrange"
+    },
+    {
+      "greek": "ταύτῃ",
+      "english": "in this way,"
+    },
+    {
+      "greek": "ταῦρος –ου, ὁ",
+      "english": "bull"
+    },
+    {
+      "greek": "ταὐτό \u003d τὸ αὐτό",
+      "english": "the same"
+    },
+    {
+      "greek": "τάφος –ου, ὁ",
+      "english": "tomb"
+    },
+    {
+      "greek": "τάχος –ους, τό",
+      "english": "speed"
+    },
+    {
+      "greek": "ταχύς –εῖα -ύ",
+      "english": "quick"
+    },
+    {
+      "greek": "τε",
+      "english": "and"
+    },
+    {
+      "greek": "τείνω",
+      "english": "stretch"
+    },
+    {
+      "greek": "τειχέω",
+      "english": "build walls"
+    },
+    {
+      "greek": "τεῖχος –ους, τό",
+      "english": "wall"
+    },
+    {
+      "greek": "τεκμήριον –ου, τό",
+      "english": "evidence"
+    },
+    {
+      "greek": "τέκνον –ου, τό",
+      "english": "child"
+    },
+    {
+      "greek": "τελευταῖος –α –ον",
+      "english": "last, final"
+    },
+    {
+      "greek": "τελευτάω",
+      "english": "finish, die"
+    },
+    {
+      "greek": "τελευτή -ῆς, ἡ",
+      "english": "completion, death"
+    },
+    {
+      "greek": "τελέω",
+      "english": "fulfil"
+    },
+    {
+      "greek": "τέλος –ους, τό",
+      "english": "end"
+    },
+    {
+      "greek": "τέμνω",
+      "english": "cut"
+    },
+    {
+      "greek": "τεσσαράκοντα",
+      "english": "forty"
+    },
+    {
+      "greek": "τέσσαρες -α",
+      "english": "four"
+    },
+    {
+      "greek": "τέταρτος –η –ον",
+      "english": "fourth"
+    },
+    {
+      "greek": "τετρακόσιοι –αι –α",
+      "english": "four hundred"
+    },
+    {
+      "greek": "τεύχω",
+      "english": "build"
+    },
+    {
+      "greek": "τέχνη –ης, ἡ",
+      "english": "art, skill"
+    },
+    {
+      "greek": "τῇ,",
+      "english": "here, there"
+    },
+    {
+      "greek": "τηλικοῦτος –αύτη –οῦτον",
+      "english": "of such an age or size"
+    },
+    {
+      "greek": "τηρέω",
+      "english": "watch for"
+    },
+    {
+      "greek": "τίθημι",
+      "english": "put"
+    },
+    {
+      "greek": "τίκτω",
+      "english": "give birth"
+    },
+    {
+      "greek": "τιμάω",
+      "english": "honor"
+    },
+    {
+      "greek": "τιμή -ῆς, ἡ",
+      "english": "value"
+    },
+    {
+      "greek": "τιμωρέω",
+      "english": "help, avenge"
+    },
+    {
+      "greek": "τιμωρία –ας, ἡ",
+      "english": "help, vengeance"
+    },
+    {
+      "greek": "τις τι",
+      "english": "someone, something"
+    },
+    {
+      "greek": "τίς τί",
+      "english": "who? what? which?"
+    },
+    {
+      "greek": "τοι",
+      "english": "let me tell you, for sure"
+    },
+    {
+      "greek": "τοίνυν",
+      "english": "therefore"
+    },
+    {
+      "greek": "τοιόσδε, τοιάδε, τοιόνδε",
+      "english": "such a"
+    },
+    {
+      "greek": "τοιοῦτος, τοιαύτη, τοιοῦτο",
+      "english": "such as this"
+    },
+    {
+      "greek": "τολμάω",
+      "english": "dare"
+    },
+    {
+      "greek": "τόξον –ου, τό",
+      "english": "bow"
+    },
+    {
+      "greek": "τόπος –ου, ὁ",
+      "english": "place, topic"
+    },
+    {
+      "greek": "τοσόσδε –ηδε –ονδε",
+      "english": "so much, so many"
+    },
+    {
+      "greek": "τοσοῦτος –αύτη –οῦτο(ν)",
+      "english": "so large, so much"
+    },
+    {
+      "greek": "τότε",
+      "english": "then"
+    },
+    {
+      "greek": "τραῦμα –ατος, τό",
+      "english": "wound"
+    },
+    {
+      "greek": "τρεῖς τρία",
+      "english": "three"
+    },
+    {
+      "greek": "τρέπω",
+      "english": "turn"
+    },
+    {
+      "greek": "τρέφω",
+      "english": "nourish"
+    },
+    {
+      "greek": "τρέχω",
+      "english": "run"
+    },
+    {
+      "greek": "τρέω",
+      "english": "flee"
+    },
+    {
+      "greek": "τριάκοντα,",
+      "english": "thirty"
+    },
+    {
+      "greek": "τριακόσιοι –αι –α,",
+      "english": "three hundred"
+    },
+    {
+      "greek": "τρίβω",
+      "english": "rub"
+    },
+    {
+      "greek": "τριήρης –ους, ἡ",
+      "english": "trireme"
+    },
+    {
+      "greek": "τρίτος –η –ον",
+      "english": "third"
+    },
+    {
+      "greek": "τρόπος –ου, ὁ",
+      "english": "way"
+    },
+    {
+      "greek": "τροφή -ῆς, ἡ",
+      "english": "nourishment, food"
+    },
+    {
+      "greek": "τυγχάνω",
+      "english": "happen (+ part .) hit, meet, have (+ gen .)"
+    },
+    {
+      "greek": "τυραννίς -ίδος, ἡ",
+      "english": "tyranny"
+    },
+    {
+      "greek": "τύραννος –ου, ὁ",
+      "english": "ruler, tyrant"
+    },
+    {
+      "greek": "τύχη –ης, ἡ",
+      "english": "luck"
+    }
+  ]
+}

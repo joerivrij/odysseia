@@ -1,1 +1,28 @@
-{"biblos":[{"greek":"ψευδής -ές","english":"false"},{"greek":"ψεύδω","english":"lie, cheat"},{"greek":"ψηφίζω","english":"vote"},{"greek":"ψήφισμα –ατος, τό","english":"decree"},{"greek":"ψῆφος –ου, ἡ","english":"vote"},{"greek":"ψυχή -ῆς, ἡ","english":"breath"}]}
+{
+  "biblos": [
+    {
+      "greek": "ψευδής -ές",
+      "english": "false"
+    },
+    {
+      "greek": "ψεύδω",
+      "english": "lie, cheat"
+    },
+    {
+      "greek": "ψηφίζω",
+      "english": "vote"
+    },
+    {
+      "greek": "ψήφισμα –ατος, τό",
+      "english": "decree"
+    },
+    {
+      "greek": "ψῆφος –ου, ἡ",
+      "english": "vote"
+    },
+    {
+      "greek": "ψυχή -ῆς, ἡ",
+      "english": "breath"
+    }
+  ]
+}

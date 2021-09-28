@@ -1,1 +1,272 @@
-{"biblos":[{"greek":"καθά","english":"just as"},{"greek":"καθαρός -ά -όν","english":"pure"},{"greek":"καθό","english":"in so far as"},{"greek":"καί","english":"and"},{"greek":"καίπερ","english":"although"},{"greek":"καιρός –οῦ, ὁ","english":"the right time"},{"greek":"καίτοι","english":"and indeed, and yet"},{"greek":"κακός -ή -όν","english":"bad"},{"greek":"καλέω","english":"call"},{"greek":"κάλλος –ους, τό","english":"beauty"},{"greek":"καλός -ή -όν","english":"beautiful"},{"greek":"κάμνω","english":"work"},{"greek":"καρδία –ας, ἡ","english":"heart"},{"greek":"καρπός –οῦ, ὁ","english":"fruit"},{"greek":"κατά +","english":"gen . or acc . down"},{"greek":"καταβαίνω","english":"step down"},{"greek":"καταγιγνώσκω","english":"have prejudice, charge"},{"greek":"κατάγω","english":"lead down"},{"greek":"κάθημαι","english":"sit"},{"greek":"καθίστημι","english":"set down"},{"greek":"καταλαμβάνω","english":"take hold of"},{"greek":"καταλείπω","english":"leave behind"},{"greek":"καταλύω","english":"put down"},{"greek":"καταπλήσσω","english":"strike down"},{"greek":"κατασκευάζω","english":"equip"},{"greek":"καταστρέφω","english":"subdue"},{"greek":"καταφεύγω","english":"flee for refuge"},{"greek":"καταφρονέω","english":"despise (+ gen .)"},{"greek":"κατέχω","english":"restrain"},{"greek":"κατηγορέω","english":"accuse"},{"greek":"κατοικέω","english":"dwell, settle"},{"greek":"κεῖμαι","english":"lie down"},{"greek":"κελεύω","english":"order"},{"greek":"κενός -ή -όν","english":"empty"},{"greek":"κέρας -ατος, τό","english":"horn"},{"greek":"κεφαλή -ῆς, ἡ","english":"head"},{"greek":"κῆρυξ –υκος, ὁ","english":"messenger"},{"greek":"κινδυνεύω","english":"risk"},{"greek":"κίνδυνος –ου, ὁ","english":"danger"},{"greek":"κινέω","english":"move"},{"greek":"κλέος –ους, τό","english":"glory"},{"greek":"κλέπτω","english":"steal"},{"greek":"κλίνω","english":"bend"},{"greek":"κοινός -ή -όν","english":"common"},{"greek":"κολάζω","english":"punish"},{"greek":"κόλπος –ου, ὁ","english":"womb, bay"},{"greek":"κομίζω","english":"bring"},{"greek":"κόπτω","english":"cut"},{"greek":"κόρη –ης, ἡ","english":"girl"},{"greek":"κοσμέω","english":"arrange"},{"greek":"κόσμος –ου, ὁ","english":"order"},{"greek":"κρατέω","english":"rule (+ gen .)"},{"greek":"κράτιστος –η -ον","english":"strongest"},{"greek":"κράτος –ους, τό","english":"strength"},{"greek":"κρείσσων -ον","english":"stronger"},{"greek":"κρίνω","english":"judge, decide"},{"greek":"κρίσις –εως, ἡ","english":"judgment, decision"},{"greek":"κριτής –ου, ὁ","english":"judge"},{"greek":"κρύπτω","english":"hide"},{"greek":"κτάομαι","english":"acquire"},{"greek":"κτείνω","english":"kill"},{"greek":"κύκλος –ου, ὁ","english":"circle"},{"greek":"κυρέω","english":"meet (+ gen .), happen"},{"greek":"κύριος –ου, ὁ","english":"lord, master"},{"greek":"κύων, κυνός, ὁ","english":"or ἡ dog"},{"greek":"κωλύω","english":"prevent"},{"greek":"κώμη –ης, ἡ","english":"village"}]}
+{
+  "biblos": [
+    {
+      "greek": "καθά",
+      "english": "just as"
+    },
+    {
+      "greek": "καθαρός -ά -όν",
+      "english": "pure"
+    },
+    {
+      "greek": "καθό",
+      "english": "in so far as"
+    },
+    {
+      "greek": "καί",
+      "english": "and"
+    },
+    {
+      "greek": "καίπερ",
+      "english": "although"
+    },
+    {
+      "greek": "καιρός –οῦ, ὁ",
+      "english": "the right time"
+    },
+    {
+      "greek": "καίτοι",
+      "english": "and indeed, and yet"
+    },
+    {
+      "greek": "κακός -ή -όν",
+      "english": "bad"
+    },
+    {
+      "greek": "καλέω",
+      "english": "call"
+    },
+    {
+      "greek": "κάλλος –ους, τό",
+      "english": "beauty"
+    },
+    {
+      "greek": "καλός -ή -όν",
+      "english": "beautiful"
+    },
+    {
+      "greek": "κάμνω",
+      "english": "work"
+    },
+    {
+      "greek": "καρδία –ας, ἡ",
+      "english": "heart"
+    },
+    {
+      "greek": "καρπός –οῦ, ὁ",
+      "english": "fruit"
+    },
+    {
+      "greek": "κατά +",
+      "english": "gen . or acc . down"
+    },
+    {
+      "greek": "καταβαίνω",
+      "english": "step down"
+    },
+    {
+      "greek": "καταγιγνώσκω",
+      "english": "have prejudice, charge"
+    },
+    {
+      "greek": "κατάγω",
+      "english": "lead down"
+    },
+    {
+      "greek": "κάθημαι",
+      "english": "sit"
+    },
+    {
+      "greek": "καθίστημι",
+      "english": "set down"
+    },
+    {
+      "greek": "καταλαμβάνω",
+      "english": "take hold of"
+    },
+    {
+      "greek": "καταλείπω",
+      "english": "leave behind"
+    },
+    {
+      "greek": "καταλύω",
+      "english": "put down"
+    },
+    {
+      "greek": "καταπλήσσω",
+      "english": "strike down"
+    },
+    {
+      "greek": "κατασκευάζω",
+      "english": "equip"
+    },
+    {
+      "greek": "καταστρέφω",
+      "english": "subdue"
+    },
+    {
+      "greek": "καταφεύγω",
+      "english": "flee for refuge"
+    },
+    {
+      "greek": "καταφρονέω",
+      "english": "despise (+ gen .)"
+    },
+    {
+      "greek": "κατέχω",
+      "english": "restrain"
+    },
+    {
+      "greek": "κατηγορέω",
+      "english": "accuse"
+    },
+    {
+      "greek": "κατοικέω",
+      "english": "dwell, settle"
+    },
+    {
+      "greek": "κεῖμαι",
+      "english": "lie down"
+    },
+    {
+      "greek": "κελεύω",
+      "english": "order"
+    },
+    {
+      "greek": "κενός -ή -όν",
+      "english": "empty"
+    },
+    {
+      "greek": "κέρας -ατος, τό",
+      "english": "horn"
+    },
+    {
+      "greek": "κεφαλή -ῆς, ἡ",
+      "english": "head"
+    },
+    {
+      "greek": "κῆρυξ –υκος, ὁ",
+      "english": "messenger"
+    },
+    {
+      "greek": "κινδυνεύω",
+      "english": "risk"
+    },
+    {
+      "greek": "κίνδυνος –ου, ὁ",
+      "english": "danger"
+    },
+    {
+      "greek": "κινέω",
+      "english": "move"
+    },
+    {
+      "greek": "κλέος –ους, τό",
+      "english": "glory"
+    },
+    {
+      "greek": "κλέπτω",
+      "english": "steal"
+    },
+    {
+      "greek": "κλίνω",
+      "english": "bend"
+    },
+    {
+      "greek": "κοινός -ή -όν",
+      "english": "common"
+    },
+    {
+      "greek": "κολάζω",
+      "english": "punish"
+    },
+    {
+      "greek": "κόλπος –ου, ὁ",
+      "english": "womb, bay"
+    },
+    {
+      "greek": "κομίζω",
+      "english": "bring"
+    },
+    {
+      "greek": "κόπτω",
+      "english": "cut"
+    },
+    {
+      "greek": "κόρη –ης, ἡ",
+      "english": "girl"
+    },
+    {
+      "greek": "κοσμέω",
+      "english": "arrange"
+    },
+    {
+      "greek": "κόσμος –ου, ὁ",
+      "english": "order"
+    },
+    {
+      "greek": "κρατέω",
+      "english": "rule (+ gen .)"
+    },
+    {
+      "greek": "κράτιστος –η -ον",
+      "english": "strongest"
+    },
+    {
+      "greek": "κράτος –ους, τό",
+      "english": "strength"
+    },
+    {
+      "greek": "κρείσσων -ον",
+      "english": "stronger"
+    },
+    {
+      "greek": "κρίνω",
+      "english": "judge, decide"
+    },
+    {
+      "greek": "κρίσις –εως, ἡ",
+      "english": "judgment, decision"
+    },
+    {
+      "greek": "κριτής –ου, ὁ",
+      "english": "judge"
+    },
+    {
+      "greek": "κρύπτω",
+      "english": "hide"
+    },
+    {
+      "greek": "κτάομαι",
+      "english": "acquire"
+    },
+    {
+      "greek": "κτείνω",
+      "english": "kill"
+    },
+    {
+      "greek": "κύκλος –ου, ὁ",
+      "english": "circle"
+    },
+    {
+      "greek": "κυρέω",
+      "english": "meet (+ gen .), happen"
+    },
+    {
+      "greek": "κύριος –ου, ὁ",
+      "english": "lord, master"
+    },
+    {
+      "greek": "κύων, κυνός, ὁ",
+      "english": "or ἡ dog"
+    },
+    {
+      "greek": "κωλύω",
+      "english": "prevent"
+    },
+    {
+      "greek": "κώμη –ης, ἡ",
+      "english": "village"
+    }
+  ]
+}

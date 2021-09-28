@@ -1,1 +1,100 @@
-{"biblos":[{"greek":"χαίρω","english":"be happy"},{"greek":"χαλεπός -ή -όν","english":"difficult"},{"greek":"χάρις, -ιτος, ἡ","english":"grace, favor"},{"greek":"χειμών –ῶνος, ὁ","english":"winter"},{"greek":"χείρ, χειρός, ἡ","english":"hand"},{"greek":"χειρόω","english":"manage, master"},{"greek":"χείρων, χεῖρον","english":"worse"},{"greek":"χέω","english":"pour"},{"greek":"χίλιοι –αι –α","english":"a thousand"},{"greek":"χόω","english":"pile up, bury"},{"greek":"χράομαι","english":"use (+ dat .)"},{"greek":"χράω","english":"(a) scrape (b) attack, be eager, desire ( impf ) (c) furnish"},{"greek":"χρεία –ας, ἡ","english":"use"},{"greek":"χρή","english":"it is fated, necessary"},{"greek":"χρῆμα –ατος, τό","english":"thing, ( pl .) money"},{"greek":"χρήσιμος –η –ον","english":"useful"},{"greek":"χρηστός -ή -όν","english":"useful"},{"greek":"χρόνος –ου, ὁ","english":"time"},{"greek":"χρυσοῦς –ῆ –οῦν","english":"golden"},{"greek":"χρυσός –οῦ, ὁ","english":"gold"},{"greek":"χώρα –ας, ἡ","english":"land"},{"greek":"χωρέω","english":"move"},{"greek":"χωρίον –ου, τό","english":"place"},{"greek":"χωρίς","english":"apart"}]}
+{
+  "biblos": [
+    {
+      "greek": "χαίρω",
+      "english": "be happy"
+    },
+    {
+      "greek": "χαλεπός -ή -όν",
+      "english": "difficult"
+    },
+    {
+      "greek": "χάρις, -ιτος, ἡ",
+      "english": "grace, favor"
+    },
+    {
+      "greek": "χειμών –ῶνος, ὁ",
+      "english": "winter"
+    },
+    {
+      "greek": "χείρ, χειρός, ἡ",
+      "english": "hand"
+    },
+    {
+      "greek": "χειρόω",
+      "english": "manage, master"
+    },
+    {
+      "greek": "χείρων, χεῖρον",
+      "english": "worse"
+    },
+    {
+      "greek": "χέω",
+      "english": "pour"
+    },
+    {
+      "greek": "χίλιοι –αι –α",
+      "english": "a thousand"
+    },
+    {
+      "greek": "χόω",
+      "english": "pile up, bury"
+    },
+    {
+      "greek": "χράομαι",
+      "english": "use (+ dat .)"
+    },
+    {
+      "greek": "χράω",
+      "english": "(a) scrape (b) attack, be eager, desire ( impf ) (c) furnish"
+    },
+    {
+      "greek": "χρεία –ας, ἡ",
+      "english": "use"
+    },
+    {
+      "greek": "χρή",
+      "english": "it is fated, necessary"
+    },
+    {
+      "greek": "χρῆμα –ατος, τό",
+      "english": "thing, ( pl .) money"
+    },
+    {
+      "greek": "χρήσιμος –η –ον",
+      "english": "useful"
+    },
+    {
+      "greek": "χρηστός -ή -όν",
+      "english": "useful"
+    },
+    {
+      "greek": "χρόνος –ου, ὁ",
+      "english": "time"
+    },
+    {
+      "greek": "χρυσοῦς –ῆ –οῦν",
+      "english": "golden"
+    },
+    {
+      "greek": "χρυσός –οῦ, ὁ",
+      "english": "gold"
+    },
+    {
+      "greek": "χώρα –ας, ἡ",
+      "english": "land"
+    },
+    {
+      "greek": "χωρέω",
+      "english": "move"
+    },
+    {
+      "greek": "χωρίον –ου, τό",
+      "english": "place"
+    },
+    {
+      "greek": "χωρίς",
+      "english": "apart"
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dionysos
+  labels:
+    app: dionysos
+spec:
+  replicas: {{ int .Values.config.replicas.low }}
+  selector:
+    matchLabels:
+      app: dionysos
+  template:
+    metadata:
+      labels:
+        app: dionysos
+        release: {{ .Release.Name }}
+        version: {{ .Values.images.tag }}
+    spec:
+      containers:
+        - image: {{ .Values.images.dionysos.repo }}:{{ .Values.images.tag }}
+          name: dionysos
+          env:
+            - name: ELASTIC_SEARCH_SERVICE
+              value: {{ .Values.envVariables.elastic.elasticService }}
+            - name: ELASTIC_SEARCH_USER
+              value: {{ .Values.envVariables.elastic.elasticUser }}
+            - name: ELASTIC_SEARCH_PASSWORD
+              value: {{ .Values.envVariables.elastic.elasticPassword }}
+            - name: ALEXANDROS_BASE_URL
+              value: {{ .Values.envVariables.dionysos.alexandrosUrl }}
+            - name: VERSION
+              value: {{ .Values.envVariables.dionysos.version }}
+            - name: API_NAME
+              value: {{ .Values.envVariables.dionysos.apiName }}
+            - name: SEARCH_ENDPOINT
+              value: {{ .Values.envVariables.dionysos.searchEnpoint }}
+
+          imagePullPolicy: {{ .Values.config.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.envVariables.alexandros.port }}
+          livenessProbe:
+            httpGet:
+              path: /dionysos/v1/health
+              port: {{ .Values.envVariables.alexandros.port }}
+            initialDelaySeconds: {{ .Values.config.initialDelayLiveness }}
+            periodSeconds: {{ .Values.config.periodSeconds }}
+          readinessProbe:
+            httpGet:
+              path: /dionysos/v1/ping
+              port: {{ .Values.envVariables.alexandros.port }}
+            initialDelaySeconds: {{ .Values.config.initialDelayReadiness }}
+            periodSeconds: {{ .Values.config.periodSeconds }}
+          resources:
+            requests:
+              memory: {{ .Values.services.dionysos.requests.memory }}
+              cpu: {{ .Values.services.dionysos.requests.cpu }}
+            limits:
+              memory: {{.Values.services.dionysos.limits.memory}}
+              cpu: {{.Values.services.dionysos.limits.memory}}

@@ -31,6 +31,13 @@ services:
     limits:
       memory: "128Mi"
       cpu: "250m"
+  dionysos:
+    requests:
+      memory: "64Mi"
+      cpu: "100m"
+    limits:
+      memory: "128Mi"
+      cpu: "250m"
   herodotos:
     requests:
       memory: "64Mi"
@@ -47,9 +54,13 @@ services:
       cpu: "250m"
 
 images:
-  tag: 965391f
+  tag: 670fa9e
+  anaximander:
+    repo: anaximander
   alexandros:
     repo: alexandros
+  dionysos:
+    repo: dionysos
   pheidias:
     repo: pheidias
   sokrates:
@@ -75,6 +86,12 @@ envVariables:
     port: 3000
   alexandros:
     port: 5000
+  dionysos:
+    port: 5000
+    alexandrosUrl: http://alexandros-service:5000
+    version: v1
+    apiName: alexandros
+    searchEnpoint: search
   sokrates:
     port: 5000
   herodotos:

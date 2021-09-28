@@ -1,1 +1,92 @@
-{"biblos":[{"greek":"θάλασσα –ης, ἡ","english":"the sea"},{"greek":"θάνατος –ου, ὁ","english":"death"},{"greek":"θάπτω","english":"bury"},{"greek":"θαρσέω","english":"be bold, courageous"},{"greek":"θαυμάζω","english":"be in awe"},{"greek":"θαυμαστός –ή -όν","english":"awesome"},{"greek":"θεά -ᾶς, ἡ","english":"goddess"},{"greek":"θεάομαι","english":"watch"},{"greek":"θεῖος –α –ον","english":"divine"},{"greek":"θεός –οῦ, ὁ","english":"god"},{"greek":"θεραπεύω","english":"serve"},{"greek":"θέρμος –ου, ὁ","english":"heat"},{"greek":"θέω","english":"run"},{"greek":"θεωρέω","english":"look at"},{"greek":"θνήσκω","english":"die"},{"greek":"θρόνος –ου, ὁ","english":"seat"},{"greek":"θυγάτηρ, θυγατρός, ἡ","english":"daughter"},{"greek":"θυμός –οῦ, ὁ","english":"soul, spirit"},{"greek":"θύρα –ας, ἡ","english":"door"},{"greek":"θυσία –ας, ἡ","english":"sacrifice"},{"greek":"θύω","english":"sacrifice"},{"greek":"θώραξ –ακος, ὁ","english":"breastplate"}]}
+{
+  "biblos": [
+    {
+      "greek": "θάλασσα –ης, ἡ",
+      "english": "the sea"
+    },
+    {
+      "greek": "θάνατος –ου, ὁ",
+      "english": "death"
+    },
+    {
+      "greek": "θάπτω",
+      "english": "bury"
+    },
+    {
+      "greek": "θαρσέω",
+      "english": "be bold, courageous"
+    },
+    {
+      "greek": "θαυμάζω",
+      "english": "be in awe"
+    },
+    {
+      "greek": "θαυμαστός –ή -όν",
+      "english": "awesome"
+    },
+    {
+      "greek": "θεά -ᾶς, ἡ",
+      "english": "goddess"
+    },
+    {
+      "greek": "θεάομαι",
+      "english": "watch"
+    },
+    {
+      "greek": "θεῖος –α –ον",
+      "english": "divine"
+    },
+    {
+      "greek": "θεός –οῦ, ὁ",
+      "english": "god"
+    },
+    {
+      "greek": "θεραπεύω",
+      "english": "serve"
+    },
+    {
+      "greek": "θέρμος –ου, ὁ",
+      "english": "heat"
+    },
+    {
+      "greek": "θέω",
+      "english": "run"
+    },
+    {
+      "greek": "θεωρέω",
+      "english": "look at"
+    },
+    {
+      "greek": "θνήσκω",
+      "english": "die"
+    },
+    {
+      "greek": "θρόνος –ου, ὁ",
+      "english": "seat"
+    },
+    {
+      "greek": "θυγάτηρ, θυγατρός, ἡ",
+      "english": "daughter"
+    },
+    {
+      "greek": "θυμός –οῦ, ὁ",
+      "english": "soul, spirit"
+    },
+    {
+      "greek": "θύρα –ας, ἡ",
+      "english": "door"
+    },
+    {
+      "greek": "θυσία –ας, ἡ",
+      "english": "sacrifice"
+    },
+    {
+      "greek": "θύω",
+      "english": "sacrifice"
+    },
+    {
+      "greek": "θώραξ –ακος, ὁ",
+      "english": "breastplate"
+    }
+  ]
+}

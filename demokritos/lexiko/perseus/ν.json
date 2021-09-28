@@ -1,1 +1,88 @@
-{"biblos":[{"greek":"ναί","english":"yes"},{"greek":"ναυμαχία –ας, ἡ","english":"sea battle"},{"greek":"ναῦς, νεώς, ἡ","english":"ship"},{"greek":"ναυτικός -ή -όν","english":"naval"},{"greek":"νεανίας –ου, ὁ","english":"young man"},{"greek":"νεκρός –οῦ, ὁ","english":"corpse"},{"greek":"νέμω","english":"distribute"},{"greek":"νέος –α –ον","english":"young"},{"greek":"νεώς, νεώ, ὁ","english":"temple"},{"greek":"νῆσος –ου, ἡ","english":"island"},{"greek":"νικάω","english":"conquer, win"},{"greek":"νίκη –ης, ἡ","english":"victory"},{"greek":"νοέω","english":"have in mind"},{"greek":"νομίζω","english":"consider"},{"greek":"νόμιμος –η –ον","english":"customary"},{"greek":"νόμος –ου, ὁ","english":"custom, law"},{"greek":"νοῦς, νοῦ, ὁ","english":"mind"},{"greek":"νόσος –ου, ὁ","english":"disease"},{"greek":"νύμφη –ης, ἡ","english":"bride"},{"greek":"νῦν, νυνί","english":"now"},{"greek":"νύξ, νυκτός, ἡ","english":"night"}]}
+{
+  "biblos": [
+    {
+      "greek": "ναί",
+      "english": "yes"
+    },
+    {
+      "greek": "ναυμαχία –ας, ἡ",
+      "english": "sea battle"
+    },
+    {
+      "greek": "ναῦς, νεώς, ἡ",
+      "english": "ship"
+    },
+    {
+      "greek": "ναυτικός -ή -όν",
+      "english": "naval"
+    },
+    {
+      "greek": "νεανίας –ου, ὁ",
+      "english": "young man"
+    },
+    {
+      "greek": "νεκρός –οῦ, ὁ",
+      "english": "corpse"
+    },
+    {
+      "greek": "νέμω",
+      "english": "distribute"
+    },
+    {
+      "greek": "νέος –α –ον",
+      "english": "young"
+    },
+    {
+      "greek": "νεώς, νεώ, ὁ",
+      "english": "temple"
+    },
+    {
+      "greek": "νῆσος –ου, ἡ",
+      "english": "island"
+    },
+    {
+      "greek": "νικάω",
+      "english": "conquer, win"
+    },
+    {
+      "greek": "νίκη –ης, ἡ",
+      "english": "victory"
+    },
+    {
+      "greek": "νοέω",
+      "english": "have in mind"
+    },
+    {
+      "greek": "νομίζω",
+      "english": "consider"
+    },
+    {
+      "greek": "νόμιμος –η –ον",
+      "english": "customary"
+    },
+    {
+      "greek": "νόμος –ου, ὁ",
+      "english": "custom, law"
+    },
+    {
+      "greek": "νοῦς, νοῦ, ὁ",
+      "english": "mind"
+    },
+    {
+      "greek": "νόσος –ου, ὁ",
+      "english": "disease"
+    },
+    {
+      "greek": "νύμφη –ης, ἡ",
+      "english": "bride"
+    },
+    {
+      "greek": "νῦν, νυνί",
+      "english": "now"
+    },
+    {
+      "greek": "νύξ, νυκτός, ἡ",
+      "english": "night"
+    }
+  ]
+}

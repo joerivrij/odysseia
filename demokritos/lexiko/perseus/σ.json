@@ -1,1 +1,284 @@
-{"biblos":[{"greek":"σαυτοῦ -ῆς","english":"yourself [reflexive]"},{"greek":"σαφής -ές","english":"clear"},{"greek":"σελήνη –ης, ἡ","english":"moon"},{"greek":"σημαίνω","english":"show"},{"greek":"σημεῖον –ου, τό","english":"sign"},{"greek":"σῖτος –ου, ὁ","english":"grain"},{"greek":"σκέπτομαι","english":"examine"},{"greek":"σκευάζω","english":"prepare"},{"greek":"σκήνη –ης, ἡ","english":"tent, stage"},{"greek":"σκοπέω","english":"look at"},{"greek":"σός –ή –όν","english":"your, yours"},{"greek":"σοφία –ας, ἡ","english":"wisdom"},{"greek":"σοφός -ή -όν","english":"wise"},{"greek":"σπεύδω","english":"hurry"},{"greek":"σπονδή -ῆς, ἡ","english":"libation"},{"greek":"σπουδάζω","english":"hurry"},{"greek":"σπουδή -ῆς, ἡ","english":"eagerness"},{"greek":"στάδιον –ου, τό","english":"stade = 185 meters"},{"greek":"στάσις –εως, ἡ","english":"revolution"},{"greek":"στέλλω","english":"send"},{"greek":"στερέω","english":"separate"},{"greek":"στέρνον –ου, τό","english":"chest"},{"greek":"στεφανόω","english":"surround, crown"},{"greek":"στόλος –ου, ὁ","english":"expedition"},{"greek":"στόμα –ατος, τό","english":"mouth"},{"greek":"στρατεία –ας, ἡ","english":"expedition, campaign"},{"greek":"στράτευμα –ατος, τό","english":"expedition, campaign"},{"greek":"στρατεύω","english":"do military service"},{"greek":"στρατηγός –οῦ, ὁ","english":"general"},{"greek":"στρατιά –ᾶς, ἡ","english":"army"},{"greek":"στρατιώτης –ου, ὁ","english":"soldier"},{"greek":"στρατοπεδεύω","english":"encamp"},{"greek":"στρατόπεδον –ου, τό","english":"camp"},{"greek":"στρατός –οῦ, ὁ","english":"army"},{"greek":"στρέφω","english":"turn"},{"greek":"σύ, σου","english":"you"},{"greek":"σύν","english":"with (+ dat .)"},{"greek":"συνάγω","english":"bring together"},{"greek":"συνάπτω","english":"bind together"},{"greek":"συγγενής -ές","english":"related"},{"greek":"συγγνώμη –ης, ἡ","english":"pardon"},{"greek":"σύγκλητος –ον","english":"specially called"},{"greek":"συλλαμβάνω","english":"collect"},{"greek":"συμβαίνω","english":"happen, agree with"},{"greek":"συμβάλλω","english":"throw together"},{"greek":"συμβουλεύω","english":"advise"},{"greek":"σύνειμι","english":"be with, associate with, live with"},{"greek":"συνέρχομαι","english":"to come together"},{"greek":"συνεχής -ές","english":"continuous"},{"greek":"συνθήκη –ης, ἡ","english":"composition, contract"},{"greek":"συνίστημι","english":"bring together"},{"greek":"συμμαχέω","english":"be an ally"},{"greek":"συμμαχία –ας, ἡ","english":"alliance"},{"greek":"σύμμαχος –ον","english":"allied"},{"greek":"σύμπας –πᾶσα –πᾶν","english":"all together"},{"greek":"συμφέρω","english":"benefit (+ dat .)"},{"greek":"συμφορά -ᾶς, ἡ","english":"accident"},{"greek":"συντάσσω","english":"arrange"},{"greek":"συντίθημι","english":"put together"},{"greek":"συγχωρέω","english":"come together, agree"},{"greek":"σφάζω","english":"kill"},{"greek":"σφεῖς, σφῶν","english":"they"},{"greek":"σφέτερος –α –ον","english":"their (own)"},{"greek":"σφόδρα","english":"exceedingly"},{"greek":"σχεδόν","english":"close, almost"},{"greek":"σχῆμα –ατος, τό","english":"form"},{"greek":"σχολή -ῆς, ἡ","english":"leisure"},{"greek":"σώζω","english":"save"},{"greek":"σῶμα –ατος, τό","english":"body"},{"greek":"σωτηρία –ας, ἡ","english":"safety"}]}
+{
+  "biblos": [
+    {
+      "greek": "σαυτοῦ -ῆς",
+      "english": "yourself [reflexive]"
+    },
+    {
+      "greek": "σαφής -ές",
+      "english": "clear"
+    },
+    {
+      "greek": "σελήνη –ης, ἡ",
+      "english": "moon"
+    },
+    {
+      "greek": "σημαίνω",
+      "english": "show"
+    },
+    {
+      "greek": "σημεῖον –ου, τό",
+      "english": "sign"
+    },
+    {
+      "greek": "σῖτος –ου, ὁ",
+      "english": "grain"
+    },
+    {
+      "greek": "σκέπτομαι",
+      "english": "examine"
+    },
+    {
+      "greek": "σκευάζω",
+      "english": "prepare"
+    },
+    {
+      "greek": "σκήνη –ης, ἡ",
+      "english": "tent, stage"
+    },
+    {
+      "greek": "σκοπέω",
+      "english": "look at"
+    },
+    {
+      "greek": "σός –ή –όν",
+      "english": "your, yours"
+    },
+    {
+      "greek": "σοφία –ας, ἡ",
+      "english": "wisdom"
+    },
+    {
+      "greek": "σοφός -ή -όν",
+      "english": "wise"
+    },
+    {
+      "greek": "σπεύδω",
+      "english": "hurry"
+    },
+    {
+      "greek": "σπονδή -ῆς, ἡ",
+      "english": "libation"
+    },
+    {
+      "greek": "σπουδάζω",
+      "english": "hurry"
+    },
+    {
+      "greek": "σπουδή -ῆς, ἡ",
+      "english": "eagerness"
+    },
+    {
+      "greek": "στάδιον –ου, τό",
+      "english": "stade \u003d 185 meters"
+    },
+    {
+      "greek": "στάσις –εως, ἡ",
+      "english": "revolution"
+    },
+    {
+      "greek": "στέλλω",
+      "english": "send"
+    },
+    {
+      "greek": "στερέω",
+      "english": "separate"
+    },
+    {
+      "greek": "στέρνον –ου, τό",
+      "english": "chest"
+    },
+    {
+      "greek": "στεφανόω",
+      "english": "surround, crown"
+    },
+    {
+      "greek": "στόλος –ου, ὁ",
+      "english": "expedition"
+    },
+    {
+      "greek": "στόμα –ατος, τό",
+      "english": "mouth"
+    },
+    {
+      "greek": "στρατεία –ας, ἡ",
+      "english": "expedition, campaign"
+    },
+    {
+      "greek": "στράτευμα –ατος, τό",
+      "english": "expedition, campaign"
+    },
+    {
+      "greek": "στρατεύω",
+      "english": "do military service"
+    },
+    {
+      "greek": "στρατηγός –οῦ, ὁ",
+      "english": "general"
+    },
+    {
+      "greek": "στρατιά –ᾶς, ἡ",
+      "english": "army"
+    },
+    {
+      "greek": "στρατιώτης –ου, ὁ",
+      "english": "soldier"
+    },
+    {
+      "greek": "στρατοπεδεύω",
+      "english": "encamp"
+    },
+    {
+      "greek": "στρατόπεδον –ου, τό",
+      "english": "camp"
+    },
+    {
+      "greek": "στρατός –οῦ, ὁ",
+      "english": "army"
+    },
+    {
+      "greek": "στρέφω",
+      "english": "turn"
+    },
+    {
+      "greek": "σύ, σου",
+      "english": "you"
+    },
+    {
+      "greek": "σύν",
+      "english": "with (+ dat .)"
+    },
+    {
+      "greek": "συνάγω",
+      "english": "bring together"
+    },
+    {
+      "greek": "συνάπτω",
+      "english": "bind together"
+    },
+    {
+      "greek": "συγγενής -ές",
+      "english": "related"
+    },
+    {
+      "greek": "συγγνώμη –ης, ἡ",
+      "english": "pardon"
+    },
+    {
+      "greek": "σύγκλητος –ον",
+      "english": "specially called"
+    },
+    {
+      "greek": "συλλαμβάνω",
+      "english": "collect"
+    },
+    {
+      "greek": "συμβαίνω",
+      "english": "happen, agree with"
+    },
+    {
+      "greek": "συμβάλλω",
+      "english": "throw together"
+    },
+    {
+      "greek": "συμβουλεύω",
+      "english": "advise"
+    },
+    {
+      "greek": "σύνειμι",
+      "english": "be with, associate with, live with"
+    },
+    {
+      "greek": "συνέρχομαι",
+      "english": "to come together"
+    },
+    {
+      "greek": "συνεχής -ές",
+      "english": "continuous"
+    },
+    {
+      "greek": "συνθήκη –ης, ἡ",
+      "english": "composition, contract"
+    },
+    {
+      "greek": "συνίστημι",
+      "english": "bring together"
+    },
+    {
+      "greek": "συμμαχέω",
+      "english": "be an ally"
+    },
+    {
+      "greek": "συμμαχία –ας, ἡ",
+      "english": "alliance"
+    },
+    {
+      "greek": "σύμμαχος –ον",
+      "english": "allied"
+    },
+    {
+      "greek": "σύμπας –πᾶσα –πᾶν",
+      "english": "all together"
+    },
+    {
+      "greek": "συμφέρω",
+      "english": "benefit (+ dat .)"
+    },
+    {
+      "greek": "συμφορά -ᾶς, ἡ",
+      "english": "accident"
+    },
+    {
+      "greek": "συντάσσω",
+      "english": "arrange"
+    },
+    {
+      "greek": "συντίθημι",
+      "english": "put together"
+    },
+    {
+      "greek": "συγχωρέω",
+      "english": "come together, agree"
+    },
+    {
+      "greek": "σφάζω",
+      "english": "kill"
+    },
+    {
+      "greek": "σφεῖς, σφῶν",
+      "english": "they"
+    },
+    {
+      "greek": "σφέτερος –α –ον",
+      "english": "their (own)"
+    },
+    {
+      "greek": "σφόδρα",
+      "english": "exceedingly"
+    },
+    {
+      "greek": "σχεδόν",
+      "english": "close, almost"
+    },
+    {
+      "greek": "σχῆμα –ατος, τό",
+      "english": "form"
+    },
+    {
+      "greek": "σχολή -ῆς, ἡ",
+      "english": "leisure"
+    },
+    {
+      "greek": "σώζω",
+      "english": "save"
+    },
+    {
+      "greek": "σῶμα –ατος, τό",
+      "english": "body"
+    },
+    {
+      "greek": "σωτηρία –ας, ἡ",
+      "english": "safety"
+    }
+  ]
+}

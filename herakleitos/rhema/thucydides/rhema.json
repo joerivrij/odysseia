@@ -2,17 +2,25 @@
   "rhemai": [
     {
       "author": "Thucydides",
-      "greek" : "Θουκυδίδης Ἀθηναῖος ξυνέγραψε τὸν πόλεμον τῶν Πελοποννησίων καὶ Ἀθηναίων",
-      "translations" : [
-        "Thucydides, an Athenian, wrote the history of the war between the Peloponnesians and the Athenians,"
-      ]
-    },
-    {
-      "author": "Thucydides",
       "greek" : "Θουκυδίδης Ἀθηναῖος ξυνέγραψε τὸν πόλεμον τῶν Πελοποννησίων καὶ Ἀθηναίων, ὡς ἐπολέμησαν πρὸς ἀλλήλους, ἀρξάμενος εὐθὺς καθισταμένου καὶ ἐλπίσας μέγαν τε ἔσεσθαι καὶ ἀξιολογώτατον τῶν προγεγενημένων, τεκμαιρόμενος ὅτι ἀκμάζοντές τε ᾖσαν ἐς αὐτὸν ἀμφότεροι παρασκευῇ τῇ πάσῃ καὶ τὸ ἄλλο Ἑλληνικὸν ὁρῶν ξυνιστάμενον πρὸς ἑκατέρους, τὸ μὲν εὐθύς, τὸ δὲ καὶ διανοούμενον. [2] κίνησις γὰρ αὕτη μεγίστη δὴ τοῖς Ἕλλησιν ἐγένετο καὶ μέρει τινὶ τῶν βαρβάρων, ὡς δὲ εἰπεῖν καὶ ἐπὶ πλεῖστον ἀνθρώπων. [3] τὰ γὰρ πρὸ αὐτῶν καὶ τὰ ἔτι παλαίτερα σαφῶς μὲν εὑρεῖν διὰ χρόνου πλῆθος ἀδύνατα ἦν, ἐκ δὲ τεκμηρίων ὧν ἐπὶ μακρότατον σκοποῦντί μοι πιστεῦσαι ξυμβαίνει οὐ μεγάλα νομίζω γενέσθαι οὔτε κατὰ τοὺς πολέμους οὔτε ἐς τὰ ἄλλα.",
       "translations" : [
         "Thucydides, an Athenian, wrote the history of the war between the Peloponnesians and the Athenians, beginning at the moment that it broke out, and believing that it would be a great war, and more worthy of relation than any that had preceded it. This belief was not without its grounds. The preparations of both the combatants were in every department in the last state of perfection; and he could see the rest of the Hellenic race taking sides in the quarrel; those who delayed doing so at once having it in contemplation. [2] Indeed this was the greatest movement yet known in history, not only of the Hellenes, but of a large part of the barbarian world—I had almost said of mankind. [3] For though the events of remote antiquity, and even those that more immediately precede the war, could not from lapse of time be clearly ascertained, yet the evidences which an inquiry carried as far back as was practicable leads me to trust, all point to the conclusion that there was nothing on a great scale, either in war or in other matters."
-      ]
+      ],
+      "book": 1,
+      "chapter":  1,
+      "section": 1,
+      "perseusTextLink": "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0003.tlg001.perseus-grc2:1.1.1?right=perseus-eng5&q=&qk=form"
+    },
+    {
+      "author": "Thucydides",
+      "greek": "πανταχῇ μὲν οὖν πολὺς θόρυβος καὶ ταραχώδης ἦν ἡ ναυμαχία, ἐν ᾗ αἱ Ἀττικαὶ νῆες παραγιγνόμεναι τοῖς Κερκυραίοις, εἴ πῃ πιέζοιντο, φόβον μὲν παρεῖχον τοῖς ἐναντίοις, μάχης δὲ οὐκ ἦρχον δεδιότες οἱ στρατηγοὶ τὴν πρόρρησιν τῶν Ἀθηναίων.",
+      "translations" : [
+        "Everywhere the battle was a scene of tumult and confusion.At any point where they saw the Corcyraeans distressed, the Athenians appeared and kept the enemy in check;but the generals, who were afraid of disobeying their instructions, would not begin the attack themselves."
+      ],
+      "book": 1,
+      "chapter":  49,
+      "section": 4,
+      "perseusTextLink": "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0003.tlg001.perseus-grc2:1.49.4?right=perseus-eng5&q=&qk=form"
     }
   ]
 }

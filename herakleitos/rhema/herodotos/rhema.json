@@ -3,7 +3,11 @@
     {
       "author": "Herodotos",
       "greek": "ἀπικομένους δὲ τούς Φοίνικας ἐς δὴ τὸ Ἄργος τοῦτο διατίθεσθαι τὸν φόρτον",
-      "translations": ["The Phoenicians came to Argos, and set out their cargo"]
+      "translations": ["The Phoenicians came to Argos, and set out their cargo"],
+      "book": 1,
+      "chapter":  1,
+      "section": 0,
+      "perseusTextLink": "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0016.tlg001.perseus-grc2:1.1.0-1.1.4?right=perseus-eng2"
     },
     {
       "author": "Herodotos",
@@ -11,7 +15,22 @@
       "translations" : [
         "This is the display of the inquiry of Herodotus of Halicarnassus",
         "This is the display of the inquiry of Herodotos of Halicarnassos"
-        ]
+        ],
+      "book": 1,
+      "chapter":  1,
+      "section": 2,
+      "perseusTextLink": "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0016.tlg001.perseus-grc2:1.1.0-1.1.4?right=perseus-eng2"
+    },
+    {
+      "author": "Herodotos",
+      "greek" : "ὡς δέ οἱ ταῦτα ἔδοξε, καὶ ἐποίεε κατὰ τάχος· ἐλάσας γὰρ τὸν στρατὸν ἐς τὴν Λυδίην αὐτὸς ἄγγελος Κροίσῳ ἐληλύθεε. ἐνθαῦτα Κροῖσος ἐς ἀπορίην πολλὴν ἀπιγμένος, ὥς οἱ παρὰ δόξαν ἔσχε τὰ πρήγματα ἢ ὡς αὐτὸς κατεδόκεε, ὅμως τοὺς Λυδοὺς ἐξῆγε ἐς μάχην.",
+      "translations" : [
+        "This he decided, and this he did immediately; he marched his army into Lydia and so came himself to bring the news of it to Croesus. All had turned out contrary to Croesus' expectation, and he was in a great quandary; nevertheless, he led out the Lydians to battle."
+      ],
+      "book": 1,
+      "chapter":  79,
+      "section": 2,
+      "perseusTextLink": "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0016.tlg001.perseus-grc2:1.79.2?right=perseus-eng2&q=&qk=form"
     }
   ]
 }
