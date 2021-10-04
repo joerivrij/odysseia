@@ -22,6 +22,10 @@ type NotFoundError struct {
 	Message NotFoundMessage `json:"errorModel"`
 }
 
+func (m *NotFoundError) Error() string {
+	return m.Error()
+}
+
 type NotFoundMessage struct {
 	Type   string `json:"type"`
 	Reason string `json:"reason"`
@@ -30,6 +34,10 @@ type NotFoundMessage struct {
 type ElasticSearchError struct {
 	ErrorModel
 	Message ElasticErrorMessage `json:"errorModel"`
+}
+
+func (m *ElasticSearchError) Error() string {
+	return m.Error()
 }
 
 type ElasticErrorMessage struct {

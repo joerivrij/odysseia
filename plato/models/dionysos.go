@@ -2,23 +2,26 @@ package models
 
 import "encoding/json"
 
-func UnmarshalDeclensions(data []byte) (Declensions, error) {
-	var r Declensions
+type DeclensionConfig struct {
+	FirstDeclension Declension
+	SecondDeclension Declension
+}
+
+func UnmarshalDeclension(data []byte) (Declension, error) {
+	var r Declension
 	err := json.Unmarshal(data, &r)
 	return r, err
 }
 
-func (r *Declensions) Marshal() ([]byte, error) {
+func (r *Declension) Marshal() ([]byte, error) {
 	return json.Marshal(r)
 }
 
-type Declensions struct {
-	Declensions Declension `json:"declensions"`
-}
-
 type Declension struct {
-	FirstDeclension  []DeclensionElement `json:"firstDeclension,omitempty"`
-	SecondDeclension []DeclensionElement `json:"secondDeclension,omitempty"`
+	Name        string              `json:"name"`
+	Type        string              `json:"type"`
+	Dialect     string              `json:"dialect"`
+	Declensions []DeclensionElement `json:"declensions"`
 }
 
 type DeclensionElement struct {
@@ -46,4 +49,29 @@ type Rule struct {
 	Declension string `json:"declension,omitempty"`
 	Rule       string `json:"rule,omitempty"`
 	SearchTerms []string `json:"searchTerm,omitempty"`
+}
+
+func UnmarshalDeclensionTranslationResults(data []byte) (DeclensionTranslationResults, error) {
+	var r DeclensionTranslationResults
+	err := json.Unmarshal(data, &r)
+	return r, err
+}
+
+func (r *DeclensionTranslationResults) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+type DeclensionTranslationResults struct {
+	Results []Result `json:"results"`
+}
+
+type Result struct {
+	Word        string `json:"word"`
+	Rule        string `json:"rule"`
+	RootWord    string `json:"rootWord"`
+	Translation string `json:"translation"`
+}
+
+func (r *DeclensionTranslationResults)RemoveIndex(index int) {
+	r.Results = append(r.Results[:index], r.Results[index+1:]...)
 }

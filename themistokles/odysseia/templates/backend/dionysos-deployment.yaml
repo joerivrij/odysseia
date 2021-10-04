@@ -34,6 +34,8 @@ spec:
               value: {{ .Values.envVariables.dionysos.apiName }}
             - name: SEARCH_ENDPOINT
               value: {{ .Values.envVariables.dionysos.searchEnpoint }}
+            - name: ENV
+              value: {{ .Values.config.environment }}
 
           imagePullPolicy: {{ .Values.config.pullPolicy }}
           ports:

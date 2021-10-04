@@ -61,6 +61,30 @@ func TestHealthEndpointElasticDown(t *testing.T) {
 	assert.False(t, healthModel.Healthy)
 }
 
+func TestQueryWordEndpointHappyPath(t *testing.T) {
+	fixtureFile := "dionysosFemaleNoun"
+	mockCode := 200
+	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
+	assert.Nil(t, err)
+
+	declensionConfig := QueryRuleSet(nil, "dionysos")
+	assert.Nil(t, err)
+
+	testConfig := DionysosConfig{
+		ElasticClient:      *mockElasticClient,
+		DictionaryIndex: dictionaryIndexDefault,
+		Index:             elasticIndexDefault,
+		DeclensionConfig:   *declensionConfig,
+	}
+	router := InitRoutes(testConfig)
+	response := performGetRequest(router, "/dionysos/v1/checkGrammar?word=μάχη")
+
+	var declensions models.DeclensionTranslationResults
+	err = json.NewDecoder(response.Body).Decode(&declensions)
+	assert.Nil(t, err)
+	assert.Equal(t, http.StatusOK, response.Code)
+}
+
 func performGetRequest(r http.Handler, path string) *httptest.ResponseRecorder {
 	req, _ := http.NewRequest("GET", path, nil)
 	w := httptest.NewRecorder()

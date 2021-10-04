@@ -8,7 +8,7 @@ import (
 
 func TestElasticIsNotHealthy(t *testing.T) {
 	esClient, _ := elastic.CreateElasticClientFromEnvVariables()
-	healthy, _ := Get(1, esClient)
+	healthy, _ := Get(1, esClient, nil)
 	assert.False(t, healthy)
 }
 
@@ -18,6 +18,9 @@ func TestElasticIsHealthy(t *testing.T) {
 	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
-	healthy, _ := Get(1, mockElasticClient)
+	declensionConfig := QueryRuleSet(nil, "dionysos")
+	assert.Nil(t, err)
+
+	healthy, _ := Get(1, mockElasticClient, declensionConfig)
 	assert.True(t, healthy)
 }

@@ -3,59 +3,62 @@ package app
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/elastic/go-elasticsearch/v7"
-	"github.com/kpango/glg"
 	"github.com/odysseia/plato/elastic"
-	"github.com/odysseia/plato/helpers"
+	"github.com/odysseia/plato/middleware"
 	"github.com/odysseia/plato/models"
 	"golang.org/x/text/runes"
 	"golang.org/x/text/transform"
 	"golang.org/x/text/unicode/norm"
-	"io/ioutil"
-	"net/url"
-	"os"
-	"path"
 	"strings"
 	"unicode"
 	"unicode/utf8"
 )
 
-type DeclensionHandler struct {
-	BaseUrl            string
-	Version            string
-	ApiName            string
-	SearchWordEndPoint string
-	Index string
-	ElasticClient elasticsearch.Client
-}
-
-func (d *DeclensionHandler) queryAlexandrosForPossibleMeaning(word string) ([]models.Meros, error) {
-	var results []models.Meros
-
-	u, err := url.Parse(d.BaseUrl)
-	if err != nil {
-		return nil, err
-	}
-
+func (d *DionysosHandler) queryWordInElastic(word string) ([]models.Meros, error) {
+	var searchResults []models.Meros
 	strippedWord := d.removeAccents(word)
 
-	u.Path = path.Join(u.Path, d.ApiName, d.Version, d.SearchWordEndPoint)
-	q := u.Query()
-	q.Set("word", strippedWord)
-	u.RawQuery = q.Encode()
+	term := "greek"
+	response, err := elastic.QueryWithMatch(d.Config.ElasticClient, d.Config.DictionaryIndex, term, strippedWord)
 
-	response, err := helpers.GetRequest(*u)
 	if err != nil {
-		return nil, err
+		errText := err.Error()
+		//todo better way to check for a 404
+		if strings.Contains(errText, "404") {
+			e := models.NotFoundError{
+				ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
+				Message: models.NotFoundMessage{
+					Type:   term,
+					Reason: errText,
+				},
+			}
+			return nil, &e
+		}
+
+		e := models.ElasticSearchError{
+			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
+			Message: models.ElasticErrorMessage{
+				ElasticError: err.Error(),
+			},
+		}
+		return nil, &e
 	}
 
-	err = json.NewDecoder(response.Body).Decode(&results)
-	glg.Debug(results)
 
-	return results, nil
+	for _, hit := range response.Hits.Hits {
+		jsonHit, _ := json.Marshal(hit.Source)
+		meros, _ := models.UnmarshalMeros(jsonHit)
+		if meros.Original != "" {
+			meros.Greek = meros.Original
+			meros.Original = ""
+		}
+		searchResults = append(searchResults, meros)
+	}
+
+	return searchResults, nil
 }
 
-func (d *DeclensionHandler)removeAccents(s string) string {
+func (d *DionysosHandler)removeAccents(s string) string {
 	t := transform.Chain(norm.NFD, runes.Remove(runes.In(unicode.Mn)), norm.NFC)
 	output, _, e := transform.String(t, s)
 	if e != nil {
@@ -64,8 +67,8 @@ func (d *DeclensionHandler)removeAccents(s string) string {
 	return output
 }
 
-func (d *DeclensionHandler) StartFindingRules(word string) (*DeclensionTranslationResults, error) {
-	var results DeclensionTranslationResults
+func (d *DionysosHandler) StartFindingRules(word string) (*models.DeclensionTranslationResults, error) {
+	var results models.DeclensionTranslationResults
 
 	declensions, err := d.searchForDeclensions(word)
 	if err != nil {
@@ -76,9 +79,9 @@ func (d *DeclensionHandler) StartFindingRules(word string) (*DeclensionTranslati
 		for _, declension := range declensions.Rules {
 			if len(declension.SearchTerms) > 0 {
 				for _, term := range declension.SearchTerms {
-					alexandrosHits, err := d.queryAlexandrosForPossibleMeaning(term)
+					alexandrosHits, err := d.queryWordInElastic(term)
 					if err != nil {
-						return nil, err
+						continue
 					}
 					var translation string
 					var article string
@@ -91,7 +94,7 @@ func (d *DeclensionHandler) StartFindingRules(word string) (*DeclensionTranslati
 						}
 					}
 
-					result := Result{
+					result := models.Result{
 						Word:        word,
 						Rule:        declension.Rule,
 						RootWord:    term,
@@ -139,66 +142,24 @@ func (d *DeclensionHandler) StartFindingRules(word string) (*DeclensionTranslati
 	return &results, nil
 }
 
-func (d *DeclensionHandler) searchForDeclensions(word string) (*models.FoundRules, error) {
-	var local bool
-
-	localString := os.Getenv("LOCAL")
-	if localString == "" {
-		local = true
-	} else {
-		local = false
-	}
-
-	var declensions models.Declensions
-	if local {
-		var basePath string
-		cw, _ := os.Getwd()
-		if !strings.Contains(cw, "dionysos") {
-			basePath = fmt.Sprintf("%s/%s/%s", cw, "dionysos", "app")
-		} else {
-			basePath = cw
-		}
-		filePath := fmt.Sprintf("%s/rules.json", basePath)
-		jsonFile, err := os.Open(filePath)
-
-		if err != nil {
-			return nil, err
-		}
-
-		byteValue, _ := ioutil.ReadAll(jsonFile)
-		declensions, err = models.UnmarshalDeclensions(byteValue)
-		if err != nil {
-			return nil, err
-		}
-	} else {
-		response, err := elastic.QueryWithMatchAll(d.ElasticClient, d.Index)
-
-		if err != nil {
-			return nil, err
-		}
-
-		jsonHit, _ := json.Marshal(response.Hits.Hits[0].Source)
-		declensions, _ = models.UnmarshalDeclensions(jsonHit)
-
-	}
-
+func (d *DionysosHandler) searchForDeclensions(word string) (*models.FoundRules, error) {
 	var foundRules models.FoundRules
 
-	firstDeclensionForms := d.loopOverDeclensions(word, declensions.Declensions.FirstDeclension)
+	firstDeclensionForms := d.loopOverDeclensions(word, d.Config.DeclensionConfig.FirstDeclension.Declensions)
 	for _, form := range firstDeclensionForms.Rules {
 		rule := models.Rule{
-			Form:        "noun",
-			Declension:  "first",
+			Form:        d.Config.DeclensionConfig.FirstDeclension.Type,
+			Declension:  d.Config.DeclensionConfig.FirstDeclension.Name,
 			Rule:        form.Rule,
 			SearchTerms: form.SearchTerms,
 		}
 		foundRules.Rules = append(foundRules.Rules, rule)
 	}
-	secondDeclensionForms := d.loopOverDeclensions(word, declensions.Declensions.SecondDeclension)
+	secondDeclensionForms := d.loopOverDeclensions(word, d.Config.DeclensionConfig.SecondDeclension.Declensions)
 	for _, form := range secondDeclensionForms.Rules {
 		rule := models.Rule{
-			Form:        "noun",
-			Declension:  "second",
+			Form:        d.Config.DeclensionConfig.SecondDeclension.Type,
+			Declension:  d.Config.DeclensionConfig.SecondDeclension.Name,
 			Rule:        form.Rule,
 			SearchTerms: form.SearchTerms,
 		}
@@ -208,7 +169,7 @@ func (d *DeclensionHandler) searchForDeclensions(word string) (*models.FoundRule
 	return &foundRules, nil
 }
 
-func (d *DeclensionHandler) loopOverDeclensions(word string, form []models.DeclensionElement) models.FoundRules {
+func (d *DionysosHandler) loopOverDeclensions(word string, form []models.DeclensionElement) models.FoundRules {
 	var declensions models.FoundRules
 
 	for _, outcome := range form {

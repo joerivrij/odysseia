@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 config:
-  environment: development
+  environment: minikube
   pullPolicy: Never
   inClusterElastic: true
   loadTests: true

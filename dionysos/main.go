@@ -37,7 +37,9 @@ func main() {
 		glg.Fatalf("Error creating ElasticClient shutting down: %s", err)
 	}
 
-	healthy, config := app.Get(200, esClient)
+	declensionConfig := app.QueryRuleSet(esClient, "dionysos")
+
+	healthy, config := app.Get(200, esClient, declensionConfig)
 	if !healthy {
 		glg.Fatal("death has found me")
 	}

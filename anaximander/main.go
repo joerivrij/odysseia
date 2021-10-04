@@ -7,6 +7,7 @@ import (
 	"github.com/elastic/go-elasticsearch/v7/esapi"
 	"github.com/kpango/glg"
 	"github.com/odysseia/plato/elastic"
+	"github.com/odysseia/plato/models"
 	"io/ioutil"
 	"os"
 	"path"
@@ -62,6 +63,8 @@ func main() {
 			for _, f := range files {
 				glg.Debug(fmt.Sprintf("found %s in %s", f.Name(), filePath))
 				plan, _ := ioutil.ReadFile(path.Join(filePath, f.Name()))
+				var declensions models.Declension
+				err := json.Unmarshal(plan, &declensions)
 
 				esRequest := esapi.IndexRequest{
 					Body:       strings.NewReader(string(plan)),

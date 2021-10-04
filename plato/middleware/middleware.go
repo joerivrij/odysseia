@@ -90,6 +90,8 @@ func ResponseWithJson(w http.ResponseWriter, payload interface{}) {
 		code = 200
 	case models.Health:
 		code = 200
+	case models.DeclensionTranslationResults:
+		code = 200
 	case map[string]interface{}:
 		code = 200
 	case models.ValidationError:
