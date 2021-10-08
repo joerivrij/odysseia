@@ -1,31 +1,47 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sokrates
+  name: "{{ template "sokrates.uname" . }}"
   labels:
-    app: sokrates
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: "{{ .Chart.Name }}"
+    env: {{ .Values.config.environment }}
+    app: "{{ template "sokrates.uname" . }}"
+    {{- range $key, $value := .Values.services.backend.labels }}
+    {{ $key }}: {{ $value | quote }}
+  {{- end }}
 spec:
   replicas: {{ int .Values.config.replicas.medium }}
   selector:
     matchLabels:
-      app: sokrates
+      app: "{{ template "sokrates.uname" . }}"
   template:
     metadata:
       labels:
-        app: sokrates
+        app: {{ template "sokrates.uname" . }}
         release: {{ .Release.Name }}
         version: {{ .Values.images.tag }}
     spec:
       containers:
         - image: {{ .Values.images.sokrates.repo }}:{{ .Values.images.tag }}
-          name: sokrates
+          name: {{ template "sokrates.uname" . }}
           env:
             - name: ELASTIC_SEARCH_SERVICE
-              value: {{ .Values.envVariables.elastic.elasticService }}
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "odysseia.fullname" . }}-config
+                  key: elasticService
             - name: ELASTIC_SEARCH_USER
-              value: {{ .Values.envVariables.elastic.elasticUser }}
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "odysseia.fullname" . }}-config
+                  key: elasticUser
             - name: ELASTIC_SEARCH_PASSWORD
-              value: {{ .Values.envVariables.elastic.elasticPassword }}
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "odysseia.fullname" . }}-config
+                  key: elasticPassword
           imagePullPolicy: {{ .Values.config.pullPolicy }}
           ports:
             - containerPort: {{ .Values.envVariables.sokrates.port }}
