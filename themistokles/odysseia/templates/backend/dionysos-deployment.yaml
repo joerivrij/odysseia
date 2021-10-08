@@ -1,34 +1,49 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dionysos
+  name: "{{ template "dionysos.uname" . }}"
   labels:
-    app: dionysos
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: "{{ .Chart.Name }}"
+    env: {{ .Values.config.environment }}
+    app: "{{ template "dionysos.uname" . }}"
+    {{- range $key, $value := .Values.services.backend.labels }}
+    {{ $key }}: {{ $value | quote }}
+  {{- end }}
 spec:
   replicas: {{ int .Values.config.replicas.medium }}
   selector:
     matchLabels:
-      app: dionysos
+      app: "{{ template "dionysos.uname" . }}"
   template:
     metadata:
       labels:
-        app: dionysos
+        app: {{ template "dionysos.uname" . }}
         release: {{ .Release.Name }}
         version: {{ .Values.images.tag }}
     spec:
       containers:
         - image: {{ .Values.images.dionysos.repo }}:{{ .Values.images.tag }}
-          name: dionysos
+          name: "{{ template "dionysos.uname" . }}"
           env:
             - name: ELASTIC_SEARCH_SERVICE
-              value: {{ .Values.envVariables.elastic.elasticService }}
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "odysseia.fullname" . }}-config
+                  key: elasticService
             - name: ELASTIC_SEARCH_USER
-              value: {{ .Values.envVariables.elastic.elasticUser }}
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "odysseia.fullname" . }}-config
+                  key: elasticUser
             - name: ELASTIC_SEARCH_PASSWORD
-              value: {{ .Values.envVariables.elastic.elasticPassword }}
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "odysseia.fullname" . }}-config
+                  key: elasticPassword
             - name: ENV
               value: {{ .Values.config.environment }}
-
           imagePullPolicy: {{ .Values.config.pullPolicy }}
           ports:
             - containerPort: {{ .Values.envVariables.alexandros.port }}

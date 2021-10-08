@@ -1,31 +1,47 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: herodotos
+  name: "{{ template "herodotos.uname" . }}"
   labels:
-    app: herodotos
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: "{{ .Chart.Name }}"
+    env: {{ .Values.config.environment }}
+    app: "{{ template "herodotos.uname" . }}"
+    {{- range $key, $value := .Values.services.backend.labels }}
+    {{ $key }}: {{ $value | quote }}
+  {{- end }}
 spec:
   replicas: {{ int .Values.config.replicas.low }}
   selector:
     matchLabels:
-      app: herodotos
+      app: "{{ template "herodotos.uname" . }}"
   template:
     metadata:
       labels:
-        app: herodotos
+        app: {{ template "herodotos.uname" . }}
         release: {{ .Release.Name }}
         version: {{ .Values.images.tag }}
     spec:
       containers:
         - image: {{ .Values.images.herodotos.repo }}:{{ .Values.images.tag }}
-          name: herodotos
+          name: {{ template "herodotos.uname" . }}
           env:
             - name: ELASTIC_SEARCH_SERVICE
-              value: {{ .Values.envVariables.elastic.elasticService }}
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "odysseia.fullname" . }}-config
+                  key: elasticService
             - name: ELASTIC_SEARCH_USER
-              value: {{ .Values.envVariables.elastic.elasticUser }}
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "odysseia.fullname" . }}-config
+                  key: elasticUser
             - name: ELASTIC_SEARCH_PASSWORD
-              value: {{ .Values.envVariables.elastic.elasticPassword }}
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "odysseia.fullname" . }}-config
+                  key: elasticPassword
           imagePullPolicy: {{ .Values.config.pullPolicy }}
           ports:
             - containerPort: {{ .Values.envVariables.herodotos.port }}

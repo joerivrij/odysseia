@@ -35,7 +35,7 @@ spec:
                 - name: HERODOTOS_URL
                   value: http://herodotos-service:5000
                 - name: DIONYSOS_URL
-                  value: http://dioynsos-service:5000
+                  value: http://dionysos-service:5000
               imagePullPolicy: {{ .Values.config.pullPolicy }}
               command:
               - /bin/sh

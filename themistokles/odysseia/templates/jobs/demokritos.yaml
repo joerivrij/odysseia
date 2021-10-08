@@ -17,11 +17,20 @@ spec:
           name: demokritos
           env:
             - name: ELASTIC_SEARCH_SERVICE
-              value: {{ .Values.envVariables.elastic.elasticService }}
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "odysseia.fullname" . }}-config
+                  key: elasticService
             - name: ELASTIC_SEARCH_USER
-              value: {{ .Values.envVariables.elastic.elasticUser }}
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "odysseia.fullname" . }}-config
+                  key: elasticUser
             - name: ELASTIC_SEARCH_PASSWORD
-              value: {{ .Values.envVariables.elastic.elasticPassword }}
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "odysseia.fullname" . }}-config
+                  key: elasticPassword
           imagePullPolicy: {{ .Values.config.pullPolicy }}
       restartPolicy: Never
   backoffLimit: 3

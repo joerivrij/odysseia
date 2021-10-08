@@ -68,3 +68,35 @@ Create the name of the service account to use
 {{ .Values.services.hippokrates.name }}
 {{- end -}}
 {{- end -}}
+
+{{- define "alexandros.uname" -}}
+{{- if empty .Values.services.alexandros.name -}}
+{{ .Values.images.alexandros }}
+{{- else -}}
+{{ .Values.services.alexandros.name }}
+{{- end -}}
+{{- end -}}
+
+{{- define "dionysos.uname" -}}
+{{- if empty .Values.services.dionysos.name -}}
+{{ .Values.images.dionysos }}
+{{- else -}}
+{{ .Values.services.dionysos.name }}
+{{- end -}}
+{{- end -}}
+
+{{- define "herodotos.uname" -}}
+{{- if empty .Values.services.herodotos.name -}}
+{{ .Values.images.herodotos }}
+{{- else -}}
+{{ .Values.services.herodotos.name }}
+{{- end -}}
+{{- end -}}
+
+{{- define "sokrates.uname" -}}
+{{- if empty .Values.services.sokrates.name -}}
+{{ .Values.images.sokrates }}
+{{- else -}}
+{{ .Values.services.sokrates.name }}
+{{- end -}}
+{{- end -}}
