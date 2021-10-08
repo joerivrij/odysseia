@@ -154,7 +154,6 @@ export default {
       databaseAnswer: "",
       closeOnContentClick: true,
       reveal: false,
-      wordsInSentence: [],
       cycle: false,
     }
   },
@@ -172,9 +171,21 @@ export default {
       let url = `${this.$dionysosUrl}/checkGrammar?word=${value}`
       this.$apiClient.get(url)
           .then((response) => {
+            for (let i = 0; i < response.data.results.length; i++) {
+              if (response.data.results[i].translation === "") {
+                response.data.results[i].translation = "No translation found"
+              }
+            }
+
             this.grammarResults = response.data.results
           })
           .catch(e => {
+            this.grammarResults =  [{
+              "word"  :  value,
+              "translation"   :  "No translation found",
+              "rootWord"      :  value,
+              "rule" : "No rule found"
+            }]
             this.errors.push(e)
           })
     },
@@ -198,15 +209,6 @@ export default {
       let url = `${this.$herodotosUrl}/createQuestion?author=${author}`
       this.$apiClient.get(url)
           .then((response) => {
-            let regex = /[,.;\s]/g;
-            let wordArray = response.data.sentence.split(" ")
-            let splittedArray = []
-            wordArray.forEach(function(word) {
-              let strippedWord = word.replace(regex, '')
-              splittedArray.push(strippedWord)
-            })
-
-            this.wordsInSentence = splittedArray
             this.sentence = response.data.sentence
             this.currentSentenceId = response.data.sentenceId
           })

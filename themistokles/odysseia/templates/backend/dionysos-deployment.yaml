@@ -26,8 +26,6 @@ spec:
               value: {{ .Values.envVariables.elastic.elasticUser }}
             - name: ELASTIC_SEARCH_PASSWORD
               value: {{ .Values.envVariables.elastic.elasticPassword }}
-            - name: ALEXANDROS_BASE_URL
-              value: {{ .Values.envVariables.dionysos.alexandrosUrl }}
             - name: ENV
               value: {{ .Values.config.environment }}
 

@@ -63,7 +63,7 @@ func (s *SokratesHandler) FindHighestChapter(w http.ResponseWriter, req *http.Re
 	}
 
 	elasticJson, _ := json.Marshal(elasticResult.Hits.Hits[0].Source)
-	chapter, err := models.UnmarshalWord(elasticJson)
+	chapter, _ := models.UnmarshalWord(elasticJson)
 	response := models.LastChapterResponse{LastChapter: chapter.Chapter}
 
 	middleware.ResponseWithJson(w, response)

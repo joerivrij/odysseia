@@ -69,19 +69,16 @@ func QueryRuleSet(es *elasticsearch.Client, index string) *models.DeclensionConf
 
 		if err != nil {
 			panic(fmt.Sprintf("Cannot start Dionysos encountered error when creating config: %s", err))
-			return nil
 		}
 		var declensionConfig models.DeclensionConfig
 		for _, jsonHit := range response.Hits.Hits {
 			byteJson, err := json.Marshal(jsonHit.Source)
 			if err != nil {
 				panic(fmt.Sprintf("Cannot start Dionysos encountered error when creating config: %s", err))
-				return nil
 			}
 			declension, err := models.UnmarshalDeclension(byteJson)
 			if err != nil {
 				panic(fmt.Sprintf("Cannot start Dionysos encountered error when creating config: %s", err))
-				return nil
 			}
 			switch declension.Name {
 			case "firstDeclension":
@@ -94,7 +91,6 @@ func QueryRuleSet(es *elasticsearch.Client, index string) *models.DeclensionConf
 		}
 		return &declensionConfig
 	}
-	return nil
 }
 
 func getJsonFilesFromAnaximander() (*models.DeclensionConfig, error){

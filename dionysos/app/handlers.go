@@ -49,7 +49,7 @@ func (d *DionysosHandler) checkGrammar(w http.ResponseWriter, req *http.Request)
 	glg.Debugf("trying to get the possibilities for %s", queryWord)
 
 	declensions, _ := d.StartFindingRules(queryWord)
-	if len(declensions.Results) > 1 || declensions.Results == nil {
+	if len(declensions.Results) == 0 || declensions.Results == nil {
 		e := models.NotFoundError{
 			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
 			Message: models.NotFoundMessage{

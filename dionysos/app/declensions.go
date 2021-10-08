@@ -68,6 +68,16 @@ func (d *DionysosHandler)removeAccents(s string) string {
 	return output
 }
 
+func (d *DionysosHandler) parseDictResults(dictionaryHits models.Meros) (translation, article string){
+	translation = dictionaryHits.English
+	greek := strings.Split(dictionaryHits.Greek, ",")
+	if len(greek) > 1 {
+		article = strings.Replace(greek[1], " ", "", -1)
+	}
+
+	return
+}
+
 func (d *DionysosHandler) StartFindingRules(word string) (*models.DeclensionTranslationResults, error) {
 	var results models.DeclensionTranslationResults
 
@@ -80,56 +90,68 @@ func (d *DionysosHandler) StartFindingRules(word string) (*models.DeclensionTran
 		for _, declension := range declensions.Rules {
 			if len(declension.SearchTerms) > 0 {
 				for _, term := range declension.SearchTerms {
-					alexandrosHits, err := d.queryWordInElastic(term)
+					dictionaryHits, err := d.queryWordInElastic(term)
 					if err != nil {
 						glg.Debug("word not found in database")
 						//this should be handled in a new service
 					}
-					var translation string
-					var article string
+					for _, hit := range dictionaryHits {
+						translation, article := d.parseDictResults(hit)
 
-					if len(alexandrosHits) > 0 {
-						translation = alexandrosHits[0].English
-						greek := strings.Split(alexandrosHits[0].Greek, ",")
-						if len(greek) > 1 {
-							article = strings.Replace(greek[1], " ", "", -1)
-						}
-					}
-
-					result := models.Result{
-						Word:        word,
-						Rule:        declension.Rule,
-						RootWord:    term,
-						Translation: translation,
-					}
-					if len(results.Results) > 0 {
-						if translation == "" {
-							continue
-						}
-					}
-
-					if article != "" {
-						switch article {
-						case "ὁ":
-							if !strings.Contains(declension.Rule, "masc") {
-								continue
-							}
-						case "ἡ":
-							if !strings.Contains(declension.Rule, "fem") {
-								continue
-							}
-						case "τό":
-							if !strings.Contains(declension.Rule, "neut") {
-								continue
-							}
-						default:
-							continue
+						result := models.Result{
+							Word:        word,
+							Rule:        declension.Rule,
+							RootWord:    term,
+							Translation: translation,
 						}
 
+						if len(results.Results) > 0 {
+							if translation == "" {
+								continue
+							}
+						}
+
+						if article != "" {
+							switch article {
+							case "ὁ":
+								if !strings.Contains(declension.Rule, "masc") {
+									continue
+								}
+							case "ἡ":
+								if !strings.Contains(declension.Rule, "fem") {
+									continue
+								}
+							case "τό":
+								if !strings.Contains(declension.Rule, "neut") {
+									continue
+								}
+							default:
+								continue
+							}
+						}
+						results.Results = append(results.Results, result)
 					}
 
-					results.Results = append(results.Results, result)
 				}
+			}
+		}
+	} else {
+		singleSearchResult, err := d.queryWordInElastic(word)
+		if err != nil {
+			glg.Debug("no result for single word continuing loop")
+		}
+
+		if len(singleSearchResult) > 0 {
+			for _, searchResult := range singleSearchResult {
+				translation, _ := d.parseDictResults(searchResult)
+				result := models.Result{
+					Word:        word,
+					Rule:        "preposition",
+					RootWord:    searchResult.Greek,
+					Translation: translation,
+				}
+
+				results.Results = append(results.Results, result)
 			}
 		}
 	}
@@ -137,8 +159,10 @@ func (d *DionysosHandler) StartFindingRules(word string) (*models.DeclensionTran
 	if len(results.Results) > 1 {
 		lastRule := ""
 		for i, result := range results.Results {
-			if lastRule == result.Rule {
-				results.RemoveIndex(i)
+			if result.Rule != "preposition" {
+				if lastRule == result.Rule {
+					results.RemoveIndex(i)
+				}
 			}
 			if result.Translation == "" {
 				results.RemoveIndex(i)

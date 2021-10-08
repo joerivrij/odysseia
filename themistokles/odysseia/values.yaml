@@ -54,7 +54,7 @@ services:
       cpu: "250m"
 
 images:
-  tag: b1badd1
+  tag: 91d8f7d
   anaximander:
     repo: anaximander
   alexandros:

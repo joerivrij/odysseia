@@ -111,6 +111,7 @@ func TestAuthorsEndPointShardFailure(t *testing.T) {
 
 	var searchResults models.ElasticSearchError
 	err = json.NewDecoder(response.Body).Decode(&searchResults)
+	assert.Nil(t, err)
 
 	expectedText := "elasticSearch returned an error"
 
@@ -134,6 +135,7 @@ func TestAuthorsEndPointReturnsBadJson(t *testing.T) {
 
 	var searchResults models.ValidationError
 	err = json.NewDecoder(response.Body).Decode(&searchResults)
+	assert.Nil(t, err)
 
 	expectedText := "an error occurred while parsing"
 
@@ -158,6 +160,7 @@ func TestCreateQuestionHappyPath(t *testing.T) {
 
 	var searchResults models.CreateSentenceResponse
 	err = json.NewDecoder(response.Body).Decode(&searchResults)
+	assert.Nil(t, err)
 
 	expectedText := "Θουκυδίδης"
 
@@ -182,6 +185,7 @@ func TestCreateQuestionMissingAuthor(t *testing.T) {
 
 	var searchResults models.ValidationError
 	err = json.NewDecoder(response.Body).Decode(&searchResults)
+	assert.Nil(t, err)
 
 	expectedText := "cannot be empty"
 
@@ -206,6 +210,7 @@ func TestCreateQuestionMissingAuthorInElastic(t *testing.T) {
 
 	var searchResults models.NotFoundError
 	err = json.NewDecoder(response.Body).Decode(&searchResults)
+	assert.Nil(t, err)
 
 	expectedText := "404"
 
@@ -230,6 +235,7 @@ func TestCreateQuestionShardFailure(t *testing.T) {
 
 	var searchResults models.ElasticSearchError
 	err = json.NewDecoder(response.Body).Decode(&searchResults)
+	assert.Nil(t, err)
 
 	expectedText := "elasticSearch returned an error"
 
@@ -254,6 +260,7 @@ func TestCreateQuestionUnParseableJson(t *testing.T) {
 
 	var searchResults models.ValidationError
 	err = json.NewDecoder(response.Body).Decode(&searchResults)
+	assert.Nil(t, err)
 
 	expectedText := [2]string{"createQuestion", "translation"}
 
@@ -286,8 +293,9 @@ func TestCheckAnswerEndPointHappyPath(t *testing.T) {
 
 	var searchResults models.CheckSentenceResponse
 	err = json.NewDecoder(response.Body).Decode(&searchResults)
+	assert.Nil(t, err)
 
-	levenshteinAsFloat, _ := strconv.ParseFloat(searchResults.LevenshteinPercentage, 8)
+	levenshteinAsFloat, _ := strconv.ParseFloat(searchResults.LevenshteinPercentage, 32)
 
 	assert.Nil(t, err)
 	assert.Equal(t, http.StatusOK, response.Code)
@@ -344,6 +352,7 @@ func TestCheckSentenceShardFailure(t *testing.T) {
 
 	var searchResults models.ElasticSearchError
 	err = json.NewDecoder(response.Body).Decode(&searchResults)
+	assert.Nil(t, err)
 
 	expectedText := "elasticSearch returned an error"
 
@@ -373,6 +382,7 @@ func TestCheckSentenceUnparseableJson(t *testing.T) {
 	response := performPostRequest(router, "/herodotos/v1/checkSentence", bodyInBytes)
 	var searchResults models.ValidationError
 	err = json.NewDecoder(response.Body).Decode(&searchResults)
+	assert.Nil(t, err)
 
 	expectedText := [2]string{"createQuestion", "translation"}
 

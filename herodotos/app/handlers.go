@@ -364,7 +364,7 @@ func checkSliceForItem(slice []string, sourceWord string) bool {
 
 func removeCharacters(input string, characters string) string {
 	filter := func(r rune) rune {
-		if strings.IndexRune(characters, r) < 0 {
+		if !strings.ContainsRune(characters, r) {
 			return r
 		}
 		return -1
