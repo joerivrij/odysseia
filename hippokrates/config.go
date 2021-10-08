@@ -11,9 +11,10 @@ type odysseiaFixture struct {
 	sokrates Sokrates
 	herodotos Herodotos
 	alexandros Alexandros
+	dionysos Dionysos
 }
 
-func New(alexandrosUrl, herodotosUrl, sokratesUrl, sokratesName, herodotosName, alexandrosName string) (*odysseiaFixture, error) {
+func New(alexandrosUrl, herodotosUrl, sokratesUrl, dionysosUrl, sokratesName, herodotosName, alexandrosName, dionysosName string) (*odysseiaFixture, error) {
 	sokratesApi := Sokrates{
 		BaseApi: BaseApi{
 			BaseUrl:   sokratesUrl,
@@ -44,10 +45,21 @@ func New(alexandrosUrl, herodotosUrl, sokratesUrl, sokratesName, herodotosName, 
 	}
 	alexandrosApi.Endpoints = alexandrosApi.GenerateEndpoints()
 
+	dionysosApi := Dionysos {
+		BaseApi: BaseApi{
+			BaseUrl:   dionysosUrl,
+			ApiName:   dionysosName,
+			Version: 	version,
+		},
+		Endpoints: DionysosEndpoints{},
+	}
+	dionysosApi.Endpoints = dionysosApi.GenerateEndpoints()
+
 	return &odysseiaFixture{
 		sokrates:                    sokratesApi,
 		herodotos: herodotosApi,
 		alexandros: alexandrosApi,
+		dionysos: dionysosApi,
 		ctx:                         context.Background(),
 	}, nil
 }

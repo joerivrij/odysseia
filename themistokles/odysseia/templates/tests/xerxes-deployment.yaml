@@ -80,7 +80,7 @@ spec:
             - name: LOCUST_HOST
               value: {{ .Values.envVariables.xerxes.dionysosHost }}
             - name: LOCUST_WEB_PORT
-              value: {{ .Values.envVariables.xerxes.sokratesPort | quote }}
+              value: {{ .Values.envVariables.xerxes.dionysosPort | quote }}
             - name: LOCUST_LOCUSTFILE
               value: locustfiles/dionysos-locustfile.py
             - name: LOCUST_USERS
