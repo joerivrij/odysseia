@@ -54,7 +54,7 @@ services:
       cpu: "250m"
 
 images:
-  tag: 670fa9e
+  tag: b1badd1
   anaximander:
     repo: anaximander
   alexandros:
@@ -89,9 +89,6 @@ envVariables:
   dionysos:
     port: 5000
     alexandrosUrl: http://alexandros-service:5000
-    version: v1
-    apiName: alexandros
-    searchEnpoint: search
   sokrates:
     port: 5000
   herodotos:
@@ -99,10 +96,12 @@ envVariables:
   ploutarchos:
     port: 8080
   xerxes:
+    alexandrosHost: http://alexandros-service:5000
+    alexandrosPort: 8086
+    dionysosHost: http://dionysos-service:5000
+    dionysosPort: 8087
     herodotosHost: http://herodotos-service:5000
     herodotosPort: 8088
-    alexandrosHost: http://alexandros-service:5000
-    alexandrosPort: 8087
     sokratesHost: http://sokrates-service:5000
     sokratesPort: 8089
     port: 8089

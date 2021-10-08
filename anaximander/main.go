@@ -65,9 +65,9 @@ func main() {
 				plan, _ := ioutil.ReadFile(path.Join(filePath, f.Name()))
 				var declensions models.Declension
 				err := json.Unmarshal(plan, &declensions)
-
+				upload, _ := declensions.Marshal()
 				esRequest := esapi.IndexRequest{
-					Body:       strings.NewReader(string(plan)),
+					Body:       strings.NewReader(string(upload)),
 					Refresh:    "true",
 					Index:      indexName,
 					DocumentID: "",

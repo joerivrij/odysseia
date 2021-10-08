@@ -1,3 +1,5 @@
+// +build !integration
+
 package app
 
 import (
@@ -61,9 +63,10 @@ func TestHealthEndpointElasticDown(t *testing.T) {
 	assert.False(t, healthModel.Healthy)
 }
 
-func TestQueryWordEndpointHappyPath(t *testing.T) {
+func TestQueryWordEndpointHappyPathFemFirst(t *testing.T) {
 	fixtureFile := "dionysosFemaleNoun"
 	mockCode := 200
+	expected := "noun - sing - fem - nom"
 	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
@@ -83,7 +86,120 @@ func TestQueryWordEndpointHappyPath(t *testing.T) {
 	err = json.NewDecoder(response.Body).Decode(&declensions)
 	assert.Nil(t, err)
 	assert.Equal(t, http.StatusOK, response.Code)
+	assert.True(t, len(declensions.Results) == 1)
+	assert.Equal(t, expected, declensions.Results[0].Rule)
 }
+
+func TestQueryWordEndpointHappyPathMascSecond(t *testing.T) {
+	fixtureFile := "dionysosMascNoun"
+	mockCode := 200
+	expected := "noun - plural - masc - nom"
+	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
+	assert.Nil(t, err)
+
+	declensionConfig := QueryRuleSet(nil, "dionysos")
+	assert.Nil(t, err)
+
+	testConfig := DionysosConfig{
+		ElasticClient:      *mockElasticClient,
+		DictionaryIndex: dictionaryIndexDefault,
+		Index:             elasticIndexDefault,
+		DeclensionConfig:   *declensionConfig,
+	}
+	router := InitRoutes(testConfig)
+	response := performGetRequest(router, "/dionysos/v1/checkGrammar?word=πόλεμοι")
+
+	var declensions models.DeclensionTranslationResults
+	err = json.NewDecoder(response.Body).Decode(&declensions)
+	assert.Nil(t, err)
+	assert.Equal(t, http.StatusOK, response.Code)
+	assert.True(t, len(declensions.Results) == 1)
+	assert.Equal(t, expected, declensions.Results[0].Rule)
+}
+
+func TestQueryWordEndpointHappyPathNeutSecond(t *testing.T) {
+	fixtureFile := "dionysosNeuterNoun"
+	mockCode := 200
+	expected := "neut"
+	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
+	assert.Nil(t, err)
+
+	declensionConfig := QueryRuleSet(nil, "dionysos")
+	assert.Nil(t, err)
+
+	testConfig := DionysosConfig{
+		ElasticClient:      *mockElasticClient,
+		DictionaryIndex: dictionaryIndexDefault,
+		Index:             elasticIndexDefault,
+		DeclensionConfig:   *declensionConfig,
+	}
+	router := InitRoutes(testConfig)
+	response := performGetRequest(router, "/dionysos/v1/checkGrammar?word=δῶρα")
+
+	var declensions models.DeclensionTranslationResults
+	err = json.NewDecoder(response.Body).Decode(&declensions)
+	assert.Nil(t, err)
+	assert.Equal(t, http.StatusOK, response.Code)
+	assert.True(t, len(declensions.Results) == 1)
+	assert.Contains(t, declensions.Results[0].Rule, expected)
+}
+
+func TestSearchEndPointElasticNoResults(t *testing.T) {
+	expected := "noun - plural - masc - nom"
+
+	elasticClient, err := elastic.CreateElasticClient("test", "test", []string{"http://localhost:9200"})
+	assert.Nil(t, err)
+
+	declensionConfig := QueryRuleSet(nil, "dionysos")
+	assert.Nil(t, err)
+
+	testConfig := DionysosConfig{
+		ElasticClient:      *elasticClient,
+		DictionaryIndex: dictionaryIndexDefault,
+		Index:             elasticIndexDefault,
+		DeclensionConfig:   *declensionConfig,
+	}
+
+	router := InitRoutes(testConfig)
+	response := performGetRequest(router, "/dionysos/v1/checkGrammar?word=πόλεμοι")
+
+	var declensions models.DeclensionTranslationResults
+	err = json.NewDecoder(response.Body).Decode(&declensions)
+	assert.Nil(t, err)
+	assert.Equal(t, http.StatusOK, response.Code)
+	assert.True(t, len(declensions.Results) == 1)
+	assert.Equal(t,  "", declensions.Results[0].Translation)
+	assert.Equal(t,  expected, declensions.Results[0].Rule)
+}
+
+
+
+func TestSearchEndPointWithoutQueryParam(t *testing.T) {
+	expected := "cannot be empty"
+
+	elasticClient, err := elastic.CreateElasticClient("test", "test", []string{"http://localhost:9200"})
+	assert.Nil(t, err)
+
+	declensionConfig := QueryRuleSet(nil, "dionysos")
+	assert.Nil(t, err)
+
+	testConfig := DionysosConfig{
+		ElasticClient:      *elasticClient,
+		DictionaryIndex: dictionaryIndexDefault,
+		Index:             elasticIndexDefault,
+		DeclensionConfig:   *declensionConfig,
+	}
+
+	router := InitRoutes(testConfig)
+	response := performGetRequest(router, "/dionysos/v1/checkGrammar?word=")
+
+	var validation models.ValidationError
+	err = json.NewDecoder(response.Body).Decode(&validation)
+	assert.Nil(t, err)
+	assert.Equal(t, http.StatusBadRequest, response.Code)
+	assert.Equal(t,  expected, validation.Messages[0].Message)
+}
+
 
 func performGetRequest(r http.Handler, path string) *httptest.ResponseRecorder {
 	req, _ := http.NewRequest("GET", path, nil)

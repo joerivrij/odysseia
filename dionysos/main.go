@@ -37,12 +37,14 @@ func main() {
 		glg.Fatalf("Error creating ElasticClient shutting down: %s", err)
 	}
 
-	declensionConfig := app.QueryRuleSet(esClient, "dionysos")
-
-	healthy, config := app.Get(200, esClient, declensionConfig)
+	healthy := elastic.CheckHealthyStatusElasticSearch(esClient, 200)
 	if !healthy {
+		glg.Errorf("elasticClient unhealthy after %d ticks", 200)
 		glg.Fatal("death has found me")
 	}
+
+	declensionConfig := app.QueryRuleSet(esClient, "dionysos")
+	config := app.Get(esClient, declensionConfig)
 
 	srv := app.InitRoutes(*config)
 

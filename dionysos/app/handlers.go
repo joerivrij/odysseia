@@ -49,5 +49,16 @@ func (d *DionysosHandler) checkGrammar(w http.ResponseWriter, req *http.Request)
 	glg.Debugf("trying to get the possibilities for %s", queryWord)
 
 	declensions, _ := d.StartFindingRules(queryWord)
-	middleware.ResponseWithJson(w, declensions)
+	if len(declensions.Results) > 1 || declensions.Results == nil {
+		e := models.NotFoundError{
+			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
+			Message: models.NotFoundMessage{
+				Type:   queryWord,
+				Reason: "no options found",
+			},
+		}
+		middleware.ResponseWithJson(w, e)
+		return
+	}
+	middleware.ResponseWithJson(w, *declensions)
 }

@@ -68,6 +68,14 @@
         ]
       },
       {
+        "declension": "-ὸν",
+        "ruleName": "noun - sing - masc - acc",
+        "searchTerm": [
+          "ος",
+          "ός"
+        ]
+      },
+      {
         "declension": "-οι",
         "ruleName": "noun - plural - masc - nom",
         "searchTerm": [
@@ -131,9 +139,14 @@
           "ός"
         ]
       },
-
-
-
+      {
+        "declension": "-οὺς",
+        "ruleName": "noun - plural - masc - acc",
+        "searchTerm": [
+          "ος",
+          "ός"
+        ]
+      },
       {
         "declension": "-ον",
         "ruleName": "noun - sing - neut - nom",
@@ -162,10 +175,15 @@
           "ον"
         ]
       },
-
-
       {
-        "declension": "-οι",
+        "declension": "-α",
+        "ruleName": "noun - plural - neut - nom",
+        "searchTerm": [
+          "ον"
+        ]
+      },
+      {
+        "declension": "-ᾰ",
         "ruleName": "noun - plural - neut - nom",
         "searchTerm": [
           "ον"

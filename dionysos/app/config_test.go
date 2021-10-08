@@ -1,16 +1,13 @@
+// +build !integration
+
 package app
 
 import (
 	"github.com/odysseia/plato/elastic"
 	"github.com/stretchr/testify/assert"
+	"os"
 	"testing"
 )
-
-func TestElasticIsNotHealthy(t *testing.T) {
-	esClient, _ := elastic.CreateElasticClientFromEnvVariables()
-	healthy, _ := Get(1, esClient, nil)
-	assert.False(t, healthy)
-}
 
 func TestElasticIsHealthy(t *testing.T) {
 	fixtureFile := "info"
@@ -21,6 +18,24 @@ func TestElasticIsHealthy(t *testing.T) {
 	declensionConfig := QueryRuleSet(nil, "dionysos")
 	assert.Nil(t, err)
 
-	healthy, _ := Get(1, mockElasticClient, declensionConfig)
-	assert.True(t, healthy)
+	config := Get(mockElasticClient, declensionConfig)
+	assert.NotNil(t, config)
+}
+
+func TestCreateElasticConfig(t *testing.T) {
+	os.Setenv("ENV", "testing")
+
+	expected := "attic"
+	fixtureFile := "declensionsDionysos"
+	mockCode := 200
+	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
+	assert.Nil(t, err)
+
+	declensionConfig := QueryRuleSet(mockElasticClient, "dionysos")
+	assert.NotNil(t, declensionConfig)
+
+	os.Setenv("ENV", "")
+
+	assert.Equal(t, declensionConfig.FirstDeclension.Dialect, expected)
+	assert.Equal(t, declensionConfig.SecondDeclension.Dialect, expected)
 }

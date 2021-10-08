@@ -5,7 +5,7 @@ metadata:
   labels:
     app: dionysos
 spec:
-  replicas: {{ int .Values.config.replicas.low }}
+  replicas: {{ int .Values.config.replicas.medium }}
   selector:
     matchLabels:
       app: dionysos
@@ -28,12 +28,6 @@ spec:
               value: {{ .Values.envVariables.elastic.elasticPassword }}
             - name: ALEXANDROS_BASE_URL
               value: {{ .Values.envVariables.dionysos.alexandrosUrl }}
-            - name: VERSION
-              value: {{ .Values.envVariables.dionysos.version }}
-            - name: API_NAME
-              value: {{ .Values.envVariables.dionysos.apiName }}
-            - name: SEARCH_ENDPOINT
-              value: {{ .Values.envVariables.dionysos.searchEnpoint }}
             - name: ENV
               value: {{ .Values.config.environment }}
 

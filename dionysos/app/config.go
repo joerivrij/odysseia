@@ -12,7 +12,6 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
-	"time"
 )
 
 type DionysosConfig struct {
@@ -25,13 +24,7 @@ type DionysosConfig struct {
 const dictionaryIndexDefault = "alexandros"
 const elasticIndexDefault = "dionysos"
 
-func Get(ticks time.Duration, es *elasticsearch.Client, declensionConfig *models.DeclensionConfig) (bool, *DionysosConfig) {
-	healthy := elastic.CheckHealthyStatusElasticSearch(es, ticks)
-	if !healthy {
-		glg.Errorf("elasticClient unhealthy after %s ticks", ticks)
-		return healthy, nil
-	}
-
+func Get(es *elasticsearch.Client, declensionConfig *models.DeclensionConfig) (*DionysosConfig) {
 	dictIndex := os.Getenv("DICTIONARY_INDEX")
 	if dictIndex == "" {
 		glg.Debugf("setting DICTIONARY_INDEX to default: %s", dictionaryIndexDefault)
@@ -51,7 +44,7 @@ func Get(ticks time.Duration, es *elasticsearch.Client, declensionConfig *models
 		DeclensionConfig: *declensionConfig,
 	}
 
-	return healthy, config
+	return config
 }
 
 func QueryRuleSet(es *elasticsearch.Client, index string) *models.DeclensionConfig {
@@ -99,6 +92,7 @@ func QueryRuleSet(es *elasticsearch.Client, index string) *models.DeclensionConf
 				continue
 			}
 		}
+		return &declensionConfig
 	}
 	return nil
 }

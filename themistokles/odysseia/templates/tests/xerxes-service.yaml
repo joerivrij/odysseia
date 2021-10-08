@@ -16,4 +16,7 @@ spec:
     - name: "sokrates"
       port: {{ .Values.envVariables.xerxes.sokratesPort }}
       targetPort: {{ .Values.envVariables.xerxes.sokratesPort }}
+    - name: "dionysos"
+      port: {{ .Values.envVariables.xerxes.dionysosPort }}
+      targetPort: {{ .Values.envVariables.xerxes.dionysosPort }}
 {{- end }}

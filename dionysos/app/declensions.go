@@ -3,6 +3,7 @@ package app
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/kpango/glg"
 	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/middleware"
 	"github.com/odysseia/plato/models"
@@ -62,7 +63,7 @@ func (d *DionysosHandler)removeAccents(s string) string {
 	t := transform.Chain(norm.NFD, runes.Remove(runes.In(unicode.Mn)), norm.NFC)
 	output, _, e := transform.String(t, s)
 	if e != nil {
-		panic(e)
+		glg.Error(e.Error())
 	}
 	return output
 }
@@ -81,7 +82,8 @@ func (d *DionysosHandler) StartFindingRules(word string) (*models.DeclensionTran
 				for _, term := range declension.SearchTerms {
 					alexandrosHits, err := d.queryWordInElastic(term)
 					if err != nil {
-						continue
+						glg.Debug("word not found in database")
+						//this should be handled in a new service
 					}
 					var translation string
 					var article string
@@ -133,10 +135,15 @@ func (d *DionysosHandler) StartFindingRules(word string) (*models.DeclensionTran
 	}
 
 	if len(results.Results) > 1 {
+		lastRule := ""
 		for i, result := range results.Results {
+			if lastRule == result.Rule {
+				results.RemoveIndex(i)
+			}
 			if result.Translation == "" {
 				results.RemoveIndex(i)
 			}
+			lastRule = result.Rule
 		}
 	}
 	return &results, nil

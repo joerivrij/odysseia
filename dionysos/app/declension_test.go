@@ -248,343 +248,268 @@ func TestFirstDeclensionMascNouns(t *testing.T) {
 	})
 }
 
-//
-//func TestGetSecondDeclensionNominativusMascSing(t *testing.T) {
-//	handler := DeclensionHandler{
-//		BaseUrl: "http://minikube-odysseia.test",
-//		Version: "v1",
-//		ApiName: "alexandros",
-//		SearchWordEndPoint: "search",
-//	}
-//
-//	words := []string{"δοῦλος", "πόλεμος", "θεός"}
-//	for _, word := range words {
-//		declensions, err := handler.StartFindingRules(word)
-//		assert.Nil(t, err)
-//		if len(declensions.Results) > 1 {
-//			for _, declension := range declensions.Results{
-//				assert.Contains(t, declension.Rule, "masc")
-//			}
-//		} else {
-//			assert.Contains(t, declensions.Results[0].Rule, "noun - sing - masc - nom")
-//		}
-//	}
-//}
-//
-//func TestGetSecondDeclensionGenitivusMascSing(t *testing.T) {
-//	handler := DeclensionHandler{
-//		BaseUrl: "http://minikube-odysseia.test",
-//		Version: "v1",
-//		ApiName: "alexandros",
-//		SearchWordEndPoint: "search",
-//	}
-//
-//	words := []string{"δοῦλου", "πόλεμου", "θεoῦ"}
-//	for _, word := range words {
-//		declensions, err := handler.StartFindingRules(word)
-//		assert.Nil(t, err)
-//		if len(declensions.Results) > 1 {
-//			for _, declension := range declensions.Results{
-//				assert.Contains(t, declension.Rule, "masc")
-//			}
-//		} else {
-//			assert.Contains(t, declensions.Results[0].Rule, "noun - sing - masc - gen")
-//		}
-//	}
-//}
-//
-//func TestGetSecondDeclensionDativusMascSing(t *testing.T) {
-//	handler := DeclensionHandler{
-//		BaseUrl: "http://minikube-odysseia.test",
-//		Version: "v1",
-//		ApiName: "alexandros",
-//		SearchWordEndPoint: "search",
-//	}
-//
-//	words := []string{"δοῦλῳ", "πόλεμῳ", "θεῷ"}
-//	for _, word := range words {
-//		declensions, err := handler.StartFindingRules(word)
-//		assert.Nil(t, err)
-//		if len(declensions.Results) > 1 {
-//			for _, declension := range declensions.Results{
-//				assert.Contains(t, declension.Rule, "masc")
-//			}
-//		} else {
-//			assert.Contains(t, declensions.Results[0].Rule, "noun - sing - masc - dat")
-//		}
-//	}
-//}
-//
-//func TestGetSecondDeclensionAccusativusMascSing(t *testing.T) {
-//	handler := DeclensionHandler{
-//		BaseUrl: "http://minikube-odysseia.test",
-//		Version: "v1",
-//		ApiName: "alexandros",
-//		SearchWordEndPoint: "search",
-//	}
-//
-//	words := []string{"πόλεμον", "θεόν"}
-//	for _, word := range words {
-//		declensions, err := handler.StartFindingRules(word)
-//		assert.Nil(t, err)
-//		if len(declensions.Results) > 1 {
-//			for _, declension := range declensions.Results{
-//				assert.Contains(t, declension.Rule, "masc")
-//			}
-//		} else {
-//			assert.Contains(t, declensions.Results[0].Rule, "noun - sing - masc - acc")
-//		}
-//	}
-//}
-//
-//func TestGetSecondDeclensionNominativusMascPlural(t *testing.T) {
-//	handler := DeclensionHandler{
-//		BaseUrl: "http://minikube-odysseia.test",
-//		Version: "v1",
-//		ApiName: "alexandros",
-//		SearchWordEndPoint: "search",
-//	}
-//
-//	words := []string{"δοῦλοι", "πόλεμοι", "θεοί"}
-//	for _, word := range words {
-//		declensions, err := handler.StartFindingRules(word)
-//		assert.Nil(t, err)
-//		if len(declensions.Results) > 1 {
-//			for _, declension := range declensions.Results{
-//				assert.Contains(t, declension.Rule, "masc")
-//			}
-//		} else {
-//			assert.Contains(t, declensions.Results[0].Rule, "noun - plural - masc - nom")
-//		}
-//	}
-//}
-//
-//func TestGetSecondDeclensionGenitivusMascPlural(t *testing.T) {
-//	handler := DeclensionHandler{
-//		BaseUrl: "http://minikube-odysseia.test",
-//		Version: "v1",
-//		ApiName: "alexandros",
-//		SearchWordEndPoint: "search",
-//	}
-//
-//	words := []string{"πόλεμων", "θεῶν"}
-//	for _, word := range words {
-//		declensions, err := handler.StartFindingRules(word)
-//		assert.Nil(t, err)
-//		if len(declensions.Results) > 1 {
-//			for _, declension := range declensions.Results{
-//				assert.Contains(t, declension.Rule, "gen")
-//			}
-//		} else {
-//			assert.Contains(t, declensions.Results[0].Rule, "noun - plural - masc - gen")
-//		}
-//	}
-//}
-//
-//func TestGetSecondDeclensionDativusMascPlural(t *testing.T) {
-//	handler := DeclensionHandler{
-//		BaseUrl: "http://minikube-odysseia.test",
-//		Version: "v1",
-//		ApiName: "alexandros",
-//		SearchWordEndPoint: "search",
-//	}
-//
-//	words := []string{"πόλεμοις", "θεοῖς"}
-//	for _, word := range words {
-//		declensions, err := handler.StartFindingRules(word)
-//		assert.Nil(t, err)
-//		if len(declensions.Results) > 1 {
-//			for _, declension := range declensions.Results{
-//				assert.Contains(t, declension.Rule, "masc")
-//			}
-//		} else {
-//			assert.Contains(t, declensions.Results[0].Rule, "noun - plural - masc - dat")
-//		}
-//	}
-//}
-//
-//func TestGetSecondDeclensionAccusativusMascPlural(t *testing.T) {
-//	handler := DeclensionHandler{
-//		BaseUrl: "http://minikube-odysseia.test",
-//		Version: "v1",
-//		ApiName: "alexandros",
-//		SearchWordEndPoint: "search",
-//	}
-//
-//	words := []string{"πόλεμους", "θεούς"}
-//	for _, word := range words {
-//		declensions, err := handler.StartFindingRules(word)
-//		assert.Nil(t, err)
-//		if len(declensions.Results) > 1 {
-//			for _, declension := range declensions.Results{
-//				assert.Contains(t, declension.Rule, "masc")
-//			}
-//		} else {
-//			assert.Contains(t, declensions.Results[0].Rule, "noun - plural - masc - acc")
-//		}
-//	}
-//}
-//
-//func TestGetSecondDeclensionNominativusNeutSing(t *testing.T) {
-//	handler := DeclensionHandler{
-//		BaseUrl: "http://minikube-odysseia.test",
-//		Version: "v1",
-//		ApiName: "alexandros",
-//		SearchWordEndPoint: "search",
-//	}
-//
-//	words := []string{"μῆλον", "δῶρον"}
-//	for _, word := range words {
-//		declensions, err := handler.StartFindingRules(word)
-//		assert.Nil(t, err)
-//		if len(declensions.Results) > 1 {
-//			for _, declension := range declensions.Results{
-//				assert.Contains(t, declension.Rule, "neut")
-//			}
-//		} else {
-//			assert.Contains(t, declensions.Results[0].Rule, "noun - sing - neut - nom")
-//		}
-//	}
-//}
-//
-//func TestGetSecondDeclensionGenitivusNeutSing(t *testing.T) {
-//	handler := DeclensionHandler{
-//		BaseUrl: "http://minikube-odysseia.test",
-//		Version: "v1",
-//		ApiName: "alexandros",
-//		SearchWordEndPoint: "search",
-//	}
-//
-//	words := []string{"μῆλου", "δῶρου" }
-//	for _, word := range words {
-//		declensions, err := handler.StartFindingRules(word)
-//		assert.Nil(t, err)
-//		if len(declensions.Results) > 1 {
-//			for _, declension := range declensions.Results{
-//				assert.Contains(t, declension.Rule, "gen")
-//			}
-//		} else {
-//			assert.Contains(t, declensions.Results[0].Rule, "noun - sing - neut - gen")
-//		}
-//	}
-//}
-//
-//func TestGetSecondDeclensionDativusNeutSing(t *testing.T) {
-//	handler := DeclensionHandler{
-//		BaseUrl: "http://minikube-odysseia.test",
-//		Version: "v1",
-//		ApiName: "alexandros",
-//		SearchWordEndPoint: "search",
-//	}
-//
-//	words := []string{"μῆλῳ", "δῶρῳ"}
-//	for _, word := range words {
-//		declensions, err := handler.StartFindingRules(word)
-//		assert.Nil(t, err)
-//		assert.Contains(t, declensions.Results[0].Rule, "noun - sing - neut - dat")
-//	}
-//}
-//
-//func TestGetSecondDeclensionAccusativusNeutSing(t *testing.T) {
-//	handler := DeclensionHandler{
-//		BaseUrl: "http://minikube-odysseia.test",
-//		Version: "v1",
-//		ApiName: "alexandros",
-//		SearchWordEndPoint: "search",
-//	}
-//
-//	words := []string{"μῆλον", "δῶρον"}
-//	for _, word := range words {
-//		declensions, err := handler.StartFindingRules(word)
-//		assert.Nil(t, err)
-//		if len(declensions.Results) > 1 {
-//			for _, declension := range declensions.Results{
-//				assert.Contains(t, declension.Rule, "neut")
-//			}
-//		} else {
-//			assert.Contains(t, declensions.Results[0].Rule, "noun - sing - neut - acc")
-//		}
-//	}
-//}
-//
-//func TestGetSecondDeclensionNominativusNeutPlural(t *testing.T) {
-//	handler := DeclensionHandler{
-//		BaseUrl: "http://minikube-odysseia.test",
-//		Version: "v1",
-//		ApiName: "alexandros",
-//		SearchWordEndPoint: "search",
-//	}
-//
-//	words := []string{"μῆλα", "δῶρα"}
-//	for _, word := range words {
-//		declensions, err := handler.StartFindingRules(word)
-//		assert.Nil(t, err)
-//		if len(declensions.Results) > 1 {
-//			for _, declension := range declensions.Results{
-//				assert.Contains(t, declension.Rule, "neut")
-//			}
-//		} else {
-//			assert.Contains(t, declensions.Results[0].Rule, "noun - plural - neut - nom")
-//		}
-//	}
-//}
-//
-//func TestGetSecondDeclensionGenitivusNeutPlural(t *testing.T) {
-//	handler := DeclensionHandler{
-//		BaseUrl: "http://minikube-odysseia.test",
-//		Version: "v1",
-//		ApiName: "alexandros",
-//		SearchWordEndPoint: "search",
-//	}
-//
-//	words := []string{"μήλων", "δῶρων" }
-//	for _, word := range words {
-//		declensions, err := handler.StartFindingRules(word)
-//		assert.Nil(t, err)
-//		if len(declensions.Results) > 1 {
-//			for _, declension := range declensions.Results{
-//				assert.Contains(t, declension.Rule, "gen")
-//			}
-//		} else {
-//			assert.Contains(t, declensions.Results[0].Rule, "noun - plural - neut - gen")
-//		}
-//	}
-//}
-//
-//func TestGetSecondDeclensionDativusNeutPlural(t *testing.T) {
-//	handler := DeclensionHandler{
-//		BaseUrl: "http://minikube-odysseia.test",
-//		Version: "v1",
-//		ApiName: "alexandros",
-//		SearchWordEndPoint: "search",
-//	}
-//
-//	words := []string{"μήλοις", "δῶροις"}
-//	for _, word := range words {
-//		declensions, err := handler.StartFindingRules(word)
-//		assert.Nil(t, err)
-//		assert.Contains(t, declensions.Results[0].Rule, "noun - plural - neut - dat")
-//	}
-//}
-//
-//func TestGetSecondDeclensionAccusativusNeutPlural(t *testing.T) {
-//	handler := DeclensionHandler{
-//		BaseUrl: "http://minikube-odysseia.test",
-//		Version: "v1",
-//		ApiName: "alexandros",
-//		SearchWordEndPoint: "search",
-//	}
-//
-//	words := []string{"μῆλα", "δῶρα"}
-//	for _, word := range words {
-//		declensions, err := handler.StartFindingRules(word)
-//		assert.Nil(t, err)
-//		if len(declensions.Results) > 1 {
-//			for _, declension := range declensions.Results{
-//				assert.Contains(t, declension.Rule, "neut")
-//			}
-//		} else {
-//			assert.Contains(t, declensions.Results[0].Rule, "noun - plural - neut - acc")
-//		}
-//	}
-//}
+func TestSecondDeclensionMascNouns(t *testing.T) {
+	t.Parallel()
+
+	elasticClient, err := elastic.CreateElasticClientFromEnvVariables()
+	assert.Nil(t, err)
+
+	declensionConfig := QueryRuleSet(nil, "dionysos")
+	assert.Nil(t, err)
+
+	testConfig := DionysosConfig{
+		ElasticClient:      *elasticClient,
+		DictionaryIndex: dictionaryIndexDefault,
+		Index:             elasticIndexDefault,
+		DeclensionConfig:   *declensionConfig,
+	}
+
+	handler := DionysosHandler{Config: &testConfig}
+
+	t.Run("NominativusMascSing", func(t *testing.T) {
+		words := []string{"δοῦλος", "πόλεμος", "θεός"}
+		for _, word := range words {
+			declensions, err := handler.StartFindingRules(word)
+			assert.Nil(t, err)
+			if len(declensions.Results) > 1 {
+				for _, declension := range declensions.Results{
+					assert.Contains(t, declension.Rule, "masc")
+				}
+			} else {
+				assert.Contains(t, declensions.Results[0].Rule, "noun - sing - masc - nom")
+			}
+		}
+	})
+
+	t.Run("GenitivusMascSing", func(t *testing.T) {
+		words := []string{"δοῦλου", "πόλεμου", "θεoῦ"}
+		for _, word := range words {
+			declensions, err := handler.StartFindingRules(word)
+			assert.Nil(t, err)
+			if len(declensions.Results) > 1 {
+				for _, declension := range declensions.Results{
+					assert.Contains(t, declension.Rule, "masc")
+				}
+			} else {
+				assert.Contains(t, declensions.Results[0].Rule, "noun - sing - masc - gen")
+			}
+		}
+	})
+
+	t.Run("DativusMascSing", func(t *testing.T) {
+		words := []string{"δοῦλῳ", "πόλεμῳ", "θεῷ"}
+		for _, word := range words {
+			declensions, err := handler.StartFindingRules(word)
+			assert.Nil(t, err)
+			if len(declensions.Results) > 1 {
+				for _, declension := range declensions.Results{
+					assert.Contains(t, declension.Rule, "masc")
+				}
+			} else {
+				assert.Contains(t, declensions.Results[0].Rule, "noun - sing - masc - dat")
+			}
+		}
+	})
+
+	t.Run("AccusativusMascSing", func(t *testing.T) {
+		words := []string{"πόλεμον", "θεόν"}
+		for _, word := range words {
+			declensions, err := handler.StartFindingRules(word)
+			assert.Nil(t, err)
+			if len(declensions.Results) > 1 {
+				for _, declension := range declensions.Results{
+					assert.Contains(t, declension.Rule, "masc")
+				}
+			} else {
+				assert.Contains(t, declensions.Results[0].Rule, "noun - sing - masc - acc")
+			}
+		}
+	})
+
+	t.Run("NominativusMascPlural", func(t *testing.T) {
+		words := []string{"δοῦλοι", "πόλεμοι", "θεοί"}
+		for _, word := range words {
+			declensions, err := handler.StartFindingRules(word)
+			assert.Nil(t, err)
+			if len(declensions.Results) > 1 {
+				for _, declension := range declensions.Results{
+					assert.Contains(t, declension.Rule, "masc")
+				}
+			} else {
+				assert.Contains(t, declensions.Results[0].Rule, "noun - plural - masc - nom")
+			}
+		}
+	})
+
+	t.Run("GenitivusMascPlural", func(t *testing.T) {
+		words := []string{"νεανίῶν", "πολίτῶν", "κριτῶν"}
+		for _, word := range words {
+			declensions, err := handler.StartFindingRules(word)
+			assert.Nil(t, err)
+			if len(declensions.Results) > 1 {
+				for _, declension := range declensions.Results{
+					assert.Contains(t, declension.Rule, "gen")
+				}
+			} else {
+				assert.Contains(t, declensions.Results[0].Rule, "noun - plural - masc - gen")
+			}
+		}
+	})
+
+	t.Run("DativusMascPlural", func(t *testing.T) {
+		words := []string{"πόλεμοις", "θεοῖς"}
+		for _, word := range words {
+			declensions, err := handler.StartFindingRules(word)
+			assert.Nil(t, err)
+			if len(declensions.Results) > 1 {
+				for _, declension := range declensions.Results{
+					assert.Contains(t, declension.Rule, "masc")
+				}
+			} else {
+				assert.Contains(t, declensions.Results[0].Rule, "noun - plural - masc - dat")
+			}
+		}
+	})
+
+	t.Run("AccusativusMascPlural", func(t *testing.T) {
+		words := []string{"πόλεμους", "θεούς"}
+		for _, word := range words {
+			declensions, err := handler.StartFindingRules(word)
+			assert.Nil(t, err)
+			if len(declensions.Results) > 1 {
+				for _, declension := range declensions.Results{
+					assert.Contains(t, declension.Rule, "masc")
+				}
+			} else {
+				assert.Contains(t, declensions.Results[0].Rule, "noun - plural - masc - acc")
+			}
+		}
+	})
+}
+
+func TestSecondDeclensionNeuterNouns(t *testing.T) {
+	t.Parallel()
+
+	elasticClient, err := elastic.CreateElasticClientFromEnvVariables()
+	assert.Nil(t, err)
+
+	declensionConfig := QueryRuleSet(nil, "dionysos")
+	assert.Nil(t, err)
+
+	testConfig := DionysosConfig{
+		ElasticClient:      *elasticClient,
+		DictionaryIndex: dictionaryIndexDefault,
+		Index:             elasticIndexDefault,
+		DeclensionConfig:   *declensionConfig,
+	}
+
+	handler := DionysosHandler{Config: &testConfig}
+
+	t.Run("NominativusNeuterSing", func(t *testing.T) {
+		words := []string{"μῆλον", "δῶρον"}
+		for _, word := range words {
+			declensions, err := handler.StartFindingRules(word)
+			assert.Nil(t, err)
+			if len(declensions.Results) > 1 {
+				for _, declension := range declensions.Results{
+					assert.Contains(t, declension.Rule, "neut")
+				}
+			} else {
+				assert.Contains(t, declensions.Results[0].Rule, "noun - sing - neut - nom")
+			}
+		}
+	})
+
+	t.Run("GenitivusNeuterSing", func(t *testing.T) {
+		words := []string{"μῆλου", "δῶρου" }
+		for _, word := range words {
+			declensions, err := handler.StartFindingRules(word)
+			assert.Nil(t, err)
+			if len(declensions.Results) > 1 {
+				for _, declension := range declensions.Results{
+					assert.Contains(t, declension.Rule, "gen")
+				}
+			} else {
+				assert.Contains(t, declensions.Results[0].Rule, "noun - sing - neut - gen")
+			}
+		}
+	})
+
+	t.Run("DativusNeuterSing", func(t *testing.T) {
+		words := []string{"μῆλῳ", "δῶρῳ"}
+		for _, word := range words {
+			declensions, err := handler.StartFindingRules(word)
+			assert.Nil(t, err)
+			assert.Contains(t, declensions.Results[0].Rule, "noun - sing - neut - dat")
+		}
+	})
+
+	t.Run("AccusativusNeuterSing", func(t *testing.T) {
+		words := []string{"μῆλον", "δῶρον"}
+		for _, word := range words {
+			declensions, err := handler.StartFindingRules(word)
+			assert.Nil(t, err)
+			if len(declensions.Results) > 1 {
+				for _, declension := range declensions.Results{
+					assert.Contains(t, declension.Rule, "neut")
+				}
+			} else {
+				assert.Contains(t, declensions.Results[0].Rule, "noun - sing - neut - acc")
+			}
+		}
+	})
+
+	t.Run("NominativusNeuterPlural", func(t *testing.T) {
+		words := []string{"μῆλα", "δῶρα"}
+		for _, word := range words {
+			declensions, err := handler.StartFindingRules(word)
+			assert.Nil(t, err)
+			if len(declensions.Results) > 1 {
+				for _, declension := range declensions.Results{
+					assert.Contains(t, declension.Rule, "neut")
+				}
+			} else {
+				assert.Contains(t, declensions.Results[0].Rule, "noun - plural - neut - nom")
+			}
+		}
+	})
+
+	t.Run("GenitivusNeuterPlural", func(t *testing.T) {
+		words := []string{"μήλων", "δῶρων" }
+		for _, word := range words {
+			declensions, err := handler.StartFindingRules(word)
+			assert.Nil(t, err)
+			if len(declensions.Results) > 1 {
+				for _, declension := range declensions.Results{
+					assert.Contains(t, declension.Rule, "gen")
+				}
+			} else {
+				assert.Contains(t, declensions.Results[0].Rule, "noun - plural - neut - gen")
+			}
+		}
+	})
+
+	t.Run("DativusNeuterPlural", func(t *testing.T) {
+		words := []string{"μήλοις", "δῶροις"}
+		for _, word := range words {
+			declensions, err := handler.StartFindingRules(word)
+			assert.Nil(t, err)
+			assert.Contains(t, declensions.Results[0].Rule, "noun - plural - neut - dat")
+		}
+	})
+
+	t.Run("AccusativusNeuterPlural", func(t *testing.T) {
+		words := []string{"μῆλα", "δῶρα"}
+		for _, word := range words {
+			declensions, err := handler.StartFindingRules(word)
+			assert.Nil(t, err)
+			if len(declensions.Results) > 1 {
+				for _, declension := range declensions.Results{
+					assert.Contains(t, declension.Rule, "neut")
+				}
+			} else {
+				assert.Contains(t, declensions.Results[0].Rule, "noun - plural - neut - acc")
+			}
+		}
+	})
+}
