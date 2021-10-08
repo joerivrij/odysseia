@@ -1,0 +1,41 @@
+{
+  "took" : 8,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 1,
+    "successful" : 1,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 2,
+      "relation" : "eq"
+    },
+    "max_score" : 8.43593,
+    "hits" : [
+      {
+        "_index" : "alexandros",
+        "_type" : "_doc",
+        "_id" : "65bbXnwBuOUlb60JEfh7",
+        "_score" : 8.43593,
+        "_source" : {
+          "greek" : "εις +",
+          "english" : "acc into",
+          "original" : "εἰς +"
+        }
+      },
+      {
+        "_index" : "alexandros",
+        "_type" : "_doc",
+        "_id" : "75bbXnwBuOUlb60JE_hg",
+        "_score" : 5.5186186,
+        "_source" : {
+          "greek" : "εις, μια, εν",
+          "english" : "one",
+          "original" : "εἷς, μία, ἕν"
+        }
+      }
+    ]
+  }
+}

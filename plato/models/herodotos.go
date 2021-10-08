@@ -13,9 +13,13 @@ func (r *RhemaSource) Marshal() ([]byte, error) {
 }
 
 type RhemaSource struct {
-	Author       string   `json:"author"`
-	Greek        string   `json:"greek"`
-	Translations []string `json:"translations"`
+	Author          string   `json:"author"`
+	Greek           string   `json:"greek"`
+	Translations    []string `json:"translations"`
+	Book            int64    `json:"book"`
+	Chapter         int64    `json:"chapter"`
+	Section         int64    `json:"section"`
+	PerseusTextLink string   `json:"perseusTextLink"`
 }
 
 type Rhema struct {

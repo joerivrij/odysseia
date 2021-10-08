@@ -1,1 +1,92 @@
-{"biblos":[{"greek":"γαῖα –ας, ἡ","english":"earth"},{"greek":"γαμέω","english":"marry"},{"greek":"γάμος –ου, ὁ","english":"wedding, marriage"},{"greek":"γάρ","english":"for, because"},{"greek":"γε","english":"for sure"},{"greek":"γελάω","english":"laugh"},{"greek":"γεννάω","english":"beget"},{"greek":"γένος –ους, τό","english":"race, family"},{"greek":"γέρας –ως, τό","english":"prize"},{"greek":"γέρων –οντος, ὁ","english":"old man"},{"greek":"γῆ, γῆς, ἡ","english":"earth"},{"greek":"γῆρας –ως, τό","english":"old age"},{"greek":"γίγνομαι","english":"become, be"},{"greek":"γιγνώσκω","english":"come to know, learn"},{"greek":"γλυκύς –εῖα –ύν","english":"sweet"},{"greek":"γλῶσσα –ης, ἡ","english":"tongue, language"},{"greek":"γνώμη –ης, ἡ","english":"thought, intelligence, opinion"},{"greek":"γοῦν","english":"so then, for sure"},{"greek":"γράμμα –ατος, τό","english":"letter"},{"greek":"γράφω","english":"write"},{"greek":"γύμνος –η –ον","english":"naked"},{"greek":"γυνή, γυναικός, ἡ","english":"woman"}]}
+{
+  "biblos": [
+    {
+      "greek": "γαῖα –ας, ἡ",
+      "english": "earth"
+    },
+    {
+      "greek": "γαμέω",
+      "english": "marry"
+    },
+    {
+      "greek": "γάμος –ου, ὁ",
+      "english": "wedding, marriage"
+    },
+    {
+      "greek": "γάρ",
+      "english": "for, because"
+    },
+    {
+      "greek": "γε",
+      "english": "for sure"
+    },
+    {
+      "greek": "γελάω",
+      "english": "laugh"
+    },
+    {
+      "greek": "γεννάω",
+      "english": "beget"
+    },
+    {
+      "greek": "γένος –ους, τό",
+      "english": "race, family"
+    },
+    {
+      "greek": "γέρας –ως, τό",
+      "english": "prize"
+    },
+    {
+      "greek": "γέρων –οντος, ὁ",
+      "english": "old man"
+    },
+    {
+      "greek": "γῆ, γῆς, ἡ",
+      "english": "earth"
+    },
+    {
+      "greek": "γῆρας –ως, τό",
+      "english": "old age"
+    },
+    {
+      "greek": "γίγνομαι",
+      "english": "become, be"
+    },
+    {
+      "greek": "γιγνώσκω",
+      "english": "come to know, learn"
+    },
+    {
+      "greek": "γλυκύς –εῖα –ύν",
+      "english": "sweet"
+    },
+    {
+      "greek": "γλῶσσα –ης, ἡ",
+      "english": "tongue, language"
+    },
+    {
+      "greek": "γνώμη –ης, ἡ",
+      "english": "thought, intelligence, opinion"
+    },
+    {
+      "greek": "γοῦν",
+      "english": "so then, for sure"
+    },
+    {
+      "greek": "γράμμα –ατος, τό",
+      "english": "letter"
+    },
+    {
+      "greek": "γράφω",
+      "english": "write"
+    },
+    {
+      "greek": "γύμνος –η –ον",
+      "english": "naked"
+    },
+    {
+      "greek": "γυνή, γυναικός, ἡ",
+      "english": "woman"
+    }
+  ]
+}

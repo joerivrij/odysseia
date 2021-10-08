@@ -82,10 +82,13 @@ func CreateMockClient(fixtureFile string, statusCode int) (*elasticsearch.Client
 	default:
 		mockCode = 200
 	}
+
+	body := fixture(fmt.Sprintf("%s.json", fixtureFile))
+
 	mockTrans := MockTransport{
 		Response: &http.Response{
 			StatusCode: mockCode,
-			Body:       fixture(fmt.Sprintf("%s.json", fixtureFile)),
+			Body:       body,
 		},
 	}
 	mockTrans.RoundTripFn = func(req *http.Request) (*http.Response, error) { return mockTrans.Response, nil }

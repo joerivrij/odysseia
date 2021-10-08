@@ -72,4 +72,22 @@ spec:
           imagePullPolicy: {{ .Values.config.pullPolicy }}
           ports:
             - containerPort: {{ .Values.envVariables.xerxes.sokratesPort }}
+        - image: {{ .Values.images.xerxes.repo }}:{{ .Values.images.tag }}
+          name: xerxes-dionysos
+          command: ["/bin/sh"]
+          args: ["-c", "locust -r $(SPAWN_RATE)"]
+          env:
+            - name: LOCUST_HOST
+              value: {{ .Values.envVariables.xerxes.dionysosHost }}
+            - name: LOCUST_WEB_PORT
+              value: {{ .Values.envVariables.xerxes.dionysosPort | quote }}
+            - name: LOCUST_LOCUSTFILE
+              value: locustfiles/dionysos-locustfile.py
+            - name: LOCUST_USERS
+              value: {{ .Values.envVariables.xerxes.locustUsers | quote }}
+            - name: SPAWN_RATE
+              value: {{ .Values.envVariables.xerxes.spawnRate | quote }}
+          imagePullPolicy: {{ .Values.config.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.envVariables.xerxes.dionysosPort }}
 {{- end }}

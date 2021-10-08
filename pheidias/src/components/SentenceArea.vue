@@ -26,9 +26,12 @@
               </p>
               <p>RESERVED FOR CHAPTER</p>
               <div class="text--primary">
-                {{ this.sentence }}
+                <v-textarea
+                    readonly
+                    v-model="sentence"
+                    v-on:dblclick="queryWord($event)"
+                ></v-textarea>
               </div>
-
               <v-container fluid>
                 <v-textarea
                     clearable
@@ -75,6 +78,59 @@
                   </v-btn>
                 </v-card-actions>
               </v-card>
+              <v-card
+                  elevation="24"
+                  max-width="444"
+                  class="mx-auto"
+              >
+                <v-system-bar lights-out></v-system-bar>
+                <div class="text-overline mb-4">
+                  Translation
+                </div>
+                <v-carousel
+                    :continuous="false"
+                    :cycle="cycle"
+                    :show-arrows="true"
+                    hide-delimiter-background
+                    height="300"
+                >
+                  <v-carousel-item
+                      v-for="(result, i) in grammarResults"
+                      :key="i"
+                  >
+                    <v-sheet
+                        height="100%"
+                        tile
+                    >
+                      <v-row
+                          class="fill-height"
+                          align="center"
+                          justify="center"
+                      >
+                        <v-list-item-title class="text-h5 mb-1">
+                          {{ result.word }}
+                        </v-list-item-title>
+                        <v-list-item-title class="text-h5 mb-1">
+                          {{ result.translation }}
+                        </v-list-item-title>
+                        <v-list-item-subtitle><strong>root:</strong> {{result.rootWord}}</v-list-item-subtitle>
+                        <v-list-item-subtitle><strong>rule:</strong> {{result.rule}}</v-list-item-subtitle>
+                      </v-row>
+                    </v-sheet>
+                  </v-carousel-item>
+                </v-carousel>
+                <v-list two-line>
+                  <v-list-item>
+                    <v-list-item-action>
+                      <v-switch
+                          v-model="cycle"
+                          label="Cycle Translations"
+                          inset
+                      ></v-switch>
+                    </v-list-item-action>
+                  </v-list-item>
+                </v-list>
+              </v-card>
             </v-expand-transition>
           </v-card>
         </div>
@@ -89,6 +145,7 @@ export default {
   data() {
     return {
       authors: [],
+      grammarResults: [],
       selectedAuthor: "",
       sentence: "",
       currentSentenceId: "",
@@ -97,12 +154,40 @@ export default {
       databaseAnswer: "",
       closeOnContentClick: true,
       reveal: false,
+      cycle: false,
     }
   },
   methods: {
     setAuthorTo(author) {
       this.selectedAuthor = author
       this.getNewSentence()
+    },
+    queryWord: function (e) {
+      let value = e.target.value.substring(
+          e.target.selectionStart,
+          e.target.selectionEnd
+      );
+      console.log(value);
+      let url = `${this.$dionysosUrl}/checkGrammar?word=${value}`
+      this.$apiClient.get(url)
+          .then((response) => {
+            for (let i = 0; i < response.data.results.length; i++) {
+              if (response.data.results[i].translation === "") {
+                response.data.results[i].translation = "No translation found"
+              }
+            }
+
+            this.grammarResults = response.data.results
+          })
+          .catch(e => {
+            this.grammarResults =  [{
+              "word"  :  value,
+              "translation"   :  "No translation found",
+              "rootWord"      :  value,
+              "rule" : "No rule found"
+            }]
+            this.errors.push(e)
+          })
     },
     getAuthors: function () {
       let url = `${this.$herodotosUrl}/authors`

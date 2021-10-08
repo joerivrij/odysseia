@@ -1,1 +1,108 @@
-{"biblos":[{"greek":"ἤ","english":"or, than"},{"greek":"ἦ","english":"[strengthening particle] or [introduces lively questions] or = \"s/he said” from ἠμί or = 1 st sg impf indic act of εἰμί"},{"greek":"ᾖ [","english":"3d sg pres subj act of εἰμί]"},{"greek":"ἡ","english":"[feminine article nom sg]"},{"greek":"ἥ","english":"[relative pronoun, fem nom sg, “who, which”]"},{"greek":"ᾗ","english":"[relative pronoun, fem dat sg] or [“where”]"},{"greek":"ἡγεμών, -όνος, ὁ","english":"leader"},{"greek":"ἡγέομαι","english":"lead, consider"},{"greek":"ἥδη","english":"already"},{"greek":"ἥδομαι","english":"rejoice"},{"greek":"ἡδονή -ῆς, ἡ","english":"pleasure"},{"greek":"ἡδύς -εῖα, -ύ","english":"sweet"},{"greek":"ἥκιστος -η –ον","english":"least"},{"greek":"ἥκω","english":"have come, be present"},{"greek":"ἡλικία -ας, ἡ","english":"time of life, age"},{"greek":"ἥλιος –ου, ὁ","english":"sun"},{"greek":"ἧμαι","english":"sit"},{"greek":"ἡμέρα –ας, ἡ","english":"day"},{"greek":"ἡμέτερος –α –ον","english":"our"},{"greek":"ἠμί","english":"say"},{"greek":"ἥμισυς –εια –υ","english":"half"},{"greek":"ἤπειρος –ου, ἡ","english":"the land"},{"greek":"ἥρως, ἥρωος, ὁ","english":"hero"},{"greek":"ἡσυχία –ας, ἡ","english":"quiet"},{"greek":"ἡσσάομαι","english":"be inferior, be defeated"},{"greek":"ἥσσων -ον","english":"less, weaker"}]}
+{
+  "biblos": [
+    {
+      "greek": "ἤ",
+      "english": "or, than"
+    },
+    {
+      "greek": "ἦ",
+      "english": "[strengthening particle] or [introduces lively questions] or \u003d \"s/he said” from ἠμί or \u003d 1 st sg impf indic act of εἰμί"
+    },
+    {
+      "greek": "ᾖ [",
+      "english": "3d sg pres subj act of εἰμί]"
+    },
+    {
+      "greek": "ἡ",
+      "english": "[feminine article nom sg]"
+    },
+    {
+      "greek": "ἥ",
+      "english": "[relative pronoun, fem nom sg, “who, which”]"
+    },
+    {
+      "greek": "ᾗ",
+      "english": "[relative pronoun, fem dat sg] or [“where”]"
+    },
+    {
+      "greek": "ἡγεμών, -όνος, ὁ",
+      "english": "leader"
+    },
+    {
+      "greek": "ἡγέομαι",
+      "english": "lead, consider"
+    },
+    {
+      "greek": "ἥδη",
+      "english": "already"
+    },
+    {
+      "greek": "ἥδομαι",
+      "english": "rejoice"
+    },
+    {
+      "greek": "ἡδονή -ῆς, ἡ",
+      "english": "pleasure"
+    },
+    {
+      "greek": "ἡδύς -εῖα, -ύ",
+      "english": "sweet"
+    },
+    {
+      "greek": "ἥκιστος -η –ον",
+      "english": "least"
+    },
+    {
+      "greek": "ἥκω",
+      "english": "have come, be present"
+    },
+    {
+      "greek": "ἡλικία -ας, ἡ",
+      "english": "time of life, age"
+    },
+    {
+      "greek": "ἥλιος –ου, ὁ",
+      "english": "sun"
+    },
+    {
+      "greek": "ἧμαι",
+      "english": "sit"
+    },
+    {
+      "greek": "ἡμέρα –ας, ἡ",
+      "english": "day"
+    },
+    {
+      "greek": "ἡμέτερος –α –ον",
+      "english": "our"
+    },
+    {
+      "greek": "ἠμί",
+      "english": "say"
+    },
+    {
+      "greek": "ἥμισυς –εια –υ",
+      "english": "half"
+    },
+    {
+      "greek": "ἤπειρος –ου, ἡ",
+      "english": "the land"
+    },
+    {
+      "greek": "ἥρως, ἥρωος, ὁ",
+      "english": "hero"
+    },
+    {
+      "greek": "ἡσυχία –ας, ἡ",
+      "english": "quiet"
+    },
+    {
+      "greek": "ἡσσάομαι",
+      "english": "be inferior, be defeated"
+    },
+    {
+      "greek": "ἥσσων -ον",
+      "english": "less, weaker"
+    }
+  ]
+}

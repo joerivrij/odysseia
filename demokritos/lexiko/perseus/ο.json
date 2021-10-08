@@ -1,1 +1,292 @@
-{"biblos":[{"greek":"ὁ, ἡ τό","english":"the"},{"greek":"ὅδε ἥδε τόδε","english":"this"},{"greek":"ὁδός –οῦ, ἡ","english":"road"},{"greek":"ὅθεν","english":"from where"},{"greek":"οἶδα","english":"know"},{"greek":"οἰκεῖος –α –ον","english":"domestic"},{"greek":"οἰκέτης –ου, ὁ","english":"servant"},{"greek":"οἰκέω","english":"inhabit, occupy"},{"greek":"οἰκία –ας, ἡ","english":"house, household"},{"greek":"οἰκοδομέω","english":"build a house"},{"greek":"οἶκος –ου, ὁ","english":"house"},{"greek":"οἶμαι, οἴομαι","english":"think"},{"greek":"οἷος –α –ον","english":"such a kind"},{"greek":"οἷος –α –ον τ' εἰμί","english":"be able"},{"greek":"οἴχομαι","english":"be gone"},{"greek":"ὀκτώ","english":"eight"},{"greek":"ὀλίγος –η –ον","english":"few"},{"greek":"ὄλλυμι","english":"destroy, lose"},{"greek":"ὅλος –η –ον","english":"whole"},{"greek":"ὄμνυμι","english":"swear"},{"greek":"ὅμοιος –α –ον","english":"or ὁμοῖος –α –ον like"},{"greek":"ὁμοιόω","english":"make like"},{"greek":"ὁμολογέω","english":"agree"},{"greek":"ὁμόω","english":"unite"},{"greek":"ὅμως","english":"nevertheless"},{"greek":"ὄνομα –ατος, τό","english":"name"},{"greek":"ὀνομάζω","english":"call by name"},{"greek":"ὀξύς –εῖα -ύ","english":"sharp"},{"greek":"ὁπλίτης –ου, ὁ","english":"heavily-armed soldier, hoplite"},{"greek":"ὅπλον –ου, τό","english":"weapon, tool"},{"greek":"ὁποῖος –α –ον","english":"of what sort"},{"greek":"ὁπόσος –η –ον","english":"as many as"},{"greek":"ὁπότε","english":"when"},{"greek":"ὅπου","english":"wherever"},{"greek":"ὅπως","english":"how, as, so that"},{"greek":"ὁράω","english":"see"},{"greek":"ὀργή -ῆς, ἡ","english":"anger"},{"greek":"ὀργίζω","english":"make angry"},{"greek":"ὀρθός –η –ον","english":"straight"},{"greek":"ὀρθόω","english":"set straight"},{"greek":"ὅρκος –ου, ὁ","english":"oath"},{"greek":"ὁρμάω","english":"rush"},{"greek":"ὁρμή -ῆς, ἡ","english":"attack"},{"greek":"ὄρος, ὄρου, ὁ","english":"mountain, hill"},{"greek":"ὅρος, ὅρου, ὁ","english":"boundary"},{"greek":"ὅς ἥ ὄ","english":"who, which, that"},{"greek":"ὅσος –η –ον","english":"however much"},{"greek":"ὅσπερ, ἥπερ, ὅπερ","english":"the very one who, the very thing which"},{"greek":"ὅστε ἥτε ὅτε","english":"who, which"},{"greek":"ὅστις ὅτι","english":"any one who, anything which"},{"greek":"ὅταν = ὄτε + ἄν","english":"whenever"},{"greek":"ὅτε","english":"when"},{"greek":"ὅτι","english":"because, that"},{"greek":"οὐ, οὐκ, οὐχ","english":"not (with indicative verbs)"},{"greek":"οὐδέ","english":"but not"},{"greek":"οὐδείς, οὐδεμία, οὐδέν","english":"no one, nothing"},{"greek":"οὐκέτι","english":"no longer"},{"greek":"οὔτε","english":"and not"},{"greek":"οὔτις","english":"no one, nobody"},{"greek":"οὔπω","english":"not yet"},{"greek":"οὗ","english":"where"},{"greek":"οὐκοῦν","english":"therefore"},{"greek":"οὖν","english":"therefore, so"},{"greek":"οὐρανός –οῦ, ὁ","english":"sky, heaven"},{"greek":"οὐσία –ας, ἡ","english":"substance, property"},{"greek":"οὗτος, αὕτη, τοῦτο","english":"this"},{"greek":"οὕτως","english":"in this way"},{"greek":"ὀφείλω","english":"owe"},{"greek":"ὀφθαλμός –οῦ, ὁ","english":"eye"},{"greek":"ὄφρα","english":"so that, until"},{"greek":"ὄχλος –ου, ὁ","english":"crowd, mob"},{"greek":"ὄψις, -εως, ἡ","english":"sight, appearance"}]}
+{
+  "biblos": [
+    {
+      "greek": "ὁ, ἡ τό",
+      "english": "the"
+    },
+    {
+      "greek": "ὅδε ἥδε τόδε",
+      "english": "this"
+    },
+    {
+      "greek": "ὁδός –οῦ, ἡ",
+      "english": "road"
+    },
+    {
+      "greek": "ὅθεν",
+      "english": "from where"
+    },
+    {
+      "greek": "οἶδα",
+      "english": "know"
+    },
+    {
+      "greek": "οἰκεῖος –α –ον",
+      "english": "domestic"
+    },
+    {
+      "greek": "οἰκέτης –ου, ὁ",
+      "english": "servant"
+    },
+    {
+      "greek": "οἰκέω",
+      "english": "inhabit, occupy"
+    },
+    {
+      "greek": "οἰκία –ας, ἡ",
+      "english": "house, household"
+    },
+    {
+      "greek": "οἰκοδομέω",
+      "english": "build a house"
+    },
+    {
+      "greek": "οἶκος –ου, ὁ",
+      "english": "house"
+    },
+    {
+      "greek": "οἶμαι, οἴομαι",
+      "english": "think"
+    },
+    {
+      "greek": "οἷος –α –ον",
+      "english": "such a kind"
+    },
+    {
+      "greek": "οἷος –α –ον τ\u0027 εἰμί",
+      "english": "be able"
+    },
+    {
+      "greek": "οἴχομαι",
+      "english": "be gone"
+    },
+    {
+      "greek": "ὀκτώ",
+      "english": "eight"
+    },
+    {
+      "greek": "ὀλίγος –η –ον",
+      "english": "few"
+    },
+    {
+      "greek": "ὄλλυμι",
+      "english": "destroy, lose"
+    },
+    {
+      "greek": "ὅλος –η –ον",
+      "english": "whole"
+    },
+    {
+      "greek": "ὄμνυμι",
+      "english": "swear"
+    },
+    {
+      "greek": "ὅμοιος –α –ον",
+      "english": "or ὁμοῖος –α –ον like"
+    },
+    {
+      "greek": "ὁμοιόω",
+      "english": "make like"
+    },
+    {
+      "greek": "ὁμολογέω",
+      "english": "agree"
+    },
+    {
+      "greek": "ὁμόω",
+      "english": "unite"
+    },
+    {
+      "greek": "ὅμως",
+      "english": "nevertheless"
+    },
+    {
+      "greek": "ὄνομα –ατος, τό",
+      "english": "name"
+    },
+    {
+      "greek": "ὀνομάζω",
+      "english": "call by name"
+    },
+    {
+      "greek": "ὀξύς –εῖα -ύ",
+      "english": "sharp"
+    },
+    {
+      "greek": "ὁπλίτης –ου, ὁ",
+      "english": "heavily-armed soldier, hoplite"
+    },
+    {
+      "greek": "ὅπλον –ου, τό",
+      "english": "weapon, tool"
+    },
+    {
+      "greek": "ὁποῖος –α –ον",
+      "english": "of what sort"
+    },
+    {
+      "greek": "ὁπόσος –η –ον",
+      "english": "as many as"
+    },
+    {
+      "greek": "ὁπότε",
+      "english": "when"
+    },
+    {
+      "greek": "ὅπου",
+      "english": "wherever"
+    },
+    {
+      "greek": "ὅπως",
+      "english": "how, as, so that"
+    },
+    {
+      "greek": "ὁράω",
+      "english": "see"
+    },
+    {
+      "greek": "ὀργή -ῆς, ἡ",
+      "english": "anger"
+    },
+    {
+      "greek": "ὀργίζω",
+      "english": "make angry"
+    },
+    {
+      "greek": "ὀρθός –η –ον",
+      "english": "straight"
+    },
+    {
+      "greek": "ὀρθόω",
+      "english": "set straight"
+    },
+    {
+      "greek": "ὅρκος –ου, ὁ",
+      "english": "oath"
+    },
+    {
+      "greek": "ὁρμάω",
+      "english": "rush"
+    },
+    {
+      "greek": "ὁρμή -ῆς, ἡ",
+      "english": "attack"
+    },
+    {
+      "greek": "ὄρος, ὄρου, ὁ",
+      "english": "mountain, hill"
+    },
+    {
+      "greek": "ὅρος, ὅρου, ὁ",
+      "english": "boundary"
+    },
+    {
+      "greek": "ὅς ἥ ὄ",
+      "english": "who, which, that"
+    },
+    {
+      "greek": "ὅσος –η –ον",
+      "english": "however much"
+    },
+    {
+      "greek": "ὅσπερ, ἥπερ, ὅπερ",
+      "english": "the very one who, the very thing which"
+    },
+    {
+      "greek": "ὅστε ἥτε ὅτε",
+      "english": "who, which"
+    },
+    {
+      "greek": "ὅστις ὅτι",
+      "english": "any one who, anything which"
+    },
+    {
+      "greek": "ὅταν \u003d ὄτε + ἄν",
+      "english": "whenever"
+    },
+    {
+      "greek": "ὅτε",
+      "english": "when"
+    },
+    {
+      "greek": "ὅτι",
+      "english": "because, that"
+    },
+    {
+      "greek": "οὐ, οὐκ, οὐχ",
+      "english": "not (with indicative verbs)"
+    },
+    {
+      "greek": "οὐδέ",
+      "english": "but not"
+    },
+    {
+      "greek": "οὐδείς, οὐδεμία, οὐδέν",
+      "english": "no one, nothing"
+    },
+    {
+      "greek": "οὐκέτι",
+      "english": "no longer"
+    },
+    {
+      "greek": "οὔτε",
+      "english": "and not"
+    },
+    {
+      "greek": "οὔτις",
+      "english": "no one, nobody"
+    },
+    {
+      "greek": "οὔπω",
+      "english": "not yet"
+    },
+    {
+      "greek": "οὗ",
+      "english": "where"
+    },
+    {
+      "greek": "οὐκοῦν",
+      "english": "therefore"
+    },
+    {
+      "greek": "οὖν",
+      "english": "therefore, so"
+    },
+    {
+      "greek": "οὐρανός –οῦ, ὁ",
+      "english": "sky, heaven"
+    },
+    {
+      "greek": "οὐσία –ας, ἡ",
+      "english": "substance, property"
+    },
+    {
+      "greek": "οὗτος, αὕτη, τοῦτο",
+      "english": "this"
+    },
+    {
+      "greek": "οὕτως",
+      "english": "in this way"
+    },
+    {
+      "greek": "ὀφείλω",
+      "english": "owe"
+    },
+    {
+      "greek": "ὀφθαλμός –οῦ, ὁ",
+      "english": "eye"
+    },
+    {
+      "greek": "ὄφρα",
+      "english": "so that, until"
+    },
+    {
+      "greek": "ὄχλος –ου, ὁ",
+      "english": "crowd, mob"
+    },
+    {
+      "greek": "ὄψις, -εως, ἡ",
+      "english": "sight, appearance"
+    }
+  ]
+}

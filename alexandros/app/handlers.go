@@ -89,5 +89,4 @@ func (a *AlexandrosHandler) searchWord(w http.ResponseWriter, req *http.Request)
 	}
 
 	middleware.ResponseWithJson(w, searchResults)
-	return
 }

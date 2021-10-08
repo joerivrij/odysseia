@@ -1,1 +1,80 @@
-{"biblos":[{"greek":"λαγχάνω","english":"obtain by a lottery"},{"greek":"λαλέω","english":"talk, babble"},{"greek":"λαμβάνω","english":"take"},{"greek":"λαμπρός -ά -όν","english":"bright"},{"greek":"λανθάνω","english":"do without being noticed"},{"greek":"λέγω","english":"say, speak"},{"greek":"λείπω","english":"leave"},{"greek":"λευκός -ή -όν","english":"white"},{"greek":"λεώς, λεώ, ὁ","english":"the people"},{"greek":"λίθος –ου, ὁ","english":"stone"},{"greek":"λιμήν -ένος, ὁ","english":"harbor"},{"greek":"λίμνη –ης, ἡ","english":"pool, swamp"},{"greek":"λιμός –οῦ, ὁ","english":"or ἡ hunger"},{"greek":"λογίζομαι","english":"calculate"},{"greek":"λόγος –ου, ὁ","english":"word"},{"greek":"λοιπός –ή -όν","english":"remaining"},{"greek":"λόφος –ου, ὁ","english":"crest (esp. of a helmet), mane, ridge"},{"greek":"λυπέω","english":"hurt"},{"greek":"λύω","english":"loosen, destroy"}]}
+{
+  "biblos": [
+    {
+      "greek": "λαγχάνω",
+      "english": "obtain by a lottery"
+    },
+    {
+      "greek": "λαλέω",
+      "english": "talk, babble"
+    },
+    {
+      "greek": "λαμβάνω",
+      "english": "take"
+    },
+    {
+      "greek": "λαμπρός -ά -όν",
+      "english": "bright"
+    },
+    {
+      "greek": "λανθάνω",
+      "english": "do without being noticed"
+    },
+    {
+      "greek": "λέγω",
+      "english": "say, speak"
+    },
+    {
+      "greek": "λείπω",
+      "english": "leave"
+    },
+    {
+      "greek": "λευκός -ή -όν",
+      "english": "white"
+    },
+    {
+      "greek": "λεώς, λεώ, ὁ",
+      "english": "the people"
+    },
+    {
+      "greek": "λίθος –ου, ὁ",
+      "english": "stone"
+    },
+    {
+      "greek": "λιμήν -ένος, ὁ",
+      "english": "harbor"
+    },
+    {
+      "greek": "λίμνη –ης, ἡ",
+      "english": "pool, swamp"
+    },
+    {
+      "greek": "λιμός –οῦ, ὁ",
+      "english": "or ἡ hunger"
+    },
+    {
+      "greek": "λογίζομαι",
+      "english": "calculate"
+    },
+    {
+      "greek": "λόγος –ου, ὁ",
+      "english": "word"
+    },
+    {
+      "greek": "λοιπός –ή -όν",
+      "english": "remaining"
+    },
+    {
+      "greek": "λόφος –ου, ὁ",
+      "english": "crest (esp. of a helmet), mane, ridge"
+    },
+    {
+      "greek": "λυπέω",
+      "english": "hurt"
+    },
+    {
+      "greek": "λύω",
+      "english": "loosen, destroy"
+    }
+  ]
+}

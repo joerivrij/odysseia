@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 config:
-  environment: development
+  environment: minikube
   pullPolicy: Never
   inClusterElastic: true
   loadTests: true
@@ -31,6 +31,13 @@ services:
     limits:
       memory: "128Mi"
       cpu: "250m"
+  dionysos:
+    requests:
+      memory: "64Mi"
+      cpu: "100m"
+    limits:
+      memory: "128Mi"
+      cpu: "250m"
   herodotos:
     requests:
       memory: "64Mi"
@@ -47,9 +54,13 @@ services:
       cpu: "250m"
 
 images:
-  tag: 965391f
+  tag: eb4f981
+  anaximander:
+    repo: anaximander
   alexandros:
     repo: alexandros
+  dionysos:
+    repo: dionysos
   pheidias:
     repo: pheidias
   sokrates:
@@ -75,6 +86,9 @@ envVariables:
     port: 3000
   alexandros:
     port: 5000
+  dionysos:
+    port: 5000
+    alexandrosUrl: http://alexandros-service:5000
   sokrates:
     port: 5000
   herodotos:
@@ -82,10 +96,12 @@ envVariables:
   ploutarchos:
     port: 8080
   xerxes:
+    alexandrosHost: http://alexandros-service:5000
+    alexandrosPort: 8086
+    dionysosHost: http://dionysos-service:5000
+    dionysosPort: 8087
     herodotosHost: http://herodotos-service:5000
     herodotosPort: 8088
-    alexandrosHost: http://alexandros-service:5000
-    alexandrosPort: 8087
     sokratesHost: http://sokrates-service:5000
     sokratesPort: 8089
     port: 8089

@@ -7,6 +7,7 @@ import (
 	"github.com/odysseia/plato/models"
 	"gopkg.in/oauth2.v3/utils/uuid"
 	"net/http"
+	"reflect"
 	"strconv"
 )
 
@@ -69,6 +70,8 @@ func SetCorsHeaders() Adapter {
 func ResponseWithJson(w http.ResponseWriter, payload interface{}) {
 	code := 500
 
+	glg.Debug(reflect.TypeOf(payload))
+
 	switch payload.(type) {
 	case models.ResultModel:
 		code = 200
@@ -89,6 +92,8 @@ func ResponseWithJson(w http.ResponseWriter, payload interface{}) {
 	case []models.Meros:
 		code = 200
 	case models.Health:
+		code = 200
+	case models.DeclensionTranslationResults:
 		code = 200
 	case map[string]interface{}:
 		code = 200

@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: anaximander
+  labels:
+    app: anaximander
+spec:
+  template:
+    metadata:
+      labels:
+        app: anaximander
+        release: {{ .Release.Name }}
+        version: {{ .Values.images.tag }}
+    spec:
+      containers:
+        - image: {{ .Values.images.anaximander.repo }}:{{ .Values.images.tag }}
+          name: anaximander
+          env:
+            - name: ELASTIC_SEARCH_SERVICE
+              value: {{ .Values.envVariables.elastic.elasticService }}
+            - name: ELASTIC_SEARCH_USER
+              value: {{ .Values.envVariables.elastic.elasticUser }}
+            - name: ELASTIC_SEARCH_PASSWORD
+              value: {{ .Values.envVariables.elastic.elasticPassword }}
+          imagePullPolicy: {{ .Values.config.pullPolicy }}
+      restartPolicy: Never
+  backoffLimit: 3

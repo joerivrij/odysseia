@@ -107,6 +107,7 @@ func TestLastChapterShardFailure(t *testing.T) {
 
 	var searchResults models.ElasticSearchError
 	err = json.NewDecoder(response.Body).Decode(&searchResults)
+	assert.Nil(t, err)
 
 	expectedText := "elasticSearch returned an error"
 
@@ -186,6 +187,7 @@ func TestCheckAnswerElasticDown(t *testing.T) {
 
 	var searchResults models.ElasticSearchError
 	err = json.NewDecoder(response.Body).Decode(&searchResults)
+	assert.Nil(t, err)
 
 	expectedText := "elasticSearch returned an error"
 
@@ -320,6 +322,7 @@ func TestCreateQuestionElasticDown(t *testing.T) {
 
 	var searchResults models.ElasticSearchError
 	err = json.NewDecoder(response.Body).Decode(&searchResults)
+	assert.Nil(t, err)
 
 	expectedText := "elasticSearch returned an error"
 

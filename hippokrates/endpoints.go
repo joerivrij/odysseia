@@ -10,6 +10,7 @@ type odysseiaApi interface {
 	Sokrates()
 	Herodotos()
 	Alexandros()
+	Dionysos()
 }
 type BaseApi struct {
 	BaseUrl string
@@ -17,6 +18,10 @@ type BaseApi struct {
 	Version string
 }
 
+type Dionysos struct {
+	BaseApi
+	Endpoints DionysosEndpoints
+}
 type Alexandros struct {
 	BaseApi
 	Endpoints AlexandrosEndpoints
@@ -55,6 +60,11 @@ type AlexandrosEndpoints struct {
 	SearchWord string
 }
 
+type DionysosEndpoints struct {
+	CommonEndpoints
+	CheckGrammar string
+}
+
 func (s *Sokrates)GenerateEndpoints() SokratesEndpoints {
 	return SokratesEndpoints{
 		CommonEndpoints: CommonEndpoints {
@@ -88,6 +98,15 @@ func (a *Alexandros)GenerateEndpoints() AlexandrosEndpoints {
 	}
 }
 
+func (d *Dionysos)GenerateEndpoints() DionysosEndpoints {
+	return DionysosEndpoints{
+		CommonEndpoints: CommonEndpoints {
+			Ping:              "ping",
+			Health:             "health",
+		},
+		CheckGrammar: "checkGrammar",
+	}
+}
 
 func (s *Sokrates) Ping() (*http.Response, error) {
 	u, err := url.Parse(s.BaseUrl)
@@ -153,6 +172,26 @@ func (a *Alexandros) Health() (*http.Response, error) {
 	return response, nil
 }
 
+
+func (a *Alexandros) QueryWord(word string) (*http.Response, error) {
+	u, err := url.Parse(a.BaseUrl)
+	if err != nil {
+		return nil, err
+	}
+
+	u.Path = path.Join(u.Path, a.ApiName, a.Version, a.Endpoints.SearchWord)
+	q := u.Query()
+	q.Set("word", word)
+	u.RawQuery = q.Encode()
+
+	response, err := GetRequest(*u)
+	if err != nil {
+		return nil, err
+	}
+
+	return response, nil
+}
+
 func (s *Sokrates) CreateQuestion(category, chapter string) (*http.Response, error) {
 	u, err := url.Parse(s.BaseUrl)
 	if err != nil {
@@ -192,13 +231,29 @@ func (h *Herodotos) CreateSentence(author string) (*http.Response, error) {
 	return response, nil
 }
 
-func (a *Alexandros) QueryWord(word string) (*http.Response, error) {
-	u, err := url.Parse(a.BaseUrl)
+func (d *Dionysos) Health() (*http.Response, error) {
+	u, err := url.Parse(d.BaseUrl)
 	if err != nil {
 		return nil, err
 	}
 
-	u.Path = path.Join(u.Path, a.ApiName, a.Version, a.Endpoints.SearchWord)
+	u.Path = path.Join(u.Path, d.ApiName, d.Version, d.Endpoints.Health)
+
+	response, err := GetRequest(*u)
+	if err != nil {
+		return nil, err
+	}
+
+	return response, nil
+}
+
+func (d *Dionysos) CheckGrammar(word string) (*http.Response, error) {
+	u, err := url.Parse(d.BaseUrl)
+	if err != nil {
+		return nil, err
+	}
+
+	u.Path = path.Join(u.Path, d.ApiName, d.Version, d.Endpoints.CheckGrammar)
 	q := u.Query()
 	q.Set("word", word)
 	u.RawQuery = q.Encode()
