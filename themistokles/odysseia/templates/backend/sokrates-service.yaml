@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: "{{ template "sokrates.uname" . }}"-service
+  name: sokrates-service
 spec:
   selector:
     app: "{{ template "sokrates.uname" . }}"

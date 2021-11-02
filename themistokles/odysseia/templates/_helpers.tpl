@@ -100,3 +100,11 @@ Create the name of the service account to use
 {{ .Values.services.sokrates.name }}
 {{- end -}}
 {{- end -}}
+
+{{- define "solon.uname" -}}
+{{- if empty .Values.services.solon.name -}}
+{{ .Values.images.solon }}
+{{- else -}}
+{{ .Values.services.solon.name }}
+{{- end -}}
+{{- end -}}

@@ -2,7 +2,10 @@ package main
 
 import (
 	"github.com/kpango/glg"
-	"github.com/odysseia/archimedes/cmd/command"
+	"github.com/odysseia/archimedes/command/images"
+	"github.com/odysseia/archimedes/command/kubernetes"
+	"github.com/odysseia/archimedes/command/parse"
+	"github.com/odysseia/archimedes/command/vault"
 	"github.com/spf13/cobra"
 	"strings"
 )
@@ -13,7 +16,8 @@ var (
 		Short: "Deploy everything related to odysseia",
 		Long: `Create and script everything odysseia related.
 Allows you to parse words from a txt file,
-build all container images`,
+build all container images
+work with vault and much more is coming`,
 	}
 )
 
@@ -26,8 +30,10 @@ func main() {
 	glg.Info(strings.Repeat("~", 37))
 
 	rootCmd.AddCommand(
-		command.ParseListToWords(),
-		command.CreateImages(),
+		images.Manager(),
+		parse.Manager(),
+		vault.Manager(),
+		kubernetes.Manager(),
 	)
 
 	err := rootCmd.Execute()

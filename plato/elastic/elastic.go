@@ -10,6 +10,7 @@ import (
 	"github.com/odysseia/plato/models"
 	"io/ioutil"
 	"log"
+	"net/http"
 	"strconv"
 	"time"
 )
@@ -22,6 +23,24 @@ func CreateElasticClient(password, username string, elasticService []string) (*e
 		Username:  username,
 		Password:  password,
 		Addresses: elasticService,
+	}
+	es, err := elasticsearch.NewClient(cfg)
+	if err != nil {
+		glg.Errorf("Error creating the client: %s", err)
+		return nil, err
+	}
+
+	return es, nil
+}
+
+func CreateElasticClientWithTLS(password, username string, elasticService []string, tp http.RoundTripper) (*elasticsearch.Client, error) {
+	glg.Info("creating elasticClient")
+
+	cfg := elasticsearch.Config{
+		Username:  username,
+		Password:  password,
+		Addresses: elasticService,
+		Transport: tp,
 	}
 	es, err := elasticsearch.NewClient(cfg)
 	if err != nil {
@@ -107,6 +126,18 @@ func CheckHealth(es *elasticsearch.Client) (elasticHealth models.DatabaseHealth)
 	elasticHealth.Healthy = true
 
 	return elasticHealth
+}
+
+// CheckHealth Check if elastic connection is healthy
+func CreateRole(elasticClient *elasticsearch.Client, name string, roleRequest models.CreateRoleRequest) (bool, error) {
+	jsonRole, err := roleRequest.Marshal()
+	if err != nil {
+		return false, err
+	}
+	buffer := bytes.NewBuffer(jsonRole)
+	res, _ := elasticClient.Security.PutRole(name, buffer)
+	glg.Debug(res)
+	return true, nil
 }
 
 // DeleteIndex delete an index without checking for success

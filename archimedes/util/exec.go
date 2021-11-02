@@ -1,35 +1,10 @@
-package impl
+package util
 
 import (
 	"bufio"
 	"fmt"
-	"io"
-	"os"
 	"os/exec"
 )
-
-func CopyFileContents(src, dst string) (err error) {
-	in, err := os.Open(src)
-	if err != nil {
-		return
-	}
-	defer in.Close()
-	out, err := os.Create(dst)
-	if err != nil {
-		return
-	}
-	defer func() {
-		cerr := out.Close()
-		if err == nil {
-			err = cerr
-		}
-	}()
-	if _, err = io.Copy(out, in); err != nil {
-		return
-	}
-	err = out.Sync()
-	return
-}
 
 func ExecCommand(command, filePath string) error {
 	cmd := exec.Command("/bin/sh", "-c", command)
@@ -49,4 +24,23 @@ func ExecCommand(command, filePath string) error {
 	cmd.Wait()
 
 	return nil
+}
+
+func ExecCommandWithReturn(command string) (string, error) {
+	cmd := exec.Command("/bin/sh", "-c", command)
+
+	stdOut, _ := cmd.StdoutPipe()
+	err := cmd.Start()
+	if err != nil {
+		return "", err
+	}
+
+	var text string
+	scanner := bufio.NewScanner(stdOut)
+	for scanner.Scan() {
+		text = scanner.Text()
+	}
+	cmd.Wait()
+
+	return text, nil
 }

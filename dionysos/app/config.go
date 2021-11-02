@@ -22,7 +22,7 @@ type DionysosConfig struct {
 }
 
 const dictionaryIndexDefault = "alexandros"
-const elasticIndexDefault = "dionysos"
+const elasticIndexDefault = "grammar"
 
 func Get(es *elasticsearch.Client, declensionConfig *models.DeclensionConfig) (*DionysosConfig) {
 	dictIndex := os.Getenv("DICTIONARY_INDEX")

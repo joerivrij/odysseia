@@ -21,7 +21,7 @@ func Get(ticks time.Duration, es *elasticsearch.Client) (bool, *AlexandrosConfig
 
 	config := &AlexandrosConfig{
 		ElasticClient: *es,
-		Index:         "alexandros",
+		Index:         "dictionary",
 	}
 
 	return healthy, config

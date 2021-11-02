@@ -1,20 +1,52 @@
-package impl
+package command
 
 import (
 	"fmt"
 	"github.com/kpango/glg"
+	"github.com/odysseia/archimedes/util"
 	"github.com/odysseia/plato/models"
-	"golang.org/x/text/runes"
-	"golang.org/x/text/transform"
-	"golang.org/x/text/unicode/norm"
+	"github.com/spf13/cobra"
 	"io/ioutil"
 	"os"
 	"regexp"
 	"strings"
-	"unicode"
 )
 
-func ParseLines(filePath, outDir string) {
+func ListToWords() *cobra.Command {
+	var (
+		filePath string
+		outDir   string
+	)
+	cmd := &cobra.Command{
+		Use:   "list",
+		Short: "parse a list of words",
+		Long: `Allows you to parse a list of words to be used by demokritos
+- Filepath
+- OutDir
+`,
+		Run: func(cmd *cobra.Command, args []string) {
+			glg.Green("parsing")
+			if filePath == "" {
+				glg.Error(fmt.Sprintf("filepath is empty"))
+				return
+			}
+
+			if outDir == "" {
+				glg.Debug(fmt.Sprintf("no outdir set assuming one"))
+				homeDir, _ := os.UserHomeDir()
+				outDir = fmt.Sprintf("%s/go/src/github.com/odysseia/demokritos/odysseia/perseus", homeDir)
+			}
+
+			parseLines(filePath, outDir)
+		},
+	}
+	cmd.PersistentFlags().StringVarP(&filePath, "filepath", "f", "", "where to find the txt file")
+	cmd.PersistentFlags().StringVarP(&outDir, "outdir", "o", "", "demokritos dir")
+
+	return cmd
+}
+
+func parseLines(filePath, outDir string) {
 	plan, _ := ioutil.ReadFile(filePath)
 	wordList := strings.Split(string(plan), "\n")
 	glg.Info(fmt.Sprintf("found %d words in %s", len(wordList), filePath))
@@ -28,7 +60,7 @@ func ParseLines(filePath, outDir string) {
 		for j, char := range word {
 			c := fmt.Sprintf("%c", char)
 			if j == 0 {
-				removedAccent := removeAccent(c)
+				removedAccent := util.RemoveAccent(c)
 				if currentLetter != removedAccent {
 					jsonBiblos, err := biblos.Marshal()
 					if err != nil {
@@ -36,7 +68,7 @@ func ParseLines(filePath, outDir string) {
 					}
 
 					outputFile := fmt.Sprintf("%s/%s.json", outDir, currentLetter)
-					writeFile(jsonBiblos, outputFile)
+					util.WriteFile(jsonBiblos, outputFile)
 					currentLetter = removedAccent
 					biblos = models.Biblos{}
 				}
@@ -66,34 +98,9 @@ func ParseLines(filePath, outDir string) {
 			}
 
 			outputFile := fmt.Sprintf("%s/%s.json", outDir, currentLetter)
-			writeFile(jsonBiblos, outputFile)
+			util.WriteFile(jsonBiblos, outputFile)
 		}
 	}
 
 	glg.Info(fmt.Sprintf("all words have been parsed and saved to %s", outDir))
-}
-
-func removeAccent(s string) string {
-	t := transform.Chain(norm.NFD, runes.Remove(runes.In(unicode.Mn)), norm.NFC)
-	output, _, e := transform.String(t, s)
-	if e != nil {
-		panic(e)
-	}
-	return output
-}
-
-func writeFile(jsonBiblos []byte, outputFile string) {
-	openedFile, err := os.Create(outputFile)
-	if err != nil {
-		glg.Error(err)
-	}
-	defer openedFile.Close()
-
-	outputFromWrite, err := openedFile.Write(jsonBiblos)
-	if err != nil {
-		glg.Error(err)
-	}
-
-	glg.Info(fmt.Sprintf("finished writing %d bytes", outputFromWrite))
-	glg.Info(fmt.Sprintf("file written to %s", outputFile))
 }

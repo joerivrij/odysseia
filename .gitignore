@@ -137,3 +137,6 @@ dmypy.json
 *.tfstate.*
 outfile
 secret.tfvars
+
+# vault file
+cluster-keys.json

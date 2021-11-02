@@ -6,6 +6,9 @@ config:
   environment: minikube
   pullPolicy: Never
   inClusterElastic: true
+  inClusterElasticStack: false
+  inClusterKibana: true
+  inClusterVault: true
   loadTests: true
   systemTests: true
   replicas:
@@ -60,9 +63,11 @@ services:
     limits:
       memory: "128Mi"
       cpu: "250m"
+  solon:
+    name: "solon"
 
 images:
-  tag: eb4f981
+  tag: 3eaee86
   anaximander:
     repo: anaximander
   alexandros:
@@ -85,6 +90,8 @@ images:
     repo: ploutarchos
   hippokrates:
     repo: hippokrates
+  solon:
+    repo: solon
   xerxes:
     repo: xerxes
 
@@ -96,11 +103,24 @@ envVariables:
     port: 5000
   dionysos:
     port: 5000
-    alexandrosUrl: http://alexandros-service:5000
   sokrates:
     port: 5000
   herodotos:
     port: 5000
+  solon:
+    port: 5000
+    extraEnvs:
+      - name: VAULT_SERVICE
+        value: http://odysseia-vault:8200
+      - name: AUTH_METHOD
+        value: kubernetes
+      - name: VAULT_ROLE
+        value: solon
+      - name: ELASTIC_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: elastic-root-secret
+            key: password
   ploutarchos:
     port: 8080
   xerxes:
@@ -117,6 +137,11 @@ envVariables:
     spawnRate: 5
 
 esConfig:
-  elasticService: http://elasticsearch-master:9200
+  elasticService: https://elastic-master:9200
   elasticUser: elastic
-  elasticPassword: odysseia
+  elasticPassword: zyldw9RLDBn1uNcul20Wvb1R
+
+secretMounts:
+  - name: elastic-certificate-pem
+    secretName: elastic-certificate-pem
+    path: /app/config/certs

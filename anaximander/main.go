@@ -44,7 +44,7 @@ func main() {
 	}
 
 	root := "arkho"
-	indexName := "dionysos"
+	indexName := "grammar"
 
 	rootDir, err := ioutil.ReadDir(root)
 	if err != nil {

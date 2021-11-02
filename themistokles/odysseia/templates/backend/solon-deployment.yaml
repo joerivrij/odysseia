@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ template "solon.uname" . }}"
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: "{{ .Chart.Name }}"
+    env: {{ .Values.config.environment }}
+    app: "{{ template "solon.uname" . }}"
+    {{- range $key, $value := .Values.services.backend.labels }}
+    {{ $key }}: {{ $value | quote }}
+  {{- end }}
+spec:
+  replicas: {{ int .Values.config.replicas.low }}
+  selector:
+    matchLabels:
+      app: "{{ template "solon.uname" . }}"
+  template:
+    metadata:
+      labels:
+        app: {{ template "solon.uname" . }}
+        release: {{ .Release.Name }}
+        version: {{ .Values.images.tag }}
+    spec:
+      serviceAccountName: odysseia-vault
+      containers:
+        - image: {{ .Values.images.solon.repo }}:{{ .Values.images.tag }}
+          name: "{{ template "solon.uname" . }}"
+          imagePullPolicy: {{ .Values.config.pullPolicy }}
+          env:
+{{- if .Values.envVariables.solon.extraEnvs }}
+{{ toYaml .Values.envVariables.solon.extraEnvs | indent 10 }}
+{{- end }}
+          volumeMounts:
+            {{- range .Values.secretMounts }}
+            - name: {{ .name }}
+              mountPath: {{ .path }}
+              {{- if .subPath }}
+              subPath: {{ .subPath }}
+            {{- end }}
+          {{- end }}
+          ports:
+            - containerPort: {{ .Values.envVariables.alexandros.port }}
+          livenessProbe:
+            httpGet:
+              path: /solon/v1/health
+              port: {{ .Values.envVariables.alexandros.port }}
+            initialDelaySeconds: {{ .Values.config.initialDelayLiveness }}
+            periodSeconds: {{ .Values.config.periodSeconds }}
+          readinessProbe:
+            httpGet:
+              path: /solon/v1/ping
+              port: {{ .Values.envVariables.alexandros.port }}
+            initialDelaySeconds: {{ .Values.config.initialDelayReadiness }}
+            periodSeconds: {{ .Values.config.periodSeconds }}
+          resources:
+            requests:
+              memory: {{ .Values.services.alexandros.requests.memory }}
+              cpu: {{ .Values.services.alexandros.requests.cpu }}
+            limits:
+              memory: {{.Values.services.alexandros.limits.memory}}
+              cpu: {{.Values.services.alexandros.limits.memory}}
+      volumes:
+        {{- range .Values.secretMounts }}
+        - name: {{ .name }}
+          secret:
+            secretName: {{ .secretName }}
+            {{- if .defaultMode }}
+            defaultMode: {{ .defaultMode }}
+        {{- end }}
+  {{- end }}

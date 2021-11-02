@@ -1,15 +1,42 @@
-package impl
+package command
 
 import (
 	"fmt"
 	"github.com/kpango/glg"
+	"github.com/odysseia/archimedes/util"
+	"github.com/spf13/cobra"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"regexp"
 )
 
-func CreateImages(odysseiaPath string) {
+func CreateImages() *cobra.Command {
+	var (
+		filePath string
+	)
+	cmd := &cobra.Command{
+		Use:   "create",
+		Short: "create images for all apis",
+		Long: `Allows you to create images for all apis
+- Filepath
+`,
+		Run: func(cmd *cobra.Command, args []string) {
+			glg.Green("creating")
+			if filePath == "" {
+				glg.Error(fmt.Sprintf("filepath is empty"))
+				return
+			}
+
+			createImages(filePath)
+		},
+	}
+	cmd.PersistentFlags().StringVarP(&filePath, "filepath", "f", "", "where to find the source code")
+
+	return cmd
+}
+
+func createImages(odysseiaPath string) {
 	ploutarchosPath := fmt.Sprintf("%s/%s/yaml", odysseiaPath, "ploutarchos")
 	directories, err := ioutil.ReadDir(odysseiaPath)
 	if err != nil {
@@ -53,7 +80,7 @@ func lookForYamlFile(absolutePath, ploutarchosPath string) {
 			swaggerDestination := fmt.Sprintf("%s/%s", ploutarchosPath, f.Name())
 			glg.Info("****** 📗 Getting OpenApi Doc 📗 ******")
 			glg.Debug("found swagger file %s copying to %s", swaggerSource, swaggerDestination)
-			err = CopyFileContents(swaggerSource, swaggerDestination)
+			err = util.CopyFileContents(swaggerSource, swaggerDestination)
 			if err != nil {
 				glg.Error(err)
 			}
@@ -73,7 +100,7 @@ func lookForMakeFile(absolutePath, command string) {
 			glg.Info("****** 🚢 Building Container Image 🚢 ******")
 			makeCommand := fmt.Sprintf("make %s", command)
 
-			err := ExecCommand(makeCommand, absolutePath)
+			err := util.ExecCommand(makeCommand, absolutePath)
 			if err != nil {
 				glg.Error(err)
 			}

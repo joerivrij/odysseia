@@ -52,7 +52,7 @@ func main() {
 	}
 
 	root := "lexiko"
-	indexName := "alexandros"
+	indexName := "dictionary"
 	searchWord := "greek"
 
 	rootDir, err := ioutil.ReadDir(root)
