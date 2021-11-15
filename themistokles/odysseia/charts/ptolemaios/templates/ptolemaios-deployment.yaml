@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ template "ptolemaios.uname" . }}"
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: "{{ .Chart.Name }}"
+    env: {{ .Values.config.environment }}
+    app: "{{ template "ptolemaios.uname" . }}"
+    {{- range $key, $value := .Values.services.backend.labels }}
+    {{ $key }}: {{ $value | quote }}
+  {{- end }}
+spec:
+  replicas: {{ int .Values.config.replicas.low }}
+  selector:
+    matchLabels:
+      app: "{{ template "ptolemaios.uname" . }}"
+  template:
+    metadata:
+      labels:
+        app: {{ template "ptolemaios.uname" . }}
+        release: {{ .Release.Name }}
+        version: {{ .Values.images.tag }}
+    spec:
+      containers:
+        - image: {{ .Values.images.ptolemaios.repo }}:{{ .Values.images.tag }}
+          name: "{{ template "ptolemaios.uname" . }}"
+          env:
+          - name: VAULT_SERVICE
+            value: http://vault:8200
+          - name: SOLON_SERVICE
+            value: http://solon-service:5000/solon/v1/register
+          imagePullPolicy: {{ .Values.config.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.envVariables.ptolemaios.port }}
+          livenessProbe:
+            httpGet:
+              path: /ptolemaios/v1/health
+              port: {{ .Values.envVariables.ptolemaios.port }}
+            initialDelaySeconds: {{ .Values.config.initialDelayLiveness }}
+            periodSeconds: {{ .Values.config.periodSeconds }}
+          readinessProbe:
+            httpGet:
+              path: /ptolemaios/v1/ping
+              port: {{ .Values.envVariables.ptolemaios.port }}
+            initialDelaySeconds: {{ .Values.config.initialDelayReadiness }}
+            periodSeconds: {{ .Values.config.periodSeconds }}
+          resources:
+            requests:
+              memory: {{ .Values.services.ptolemaios.requests.memory }}
+              cpu: {{ .Values.services.ptolemaios.requests.cpu }}
+            limits:
+              memory: {{.Values.services.ptolemaios.limits.memory}}
+              cpu: {{.Values.services.ptolemaios.limits.memory}}

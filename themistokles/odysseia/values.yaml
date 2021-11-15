@@ -65,9 +65,11 @@ services:
       cpu: "250m"
   solon:
     name: "solon"
+  ptolemaios:
+    name: "ptolemaios"
 
 images:
-  tag: 3eaee86
+  tag: c1d072e
   anaximander:
     repo: anaximander
   alexandros:
@@ -92,6 +94,8 @@ images:
     repo: hippokrates
   solon:
     repo: solon
+  ptolemaios:
+    repo: ptolemaios
   xerxes:
     repo: xerxes
 
@@ -111,7 +115,7 @@ envVariables:
     port: 5000
     extraEnvs:
       - name: VAULT_SERVICE
-        value: http://odysseia-vault:8200
+        value: http://vault:8200
       - name: AUTH_METHOD
         value: kubernetes
       - name: VAULT_ROLE

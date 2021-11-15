@@ -1,0 +1,47 @@
+# Default values for Odysseia.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+config:
+  environment: minikube
+  pullPolicy: Never
+  replicas:
+    low: 1
+    medium: 2
+    high: 4
+  initialDelayLiveness: 20
+  initialDelayReadiness: 1
+  periodSeconds: 20
+
+services:
+  backend:
+    labels: {
+      domain: backend
+    }
+  ptolemaios:
+    name: "ptolemaios"
+    requests:
+      memory: "64Mi"
+      cpu: "100m"
+    limits:
+      memory: "128Mi"
+      cpu: "250m"
+
+images:
+  tag: c1d072e
+  ptolemaios:
+    repo: ptolemaios
+
+envVariables:
+  ptolemaios:
+    port: 5001
+
+esConfig:
+  elasticService: https://elastic-master:9200
+  elasticUser: elastic
+  elasticPassword: zyldw9RLDBn1uNcul20Wvb1R
+
+secretMounts:
+  - name: elastic-certificate-pem
+    secretName: elastic-certificate-pem
+    path: /app/config/certs

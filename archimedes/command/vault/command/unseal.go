@@ -60,10 +60,10 @@ func Unseal() *cobra.Command {
 	return cmd
 }
 
-func unsealVault(key, namespace string, kube kubernetes.KubeClient) {
+func unsealVault(key, namespace string, kube kubernetes.Client) {
 	if key == "" {
 		glg.Info("key was not given, trying to get key from cluster-keys.json")
-		clusterKeys := vault.GetClusterKeys()
+		clusterKeys := vault.GetClusterKeys(namespace)
 		key = clusterKeys.UnsealKeysHex[0]
 		glg.Info("key found")
 	}

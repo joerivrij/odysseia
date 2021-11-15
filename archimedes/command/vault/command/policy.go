@@ -71,7 +71,7 @@ func Policy() *cobra.Command {
 	return cmd
 }
 
-func createPolicy(policyName, namespace string, kube kubernetes.KubeClient) {
+func createPolicy(policyName, namespace string, kube kubernetes.Client) {
 	for key, value := range policies {
 		var policyToCreate []byte
 

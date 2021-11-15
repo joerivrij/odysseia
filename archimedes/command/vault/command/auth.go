@@ -5,6 +5,7 @@ import (
 	"github.com/kpango/glg"
 	"github.com/odysseia/archimedes/util"
 	"github.com/odysseia/plato/kubernetes"
+	"github.com/odysseia/plato/vault"
 	"github.com/spf13/cobra"
 	"os"
 	"path/filepath"
@@ -71,7 +72,7 @@ func Auth() *cobra.Command {
 	return cmd
 }
 
-func EnableKubernetesAsAuth(namespace, policyName string, kube kubernetes.KubeClient) {
+func EnableKubernetesAsAuth(namespace, policyName string, kube kubernetes.Client) {
 	vaultSubString := "vault"
 	var vaultSelector string
 	var podName string
@@ -150,6 +151,21 @@ func EnableKubernetesAsAuth(namespace, policyName string, kube kubernetes.KubeCl
 	}
 
 	glg.Info("gathered all data needed to start and enable kubernetes as auth and adding your current cluster")
+
+	glg.Info("step 0: logging in using roottoken")
+
+	clusterKeys := vault.GetClusterKeys(namespace)
+	rootToken := clusterKeys.RootToken
+	glg.Info("key found")
+
+	loginCommand := []string{"vault", "login", rootToken}
+
+	login, err := kube.ExecNamedPod(namespace, podName, loginCommand)
+	if err != nil {
+		glg.Error(err)
+	}
+
+	glg.Debug(login)
 
 	glg.Info("step 1: enable kubernetes as auth method")
 	command := []string{"vault", "auth", "enable", "kubernetes"}

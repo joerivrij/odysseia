@@ -7,5 +7,5 @@ spec:
     app: "{{ template "solon.uname" . }}"
   ports:
     - name: "http"
-      port: {{ .Values.envVariables.alexandros.port }}
-      targetPort: {{ .Values.envVariables.alexandros.port }}
+      port: {{ .Values.envVariables.solon.port }}
+      targetPort: {{ .Values.envVariables.solon.port }}

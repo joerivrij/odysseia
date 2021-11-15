@@ -58,7 +58,11 @@ func (s *SolonHandler) CreateOneTimeToken(w http.ResponseWriter, req *http.Reque
 
 
 func (s *SolonHandler) RegisterService(w http.ResponseWriter, req *http.Request) {
-
+	glg.Info(req.RemoteAddr)
+	glg.Info(req.Host)
+	glg.Info(req.Header)
+	glg.Info(req.RequestURI)
+	middleware.ResponseWithJson(w, req)
 }
 
 func (s *SolonHandler)vaultHealth() (bool, error) {

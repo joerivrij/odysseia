@@ -23,12 +23,14 @@ spec:
         release: {{ .Release.Name }}
         version: {{ .Values.images.tag }}
     spec:
-      serviceAccountName: odysseia-vault
+      serviceAccountName: vault
       containers:
         - image: {{ .Values.images.solon.repo }}:{{ .Values.images.tag }}
           name: "{{ template "solon.uname" . }}"
           imagePullPolicy: {{ .Values.config.pullPolicy }}
           env:
+          - name: ENV
+            value: {{ .Values.config.environment }}
 {{- if .Values.envVariables.solon.extraEnvs }}
 {{ toYaml .Values.envVariables.solon.extraEnvs | indent 10 }}
 {{- end }}
@@ -41,26 +43,26 @@ spec:
             {{- end }}
           {{- end }}
           ports:
-            - containerPort: {{ .Values.envVariables.alexandros.port }}
+            - containerPort: {{ .Values.envVariables.solon.port }}
           livenessProbe:
             httpGet:
               path: /solon/v1/health
-              port: {{ .Values.envVariables.alexandros.port }}
+              port: {{ .Values.envVariables.solon.port }}
             initialDelaySeconds: {{ .Values.config.initialDelayLiveness }}
             periodSeconds: {{ .Values.config.periodSeconds }}
           readinessProbe:
             httpGet:
               path: /solon/v1/ping
-              port: {{ .Values.envVariables.alexandros.port }}
+              port: {{ .Values.envVariables.solon.port }}
             initialDelaySeconds: {{ .Values.config.initialDelayReadiness }}
             periodSeconds: {{ .Values.config.periodSeconds }}
           resources:
             requests:
-              memory: {{ .Values.services.alexandros.requests.memory }}
-              cpu: {{ .Values.services.alexandros.requests.cpu }}
+              memory: {{ .Values.services.solon.requests.memory }}
+              cpu: {{ .Values.services.solon.requests.cpu }}
             limits:
-              memory: {{.Values.services.alexandros.limits.memory}}
-              cpu: {{.Values.services.alexandros.limits.memory}}
+              memory: {{.Values.services.solon.limits.memory}}
+              cpu: {{.Values.services.solon.limits.memory}}
       volumes:
         {{- range .Values.secretMounts }}
         - name: {{ .name }}

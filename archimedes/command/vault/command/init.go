@@ -57,7 +57,7 @@ func Init() *cobra.Command {
 	return cmd
 }
 
-func initVault(namespace string, kube kubernetes.KubeClient) {
+func initVault(namespace string, kube kubernetes.Client) {
 	vaultSelector := "app.kubernetes.io/name=vault"
 	var podName string
 

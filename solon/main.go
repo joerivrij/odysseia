@@ -43,6 +43,7 @@ func main() {
 
 	var esClient *elasticsearch.Client
 	if env != "TEST" {
+		glg.Info("trying to read cert file from pod")
 		cert, _ := ioutil.ReadFile("/app/config/certs/elastic-certificate.pem")
 		es, err := elastic.CreateElasticClientFromEnvVariablesWithTLS(cert)
 		if err != nil {
@@ -65,8 +66,8 @@ func main() {
 		glg.Fatal("death has found me")
 	}
 
-	created := app.InitRoot(*config)
-	glg.Info(created)
+	//created := app.InitRoot(*config)
+	//glg.Info(created)
 	srv := app.InitRoutes(*config)
 
 	glg.Infof("%s : %s", "running on port", port)

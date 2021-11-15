@@ -13,6 +13,7 @@ func InitRoutes(config PtolemaiosConfig) *mux.Router {
 
 	serveMux.HandleFunc("/ptolemaios/v1/ping", middleware.Adapt(handler.PingPong, middleware.ValidateRestMethod("GET"), middleware.LogRequestDetails(), middleware.SetCorsHeaders()))
 	serveMux.HandleFunc("/ptolemaios/v1/secret", middleware.Adapt(handler.GetSecretFromVault, middleware.ValidateRestMethod("GET"), middleware.LogRequestDetails(), middleware.SetCorsHeaders()))
+	serveMux.HandleFunc("/ptolemaios/v1/register", middleware.Adapt(handler.Register, middleware.ValidateRestMethod("GET"), middleware.LogRequestDetails(), middleware.SetCorsHeaders()))
 
 	return serveMux
 }

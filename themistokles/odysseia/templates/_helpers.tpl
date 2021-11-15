@@ -108,3 +108,11 @@ Create the name of the service account to use
 {{ .Values.services.solon.name }}
 {{- end -}}
 {{- end -}}
+
+{{- define "ptolemaios.uname" -}}
+{{- if empty .Values.services.ptolemaios.name -}}
+{{ .Values.images.ptolemaios }}
+{{- else -}}
+{{ .Values.services.ptolemaios.name }}
+{{- end -}}
+{{- end -}}
