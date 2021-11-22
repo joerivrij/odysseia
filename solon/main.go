@@ -41,10 +41,11 @@ func main() {
 	glg.Debug("starting up and getting env variables")
 
 
+	var cert []byte
 	var esClient *elasticsearch.Client
 	if env != "TEST" {
 		glg.Info("trying to read cert file from pod")
-		cert, _ := ioutil.ReadFile("/app/config/certs/elastic-certificate.pem")
+		cert, _ = ioutil.ReadFile("/app/config/certs/elastic-certificate.pem")
 		es, err := elastic.CreateElasticClientFromEnvVariablesWithTLS(cert)
 		if err != nil {
 			glg.Fatalf("Error creating ElasticClient shutting down: %s", err)
@@ -52,7 +53,7 @@ func main() {
 
 		esClient = es
 	} else {
-		cert, _ := ioutil.ReadFile("/home/joerivrij/go/src/github.com/odysseia/solon/vault_config/elastic-certificate.pem")
+		cert, _ = ioutil.ReadFile("/home/joerivrij/go/src/github.com/odysseia/solon/vault_config/elastic-certificate.pem")
 		es, err := elastic.CreateElasticClientFromEnvVariablesWithTLS(cert)
 		if err != nil {
 			glg.Fatalf("Error creating ElasticClient shutting down: %s", err)
@@ -61,13 +62,13 @@ func main() {
 		esClient = es
 	}
 
-	healthy, config := app.Get(200, esClient)
+	healthy, config := app.Get(200, esClient, cert, env)
 	if !healthy {
 		glg.Fatal("death has found me")
 	}
 
-	//created := app.InitRoot(*config)
-	//glg.Info(created)
+	created := app.InitRoot(*config)
+	glg.Info(created)
 	srv := app.InitRoutes(*config)
 
 	glg.Infof("%s : %s", "running on port", port)

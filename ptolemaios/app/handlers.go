@@ -3,11 +3,8 @@ package app
 import (
 	"fmt"
 	vault "github.com/hashicorp/vault/api"
-	"github.com/kpango/glg"
-	"github.com/odysseia/plato/helpers"
 	"github.com/odysseia/plato/middleware"
 	"github.com/odysseia/plato/models"
-	"io/ioutil"
 	"net/http"
 )
 
@@ -19,16 +16,6 @@ type PtolemaiosHandler struct {
 func (p *PtolemaiosHandler) PingPong(w http.ResponseWriter, req *http.Request) {
 	pingPong := models.ResultModel{Result: "pong"}
 	middleware.ResponseWithJson(w, pingPong)
-}
-
-func (p *PtolemaiosHandler) Register(w http.ResponseWriter, req *http.Request) {
-	glg.Info(p.Config.SolonService.String())
-
-	resp, _ := helpers.GetRequest(p.Config.SolonService)
-
-	bodyBytes, _ := ioutil.ReadAll(resp.Body)
-	glg.Info(string(bodyBytes))
-	middleware.ResponseWithJson(w, bodyBytes)
 }
 
 func (p *PtolemaiosHandler) GetSecretFromVault(w http.ResponseWriter, req *http.Request) {

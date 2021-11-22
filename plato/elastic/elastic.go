@@ -128,7 +128,7 @@ func CheckHealth(es *elasticsearch.Client) (elasticHealth models.DatabaseHealth)
 	return elasticHealth
 }
 
-// CheckHealth Check if elastic connection is healthy
+// CreateRole to create a role in ES
 func CreateRole(elasticClient *elasticsearch.Client, name string, roleRequest models.CreateRoleRequest) (bool, error) {
 	jsonRole, err := roleRequest.Marshal()
 	if err != nil {
@@ -136,6 +136,18 @@ func CreateRole(elasticClient *elasticsearch.Client, name string, roleRequest mo
 	}
 	buffer := bytes.NewBuffer(jsonRole)
 	res, _ := elasticClient.Security.PutRole(name, buffer)
+	glg.Debug(res)
+	return true, nil
+}
+
+// CreateUser Creates a new user
+func CreateUser(elasticClient *elasticsearch.Client, name string, userCreation models.CreateUserRequest) (bool, error) {
+	jsonUser, err := userCreation.Marshal()
+	if err != nil {
+		return false, err
+	}
+	buffer := bytes.NewBuffer(jsonUser)
+	res, _ := elasticClient.Security.PutUser(name, buffer)
 	glg.Debug(res)
 	return true, nil
 }

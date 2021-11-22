@@ -6,6 +6,7 @@ import (
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
 )
 
@@ -13,6 +14,7 @@ type Client interface {
 	ExecNamedPod(namespace, podName string, command []string) (string, error)
 	GetStatefulSets(namespace string) (*appsv1.StatefulSetList, error)
 	GetPodsBySelector(namespace, selector string) (*corev1.PodList, error)
+	GetPodByName(namespace, name string) (*corev1.Pod, error)
 	GetDeploymentStatus(namespace string) (bool, error)
 	GetSecrets(namespace string) (*corev1.SecretList, error)
 	CreateSecret(namespace, secretName string, data map[string][]byte) error
@@ -42,6 +44,18 @@ func NewKubeClient(kubeConfigFilePath string) (Client, error) {
 	return client, nil
 }
 
+func NewInClusterKubeClient() (Client, error) {
+	config, err := rest.InClusterConfig()
+	clientSet, err := kubernetes.NewForConfig(config)
+	if err != nil {
+		return nil, err
+	}
+
+	client := &Kube{set: clientSet, config: nil }
+
+	return client, nil
+}
+
 func New(config []byte) (*Kube, error) {
 	c, err := clientcmd.NewClientConfigFromBytes(config)
 	if err != nil {
@@ -53,12 +67,12 @@ func New(config []byte) (*Kube, error) {
 		return nil, err
 	}
 
-	clientset, err := kubernetes.NewForConfig(restConfig)
+	clientSet, err := kubernetes.NewForConfig(restConfig)
 	if err != nil {
 		return nil, err
 	}
 
-	return &Kube{set: clientset, config: config }, nil
+	return &Kube{set: clientSet, config: config }, nil
 }
 
 

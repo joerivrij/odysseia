@@ -7,6 +7,7 @@ import (
 )
 
 const defaultVaultService = "http://127.0.0.1:8200"
+const defaultSolonService = "http://localhost:5000"
 
 type PtolemaiosConfig struct {
 	VaultService string
@@ -22,6 +23,7 @@ func Get() *PtolemaiosConfig {
 	solonService := os.Getenv("SOLON_SERVICE")
 	if solonService == "" {
 		glg.Info("no connection to solon can be made")
+		solonService = defaultSolonService
 	}
 
 	solonUrl, _ := url.Parse(solonService)

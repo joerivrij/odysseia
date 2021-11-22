@@ -7,6 +7,7 @@ import (
 	vault "github.com/hashicorp/vault/api"
 	"github.com/kpango/glg"
 	"github.com/odysseia/plato/elastic"
+	"github.com/odysseia/plato/kubernetes"
 	"github.com/odysseia/plato/models"
 	"io/ioutil"
 	"os"
@@ -18,13 +19,16 @@ import (
 
 const defaultVaultService = "http://127.0.0.1:8200"
 const defaultRoleName = "solon"
+const defaultKubeConfig = "/.kube/config"
 
 type SolonConfig struct {
 	VaultClient *vault.Client
 	ElasticClient elasticsearch.Client
+	ElasticCert []byte
+	Kube kubernetes.Client
 }
 
-func Get(ticks time.Duration, es *elasticsearch.Client) (bool, *SolonConfig) {
+func Get(ticks time.Duration, es *elasticsearch.Client, cert []byte, env string) (bool, *SolonConfig) {
 	healthy := elastic.CheckHealthyStatusElasticSearch(es, ticks)
 	if !healthy {
 		glg.Errorf("elasticClient unhealthy after %s ticks", ticks)
@@ -73,9 +77,34 @@ func Get(ticks time.Duration, es *elasticsearch.Client) (bool, *SolonConfig) {
 		}
 	}
 
+	var kubeManager kubernetes.Client
+	if env != "TEST" {
+		kube, err := kubernetes.NewInClusterKubeClient()
+		if err != nil {
+			glg.Fatal("error creating kubeclient")
+		}
+		kubeManager = kube
+	} else {
+		glg.Debugf("defaulting to %s", defaultKubeConfig)
+		homeDir, err := os.UserHomeDir()
+		if err != nil {
+			glg.Error(err)
+		}
+
+		filePath := filepath.Join(homeDir, defaultKubeConfig)
+		kube, err := kubernetes.NewKubeClient(filePath)
+		if err != nil {
+			glg.Fatal("error creating kubeclient")
+		}
+		kubeManager = kube
+	}
+
+
 	config := &SolonConfig{
 		ElasticClient: *es,
 		VaultClient: vaultClient,
+		ElasticCert: cert,
+		Kube: kubeManager,
 	}
 
 	return healthy, config
@@ -110,7 +139,7 @@ func getTokenFromFile() string {
 	for _, path := range odysseiaPath {
 		l = filepath.Join(l, path)
 	}
-	clusterKeys := filepath.Join(l, "solon", "vault_config", "cluster-keys.json")
+	clusterKeys := filepath.Join(l, "solon", "vault_config", "cluster-keys-odysseia.json")
 
 	f, err := ioutil.ReadFile(clusterKeys)
 	if err != nil {
@@ -161,39 +190,37 @@ func createVaultClientKubernetes(address, vaultRole string) (*vault.Client, erro
 
 func InitRoot(config SolonConfig) bool {
 	glg.Debug("creating secrets at startup and validating functioning of vault connection")
-	roleNames := []string{"dictionary", "text", "words", "grammar"}
-	indexes := []string{"dictionary", "grammar", "authors", "authorNames", "multiChoice"}
-	typeOfRoles := []string{"seeder", "api"}
+
+	unparsedIndexes := os.Getenv("ELASTIC_INDEXES")
+	unparsedRoles := os.Getenv("ELASTIC_ROLES")
+	roles := strings.Split(unparsedRoles, ";")
+	indexes := strings.Split(unparsedIndexes, ";")
+
 
 	var created bool
-	for _, role := range roleNames {
-		for _, typeOfRole := range typeOfRoles {
-			glg.Debug(role)
+	for _, index := range indexes {
+		for _, role := range roles {
+			glg.Debugf("creating a role for index %s with role %s", index, role)
 
 			var privileges []string
-			if typeOfRole == "seeder" {
+			if role == "seeder" {
 				privileges = append(privileges, "delete")
 				privileges = append(privileges, "create")
 			} else {
 				privileges = append(privileges, "read")
 			}
 
-			names := []string{indexes[0]}
+			names := []string{index}
 
 			indices := []models.Index{
 				{
 					Names:      names,
-					Privileges: []string{"all"},
+					Privileges: privileges,
 					Query:      "",
 				},
 			}
 
 			application := []models.Application{
-				{
-					Application: "odysseia",
-					Privileges:  privileges,
-					Resources:   []string{"*"},
-				},
 			}
 
 			putRole := models.CreateRoleRequest{
@@ -203,7 +230,9 @@ func InitRoot(config SolonConfig) bool {
 				RunAs:        nil,
 				Metadata:     models.Metadata{Version: 1},
 			}
-			roleCreated, err := elastic.CreateRole(&config.ElasticClient, role, putRole)
+
+			roleName := fmt.Sprintf("%s_%s", index, role)
+			roleCreated, err := elastic.CreateRole(&config.ElasticClient, roleName, putRole)
 			if err != nil {
 				glg.Error(err)
 			}

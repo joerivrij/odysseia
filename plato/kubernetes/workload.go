@@ -73,6 +73,18 @@ func (k *Kube) GetPodsBySelector(namespace, selector string) (*corev1.PodList, e
 	return pods, nil
 }
 
+func (k *Kube) GetPodByName(namespace, name string) (*corev1.Pod, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
+	defer cancel()
+
+	pod, err := k.GetK8sClientSet().CoreV1().Pods(namespace).Get(ctx, name, metav1.GetOptions{})
+	if err != nil {
+		return nil, err
+	}
+
+	return pod, nil
+}
+
 func (k *Kube) ExecNamedPod(namespace, podName string, command []string) (string, error) {
 	kubeCfg := clientcmd.NewNonInteractiveDeferredLoadingClientConfig(
 		clientcmd.NewDefaultClientConfigLoadingRules(),

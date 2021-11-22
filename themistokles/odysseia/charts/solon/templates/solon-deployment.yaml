@@ -22,6 +22,9 @@ spec:
         app: {{ template "solon.uname" . }}
         release: {{ .Release.Name }}
         version: {{ .Values.images.tag }}
+      annotations:
+        elastic/indices: "dictionary;grammar;authors;authorNames;multiChoice"
+        elastic/roles: "api;seeder"
     spec:
       serviceAccountName: vault
       containers:
@@ -31,6 +34,14 @@ spec:
           env:
           - name: ENV
             value: {{ .Values.config.environment }}
+          - name: ELASTIC_INDEXES
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.annotations['elastic/indices']
+          - name: ELASTIC_ROLES
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.annotations['elastic/roles']
 {{- if .Values.envVariables.solon.extraEnvs }}
 {{ toYaml .Values.envVariables.solon.extraEnvs | indent 10 }}
 {{- end }}

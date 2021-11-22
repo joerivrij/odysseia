@@ -73,6 +73,8 @@ func ResponseWithJson(w http.ResponseWriter, payload interface{}) {
 	glg.Debug(reflect.TypeOf(payload))
 
 	switch payload.(type) {
+	case models.SolonResponse:
+		code = 200
 	case models.ResultModel:
 		code = 200
 	case models.Word:

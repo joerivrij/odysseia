@@ -24,4 +24,19 @@ type ClusterKeys struct {
 	RootToken             string        `json:"root_token"`
 }
 
+func (r *CreateSecretRequest) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+type CreateSecretRequest struct {
+	Data SecretData `json:"data"`
+}
+
+type SecretData struct {
+	Username 	string `json:"elasticUsername"`
+	Password    string `json:"elasticPassword"`
+	ElasticCERT []byte `json:"elasticCert"`
+}
+
+
 

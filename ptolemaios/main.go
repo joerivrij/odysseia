@@ -33,6 +33,7 @@ func main() {
 
 
 	config := app.Get()
+
 	srv := app.InitRoutes(*config)
 
 	glg.Infof("%s : %s", "running on port", port)

@@ -28,7 +28,7 @@ services:
       cpu: "250m"
 
 images:
-  tag: c1d072e
+  tag: 6e6f944
   solon:
     repo: solon
 

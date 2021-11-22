@@ -1,11 +1,10 @@
 package command
 
 import (
-	"crypto/rand"
 	"github.com/kpango/glg"
+	"github.com/odysseia/plato/generator"
 	"github.com/odysseia/plato/kubernetes"
 	"github.com/spf13/cobra"
-	"math/big"
 	"os"
 	"path/filepath"
 )
@@ -70,7 +69,7 @@ func CreateSecret() *cobra.Command {
 }
 
 func createSecret(secretName, namespace string, secretLength int, kube kubernetes.Client) {
-	password, err := generateRandomSecretString(secretLength)
+	password, err := generator.RandomPassword(secretLength)
 	if err != nil {
 		glg.Error(err)
 		return
@@ -89,18 +88,4 @@ func createSecret(secretName, namespace string, secretLength int, kube kubernete
 	}
 
 	glg.Infof("create secret with name %s", secretName)
-}
-
-func generateRandomSecretString(length int) (string, error) {
-	const letters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-"
-	ret := make([]byte, length)
-	for i := 0; i < length; i++ {
-		num, err := rand.Int(rand.Reader, big.NewInt(int64(len(letters))))
-		if err != nil {
-			return "", err
-		}
-		ret[i] = letters[num.Int64()]
-	}
-
-	return string(ret), nil
 }
