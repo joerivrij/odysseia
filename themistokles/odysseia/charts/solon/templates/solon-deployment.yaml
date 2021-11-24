@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: "{{ template "solon.uname" . }}"
+  namespace: {{ .Values.config.namespace }}
   labels:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
@@ -23,7 +24,7 @@ spec:
         release: {{ .Release.Name }}
         version: {{ .Values.images.tag }}
       annotations:
-        elastic/indices: "dictionary;grammar;authors;authorNames;multiChoice"
+        elastic/indices: "dictionary;grammar;authors;text"
         elastic/roles: "api;seeder"
     spec:
       serviceAccountName: vault
@@ -34,6 +35,10 @@ spec:
           env:
           - name: ENV
             value: {{ .Values.config.environment }}
+          - name: NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
           - name: ELASTIC_INDEXES
             valueFrom:
               fieldRef:

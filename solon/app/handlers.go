@@ -12,6 +12,7 @@ import (
 	"github.com/odysseia/plato/models"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 type SolonHandler struct {
@@ -25,7 +26,6 @@ func (s *SolonHandler) PingPong(w http.ResponseWriter, req *http.Request) {
 }
 
 func (s *SolonHandler)Health(w http.ResponseWriter, r *http.Request) {
-	glg.Debug("connecting to vault to establish health")
 	vaultHealth, _ := s.vaultHealth()
 	glg.Debugf("%s : %s", "vault healthy", strconv.FormatBool(vaultHealth))
 
@@ -64,6 +64,8 @@ func (s *SolonHandler) RegisterService(w http.ResponseWriter, req *http.Request)
 	var creationRequest models.SolonCreationRequest
 	decoder := json.NewDecoder(req.Body)
 	err := decoder.Decode(&creationRequest)
+
+	glg.Debug(creationRequest)
 	if err != nil {
 		e := models.ValidationError{
 			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
@@ -93,11 +95,49 @@ func (s *SolonHandler) RegisterService(w http.ResponseWriter, req *http.Request)
 		return
 	}
 
+	glg.Debug("checking pod for correct label")
 	//check if pod has the correct labels
-	namespace := "odysseia"
-	pod, err := s.Config.Kube.GetPodByName(namespace, creationRequest.PodName)
-	glg.Debug(pod.Annotations)
+	pod, err := s.Config.Kube.GetPodByName(s.Config.Namespace, creationRequest.PodName)
+	var validAccess bool
+	var validRole bool
+	for key, value := range pod.Annotations {
+		if key == s.Config.AccessAnnotation {
+			splittedValues := strings.Split(value, ";")
+			for _, a := range creationRequest.Access {
+				contains := sliceContains(splittedValues, a)
+				if !contains {
+					break
+				}
+				glg.Debugf("requested %s matched in annotations %s", a, splittedValues)
+				validAccess = contains
+			}
 
+		} else if key == s.Config.RoleAnnotation {
+			if value == creationRequest.Role {
+				glg.Debugf("requested %s matched annotation %s", creationRequest.Role, value)
+				validRole = true
+			}
+		} else {
+			continue
+		}
+	}
+
+	if !validAccess || !validRole {
+		glg.Debugf("annotations found on pod %s did not match requested", creationRequest.PodName)
+		e := models.ValidationError{
+			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
+			Messages: []models.ValidationMessages{
+				{
+					Field:   "annotations",
+					Message: fmt.Sprintf("annotations requested and found on pod %s did not match", creationRequest.PodName),
+				},
+			},
+		}
+		middleware.ResponseWithJson(w, e)
+		return
+	}
+
+	glg.Debugf("annotations found on pod %s matched requested", creationRequest.PodName)
 
 	var roleNames []string
 	for _, a := range creationRequest.Access {
@@ -160,4 +200,13 @@ func (s *SolonHandler)createNewSecret(name string, payload []byte) (bool, error)
 	glg.Debug(secret.Data)
 
 	return true, nil
+}
+
+func sliceContains(slice []string, str string) bool {
+	for _, s := range slice {
+		if s == str {
+			return true
+		}
+	}
+	return false
 }

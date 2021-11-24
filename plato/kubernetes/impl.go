@@ -51,8 +51,9 @@ func NewInClusterKubeClient() (Client, error) {
 		return nil, err
 	}
 
-	client := &Kube{set: clientSet, config: nil }
+	glg.Debug("created in cluster kube client")
 
+	client := &Kube{set: clientSet, config: config.CAData }
 	return client, nil
 }
 

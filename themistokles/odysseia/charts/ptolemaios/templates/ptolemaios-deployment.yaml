@@ -23,17 +23,15 @@ spec:
         release: {{ .Release.Name }}
         version: {{ .Values.images.tag }}
       annotations:
-        odysseia-greek/role: "seeder"
+        odysseia-greek/role: "api"
         odysseia-greek/access: "dictionary;text"
     spec:
-      containers:
-        - image: {{ .Values.images.ptolemaios.repo }}:{{ .Values.images.tag }}
-          name: "{{ template "ptolemaios.uname" . }}"
+      initContainers:
+        - image: {{ .Values.images.periandros.repo }}:{{ .Values.images.tag }}
+          name: "{{ template "periandros.uname" . }}"
           env:
-          - name: VAULT_SERVICE
-            value: http://vault:8200
           - name: SOLON_SERVICE
-            value: http://solon-service:5000
+            value: {{ .Values.envVariables.solonService }}
           - name: POD_NAME
             valueFrom:
               fieldRef:
@@ -46,6 +44,18 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.annotations['odysseia-greek/access']
+      containers:
+        - image: {{ .Values.images.ptolemaios.repo }}:{{ .Values.images.tag }}
+          name: "{{ template "ptolemaios.uname" . }}"
+          env:
+          - name: VAULT_SERVICE
+            value: {{ .Values.envVariables.vaultService }}
+          - name: SOLON_SERVICE
+            value: {{ .Values.envVariables.solonService }}
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
           imagePullPolicy: {{ .Values.config.pullPolicy }}
           ports:
             - containerPort: {{ .Values.envVariables.ptolemaios.port }}

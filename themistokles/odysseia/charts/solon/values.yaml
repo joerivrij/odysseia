@@ -3,6 +3,7 @@
 # Declare variables to be passed into your templates.
 
 config:
+  namespace: odysseia
   environment: minikube
   pullPolicy: Never
   replicas:
@@ -28,7 +29,7 @@ services:
       cpu: "250m"
 
 images:
-  tag: 6e6f944
+  tag: b463af3
   solon:
     repo: solon
 

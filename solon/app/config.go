@@ -17,15 +17,23 @@ import (
 	"time"
 )
 
-const defaultVaultService = "http://127.0.0.1:8200"
-const defaultRoleName = "solon"
-const defaultKubeConfig = "/.kube/config"
+const (
+	defaultVaultService = "http://127.0.0.1:8200"
+	defaultRoleName = "solon"
+	defaultKubeConfig = "/.kube/config"
+	defaultNamespace = "odysseia"
+	defaultRoleAnnotation = "odysseia-greek/role"
+	defaultAccessAnnotation = "odysseia-greek/access"
+)
 
 type SolonConfig struct {
 	VaultClient *vault.Client
 	ElasticClient elasticsearch.Client
 	ElasticCert []byte
 	Kube kubernetes.Client
+	Namespace string
+	AccessAnnotation string
+	RoleAnnotation string
 }
 
 func Get(ticks time.Duration, es *elasticsearch.Client, cert []byte, env string) (bool, *SolonConfig) {
@@ -33,6 +41,12 @@ func Get(ticks time.Duration, es *elasticsearch.Client, cert []byte, env string)
 	if !healthy {
 		glg.Errorf("elasticClient unhealthy after %s ticks", ticks)
 		return healthy, nil
+	}
+
+	namespace := os.Getenv("NAMESPACE")
+
+	if namespace == "" {
+		namespace = defaultNamespace
 	}
 
 	var vaultClient *vault.Client
@@ -79,6 +93,7 @@ func Get(ticks time.Duration, es *elasticsearch.Client, cert []byte, env string)
 
 	var kubeManager kubernetes.Client
 	if env != "TEST" {
+		glg.Debug("creating in cluster kube client")
 		kube, err := kubernetes.NewInClusterKubeClient()
 		if err != nil {
 			glg.Fatal("error creating kubeclient")
@@ -99,12 +114,14 @@ func Get(ticks time.Duration, es *elasticsearch.Client, cert []byte, env string)
 		kubeManager = kube
 	}
 
-
 	config := &SolonConfig{
 		ElasticClient: *es,
 		VaultClient: vaultClient,
 		ElasticCert: cert,
 		Kube: kubeManager,
+		Namespace: namespace,
+		RoleAnnotation: defaultRoleAnnotation,
+		AccessAnnotation: defaultAccessAnnotation,
 	}
 
 	return healthy, config

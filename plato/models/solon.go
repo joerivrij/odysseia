@@ -13,7 +13,7 @@ func (r *SolonCreationRequest) Marshal() ([]byte, error) {
 }
 
 type SolonCreationRequest struct {
-	Role    string   `json:"role"`
+	Role    string   `json:"roles"`
 	Access  []string `json:"access"`
 	PodName string   `json:"podName"`
 }

@@ -140,7 +140,7 @@ func ResponseWithCustomCode(w http.ResponseWriter, code int, payload interface{}
 	w.Write([]byte(resp))
 }
 
-// creates a Guid for error tracing
+// CreateGUID creates a Guid for error tracing
 func CreateGUID() string {
 	b, _ := uuid.NewRandom()
 	uuid := fmt.Sprintf("%x-%x-%x-%x-%x",
