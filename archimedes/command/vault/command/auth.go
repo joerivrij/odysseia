@@ -197,7 +197,8 @@ func EnableKubernetesAsAuth(namespace, policyName string, kube kubernetes.Client
 	glg.Info("step 3: enabling role on kubernetes auth")
 	glg.Info("role will be called Solon")
 
-	boundServiceName := fmt.Sprintf("bound_service_account_names=%s", serviceAccountName)
+	//add new serviceaccount: serviceAccountName,access-sa
+	boundServiceName := fmt.Sprintf("bound_service_account_names=%s,%s", serviceAccountName, "access-sa")
 	boundNamespace := fmt.Sprintf("bound_service_account_namespaces=%s", namespace)
 	policies := fmt.Sprintf("policies=%s", policyName)
 

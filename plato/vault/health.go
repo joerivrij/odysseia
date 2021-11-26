@@ -7,7 +7,7 @@ import (
 )
 
 func (v *Vault) Health() (bool, error) {
-	_, err := v.Connection.Logical().Read("/sys/health?standbyok=true")
+	_, err := v.Connection.Logical().Read("sys/health")
 	if err != nil {
 		return false, fmt.Errorf("unable to connect to vault: %w", err)
 	}

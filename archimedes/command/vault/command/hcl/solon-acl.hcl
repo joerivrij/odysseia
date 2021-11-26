@@ -1,6 +1,6 @@
 path "sys/health"
 {
-  capabilities = ["read", "sudo"]
+  capabilities = ["create", "read", "update", "delete", "list", "sudo"]
 }
 
 # Manage tokens broadly across Vault
@@ -10,7 +10,7 @@ path "auth/token/*"
 }
 
 # List, create, update, and delete key/value secrets for configs
-path "secret/config/*"
+path "secret/configs/*"
 {
   capabilities = ["create", "read", "update", "delete", "list", "sudo"]
 }

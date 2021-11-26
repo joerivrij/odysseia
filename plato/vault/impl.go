@@ -1,9 +1,11 @@
 package vault
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	vaultApi "github.com/hashicorp/vault/api"
+	auth "github.com/hashicorp/vault/api/auth/kubernetes"
 	"github.com/kpango/glg"
 	"io/ioutil"
 	"os"
@@ -49,13 +51,13 @@ func CreateVaultClientKubernetes(address, vaultRole, jwt string) (Client, error)
 		return nil, fmt.Errorf("unable to initialize Vault client: %w", err)
 	}
 
-	params := map[string]interface{}{
-		"jwt":  jwt,
-		"role": vaultRole,
-	}
+	k8sAuth, err := auth.NewKubernetesAuth(
+		vaultRole,
+		auth.WithServiceAccountToken(jwt),
+	)
 
 	// log in to Vault's Kubernetes auth method
-	resp, err := client.Logical().Write("auth/kubernetes/login", params)
+	resp, err := client.Auth().Login(context.TODO(), k8sAuth)
 	if err != nil {
 		return nil, fmt.Errorf("unable to log in with Kubernetes auth: %w", err)
 	}
