@@ -1,18 +1,15 @@
 package app
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/elastic/go-elasticsearch/v7"
-	vault "github.com/hashicorp/vault/api"
 	"github.com/kpango/glg"
 	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/kubernetes"
 	"github.com/odysseia/plato/models"
-	"io/ioutil"
+	"github.com/odysseia/plato/vault"
 	"os"
 	"path/filepath"
-	"runtime"
 	"strings"
 	"time"
 )
@@ -27,7 +24,7 @@ const (
 )
 
 type SolonConfig struct {
-	VaultClient *vault.Client
+	Vault vault.Client
 	ElasticClient elasticsearch.Client
 	ElasticCert []byte
 	Kube kubernetes.Client
@@ -49,10 +46,11 @@ func Get(ticks time.Duration, es *elasticsearch.Client, cert []byte, env string)
 		namespace = defaultNamespace
 	}
 
-	var vaultClient *vault.Client
+	var vaultClient vault.Client
 	vaultRootToken := os.Getenv("VAULT_ROOT_TOKEN")
 	vaultAuthMethod := os.Getenv("AUTH_METHOD")
 	vaultService := os.Getenv("VAULT_SERVICE")
+	vaultJwtToken := os.Getenv("VAULT_JWT")
 
 	if vaultService == "" {
 		vaultService = defaultVaultService
@@ -66,26 +64,42 @@ func Get(ticks time.Duration, es *elasticsearch.Client, cert []byte, env string)
 	glg.Debugf("vaultAuthMethod set to %s", vaultAuthMethod)
 
 	if vaultAuthMethod == "kubernetes" {
-		client, err := createVaultClientKubernetes(vaultService, vaultRole)
+		client, err := vault.CreateVaultClientKubernetes(vaultService, vaultRole, vaultJwtToken)
 		if err != nil {
 			glg.Error(err)
 		}
 
+		healthy := client.CheckHealthyStatus(120)
+		if !healthy {
+			glg.Fatal("death has found me")
+		}
 		vaultClient = client
 	} else {
 		if vaultRootToken == "" {
 			glg.Debug("root token empty getting from file for local testing")
-			vaultRootToken = getTokenFromFile()
-			client, err := createVaultClient(vaultService, vaultRootToken)
+			vaultRootToken, err := vault.GetTokenFromFile()
+			if err != nil {
+				glg.Error(err)
+			}
+			client, err := vault.CreateVaultClient(vaultService, vaultRootToken)
 			if err != nil {
 				glg.Error(err)
 			}
 
+			healthy := client.CheckHealthyStatus(120)
+			if !healthy {
+				glg.Fatal("death has found me")
+			}
 			vaultClient = client
 		} else {
-			client, err := createVaultClient(vaultService, vaultRootToken)
+			client, err := vault.CreateVaultClient(vaultService, vaultRootToken)
 			if err != nil {
 				glg.Error(err)
+			}
+
+			healthy := client.CheckHealthyStatus(120)
+			if !healthy {
+				glg.Fatal("death has found me")
 			}
 			vaultClient = client
 		}
@@ -94,7 +108,7 @@ func Get(ticks time.Duration, es *elasticsearch.Client, cert []byte, env string)
 	var kubeManager kubernetes.Client
 	if env != "TEST" {
 		glg.Debug("creating in cluster kube client")
-		kube, err := kubernetes.NewInClusterKubeClient()
+		kube, err := kubernetes.NewInClusterKubeClient(namespace)
 		if err != nil {
 			glg.Fatal("error creating kubeclient")
 		}
@@ -116,7 +130,7 @@ func Get(ticks time.Duration, es *elasticsearch.Client, cert []byte, env string)
 
 	config := &SolonConfig{
 		ElasticClient: *es,
-		VaultClient: vaultClient,
+		Vault: vaultClient,
 		ElasticCert: cert,
 		Kube: kubeManager,
 		Namespace: namespace,
@@ -125,84 +139,6 @@ func Get(ticks time.Duration, es *elasticsearch.Client, cert []byte, env string)
 	}
 
 	return healthy, config
-}
-
-func createVaultClient(address, rootToken string) (*vault.Client, error) {
-	config := vault.Config{
-		Address:    address,
-	}
-
-	client, err := vault.NewClient(&config)
-	if err != nil {
-		return nil, fmt.Errorf("unable to initialize Vault client: %w", err)
-	}
-
-	client.SetToken(rootToken)
-
-	return client, nil
-}
-
-func getTokenFromFile() string {
-	_, callingFile, _, _ := runtime.Caller(0)
-	callingDir := filepath.Dir(callingFile)
-	dirParts := strings.Split(callingDir, string(os.PathSeparator))
-	var odysseiaPath []string
-	for i, part := range dirParts {
-		if part == "odysseia" {
-			odysseiaPath = dirParts[0 : i+1]
-		}
-	}
-	l := "/"
-	for _, path := range odysseiaPath {
-		l = filepath.Join(l, path)
-	}
-	clusterKeys := filepath.Join(l, "solon", "vault_config", "cluster-keys-odysseia.json")
-
-	f, err := ioutil.ReadFile(clusterKeys)
-	if err != nil {
-		panic(fmt.Sprintf("Cannot read fixture file: %s", err))
-	}
-
-	var result map[string]interface{}
-
-	// Unmarshal or Decode the JSON to the interface.
-	json.Unmarshal(f, &result)
-
-	return result["root_token"].(string)
-}
-
-func createVaultClientKubernetes(address, vaultRole string) (*vault.Client, error) {
-	config := vault.Config{
-		Address:    address,
-	}
-
-	client, err := vault.NewClient(&config)
-	if err != nil {
-		return nil, fmt.Errorf("unable to initialize Vault client: %w", err)
-	}
-
-	jwt, err := os.ReadFile("/var/run/secrets/kubernetes.io/serviceaccount/token")
-	if err != nil {
-		return nil, fmt.Errorf("unable to read file containing service account token: %w", err)
-	}
-
-	params := map[string]interface{}{
-		"jwt":  string(jwt),
-		"role": vaultRole,
-	}
-
-	// log in to Vault's Kubernetes auth method
-	resp, err := client.Logical().Write("auth/kubernetes/login", params)
-	if err != nil {
-		return nil, fmt.Errorf("unable to log in with Kubernetes auth: %w", err)
-	}
-	if resp == nil || resp.Auth == nil || resp.Auth.ClientToken == "" {
-		return nil, fmt.Errorf("login response did not return client token")
-	}
-
-	client.SetToken(resp.Auth.ClientToken)
-
-	return client, nil
 }
 
 func InitRoot(config SolonConfig) bool {

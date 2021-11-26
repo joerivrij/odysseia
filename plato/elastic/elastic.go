@@ -71,6 +71,7 @@ func CheckHealthyStatusElasticSearch(es *elasticsearch.Client, ticks time.Durati
 			// Check response status
 			if res.IsError() {
 				glg.Errorf("Error: %s", res.String())
+				continue
 			}
 
 			var r map[string]interface{}
@@ -78,6 +79,7 @@ func CheckHealthyStatusElasticSearch(es *elasticsearch.Client, ticks time.Durati
 			// Deserialize the response into a map.
 			if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
 				glg.Errorf("Error parsing the response body: %s", err)
+				continue
 			}
 
 			glg.Infof("serverVersion: %s", r["version"].(map[string]interface{})["number"])

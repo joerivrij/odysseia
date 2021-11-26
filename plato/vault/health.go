@@ -1,0 +1,46 @@
+package vault
+
+import (
+	"fmt"
+	"github.com/kpango/glg"
+	"time"
+)
+
+func (v *Vault) Health() (bool, error) {
+	_, err := v.Connection.Logical().Read("/sys/health?standbyok=true")
+	if err != nil {
+		return false, fmt.Errorf("unable to connect to vault: %w", err)
+	}
+
+	return true, nil
+}
+
+func (v *Vault) CheckHealthyStatus(ticks time.Duration) bool {
+	healthy := false
+
+	ticker := time.NewTicker(1 * time.Second)
+	timeout := time.After(ticks * time.Second)
+
+	for {
+		select {
+		case t := <-ticker.C:
+			glg.Infof("tick: %s", t)
+			res, err := v.Health()
+			if err != nil {
+				glg.Errorf("Error getting response: %s", err)
+				continue
+			}
+			if res {
+				healthy = true
+				ticker.Stop()
+			}
+
+		case <-timeout:
+			ticker.Stop()
+		}
+		break
+	}
+
+	return healthy
+}
+

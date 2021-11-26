@@ -1,10 +1,13 @@
 package kubernetes
 
 import (
+	"context"
+	"fmt"
 	"github.com/kpango/glg"
 	"io/ioutil"
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
@@ -44,7 +47,7 @@ func NewKubeClient(kubeConfigFilePath string) (Client, error) {
 	return client, nil
 }
 
-func NewInClusterKubeClient() (Client, error) {
+func NewInClusterKubeClient(namespace string) (Client, error) {
 	config, err := rest.InClusterConfig()
 	clientSet, err := kubernetes.NewForConfig(config)
 	if err != nil {
@@ -54,6 +57,13 @@ func NewInClusterKubeClient() (Client, error) {
 	glg.Debug("created in cluster kube client")
 
 	client := &Kube{set: clientSet, config: config.CAData }
+
+	pods, err := clientSet.CoreV1().Pods(namespace).List(context.TODO(), metav1.ListOptions{})
+	if err != nil {
+		glg.Fatal(err.Error())
+	}
+	fmt.Printf("There are %d pods in the cluster\n", len(pods.Items))
+
 	return client, nil
 }
 

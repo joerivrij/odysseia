@@ -3,7 +3,6 @@
 # Declare variables to be passed into your templates.
 
 config:
-  namespace: odysseia
   environment: minikube
   pullPolicy: Never
   replicas:
@@ -29,7 +28,7 @@ services:
       cpu: "250m"
 
 images:
-  tag: b463af3
+  tag: 421ca9c
   solon:
     repo: solon
 
@@ -43,6 +42,11 @@ envVariables:
         value: kubernetes
       - name: VAULT_ROLE
         value: solon
+      - name: VAULT_JWT
+        valueFrom:
+          secretKeyRef:
+            name: vault-token-vk4qx
+            key: token
       - name: ELASTIC_SEARCH_PASSWORD
         valueFrom:
           secretKeyRef:
@@ -62,3 +66,11 @@ secretMounts:
   - name: elastic-certificate-pem
     secretName: elastic-certificate-pem
     path: /app/config/certs
+
+serviceAccount:
+  name: access-sa
+
+namespaceOverride: odysseia
+
+role:
+  name: api-access

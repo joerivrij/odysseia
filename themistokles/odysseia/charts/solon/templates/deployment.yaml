@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: "{{ template "solon.uname" . }}"
-  namespace: {{ .Values.config.namespace }}
+  namespace: {{ template "solon.namespace" . }}
   labels:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
@@ -27,7 +27,7 @@ spec:
         elastic/indices: "dictionary;grammar;authors;text"
         elastic/roles: "api;seeder"
     spec:
-      serviceAccountName: vault
+      serviceAccountName: {{ template "solon.serviceAccountName" . }}
       containers:
         - image: {{ .Values.images.solon.repo }}:{{ .Values.images.tag }}
           name: "{{ template "solon.uname" . }}"

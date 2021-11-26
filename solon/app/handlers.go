@@ -3,7 +3,6 @@ package app
 import (
 	"encoding/json"
 	"fmt"
-	vault "github.com/hashicorp/vault/api"
 	"github.com/kpango/glg"
 	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/generator"
@@ -26,7 +25,7 @@ func (s *SolonHandler) PingPong(w http.ResponseWriter, req *http.Request) {
 }
 
 func (s *SolonHandler)Health(w http.ResponseWriter, r *http.Request) {
-	vaultHealth, _ := s.vaultHealth()
+	vaultHealth, _ := s.Config.Vault.Health()
 	glg.Debugf("%s : %s", "vault healthy", strconv.FormatBool(vaultHealth))
 
 	healthy := helpers.GetHealthWithVault(true)
@@ -34,21 +33,20 @@ func (s *SolonHandler)Health(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *SolonHandler) CreateOneTimeToken(w http.ResponseWriter, req *http.Request) {
-	policy := []string{"odysseia"}
-	renew := false
-
-	tokenRequest := vault.TokenCreateRequest{
-		Policies:        policy,
-		TTL:             "5m",
-		DisplayName:     "solonCreated",
-		NumUses:         1,
-		Renewable:       &renew,
+	token, err := s.Config.Vault.CreateToken()
+	if err != nil {
+		e := models.ValidationError{
+			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
+			Messages: []models.ValidationMessages{
+				{
+					Field:   "getting token",
+					Message: err.Error(),
+				},
+			},
+		}
+		middleware.ResponseWithJson(w, e)
+		return
 	}
-
-	glg.Debug("request created")
-
-	resp, _ := s.Config.VaultClient.Auth().Token().Create(&tokenRequest)
-	token := resp.Auth.ClientToken
 
 	glg.Debug(token)
 
@@ -170,36 +168,13 @@ func (s *SolonHandler) RegisterService(w http.ResponseWriter, req *http.Request)
 
 	payload, _ := createRequest.Marshal()
 
-	secretCreated, _ := s.createNewSecret(creationRequest.PodName, payload)
+	secretCreated, _ := s.Config.Vault.CreateNewSecret(creationRequest.PodName, payload)
 	glg.Debugf("secret created in vault %t", secretCreated)
 
 	response.Created = userCreated
 
 	middleware.ResponseWithJson(w, response)
 	return
-}
-
-func (s *SolonHandler)vaultHealth() (bool, error) {
-	_, err := s.Config.VaultClient.Logical().Read("/sys/health")
-	if err != nil {
-		return false, fmt.Errorf("unable to connect to vault: %w", err)
-	}
-
-	return true, nil
-}
-
-
-func (s *SolonHandler)createNewSecret(name string, payload []byte) (bool, error) {
-	vaultPath := fmt.Sprintf("configs/data/%s", name)
-
-	secret, err := s.Config.VaultClient.Logical().WriteBytes(vaultPath, payload)
-	if err != nil {
-		return false, fmt.Errorf("unable to connect to vault: %w", err)
-	}
-
-	glg.Debug(secret.Data)
-
-	return true, nil
 }
 
 func sliceContains(slice []string, str string) bool {
