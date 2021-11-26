@@ -12,6 +12,7 @@ const defaultSolonService = "http://localhost:5000"
 type PtolemaiosConfig struct {
 	VaultService string
 	SolonService url.URL
+	PodName string
 }
 
 func Get() *PtolemaiosConfig {
@@ -28,9 +29,12 @@ func Get() *PtolemaiosConfig {
 
 	solonUrl, _ := url.Parse(solonService)
 
+	podName := os.Getenv("POD_NAME")
+
 	config := &PtolemaiosConfig{
 		VaultService: vaultService,
 		SolonService: *solonUrl,
+		PodName: podName,
 	}
 
 	return config

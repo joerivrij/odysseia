@@ -1,3 +1,3 @@
-path "config/*" {
+path "configs/*" {
   capabilities = ["read"]
 }

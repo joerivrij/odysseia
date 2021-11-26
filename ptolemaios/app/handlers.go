@@ -1,10 +1,12 @@
 package app
 
 import (
-	"fmt"
-	vault "github.com/hashicorp/vault/api"
+	"encoding/json"
+	"github.com/kpango/glg"
+	"github.com/odysseia/plato/helpers"
 	"github.com/odysseia/plato/middleware"
 	"github.com/odysseia/plato/models"
+	"github.com/odysseia/plato/vault"
 	"net/http"
 )
 
@@ -19,20 +21,14 @@ func (p *PtolemaiosHandler) PingPong(w http.ResponseWriter, req *http.Request) {
 }
 
 func (p *PtolemaiosHandler) GetSecretFromVault(w http.ResponseWriter, req *http.Request) {
-	engine := req.URL.Query().Get("config")
-	secretName := req.URL.Query().Get("service")
-
-	if engine == "" || secretName == "" {
+	oneTimeToken, err := p.getOneTimeToken()
+	if err != nil {
 		e := models.ValidationError{
 			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
 			Messages: []models.ValidationMessages{
 				{
-					Field:   "config",
-					Message: "cannot be empty",
-				},
-				{
-					Field:   "service",
-					Message: "cannot be empty",
+					Field:   "getToken",
+					Message: err.Error(),
 				},
 			},
 		}
@@ -40,25 +36,14 @@ func (p *PtolemaiosHandler) GetSecretFromVault(w http.ResponseWriter, req *http.
 		return
 	}
 
-	clientToken := "s.tsLsUgLsqQqya4Fhkn9sgeXz"
-
-	vaultURL := fmt.Sprintf("%s/v1/%s/data/%s?metadata=1", p.Config.VaultService, engine, secretName)
-	vaultReq, _ := http.NewRequest("GET", vaultURL, nil)
-	vaultReq.Header.Add("X-Vault-Token", clientToken)
-
-	secret, err := p.getSecretFromVault(*vaultReq)
+	client, err := vault.CreateVaultClient(p.Config.VaultService, oneTimeToken)
 	if err != nil {
-		middleware.ResponseWithJson(w, err)
-		return
-	}
-
-	if secret.Data == nil {
 		e := models.ValidationError{
 			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
 			Messages: []models.ValidationMessages{
 				{
-					Field:   "secret",
-					Message: "was not retrievable",
+					Field:   "createVault",
+					Message: err.Error(),
 				},
 			},
 		}
@@ -66,29 +51,49 @@ func (p *PtolemaiosHandler) GetSecretFromVault(w http.ResponseWriter, req *http.
 		return
 	}
 
-	middleware.ResponseWithJson(w, secret.Data)
-}
-
-func (p *PtolemaiosHandler)getSecretFromVault(vaultRequest http.Request) (*vault.Secret, error) {
-	client := &http.Client{}
-	resp, err := client.Do(&vaultRequest)
+	secret, err := client.GetSecret(p.Config.PodName)
 	if err != nil {
-		return nil, err
+		e := models.ValidationError{
+			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
+			Messages: []models.ValidationMessages{
+				{
+					Field:   "getSecret",
+					Message: err.Error(),
+				},
+			},
+		}
+		middleware.ResponseWithJson(w, e)
+		return
 	}
 
-	secret, err := vault.ParseSecret(resp.Body)
-	if err != nil {
-		return nil, err
+	var elasticModel models.SecretData
+	for key, value := range secret.Data {
+		if key == "data" {
+			j, _ := json.Marshal(value)
+			elasticModel, _ = models.UnmarshalSecretData(j)
+		}
 	}
 
-	return secret, nil
+	middleware.ResponseWithJson(w, elasticModel)
 }
 
 func (p *PtolemaiosHandler)getOneTimeToken() (string, error){
+	u := p.Config.SolonService
+	u.Path = "/solon/v1/token"
+	response, err := helpers.GetRequest(u)
+	if err != nil {
+		return "", err
+	}
 
-	return "", nil
-}
+	defer response.Body.Close()
 
-func (p *PtolemaiosHandler)registerServiceAtStartUp()  {
+	var tokenModel models.TokenResponse
+	err = json.NewDecoder(response.Body).Decode(&tokenModel)
+	if err != nil {
+		return "", err
+	}
 
+	glg.Debugf("found token: %s", tokenModel.Token)
+
+	return tokenModel.Token, nil
 }

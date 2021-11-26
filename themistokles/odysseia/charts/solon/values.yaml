@@ -28,7 +28,7 @@ services:
       cpu: "250m"
 
 images:
-  tag: d2015a3
+  tag: b52bfb1
   solon:
     repo: solon
 
@@ -45,7 +45,7 @@ envVariables:
       - name: VAULT_JWT
         valueFrom:
           secretKeyRef:
-            name: vault-token-vk4qx
+            name: vault-token-w6b4p
             key: token
       - name: ELASTIC_SEARCH_PASSWORD
         valueFrom:

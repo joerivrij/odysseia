@@ -5,8 +5,7 @@ import (
 	"github.com/kpango/glg"
 )
 
-func (v *Vault) CreateToken() (string, error) {
-	policy := []string{"odysseia"}
+func (v *Vault) CreateOneTimeToken(policy []string,) (string, error) {
 	renew := false
 
 	tokenRequest := vault.TokenCreateRequest{

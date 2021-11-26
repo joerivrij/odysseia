@@ -33,7 +33,9 @@ func (s *SolonHandler)Health(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *SolonHandler) CreateOneTimeToken(w http.ResponseWriter, req *http.Request) {
-	token, err := s.Config.Vault.CreateToken()
+	//validate podname as registered?
+	policy := []string{"ptolemaios"}
+	token, err := s.Config.Vault.CreateOneTimeToken(policy)
 	if err != nil {
 		e := models.ValidationError{
 			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
@@ -140,7 +142,7 @@ func (s *SolonHandler) RegisterService(w http.ResponseWriter, req *http.Request)
 	var roleNames []string
 	for _, a := range creationRequest.Access {
 		roleName := fmt.Sprintf("%s_%s", a, creationRequest.Role)
-		glg.Debugf("adding new role named: %s to elastic", roleName)
+		glg.Debugf("adding role named: %s to user", roleName)
 		roleNames = append(roleNames, roleName)
 	}
 
@@ -162,7 +164,7 @@ func (s *SolonHandler) RegisterService(w http.ResponseWriter, req *http.Request)
 		Data: models.SecretData{
 			Username:    creationRequest.PodName,
 			Password:    password,
-			ElasticCERT: s.Config.ElasticCert,
+			ElasticCERT: string(s.Config.ElasticCert),
 		},
 	}
 

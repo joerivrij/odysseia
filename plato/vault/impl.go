@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	vaultApi "github.com/hashicorp/vault/api"
+	"github.com/hashicorp/vault/api"
 	auth "github.com/hashicorp/vault/api/auth/kubernetes"
 	"github.com/kpango/glg"
 	"io/ioutil"
@@ -18,35 +18,36 @@ import (
 type Client interface {
 	CheckHealthyStatus(ticks time.Duration) bool
 	Health() (bool, error)
-	CreateToken() (string, error)
+	CreateOneTimeToken(policy []string) (string, error)
 	CreateNewSecret(name string, payload []byte) (bool, error)
+	GetSecret(name string) (*api.Secret, error)
 }
 
 type Vault struct {
-	Connection    *vaultApi.Client
+	Connection    *api.Client
 }
 
-func CreateVaultClient(address, rootToken string) (Client, error) {
-	config := vaultApi.Config{
+func CreateVaultClient(address, token string) (Client, error) {
+	config := api.Config{
 		Address:    address,
 	}
 
-	client, err := vaultApi.NewClient(&config)
+	client, err := api.NewClient(&config)
 	if err != nil {
 		return nil, fmt.Errorf("unable to initialize Vault client: %w", err)
 	}
 
-	client.SetToken(rootToken)
+	client.SetToken(token)
 
 	return &Vault{Connection: client}, nil
 }
 
 func CreateVaultClientKubernetes(address, vaultRole, jwt string) (Client, error) {
-	config := vaultApi.Config{
+	config := api.Config{
 		Address:    address,
 	}
 
-	client, err := vaultApi.NewClient(&config)
+	client, err := api.NewClient(&config)
 	if err != nil {
 		return nil, fmt.Errorf("unable to initialize Vault client: %w", err)
 	}

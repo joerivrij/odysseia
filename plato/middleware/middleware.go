@@ -7,7 +7,6 @@ import (
 	"github.com/odysseia/plato/models"
 	"gopkg.in/oauth2.v3/utils/uuid"
 	"net/http"
-	"reflect"
 	"strconv"
 )
 
@@ -69,8 +68,6 @@ func SetCorsHeaders() Adapter {
 // ResponseWithJson returns formed JSON
 func ResponseWithJson(w http.ResponseWriter, payload interface{}) {
 	code := 500
-
-	glg.Debug(reflect.TypeOf(payload))
 
 	switch payload.(type) {
 	case models.SolonResponse:

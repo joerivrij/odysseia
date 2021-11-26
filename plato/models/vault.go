@@ -28,6 +28,12 @@ func (r *CreateSecretRequest) Marshal() ([]byte, error) {
 	return json.Marshal(r)
 }
 
+func UnmarshalSecretData(data []byte) (SecretData, error) {
+	var r SecretData
+	err := json.Unmarshal(data, &r)
+	return r, err
+}
+
 type CreateSecretRequest struct {
 	Data SecretData `json:"data"`
 }
@@ -35,7 +41,7 @@ type CreateSecretRequest struct {
 type SecretData struct {
 	Username 	string `json:"elasticUsername"`
 	Password    string `json:"elasticPassword"`
-	ElasticCERT []byte `json:"elasticCert"`
+	ElasticCERT string `json:"elasticCert"`
 }
 
 
