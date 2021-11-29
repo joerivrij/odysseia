@@ -1,7 +1,12 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: leaderelection-role
+  namespace: {{ template "periandros.namespace" . }}
+  name: {{ template "periandros.roleName" $ }}
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: "{{ .Chart.Name }}"
 rules:
   - apiGroups:
       - coordination.k8s.io

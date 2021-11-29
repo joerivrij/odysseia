@@ -11,6 +11,7 @@ import (
 const defaultSolonService = "http://localhost:5000"
 
 type PeriandrosConfig struct {
+	Namespace string
 	SolonService url.URL
 	SolonCreationRequest models.SolonCreationRequest
 }
@@ -25,6 +26,7 @@ func Get() *PeriandrosConfig {
 	role := os.Getenv("ELASTIC_ROLE")
 	envAccess := os.Getenv("ELASTIC_ACCESS")
 	podName := os.Getenv("POD_NAME")
+	namespace := os.Getenv("NAMESPACE")
 	access := strings.Split(envAccess, ";")
 	splitPodName := strings.Split(podName, "-")
 	username := splitPodName[0]
@@ -41,6 +43,7 @@ func Get() *PeriandrosConfig {
 	solonUrl, _ := url.Parse(solonService)
 
 	config := &PeriandrosConfig{
+		Namespace: namespace,
 		SolonService: *solonUrl,
 		SolonCreationRequest: creationRequest,
 	}

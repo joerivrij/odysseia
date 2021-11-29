@@ -4,13 +4,14 @@ import (
 	"context"
 	"github.com/kpango/glg"
 	"github.com/odysseia/periandros/app"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	clientset "k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/rest"
+	"github.com/odysseia/plato/kubernetes"
+	"io/ioutil"
 	"k8s.io/client-go/tools/leaderelection"
 	"k8s.io/client-go/tools/leaderelection/resourcelock"
 	"os"
+	"path/filepath"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -23,49 +24,38 @@ func init() {
 		AddLevelWriter(glg.ERR, errlog)
 }
 
-func getNewLock(lockName, podName, namespace string, client *clientset.Clientset) *resourcelock.LeaseLock {
-	return &resourcelock.LeaseLock{
-		LeaseMeta: metav1.ObjectMeta{
-			Name:      lockName,
-			Namespace: namespace,
-		},
-		Client: client.CoordinationV1(),
-		LockConfig: resourcelock.ResourceLockConfig{
-			Identity: podName,
-		},
-	}
-}
-
-func runLeaderElection(lock *resourcelock.LeaseLock, ctx context.Context, id string, config app.PeriandrosConfig) {
-	le, _ := leaderelection.NewLeaderElector(leaderelection.LeaderElectionConfig{
-		Lock:            lock,
+func getLeaderConfig(lock *resourcelock.LeaseLock, id string, config *app.PeriandrosConfig) leaderelection.LeaderElectionConfig {
+	leaderConfig := leaderelection.LeaderElectionConfig{
+		Lock: lock,
 		ReleaseOnCancel: true,
-		LeaseDuration:   15 * time.Second,
-		RenewDeadline:   10 * time.Second,
-		RetryPeriod:     2 * time.Second,
-	})
-
-	le.Run(ctx)
-
-	leader := le.GetLeader()
-	isLeader := le.IsLeader()
-
-	glg.Info(leader)
-	glg.Info(isLeader)
-
-	if isLeader && leader != "" {
-		created, err := config.CreateUser()
-		if err != nil {
-			glg.Error(err)
-		}
-
-		glg.Info(created)
-		os.Exit(0)
+		LeaseDuration:   60 * time.Second,
+		RenewDeadline:   15 * time.Second,
+		RetryPeriod:     1 * time.Second,
+		Callbacks: leaderelection.LeaderCallbacks{
+			OnStartedLeading: func(ctx context.Context) {
+				created, err := config.CreateUser()
+				if err != nil {
+					glg.Error("error occurred while creating user")
+					glg.Error(err)
+				}
+				if created {
+					glg.Infof("created user while being leader: %s", config.SolonCreationRequest.Username)
+				}
+			},
+			OnStoppedLeading: func() {
+				glg.Infof("leader lost: %s", id)
+				os.Exit(0)
+			},
+			OnNewLeader: func(identity string) {
+				if identity == id {
+					return
+				}
+				glg.Infof("new leader elected: %s", identity)
+			},
+		},
 	}
 
-	if !isLeader && leader != "" {
-		os.Exit(0)
-	}
+	return leaderConfig
 }
 
 func main() {
@@ -85,20 +75,42 @@ func main() {
 		glg.Fatal("death has found me")
 	}
 
-	leaseLockName := "locked-lease"
-	leaseLockNamespace := "odysseia"
+	var wg sync.WaitGroup
+	leaseLockName := "periandros-lock"
 
-	ctx, cancel := context.WithCancel(context.Background())
+	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
 
-	cfg, err := rest.InClusterConfig()
-	client := clientset.NewForConfigOrDie(cfg)
+	defaultKubeConfig := "/.kube/config"
+	glg.Debugf("defaulting to %s", defaultKubeConfig)
+	homeDir, err := os.UserHomeDir()
 	if err != nil {
-		glg.Fatalf("failed to get incluster kube")
+		glg.Error(err)
 	}
 
-	lock := getNewLock(leaseLockName, config.SolonCreationRequest.PodName, leaseLockNamespace, client)
-	runLeaderElection(lock, ctx, config.SolonCreationRequest.PodName, *config)
+	filePath := filepath.Join(homeDir, defaultKubeConfig)
+	cfg, err := ioutil.ReadFile(filePath)
+	if err != nil {
+		glg.Error("error getting kubeconfig")
+	}
+	kube, err := kubernetes.New(cfg)
+	if err != nil {
+		glg.Fatal("error creating kubeclient")
+	}
 
-	os.Exit(0)
+
+	lock := kube.GetNewLock(leaseLockName, config.SolonCreationRequest.PodName, config.Namespace)
+
+	leaderConfig := getLeaderConfig(lock, config.SolonCreationRequest.PodName, config)
+	leader, err := leaderelection.NewLeaderElector(leaderConfig)
+	if err != nil {
+		glg.Error(err)
+		glg.Fatal("error electing leader")
+	}
+
+	wg.Add(1)
+	go func() {
+		leader.Run(ctx)
+		wg.Done()
+	}()
 }

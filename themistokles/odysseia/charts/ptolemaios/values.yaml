@@ -38,7 +38,7 @@ services:
       cpu: "250m"
 
 images:
-  tag: 3788b84
+  tag: d40a7aa
   ptolemaios:
     repo: ptolemaios
   periandros:
@@ -53,3 +53,11 @@ envVariables:
   vaultService: http://vault:8200
   alexandros:
     port: 5000
+
+serviceAccount:
+  name: leaderelection-sa
+
+namespaceOverride: odysseia
+
+role:
+  name: leaderelection-role

@@ -10,6 +10,7 @@ import (
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
+	"k8s.io/client-go/tools/leaderelection/resourcelock"
 )
 
 type Client interface {
@@ -92,4 +93,17 @@ func (k *Kube) GetK8sClientSet() *kubernetes.Clientset {
 
 func (k *Kube) GetConfig() []byte {
 	return k.config
+}
+
+func (k *Kube)GetNewLock(lockName, podName, namespace string) *resourcelock.LeaseLock {
+	return &resourcelock.LeaseLock{
+		LeaseMeta: metav1.ObjectMeta{
+			Name:      lockName,
+			Namespace: namespace,
+		},
+		Client: k.GetK8sClientSet().CoordinationV1(),
+		LockConfig: resourcelock.ResourceLockConfig{
+			Identity: podName,
+		},
+	}
 }
