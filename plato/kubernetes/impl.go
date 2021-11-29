@@ -2,7 +2,6 @@ package kubernetes
 
 import (
 	"context"
-	"fmt"
 	"github.com/kpango/glg"
 	"io/ioutil"
 	appsv1 "k8s.io/api/apps/v1"
@@ -62,7 +61,7 @@ func NewInClusterKubeClient(namespace string) (Client, error) {
 	if err != nil {
 		glg.Fatal(err.Error())
 	}
-	fmt.Printf("There are %d pods in the cluster\n", len(pods.Items))
+	glg.Debug("There are %d pods in the cluster\n", len(pods.Items))
 
 	return client, nil
 }

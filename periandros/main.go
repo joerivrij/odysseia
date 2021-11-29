@@ -1,10 +1,17 @@
 package main
 
 import (
+	"context"
 	"github.com/kpango/glg"
 	"github.com/odysseia/periandros/app"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	clientset "k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/rest"
+	"k8s.io/client-go/tools/leaderelection"
+	"k8s.io/client-go/tools/leaderelection/resourcelock"
 	"os"
 	"strings"
+	"time"
 )
 
 func init() {
@@ -14,6 +21,51 @@ func init() {
 	glg.Get().
 		SetMode(glg.BOTH).
 		AddLevelWriter(glg.ERR, errlog)
+}
+
+func getNewLock(lockName, podName, namespace string, client *clientset.Clientset) *resourcelock.LeaseLock {
+	return &resourcelock.LeaseLock{
+		LeaseMeta: metav1.ObjectMeta{
+			Name:      lockName,
+			Namespace: namespace,
+		},
+		Client: client.CoordinationV1(),
+		LockConfig: resourcelock.ResourceLockConfig{
+			Identity: podName,
+		},
+	}
+}
+
+func runLeaderElection(lock *resourcelock.LeaseLock, ctx context.Context, id string, config app.PeriandrosConfig) {
+	leaderelection.RunOrDie(ctx, leaderelection.LeaderElectionConfig{
+		Lock:            lock,
+		ReleaseOnCancel: true,
+		LeaseDuration:   15 * time.Second,
+		RenewDeadline:   10 * time.Second,
+		RetryPeriod:     2 * time.Second,
+		Callbacks: leaderelection.LeaderCallbacks{
+			OnStartedLeading: func(c context.Context) {
+				glg.Info("creating user")
+				created, err := config.CreateUser()
+				if err != nil {
+					glg.Fatal(err)
+				}
+
+				glg.Infof("user created was %t", created)
+				return
+			},
+			OnStoppedLeading: func() {
+				glg.Info("no longer the leader, staying inactive.")
+			},
+			OnNewLeader: func(currentId string) {
+				if currentId == id {
+					glg.Info("still the leader!")
+					return
+				}
+				glg.Info("new leader is %s", currentId)
+			},
+		},
+	})
 }
 
 func main() {
@@ -33,11 +85,20 @@ func main() {
 		glg.Fatal("death has found me")
 	}
 
-	created, err := config.CreateRole()
+	leaseLockName := "locked-lease"
+	leaseLockNamespace := "odysseia"
+
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	cfg, err := rest.InClusterConfig()
+	client := clientset.NewForConfigOrDie(cfg)
 	if err != nil {
-		glg.Fatal(err)
+		glg.Fatalf("failed to get incluster kube")
 	}
 
-	glg.Infof("user created was %t", created)
+	lock := getNewLock(leaseLockName, config.SolonCreationRequest.PodName, leaseLockNamespace, client)
+	runLeaderElection(lock, ctx, config.SolonCreationRequest.PodName, *config)
+
 	os.Exit(0)
 }

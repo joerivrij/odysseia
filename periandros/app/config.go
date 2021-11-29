@@ -26,11 +26,16 @@ func Get() *PeriandrosConfig {
 	envAccess := os.Getenv("ELASTIC_ACCESS")
 	podName := os.Getenv("POD_NAME")
 	access := strings.Split(envAccess, ";")
+	splitPodName := strings.Split(podName, "-")
+	username := splitPodName[0]
+
+	glg.Infof("username from podname is: %s", username)
 
 	creationRequest := models.SolonCreationRequest{
 		Role:    role,
 		Access:  access,
 		PodName: podName,
+		Username: username,
 	}
 
 	solonUrl, _ := url.Parse(solonService)

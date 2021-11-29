@@ -149,8 +149,8 @@ func (s *SolonHandler) RegisterService(w http.ResponseWriter, req *http.Request)
 	putUser := models.CreateUserRequest{
 		Password: password,
 		Roles:    roleNames,
-		FullName: creationRequest.PodName,
-		Email:    fmt.Sprintf("%s@odysseia-greek.com", creationRequest.PodName),
+		FullName: creationRequest.Username,
+		Email:    fmt.Sprintf("%s@odysseia-greek.com", creationRequest.Username),
 		Metadata: &models.Metadata{Version: 1},
 	}
 

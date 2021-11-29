@@ -28,16 +28,28 @@ services:
       cpu: "250m"
   periandros:
     name: "periandros"
+  alexandros:
+    name: "alexandros"
+    requests:
+      memory: "64Mi"
+      cpu: "100m"
+    limits:
+      memory: "128Mi"
+      cpu: "250m"
 
 images:
-  tag: b463af3
+  tag: 8152f2b
   ptolemaios:
     repo: ptolemaios
   periandros:
     repo: periandros
+  alexandros:
+    repo: alexandros
+  demokritos:
+    repo: demokritos
 
 envVariables:
-  ptolemaios:
-    port: 5001
   solonService: http://solon-service:5000
   vaultService: http://vault:8200
+  alexandros:
+    port: 5000

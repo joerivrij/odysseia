@@ -10,6 +10,7 @@ The goal is for people to learn or rehearse ancient Greek. Some of it is in Dutc
   - [Dionysos - Διονύσιος ὁ Θρᾷξ](#dionysos---διονύσιος-ὁ-θρᾷξ)
   - [Herodotos - Ἡρόδοτος](#herodotos---ἡρόδοτος)
   - [Sokrates - Σωκράτης](#sokrates---σωκράτης)
+  - [Solon - Σόλων](#solon---σόλων)
 - [Common](#common)
   - [Eratosthenes - Ἐρατοσθένης](#eratosthenes---ἐρατοσθένης)
   - [Plato - Πλάτων](#plato---πλάτων)
@@ -22,10 +23,14 @@ The goal is for people to learn or rehearse ancient Greek. Some of it is in Dutc
   - [Ploutarchos - Πλούταρχος](#ploutarchos---πλούταρχος)
 - [Frontend](#frontend)
   - [Pheidias - Φειδίας](#pheidias---φειδίας)
+- [Init](#init)
+  - [Periandros - Περίανδρος](#periandros---περίανδρος)
 - [Ops](#ops)
   - [Archimedes - Ἀρχιμήδης](#archimedes---ἀρχιμήδης)
   - [Lykourgos - Λυκοῦργος](#lykourgos---λυκοῦργος)
   - [Themistokles - Θεμιστοκλῆς](#themistokles---θεμιστοκλῆς)
+- [Sidecar](#sidecar)
+  - [Ptolemaios - Πτολεμαῖος](#ptolemaios---πτολεμαῖος)
 - [Tests](#tests)
   - [Hippokrates - Ἱπποκράτης](#hippokrates---ἱπποκράτης)
   - [Xerxes - Ξέρξης](#xerxes---ξέρξης)
@@ -59,6 +64,14 @@ Herodotos is often hailed as the father of history. I name he lives up to. His w
 <img src="https://upload.wikimedia.org/wikipedia/commons/2/25/Raffael_069.jpg" alt="Sokrates" width="200"/>
 
 Sokrates (on the right) is a figure of mythical propertions. He could stare at the sky for days, weather cold in nothing but a simple cloak. Truly one of the greatest philosophers and a big influence on Plato which is why we know so much about him at all. A sokratic dialogue is a game of wits were the back and forth between Sokrates and whoever was unlucky (or lucky) to be part of the dialogue would end in frustration. Sokrates was known to question anyone until he had proven they truly knew nothing. As the API responsible for creating and asking questions he was the obvious choice.
+
+### Solon - Σόλων
+
+αὐτοὶ γὰρ οὐκ οἷοί τε ἦσαν αὐτὸ ποιῆσαι Ἀθηναῖοι: ὁρκίοισι γὰρ μεγάλοισι κατείχοντο δέκα ἔτεα χρήσεσθαι νόμοισι τοὺς ἄν σφι Σόλων θῆται - since the Athenians themselves could not do that, for they were bound by solemn oaths to abide for ten years by whatever laws Solon should make
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Ignoto%2C_c.d._solone%2C_replica_del_90_dc_ca_da_orig._greco_del_110_ac._ca%2C_6143.JPG" alt="Solon" width="200"/>
+
+Solon is most famous for his role as the great Athenian lawgiver following the reforms made by Drakon. His laws laid the foundation of what would become the Athenian Democracy.
 
 ## Common
 
@@ -127,6 +140,16 @@ Ploutarchos (or Plutarch) is most well known for his Parallel Lives, a series of
 
 Pheidias (or Phidias) is one of the great artists of the Greek world, most famous for his work on the Athenian Akropolis. An apt choice for the frontend of the app.
 
+## Init
+
+### Periandros - Περίανδρος
+
+Περίανδρος δὲ ἦν Κυψέλου παῖς οὗτος ὁ τῷ Θρασυβούλῳ τὸ χρηστήριον μηνύσας· ἐτυράννευε δὲ ὁ Περίανδρος Κορίνθου - Periander, who disclosed the oracle's answer to Thrasybulus, was the son of Cypselus, and sovereign of Corinth
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/4/48/Periander_Pio-Clementino_Inv276.jpg" alt="Periandros" width="200"/>
+
+Tyrant of Corinth.
+
 ## Ops
 
 ### Archimedes - Ἀρχιμήδης
@@ -151,6 +174,15 @@ Lykourgos (or Lycurgus) is a semi mythical lawmaker that laid the foundation for
 Themistokles is argueably the greatest Greek admiral. His victory at Salamis is most well-known. As an admiral he held sway over many ships and thus over many pilots (kubernetes).
 
 
+## Sidecar
+
+### Ptolemaios - Πτολεμαῖος
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/2/21/Ptolemy_I_Soter_Louvre_Ma849.jpg" alt="Ptolemaios" width="200"/>
+
+
+First Macedonian king of Egypt.
+
 ## Tests
 
 ### Hippokrates - Ἱπποκράτης
@@ -162,6 +194,6 @@ The most well known medical professional in history. Hippokrates houses tests to
 
 ### Xerxes - Ξέρξης
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Xerxes_by_Ernest_Normand.jpg" alt="Xerxes" width="200"/>
+<img src="https://upload.wikimedia.org/wikipedia/commons/6/64/National_Museum_of_Iran_Darafsh_%28785%29.JPG" alt="Xerxes" width="200"/>
 
-Xerxes was the Persian great king and invaded Greek during the second invasion of Greece. He tested the Greeks with an army so great it was reported to drain rivers and shake the earth.
+Xerxes was the Persian great king and invaded Greece during the second Greco-Persion war. He tested the Greeks with an army so great it was reported to drain rivers and shake the earth.

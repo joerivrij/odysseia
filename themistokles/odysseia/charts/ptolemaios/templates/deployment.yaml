@@ -12,7 +12,7 @@ metadata:
     {{ $key }}: {{ $value | quote }}
     {{- end }}
 spec:
-  replicas: {{ int .Values.config.replicas.low }}
+  replicas: {{ int .Values.config.replicas.medium }}
   selector:
     matchLabels:
       app: "{{ template "ptolemaios.uname" . }}"
@@ -24,8 +24,9 @@ spec:
         version: {{ .Values.images.tag }}
       annotations:
         odysseia-greek/role: "api"
-        odysseia-greek/access: "dictionary;text"
+        odysseia-greek/access: "dictionary"
     spec:
+      serviceAccountName: leaderelection-sa
       initContainers:
         - image: {{ .Values.images.periandros.repo }}:{{ .Values.images.tag }}
           name: "{{ template "periandros.uname" . }}"
@@ -57,20 +58,6 @@ spec:
               fieldRef:
                 fieldPath: metadata.name
           imagePullPolicy: {{ .Values.config.pullPolicy }}
-          ports:
-            - containerPort: {{ .Values.envVariables.ptolemaios.port }}
-          livenessProbe:
-            httpGet:
-              path: /ptolemaios/v1/ping
-              port: {{ .Values.envVariables.ptolemaios.port }}
-            initialDelaySeconds: {{ .Values.config.initialDelayLiveness }}
-            periodSeconds: {{ .Values.config.periodSeconds }}
-          readinessProbe:
-            httpGet:
-              path: /ptolemaios/v1/ping
-              port: {{ .Values.envVariables.ptolemaios.port }}
-            initialDelaySeconds: {{ .Values.config.initialDelayReadiness }}
-            periodSeconds: {{ .Values.config.periodSeconds }}
           resources:
             requests:
               memory: {{ .Values.services.ptolemaios.requests.memory }}
@@ -78,3 +65,32 @@ spec:
             limits:
               memory: {{.Values.services.ptolemaios.limits.memory}}
               cpu: {{.Values.services.ptolemaios.limits.memory}}
+{{/*        - image: {{ .Values.images.alexandros.repo }}:{{ .Values.images.tag }}*/}}
+{{/*          name: "{{ template "alexandros.uname" . }}"*/}}
+{{/*          env:*/}}
+{{/*            - name: POD_NAME*/}}
+{{/*              valueFrom:*/}}
+{{/*                fieldRef:*/}}
+{{/*                  fieldPath: metadata.name*/}}
+{{/*          imagePullPolicy: {{ .Values.config.pullPolicy }}*/}}
+{{/*          ports:*/}}
+{{/*            - containerPort: {{ .Values.envVariables.alexandros.port }}*/}}
+{{/*          livenessProbe:*/}}
+{{/*            httpGet:*/}}
+{{/*              path: /alexandros/v1/health*/}}
+{{/*              port: {{ .Values.envVariables.alexandros.port }}*/}}
+{{/*            initialDelaySeconds: {{ .Values.config.initialDelayLiveness }}*/}}
+{{/*            periodSeconds: {{ .Values.config.periodSeconds }}*/}}
+{{/*          readinessProbe:*/}}
+{{/*            httpGet:*/}}
+{{/*              path: /alexandros/v1/ping*/}}
+{{/*              port: {{ .Values.envVariables.alexandros.port }}*/}}
+{{/*            initialDelaySeconds: {{ .Values.config.initialDelayReadiness }}*/}}
+{{/*            periodSeconds: {{ .Values.config.periodSeconds }}*/}}
+{{/*          resources:*/}}
+{{/*            requests:*/}}
+{{/*              memory: {{ .Values.services.alexandros.requests.memory }}*/}}
+{{/*              cpu: {{ .Values.services.alexandros.requests.cpu }}*/}}
+{{/*            limits:*/}}
+{{/*              memory: {{.Values.services.alexandros.limits.memory}}*/}}
+{{/*              cpu: {{.Values.services.alexandros.limits.memory}}*/}}

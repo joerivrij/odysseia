@@ -4,6 +4,7 @@ import (
 	"crypto/x509"
 	"github.com/elastic/go-elasticsearch/v7"
 	"github.com/kpango/glg"
+	"github.com/odysseia/plato/models"
 	"net/http"
 	"os"
 )
@@ -41,6 +42,46 @@ func CreateElasticClientFromEnvVariables() (*elasticsearch.Client, error) {
 
 	return es, nil
 }
+
+func CreateElasticClientFromEnvVariablesWithVaultData(config models.SecretData) (*elasticsearch.Client, error) {
+	elasticService := os.Getenv("ELASTIC_SEARCH_SERVICE")
+	if elasticService == "" {
+		glg.Debugf("setting ELASTIC_SEARCH_SERVICE to default: %s", serviceDefaultTlS)
+		elasticService = serviceDefaultTlS
+	}
+
+	caCert := []byte(config.ElasticCERT)
+
+	glg.Debugf("%s : %s", "ELASTIC_SEARCH_PASSWORD", config.Password)
+	glg.Debugf("%s : %s", "ELASTIC_SEARCH_USER", config.Username)
+	glg.Debugf("%s : %s", "ELASTIC_SEARCH_SERVICE", elasticService)
+
+	// --> Clone the default HTTP transport
+
+	tp := http.DefaultTransport.(*http.Transport).Clone()
+
+	// --> Initialize the set of root certificate authorities
+	//
+	var err error
+
+	if tp.TLSClientConfig.RootCAs, err = x509.SystemCertPool(); err != nil {
+		glg.Fatalf("ERROR: Problem adding system CA: %s", err)
+	}
+
+	// --> Add the custom certificate authority
+	//
+	if ok := tp.TLSClientConfig.RootCAs.AppendCertsFromPEM(caCert); !ok {
+		glg.Fatalf("ERROR: Problem adding CA from file %q", caCert)
+	}
+
+	es, err := CreateElasticClientWithTLS(config.Password, config.Username, []string{elasticService}, tp)
+	if err != nil {
+		return nil, err
+	}
+
+	return es, nil
+}
+
 
 func CreateElasticClientFromEnvVariablesWithTLS(caCert []byte) (*elasticsearch.Client, error) {
 	elasticService := os.Getenv("ELASTIC_SEARCH_SERVICE")
@@ -88,4 +129,3 @@ func CreateElasticClientFromEnvVariablesWithTLS(caCert []byte) (*elasticsearch.C
 
 	return es, nil
 }
-
