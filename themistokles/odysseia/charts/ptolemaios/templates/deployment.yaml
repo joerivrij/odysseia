@@ -12,7 +12,7 @@ metadata:
     {{ $key }}: {{ $value | quote }}
     {{- end }}
 spec:
-  replicas: {{ int .Values.config.replicas.medium }}
+  replicas: {{ int .Values.config.replicas.high }}
   selector:
     matchLabels:
       app: "{{ template "ptolemaios.uname" . }}"

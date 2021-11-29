@@ -37,35 +37,35 @@ func getNewLock(lockName, podName, namespace string, client *clientset.Clientset
 }
 
 func runLeaderElection(lock *resourcelock.LeaseLock, ctx context.Context, id string, config app.PeriandrosConfig) {
-	leaderelection.RunOrDie(ctx, leaderelection.LeaderElectionConfig{
+	le, _ := leaderelection.NewLeaderElector(leaderelection.LeaderElectionConfig{
 		Lock:            lock,
 		ReleaseOnCancel: true,
 		LeaseDuration:   15 * time.Second,
 		RenewDeadline:   10 * time.Second,
 		RetryPeriod:     2 * time.Second,
-		Callbacks: leaderelection.LeaderCallbacks{
-			OnStartedLeading: func(c context.Context) {
-				glg.Info("creating user")
-				created, err := config.CreateUser()
-				if err != nil {
-					glg.Fatal(err)
-				}
-
-				glg.Infof("user created was %t", created)
-				return
-			},
-			OnStoppedLeading: func() {
-				glg.Info("no longer the leader, staying inactive.")
-			},
-			OnNewLeader: func(currentId string) {
-				if currentId == id {
-					glg.Info("still the leader!")
-					return
-				}
-				glg.Info("new leader is %s", currentId)
-			},
-		},
 	})
+
+	le.Run(ctx)
+
+	leader := le.GetLeader()
+	isLeader := le.IsLeader()
+
+	glg.Info(leader)
+	glg.Info(isLeader)
+
+	if isLeader && leader != "" {
+		created, err := config.CreateUser()
+		if err != nil {
+			glg.Error(err)
+		}
+
+		glg.Info(created)
+		os.Exit(0)
+	}
+
+	if !isLeader && leader != "" {
+		os.Exit(0)
+	}
 }
 
 func main() {
