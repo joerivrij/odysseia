@@ -108,7 +108,7 @@ func Get(ticks time.Duration, es *elasticsearch.Client, cert []byte, env string)
 	var kubeManager kubernetes.Client
 	if env != "TEST" {
 		glg.Debug("creating in cluster kube client")
-		kube, err := kubernetes.NewInClusterKubeClient(namespace)
+		kube, err := kubernetes.NewInClusterKubeClient()
 		if err != nil {
 			glg.Fatal("error creating kubeclient")
 		}

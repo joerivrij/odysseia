@@ -71,7 +71,7 @@ Create the name of the roleBinding to use
 {{- if .Values.role.create -}}
 {{- default (include "solon.fullname" .) .Values.role.name }}
 {{- else -}}
-    {{- default (include "solon.roleName" .) "binding" }}
+    {{- default (include "solon.roleName" .) "api-access-binding" }}
 {{- end -}}
 {{- end -}}
 

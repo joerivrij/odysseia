@@ -32,6 +32,8 @@ spec:
         - image: {{ .Values.images.periandros.repo }}:{{ .Values.images.tag }}
           name: "{{ template "periandros.uname" . }}"
           env:
+          - name: ENV
+            value: {{ .Values.config.environment }}
           - name: SOLON_SERVICE
             value: {{ .Values.envVariables.solonService }}
           - name: POD_NAME

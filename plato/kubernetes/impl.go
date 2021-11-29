@@ -1,7 +1,6 @@
 package kubernetes
 
 import (
-	"context"
 	"github.com/kpango/glg"
 	"io/ioutil"
 	appsv1 "k8s.io/api/apps/v1"
@@ -11,7 +10,11 @@ import (
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/tools/leaderelection/resourcelock"
+	"os"
+	"path/filepath"
 )
+
+const defaultKubeConfig = "/.kube/config"
 
 type Client interface {
 	ExecNamedPod(namespace, podName string, command []string) (string, error)
@@ -47,7 +50,7 @@ func NewKubeClient(kubeConfigFilePath string) (Client, error) {
 	return client, nil
 }
 
-func NewInClusterKubeClient(namespace string) (Client, error) {
+func NewInClusterKubeClient() (Client, error) {
 	config, err := rest.InClusterConfig()
 	clientSet, err := kubernetes.NewForConfig(config)
 	if err != nil {
@@ -57,12 +60,6 @@ func NewInClusterKubeClient(namespace string) (Client, error) {
 	glg.Debug("created in cluster kube client")
 
 	client := &Kube{set: clientSet, config: config.CAData }
-
-	pods, err := clientSet.CoreV1().Pods(namespace).List(context.TODO(), metav1.ListOptions{})
-	if err != nil {
-		glg.Fatal(err.Error())
-	}
-	glg.Debug("There are %d pods in the cluster\n", len(pods.Items))
 
 	return client, nil
 }
@@ -86,6 +83,50 @@ func New(config []byte) (*Kube, error) {
 	return &Kube{set: clientSet, config: config }, nil
 }
 
+func CreateEnvBasedKube(env string) *Kube {
+	var kubeManager Kube
+	if env != "TEST" {
+		glg.Debug("creating in cluster kube client")
+		kube, err := NewInClusterKube()
+		if err != nil {
+			glg.Fatal("error creating kubeclient")
+		}
+		kubeManager = *kube
+	} else {
+		glg.Debugf("defaulting to %s", defaultKubeConfig)
+		homeDir, err := os.UserHomeDir()
+		if err != nil {
+			glg.Error(err)
+		}
+
+		filePath := filepath.Join(homeDir, defaultKubeConfig)
+		cfg, err := ioutil.ReadFile(filePath)
+		if err != nil {
+			glg.Error("error getting kubeconfig")
+		}
+		kube, err := New(cfg)
+		if err != nil {
+			glg.Fatal("error creating kubeclient")
+		}
+		kubeManager = *kube
+	}
+
+	return &kubeManager
+}
+
+func NewInClusterKube() (*Kube, error) {
+	config, err := rest.InClusterConfig()
+	clientSet, err := kubernetes.NewForConfig(config)
+	if err != nil {
+		return nil, err
+	}
+
+	glg.Debug("created in cluster kube client")
+
+	client := &Kube{set: clientSet, config: config.CAData }
+
+	return client, nil
+}
 
 func (k *Kube) GetK8sClientSet() *kubernetes.Clientset {
 	return k.set

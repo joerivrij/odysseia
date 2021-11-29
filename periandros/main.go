@@ -5,15 +5,15 @@ import (
 	"github.com/kpango/glg"
 	"github.com/odysseia/periandros/app"
 	"github.com/odysseia/plato/kubernetes"
-	"io/ioutil"
 	"k8s.io/client-go/tools/leaderelection"
 	"k8s.io/client-go/tools/leaderelection/resourcelock"
 	"os"
-	"path/filepath"
 	"strings"
 	"sync"
 	"time"
 )
+
+const testingEnv = "TEST"
 
 func init() {
 	errlog := glg.FileWriter("/tmp/error.log", 0666)
@@ -28,9 +28,9 @@ func getLeaderConfig(lock *resourcelock.LeaseLock, id string, config *app.Perian
 	leaderConfig := leaderelection.LeaderElectionConfig{
 		Lock: lock,
 		ReleaseOnCancel: true,
-		LeaseDuration:   60 * time.Second,
-		RenewDeadline:   15 * time.Second,
-		RetryPeriod:     1 * time.Second,
+		LeaseDuration:   15 * time.Second,
+		RenewDeadline:   10 * time.Second,
+		RetryPeriod:     2 * time.Second,
 		Callbacks: leaderelection.LeaderCallbacks{
 			OnStartedLeading: func(ctx context.Context) {
 				created, err := config.CreateUser()
@@ -58,6 +58,7 @@ func getLeaderConfig(lock *resourcelock.LeaseLock, id string, config *app.Perian
 	return leaderConfig
 }
 
+
 func main() {
 	//https://patorjk.com/software/taag/#p=display&f=Crawford2&t=PERIANDROS
 	glg.Info("\n ____   ___  ____   ____   ____  ____   ___    ____   ___   _____\n|    \\ /  _]|    \\ |    | /    ||    \\ |   \\  |    \\ /   \\ / ___/\n|  o  )  [_ |  D  ) |  | |  o  ||  _  ||    \\ |  D  )     (   \\_ \n|   _/    _]|    /  |  | |     ||  |  ||  D  ||    /|  O  |\\__  |\n|  | |   [_ |    \\  |  | |  _  ||  |  ||     ||    \\|     |/  \\ |\n|  | |     ||  .  \\ |  | |  |  ||  |  ||     ||  .  \\     |\\    |\n|__| |_____||__|\\_||____||__|__||__|__||_____||__|\\_|\\___/  \\___|\n                                                                 \n")
@@ -67,6 +68,13 @@ func main() {
 	glg.Info(strings.Repeat("~", 37))
 
 	glg.Debug("creating config")
+
+	env := os.Getenv("ENV")
+	if env == "" {
+		env = testingEnv
+	}
+
+	glg.Infof("env set to: %s", env)
 
 	config := app.Get()
 
@@ -78,27 +86,10 @@ func main() {
 	var wg sync.WaitGroup
 	leaseLockName := "periandros-lock"
 
-	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
-	defaultKubeConfig := "/.kube/config"
-	glg.Debugf("defaulting to %s", defaultKubeConfig)
-	homeDir, err := os.UserHomeDir()
-	if err != nil {
-		glg.Error(err)
-	}
-
-	filePath := filepath.Join(homeDir, defaultKubeConfig)
-	cfg, err := ioutil.ReadFile(filePath)
-	if err != nil {
-		glg.Error("error getting kubeconfig")
-	}
-	kube, err := kubernetes.New(cfg)
-	if err != nil {
-		glg.Fatal("error creating kubeclient")
-	}
-
-
+	kube := kubernetes.CreateEnvBasedKube(env)
 	lock := kube.GetNewLock(leaseLockName, config.SolonCreationRequest.PodName, config.Namespace)
 
 	leaderConfig := getLeaderConfig(lock, config.SolonCreationRequest.PodName, config)
@@ -113,4 +104,9 @@ func main() {
 		leader.Run(ctx)
 		wg.Done()
 	}()
+
+	for {
+		glg.Infof("current leader[%s]", leader.GetLeader())
+		time.Sleep(5 * time.Second)
+	}
 }

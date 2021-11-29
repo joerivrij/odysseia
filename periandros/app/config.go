@@ -8,7 +8,10 @@ import (
 	"strings"
 )
 
-const defaultSolonService = "http://localhost:5000"
+const (
+	defaultSolonService = "http://localhost:5000"
+	defaultNamespace = "odysseia"
+)
 
 type PeriandrosConfig struct {
 	Namespace string
@@ -19,14 +22,22 @@ type PeriandrosConfig struct {
 func Get() *PeriandrosConfig {
 	solonService := os.Getenv("SOLON_SERVICE")
 	if solonService == "" {
-		glg.Info("no connection to solon can be made")
+		glg.Infof("no solon service select defaulting to %s", defaultSolonService)
 		solonService = defaultSolonService
 	}
 
 	role := os.Getenv("ELASTIC_ROLE")
 	envAccess := os.Getenv("ELASTIC_ACCESS")
+
+	if role == "" || envAccess == "" {
+		glg.Error("ELASTIC_ROLE or ELASTIC_ACCESS env variables not set!")
+		glg.Fatal("cannot set access with empty env variables")
+	}
 	podName := os.Getenv("POD_NAME")
 	namespace := os.Getenv("NAMESPACE")
+	if namespace == "" {
+		namespace = defaultNamespace
+	}
 	access := strings.Split(envAccess, ";")
 	splitPodName := strings.Split(podName, "-")
 	username := splitPodName[0]
