@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/kpango/glg"
 	"github.com/odysseia/archimedes/util"
+	"github.com/odysseia/plato/configuration"
 	"github.com/odysseia/plato/kubernetes"
 	"github.com/odysseia/plato/vault"
 	"github.com/spf13/cobra"
@@ -54,13 +55,19 @@ func Auth() *cobra.Command {
 				method = defaultMethod
 			}
 
-			kubeManager, err := kubernetes.NewKubeClient(filePath)
+			config, err := configuration.NewConfig()
+			if err != nil {
+				glg.Error(err)
+				os.Exit(1)
+			}
+
+			kube, err := config.GetKubeClient(filePath, namespace)
 			if err != nil {
 				glg.Fatal("error creating kubeclient")
 			}
 
 			glg.Infof("enabling the following auth method %s", method)
-			EnableKubernetesAsAuth(namespace, policyName, kubeManager)
+			enableKubernetesAsAuth(namespace, policyName, kube)
 		},
 	}
 
@@ -72,7 +79,7 @@ func Auth() *cobra.Command {
 	return cmd
 }
 
-func EnableKubernetesAsAuth(namespace, policyName string, kube kubernetes.Client) {
+func enableKubernetesAsAuth(namespace, policyName string, kube *kubernetes.Kube) {
 	vaultSubString := "vault"
 	var vaultSelector string
 	var podName string
@@ -141,7 +148,7 @@ func EnableKubernetesAsAuth(namespace, policyName string, kube kubernetes.Client
 
 	util.WriteFile(ca, filePath)
 
-	writeResult, err := kube.CopyFileToPod(namespace, podName, filePath, filePath)
+	writeResult, err := kube.Copier.CopyFileToPod(podName, filePath, filePath)
 	if err != nil {
 		glg.Error(err)
 	}

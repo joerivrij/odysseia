@@ -71,10 +71,10 @@ type Application struct {
 }
 
 type Index struct {
-	Names         []string      `json:"names"`
-	Privileges    []string      `json:"privileges"`
+	Names         []string       `json:"names"`
+	Privileges    []string       `json:"privileges"`
 	FieldSecurity *FieldSecurity `json:"field_security,omitempty"`
-	Query         string        `json:"query,omitempty"`
+	Query         string         `json:"query,omitempty"`
 }
 
 type FieldSecurity struct {
@@ -96,9 +96,9 @@ func (r *CreateUserRequest) Marshal() ([]byte, error) {
 }
 
 type CreateUserRequest struct {
-	Password string   `json:"password"`
-	Roles    []string `json:"roles"`
-	FullName string   `json:"full_name"`
-	Email    string   `json:"email"`
+	Password string    `json:"password"`
+	Roles    []string  `json:"roles"`
+	FullName string    `json:"full_name"`
+	Email    string    `json:"email"`
 	Metadata *Metadata `json:"metadata"`
 }

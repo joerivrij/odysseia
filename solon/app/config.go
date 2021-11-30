@@ -8,6 +8,7 @@ import (
 	"github.com/odysseia/plato/kubernetes"
 	"github.com/odysseia/plato/models"
 	"github.com/odysseia/plato/vault"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
@@ -15,22 +16,22 @@ import (
 )
 
 const (
-	defaultVaultService = "http://127.0.0.1:8200"
-	defaultRoleName = "solon"
-	defaultKubeConfig = "/.kube/config"
-	defaultNamespace = "odysseia"
-	defaultRoleAnnotation = "odysseia-greek/role"
+	defaultVaultService     = "http://127.0.0.1:8200"
+	defaultRoleName         = "solon"
+	defaultKubeConfig       = "/.kube/config"
+	defaultNamespace        = "odysseia"
+	defaultRoleAnnotation   = "odysseia-greek/role"
 	defaultAccessAnnotation = "odysseia-greek/access"
 )
 
 type SolonConfig struct {
-	Vault vault.Client
-	ElasticClient elasticsearch.Client
-	ElasticCert []byte
-	Kube kubernetes.Client
-	Namespace string
+	Vault            vault.Client
+	ElasticClient    elasticsearch.Client
+	ElasticCert      []byte
+	Kube             kubernetes.Kube
+	Namespace        string
 	AccessAnnotation string
-	RoleAnnotation string
+	RoleAnnotation   string
 }
 
 func Get(ticks time.Duration, es *elasticsearch.Client, cert []byte, env string) (bool, *SolonConfig) {
@@ -105,14 +106,14 @@ func Get(ticks time.Duration, es *elasticsearch.Client, cert []byte, env string)
 		}
 	}
 
-	var kubeManager kubernetes.Client
+	var kubeManager kubernetes.Kube
 	if env != "TEST" {
 		glg.Debug("creating in cluster kube client")
-		kube, err := kubernetes.NewInClusterKubeClient()
+		kube, err := kubernetes.NewInClusterKube(namespace)
 		if err != nil {
 			glg.Fatal("error creating kubeclient")
 		}
-		kubeManager = kube
+		kubeManager = *kube
 	} else {
 		glg.Debugf("defaulting to %s", defaultKubeConfig)
 		homeDir, err := os.UserHomeDir()
@@ -121,20 +122,26 @@ func Get(ticks time.Duration, es *elasticsearch.Client, cert []byte, env string)
 		}
 
 		filePath := filepath.Join(homeDir, defaultKubeConfig)
-		kube, err := kubernetes.NewKubeClient(filePath)
+
+		cfg, err := ioutil.ReadFile(filePath)
+		if err != nil {
+			glg.Error("error getting kubeconfig")
+		}
+
+		kube, err := kubernetes.New(cfg, namespace)
 		if err != nil {
 			glg.Fatal("error creating kubeclient")
 		}
-		kubeManager = kube
+		kubeManager = *kube
 	}
 
 	config := &SolonConfig{
-		ElasticClient: *es,
-		Vault: vaultClient,
-		ElasticCert: cert,
-		Kube: kubeManager,
-		Namespace: namespace,
-		RoleAnnotation: defaultRoleAnnotation,
+		ElasticClient:    *es,
+		Vault:            vaultClient,
+		ElasticCert:      cert,
+		Kube:             kubeManager,
+		Namespace:        namespace,
+		RoleAnnotation:   defaultRoleAnnotation,
 		AccessAnnotation: defaultAccessAnnotation,
 	}
 
@@ -148,7 +155,6 @@ func InitRoot(config SolonConfig) bool {
 	unparsedRoles := os.Getenv("ELASTIC_ROLES")
 	roles := strings.Split(unparsedRoles, ";")
 	indexes := strings.Split(unparsedIndexes, ";")
-
 
 	var created bool
 	for _, index := range indexes {
@@ -173,8 +179,7 @@ func InitRoot(config SolonConfig) bool {
 				},
 			}
 
-			application := []models.Application{
-			}
+			application := []models.Application{}
 
 			putRole := models.CreateRoleRequest{
 				Cluster:      []string{"all"},

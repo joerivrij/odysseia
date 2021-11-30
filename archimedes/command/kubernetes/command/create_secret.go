@@ -68,7 +68,7 @@ func CreateSecret() *cobra.Command {
 	return cmd
 }
 
-func createSecret(secretName, namespace string, secretLength int, kube kubernetes.Client) {
+func createSecret(secretName, namespace string, secretLength int, kube kubernetes.KubeClient) {
 	password, err := generator.RandomPassword(secretLength)
 	if err != nil {
 		glg.Error(err)

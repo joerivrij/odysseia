@@ -31,7 +31,6 @@ func main() {
 	glg.Info("starting up.....")
 	glg.Debug("starting up and getting env variables")
 
-
 	config := app.Get()
 
 	srv := app.InitRoutes(*config)

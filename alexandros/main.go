@@ -32,7 +32,6 @@ func main() {
 	glg.Info("starting up.....")
 	glg.Debug("starting up and getting env variables")
 
-
 	confManager, err := configuration.NewConfig()
 	if err != nil {
 		glg.Error(err)

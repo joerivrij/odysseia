@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/kpango/glg"
 	"github.com/odysseia/archimedes/util"
+	"github.com/odysseia/plato/configuration"
 	"github.com/odysseia/plato/kubernetes"
 	"github.com/spf13/cobra"
 	"os"
@@ -40,14 +41,20 @@ func Init() *cobra.Command {
 				filePath = filepath.Join(homeDir, defaultKubeConfig)
 			}
 
-			kubeManager, err := kubernetes.NewKubeClient(filePath)
+			config, err := configuration.NewConfig()
+			if err != nil {
+				glg.Error(err)
+				os.Exit(1)
+			}
+
+			kube, err := config.GetKubeClient(filePath, namespace)
 			if err != nil {
 				glg.Fatal("error creating kubeclient")
 			}
 
 			glg.Info("is it secret? Is it safe? Well no longer!")
 			glg.Debug("unsealing kube vault")
-			initVault(namespace, kubeManager)
+			initVault(namespace, kube)
 		},
 	}
 
@@ -57,7 +64,7 @@ func Init() *cobra.Command {
 	return cmd
 }
 
-func initVault(namespace string, kube kubernetes.Client) {
+func initVault(namespace string, kube *kubernetes.Kube) {
 	vaultSelector := "app.kubernetes.io/name=vault"
 	var podName string
 

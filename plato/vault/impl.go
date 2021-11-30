@@ -24,12 +24,12 @@ type Client interface {
 }
 
 type Vault struct {
-	Connection    *api.Client
+	Connection *api.Client
 }
 
 func CreateVaultClient(address, token string) (Client, error) {
 	config := api.Config{
-		Address:    address,
+		Address: address,
 	}
 
 	client, err := api.NewClient(&config)
@@ -44,7 +44,7 @@ func CreateVaultClient(address, token string) (Client, error) {
 
 func CreateVaultClientKubernetes(address, vaultRole, jwt string) (Client, error) {
 	config := api.Config{
-		Address:    address,
+		Address: address,
 	}
 
 	client, err := api.NewClient(&config)

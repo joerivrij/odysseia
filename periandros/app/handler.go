@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (p *PeriandrosConfig)CreateUser() (bool, error) {
+func (p *PeriandrosConfig) CreateUser() (bool, error) {
 	path := "solon/v1/register"
 	p.SolonService.Path = path
 
@@ -30,7 +30,7 @@ func (p *PeriandrosConfig)CreateUser() (bool, error) {
 	return solonResponse.Created, nil
 }
 
-func (p *PeriandrosConfig)CheckSolonHealth(ticks time.Duration) bool {
+func (p *PeriandrosConfig) CheckSolonHealth(ticks time.Duration) bool {
 	path := "solon/v1/health"
 	p.SolonService.Path = path
 

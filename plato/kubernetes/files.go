@@ -7,7 +7,9 @@ import (
 	"io"
 	"io/ioutil"
 	corev1 "k8s.io/api/core/v1"
+	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/kubernetes/scheme"
+	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/tools/remotecommand"
 	"os"
@@ -16,13 +18,22 @@ import (
 	"strings"
 )
 
-func (k *Kube) CopyFileToPod(namespace, podName, destPath, srcPath string) (string, error) {
+type CopierImpl struct {
+	rest rest.Interface
+	ns   string
+}
+
+func NewCopierClient(kube *kubernetes.Clientset, namespace string) (*CopierImpl, error) {
+	set := kube.CoreV1().RESTClient()
+
+	return &CopierImpl{rest: set, ns: namespace}, nil
+}
+
+func (c *CopierImpl) CopyFileToPod(podName, destPath, srcPath string) (string, error) {
 	kubeCfg := clientcmd.NewNonInteractiveDeferredLoadingClientConfig(
 		clientcmd.NewDefaultClientConfigLoadingRules(),
 		&clientcmd.ConfigOverrides{},
 	)
-
-	k.GetConfig()
 
 	restCfg, err := kubeCfg.ClientConfig()
 	if err != nil {
@@ -50,8 +61,7 @@ func (k *Kube) CopyFileToPod(namespace, podName, destPath, srcPath string) (stri
 		cmdArr = append(cmdArr, "-C", destDir)
 	}
 
-	req := k.GetK8sClientSet().CoreV1().RESTClient().Post().
-		Resource("pods").Name(podName).Namespace(namespace).SubResource("exec").
+	req := c.rest.Post().Resource("pods").Name(podName).Namespace(c.ns).SubResource("exec").
 		VersionedParams(&corev1.PodExecOptions{
 			Command: cmdArr,
 			Stdin:   true,

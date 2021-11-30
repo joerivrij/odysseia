@@ -3,7 +3,7 @@ package models
 import "encoding/json"
 
 type DeclensionConfig struct {
-	FirstDeclension Declension
+	FirstDeclension  Declension
 	SecondDeclension Declension
 }
 
@@ -25,8 +25,8 @@ type Declension struct {
 }
 
 type DeclensionElement struct {
-	Declension string       `json:"declension"`
-	RuleName   string       `json:"ruleName"`
+	Declension string   `json:"declension"`
+	RuleName   string   `json:"ruleName"`
 	SearchTerm []string `json:"searchTerm"`
 }
 
@@ -45,9 +45,9 @@ type FoundRules struct {
 }
 
 type Rule struct {
-	Form       string `json:"form,omitempty"`
-	Declension string `json:"declension,omitempty"`
-	Rule       string `json:"rule,omitempty"`
+	Form        string   `json:"form,omitempty"`
+	Declension  string   `json:"declension,omitempty"`
+	Rule        string   `json:"rule,omitempty"`
 	SearchTerms []string `json:"searchTerm,omitempty"`
 }
 
@@ -72,6 +72,6 @@ type Result struct {
 	Translation string `json:"translation"`
 }
 
-func (r *DeclensionTranslationResults)RemoveIndex(index int) {
+func (r *DeclensionTranslationResults) RemoveIndex(index int) {
 	r.Results = append(r.Results[:index], r.Results[index+1:]...)
 }

@@ -43,4 +43,3 @@ func (v *Vault) CheckHealthyStatus(ticks time.Duration) bool {
 
 	return healthy
 }
-

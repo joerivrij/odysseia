@@ -8,25 +8,29 @@ import (
 	"github.com/odysseia/plato/helpers"
 	"github.com/odysseia/plato/kubernetes"
 	"github.com/odysseia/plato/models"
+	"io/ioutil"
 	"net/url"
 	"os"
+	"path/filepath"
 	"time"
 )
 
 type Config interface {
 	GetElasticClient() (*elasticsearch.Client, error)
-	GetKubeClient() (kubernetes.Client, error)
+	GetKubeClient(kubePath, namespace string) (*kubernetes.Kube, error)
 }
 
 const (
 	defaultSidecarService = "http://127.0.0.1:5001"
-	defaultSidecarPath = "/ptolemaios/v1/secret"
+	defaultSidecarPath    = "/ptolemaios/v1/secret"
+	defaultKubeConfig     = "/.kube/config"
+	defaultNamespace      = "odysseia"
 )
 
 type ConfigImpl struct {
-	env string
+	env        string
 	tlsEnabled bool
-	sideCar url.URL
+	sideCar    url.URL
 }
 
 func NewConfig() (Config, error) {
@@ -74,7 +78,7 @@ func (c *ConfigImpl) GetElasticClient() (*elasticsearch.Client, error) {
 		es = client
 	}
 
-	standardTicks := time.Minute*2
+	standardTicks := time.Minute * 2
 
 	healthy := elastic.CheckHealthyStatusElasticSearch(es, standardTicks)
 	if !healthy {
@@ -114,7 +118,45 @@ func (c *ConfigImpl) GetSecretFromVault() (*models.ElasticConfigVault, error) {
 	return &secret, nil
 }
 
-func (c *ConfigImpl) GetKubeClient() (kubernetes.Client, error) {
+func (c *ConfigImpl) GetKubeClient(kubePath, namespace string) (*kubernetes.Kube, error) {
+	var kubeManager kubernetes.Kube
 
-	return nil, nil
+	if namespace == "" {
+		namespace = defaultNamespace
+	}
+
+	if c.env == "ARCHIMEDES" || c.env == "TEST" {
+		var filePath string
+		if kubePath == "" {
+			glg.Debugf("defaulting to %s", defaultKubeConfig)
+			homeDir, err := os.UserHomeDir()
+			if err != nil {
+				glg.Error(err)
+			}
+
+			filePath = filepath.Join(homeDir, defaultKubeConfig)
+		} else {
+			filePath = kubePath
+		}
+
+		cfg, err := ioutil.ReadFile(filePath)
+		if err != nil {
+			glg.Error("error getting kubeconfig")
+		}
+
+		kube, err := kubernetes.New(cfg, namespace)
+		if err != nil {
+			glg.Fatal("error creating kubeclient")
+		}
+		kubeManager = *kube
+	} else {
+		glg.Debug("creating in cluster kube client")
+		kube, err := kubernetes.NewInClusterKube(namespace)
+		if err != nil {
+			glg.Fatal("error creating kubeclient")
+		}
+		kubeManager = *kube
+	}
+
+	return &kubeManager, nil
 }

@@ -12,7 +12,7 @@ func (k *Kube) GetSecrets(namespace string) (*corev1.SecretList, error) {
 	defer cancel()
 
 	secrets, err := k.GetK8sClientSet().CoreV1().Secrets(namespace).List(ctx, metav1.ListOptions{
-		TypeMeta:            metav1.TypeMeta{
+		TypeMeta: metav1.TypeMeta{
 			Kind:       "",
 			APIVersion: "",
 		},

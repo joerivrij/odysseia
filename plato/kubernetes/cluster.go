@@ -50,4 +50,3 @@ func (k *Kube) GetHostCaCert() ([]byte, error) {
 
 	return nil, nil
 }
-

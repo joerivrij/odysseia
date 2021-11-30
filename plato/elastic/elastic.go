@@ -405,7 +405,7 @@ func QueryWithScroll(elasticClient elasticsearch.Client, index, term, word strin
 
 	scrollID := firstResponse.ScrollId
 
-	for _, hit := range firstResponse.Hits.Hits{
+	for _, hit := range firstResponse.Hits.Hits {
 		elasticResult.Hits.Hits = append(elasticResult.Hits.Hits, hit)
 	}
 
@@ -437,7 +437,7 @@ func QueryWithScroll(elasticClient elasticsearch.Client, index, term, word strin
 			break
 		}
 
-		for _, hit := range scrollResponse.Hits.Hits{
+		for _, hit := range scrollResponse.Hits.Hits {
 			elasticResult.Hits.Hits = append(elasticResult.Hits.Hits, hit)
 		}
 	}

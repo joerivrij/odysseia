@@ -40,7 +40,6 @@ func main() {
 	glg.Info("starting up.....")
 	glg.Debug("starting up and getting env variables")
 
-
 	var cert []byte
 	var esClient *elasticsearch.Client
 	if env != "TEST" {

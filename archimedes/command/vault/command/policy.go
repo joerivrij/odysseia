@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/kpango/glg"
 	"github.com/odysseia/archimedes/util"
+	"github.com/odysseia/plato/configuration"
 	"github.com/odysseia/plato/kubernetes"
 	"github.com/spf13/cobra"
 	"os"
@@ -53,14 +54,20 @@ func Policy() *cobra.Command {
 				filePath = filepath.Join(homeDir, defaultKubeConfig)
 			}
 
-			kubeManager, err := kubernetes.NewKubeClient(filePath)
+			config, err := configuration.NewConfig()
+			if err != nil {
+				glg.Error(err)
+				os.Exit(1)
+			}
+
+			kube, err := config.GetKubeClient(filePath, namespace)
 			if err != nil {
 				glg.Fatal("error creating kubeclient")
 			}
 
 			glg.Info("is it secret? Is it safe? Well no longer!")
 			glg.Debug("creating a vault policy")
-			createPolicy(policyName, namespace, kubeManager)
+			createPolicy(policyName, namespace, kube)
 		},
 	}
 
@@ -71,7 +78,7 @@ func Policy() *cobra.Command {
 	return cmd
 }
 
-func createPolicy(policyName, namespace string, kube kubernetes.Client) {
+func createPolicy(policyName, namespace string, kube *kubernetes.Kube) {
 	for key, value := range policies {
 		var policyToCreate []byte
 
@@ -131,7 +138,7 @@ func createPolicy(policyName, namespace string, kube kubernetes.Client) {
 		srcPath := fmt.Sprintf("/tmp/%s.hcl", policyName)
 		util.WriteFile(policyToCreate, srcPath)
 
-		copy, err := kube.CopyFileToPod(namespace, podName, srcPath, srcPath)
+		copy, err := kube.Copier.CopyFileToPod(podName, srcPath, srcPath)
 		if err != nil {
 			glg.Error(err)
 		}

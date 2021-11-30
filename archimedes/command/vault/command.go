@@ -17,6 +17,7 @@ func Manager() *cobra.Command {
 		command.Unseal(),
 		command.Policy(),
 		command.Init(),
+		command.New(),
 	)
 
 	return cmd

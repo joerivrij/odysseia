@@ -82,7 +82,6 @@ func CreateElasticClientWithTlS(config models.ElasticConfigVault) (*elasticsearc
 	return es, nil
 }
 
-
 func CreateElasticClientFromEnvVariablesWithTLS(caCert []byte) (*elasticsearch.Client, error) {
 	elasticService := os.Getenv("ELASTIC_SEARCH_SERVICE")
 	if elasticService == "" {

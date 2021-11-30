@@ -24,7 +24,7 @@ func (s *SolonHandler) PingPong(w http.ResponseWriter, req *http.Request) {
 	middleware.ResponseWithJson(w, pingPong)
 }
 
-func (s *SolonHandler)Health(w http.ResponseWriter, r *http.Request) {
+func (s *SolonHandler) Health(w http.ResponseWriter, r *http.Request) {
 	vaultHealth, _ := s.Config.Vault.Health()
 	glg.Debugf("%s : %s", "vault healthy", strconv.FormatBool(vaultHealth))
 
@@ -58,7 +58,6 @@ func (s *SolonHandler) CreateOneTimeToken(w http.ResponseWriter, req *http.Reque
 
 	middleware.ResponseWithJson(w, tokenModel)
 }
-
 
 func (s *SolonHandler) RegisterService(w http.ResponseWriter, req *http.Request) {
 	var creationRequest models.SolonCreationRequest

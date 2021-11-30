@@ -77,7 +77,7 @@ func (p *PtolemaiosHandler) GetSecretFromVault(w http.ResponseWriter, req *http.
 	middleware.ResponseWithJson(w, elasticModel)
 }
 
-func (p *PtolemaiosHandler)getOneTimeToken() (string, error){
+func (p *PtolemaiosHandler) getOneTimeToken() (string, error) {
 	u := p.Config.SolonService
 	u.Path = "/solon/v1/token"
 	response, err := helpers.GetRequest(u)

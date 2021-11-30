@@ -14,8 +14,8 @@ type KubeConfigYaml struct {
 		Name    string `yaml:"name"`
 		Cluster struct {
 			CertificateAuthorityData string `yaml:"certificate-authority-data"`
-			CertificateAuthority string `yaml:"certificate-authority"`
-			Extensions           []struct {
+			CertificateAuthority     string `yaml:"certificate-authority"`
+			Extensions               []struct {
 				Extension struct {
 					LastUpdate string `yaml:"last-update"`
 					Provider   string `yaml:"provider"`

@@ -1,3 +1,4 @@
+//go:build !integration
 // +build !integration
 
 package app
@@ -74,10 +75,10 @@ func TestQueryWordEndpointHappyPathFemFirst(t *testing.T) {
 	assert.Nil(t, err)
 
 	testConfig := DionysosConfig{
-		ElasticClient:      *mockElasticClient,
-		DictionaryIndex: dictionaryIndexDefault,
-		Index:             elasticIndexDefault,
-		DeclensionConfig:   *declensionConfig,
+		ElasticClient:    *mockElasticClient,
+		DictionaryIndex:  dictionaryIndexDefault,
+		Index:            elasticIndexDefault,
+		DeclensionConfig: *declensionConfig,
 	}
 	router := InitRoutes(testConfig)
 	response := performGetRequest(router, "/dionysos/v1/checkGrammar?word=μάχη")
@@ -101,10 +102,10 @@ func TestQueryWordEndpointHappyPathMascSecond(t *testing.T) {
 	assert.Nil(t, err)
 
 	testConfig := DionysosConfig{
-		ElasticClient:      *mockElasticClient,
-		DictionaryIndex: dictionaryIndexDefault,
-		Index:             elasticIndexDefault,
-		DeclensionConfig:   *declensionConfig,
+		ElasticClient:    *mockElasticClient,
+		DictionaryIndex:  dictionaryIndexDefault,
+		Index:            elasticIndexDefault,
+		DeclensionConfig: *declensionConfig,
 	}
 	router := InitRoutes(testConfig)
 	response := performGetRequest(router, "/dionysos/v1/checkGrammar?word=πόλεμοι")
@@ -127,10 +128,10 @@ func TestSearchEndPointElasticNoResults(t *testing.T) {
 	assert.Nil(t, err)
 
 	testConfig := DionysosConfig{
-		ElasticClient:      *elasticClient,
-		DictionaryIndex: dictionaryIndexDefault,
-		Index:             elasticIndexDefault,
-		DeclensionConfig:   *declensionConfig,
+		ElasticClient:    *elasticClient,
+		DictionaryIndex:  dictionaryIndexDefault,
+		Index:            elasticIndexDefault,
+		DeclensionConfig: *declensionConfig,
 	}
 
 	router := InitRoutes(testConfig)
@@ -140,7 +141,7 @@ func TestSearchEndPointElasticNoResults(t *testing.T) {
 	err = json.NewDecoder(response.Body).Decode(&notFoundError)
 	assert.Nil(t, err)
 	assert.Equal(t, http.StatusNotFound, response.Code)
-	assert.Equal(t,  expected, notFoundError.Message.Reason)
+	assert.Equal(t, expected, notFoundError.Message.Reason)
 }
 
 func TestSearchEndPointPrespositionFound(t *testing.T) {
@@ -154,10 +155,10 @@ func TestSearchEndPointPrespositionFound(t *testing.T) {
 	assert.Nil(t, err)
 
 	testConfig := DionysosConfig{
-		ElasticClient:      *mockElasticClient,
-		DictionaryIndex: dictionaryIndexDefault,
-		Index:             elasticIndexDefault,
-		DeclensionConfig:   *declensionConfig,
+		ElasticClient:    *mockElasticClient,
+		DictionaryIndex:  dictionaryIndexDefault,
+		Index:            elasticIndexDefault,
+		DeclensionConfig: *declensionConfig,
 	}
 	router := InitRoutes(testConfig)
 	response := performGetRequest(router, "/dionysos/v1/checkGrammar?word=εἰς")
@@ -181,10 +182,10 @@ func TestSearchEndPointWithoutQueryParam(t *testing.T) {
 	assert.Nil(t, err)
 
 	testConfig := DionysosConfig{
-		ElasticClient:      *elasticClient,
-		DictionaryIndex: dictionaryIndexDefault,
-		Index:             elasticIndexDefault,
-		DeclensionConfig:   *declensionConfig,
+		ElasticClient:    *elasticClient,
+		DictionaryIndex:  dictionaryIndexDefault,
+		Index:            elasticIndexDefault,
+		DeclensionConfig: *declensionConfig,
 	}
 
 	router := InitRoutes(testConfig)
@@ -194,9 +195,8 @@ func TestSearchEndPointWithoutQueryParam(t *testing.T) {
 	err = json.NewDecoder(response.Body).Decode(&validation)
 	assert.Nil(t, err)
 	assert.Equal(t, http.StatusBadRequest, response.Code)
-	assert.Equal(t,  expected, validation.Messages[0].Message)
+	assert.Equal(t, expected, validation.Messages[0].Message)
 }
-
 
 func performGetRequest(r http.Handler, path string) *httptest.ResponseRecorder {
 	req, _ := http.NewRequest("GET", path, nil)

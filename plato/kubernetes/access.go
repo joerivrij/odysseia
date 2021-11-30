@@ -4,14 +4,26 @@ import (
 	"context"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/kubernetes/typed/core/v1"
 	"time"
 )
 
-func (k *Kube) GetServiceAccounts(namespace string) (*corev1.ServiceAccountList, error) {
+type AccessImpl struct {
+	serviceSet v1.ServiceAccountInterface
+}
+
+func NewAccessClient(kube *kubernetes.Clientset, namespace string) (*AccessImpl, error) {
+	set := kube.CoreV1().ServiceAccounts(namespace)
+
+	return &AccessImpl{serviceSet: set}, nil
+}
+
+func (a *AccessImpl) GetServiceAccounts() (*corev1.ServiceAccountList, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
 	defer cancel()
 
-	serviceAccounts, err := k.GetK8sClientSet().CoreV1().ServiceAccounts(namespace).List(ctx, metav1.ListOptions{
+	serviceAccounts, err := a.serviceSet.List(ctx, metav1.ListOptions{
 		TypeMeta:            metav1.TypeMeta{},
 		LabelSelector:       "",
 		FieldSelector:       "",
@@ -28,4 +40,3 @@ func (k *Kube) GetServiceAccounts(namespace string) (*corev1.ServiceAccountList,
 
 	return serviceAccounts, nil
 }
-

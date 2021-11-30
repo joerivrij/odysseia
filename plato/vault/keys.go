@@ -39,4 +39,3 @@ func GetClusterKeys(namespace string) models.ClusterKeys {
 
 	return clusterKeys
 }
-

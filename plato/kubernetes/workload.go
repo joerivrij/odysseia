@@ -50,7 +50,6 @@ func (k *Kube) GetStatefulSets(namespace string) (*appsv1.StatefulSetList, error
 	return sets, nil
 }
 
-
 func (k *Kube) GetPodsBySelector(namespace, selector string) (*corev1.PodList, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
 	defer cancel()

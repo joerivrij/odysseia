@@ -5,15 +5,15 @@ import (
 	"github.com/kpango/glg"
 )
 
-func (v *Vault) CreateOneTimeToken(policy []string,) (string, error) {
+func (v *Vault) CreateOneTimeToken(policy []string) (string, error) {
 	renew := false
 
 	tokenRequest := vault.TokenCreateRequest{
-		Policies:        policy,
-		TTL:             "5m",
-		DisplayName:     "solonCreated",
-		NumUses:         1,
-		Renewable:       &renew,
+		Policies:    policy,
+		TTL:         "5m",
+		DisplayName: "solonCreated",
+		NumUses:     1,
+		Renewable:   &renew,
 	}
 
 	glg.Debug("request created")

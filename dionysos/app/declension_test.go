@@ -1,3 +1,4 @@
+//go:build integration
 // +build integration
 
 package app
@@ -18,10 +19,10 @@ func TestFirstDeclensionFemNouns(t *testing.T) {
 	assert.Nil(t, err)
 
 	testConfig := DionysosConfig{
-		ElasticClient:      *elasticClient,
-		DictionaryIndex: dictionaryIndexDefault,
-		Index:             elasticIndexDefault,
-		DeclensionConfig:   *declensionConfig,
+		ElasticClient:    *elasticClient,
+		DictionaryIndex:  dictionaryIndexDefault,
+		Index:            elasticIndexDefault,
+		DeclensionConfig: *declensionConfig,
 	}
 
 	handler := DionysosHandler{Config: &testConfig}
@@ -32,7 +33,7 @@ func TestFirstDeclensionFemNouns(t *testing.T) {
 			declensions, err := handler.StartFindingRules(word)
 			assert.Nil(t, err)
 			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results{
+				for _, declension := range declensions.Results {
 					assert.Contains(t, declension.Rule, "fem")
 				}
 			} else {
@@ -49,7 +50,7 @@ func TestFirstDeclensionFemNouns(t *testing.T) {
 			declensionLength := len(declensions.Results)
 			assert.True(t, declensionLength > 0)
 			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results{
+				for _, declension := range declensions.Results {
 					assert.Contains(t, declension.Rule, "fem")
 					assert.NotEqual(t, "", declension.Translation)
 				}
@@ -65,7 +66,7 @@ func TestFirstDeclensionFemNouns(t *testing.T) {
 			declensions, err := handler.StartFindingRules(word)
 			assert.Nil(t, err)
 			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results{
+				for _, declension := range declensions.Results {
 					assert.Contains(t, declension.Rule, "dat")
 				}
 			} else {
@@ -98,7 +99,7 @@ func TestFirstDeclensionFemNouns(t *testing.T) {
 			declensions, err := handler.StartFindingRules(word)
 			assert.Nil(t, err)
 			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results{
+				for _, declension := range declensions.Results {
 					assert.Contains(t, declension.Rule, "gen")
 				}
 			} else {
@@ -113,7 +114,7 @@ func TestFirstDeclensionFemNouns(t *testing.T) {
 			declensions, err := handler.StartFindingRules(word)
 			assert.Nil(t, err)
 			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results{
+				for _, declension := range declensions.Results {
 					assert.Contains(t, declension.Rule, "dat")
 				}
 			} else {
@@ -128,7 +129,7 @@ func TestFirstDeclensionFemNouns(t *testing.T) {
 			declensions, err := handler.StartFindingRules(word)
 			assert.Nil(t, err)
 			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results{
+				for _, declension := range declensions.Results {
 					assert.Contains(t, declension.Rule, "fem")
 				}
 			} else {
@@ -137,7 +138,6 @@ func TestFirstDeclensionFemNouns(t *testing.T) {
 		}
 	})
 }
-
 
 func TestFirstDeclensionMascNouns(t *testing.T) {
 	t.Parallel()
@@ -149,10 +149,10 @@ func TestFirstDeclensionMascNouns(t *testing.T) {
 	assert.Nil(t, err)
 
 	testConfig := DionysosConfig{
-		ElasticClient:      *elasticClient,
-		DictionaryIndex: dictionaryIndexDefault,
-		Index:             elasticIndexDefault,
-		DeclensionConfig:   *declensionConfig,
+		ElasticClient:    *elasticClient,
+		DictionaryIndex:  dictionaryIndexDefault,
+		Index:            elasticIndexDefault,
+		DeclensionConfig: *declensionConfig,
 	}
 
 	handler := DionysosHandler{Config: &testConfig}
@@ -194,12 +194,12 @@ func TestFirstDeclensionMascNouns(t *testing.T) {
 	})
 
 	t.Run("NominativusMascPlural", func(t *testing.T) {
-			words := []string{"νεανίαι", "πολίται", "κριταί"}
-			for _, word := range words {
-				declensions, err := handler.StartFindingRules(word)
-				assert.Nil(t, err)
-				assert.Contains(t, declensions.Results[0].Rule, "noun - plural - masc - nom")
-			}
+		words := []string{"νεανίαι", "πολίται", "κριταί"}
+		for _, word := range words {
+			declensions, err := handler.StartFindingRules(word)
+			assert.Nil(t, err)
+			assert.Contains(t, declensions.Results[0].Rule, "noun - plural - masc - nom")
+		}
 	})
 
 	t.Run("GenitivusMascPlural", func(t *testing.T) {
@@ -208,7 +208,7 @@ func TestFirstDeclensionMascNouns(t *testing.T) {
 			declensions, err := handler.StartFindingRules(word)
 			assert.Nil(t, err)
 			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results{
+				for _, declension := range declensions.Results {
 					assert.Contains(t, declension.Rule, "gen")
 				}
 			} else {
@@ -223,7 +223,7 @@ func TestFirstDeclensionMascNouns(t *testing.T) {
 			declensions, err := handler.StartFindingRules(word)
 			assert.Nil(t, err)
 			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results{
+				for _, declension := range declensions.Results {
 					assert.Contains(t, declension.Rule, "dat")
 				}
 			} else {
@@ -238,7 +238,7 @@ func TestFirstDeclensionMascNouns(t *testing.T) {
 			declensions, err := handler.StartFindingRules(word)
 			assert.Nil(t, err)
 			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results{
+				for _, declension := range declensions.Results {
 					assert.Contains(t, declension.Rule, "masc")
 				}
 			} else {
@@ -258,10 +258,10 @@ func TestSecondDeclensionMascNouns(t *testing.T) {
 	assert.Nil(t, err)
 
 	testConfig := DionysosConfig{
-		ElasticClient:      *elasticClient,
-		DictionaryIndex: dictionaryIndexDefault,
-		Index:             elasticIndexDefault,
-		DeclensionConfig:   *declensionConfig,
+		ElasticClient:    *elasticClient,
+		DictionaryIndex:  dictionaryIndexDefault,
+		Index:            elasticIndexDefault,
+		DeclensionConfig: *declensionConfig,
 	}
 
 	handler := DionysosHandler{Config: &testConfig}
@@ -272,7 +272,7 @@ func TestSecondDeclensionMascNouns(t *testing.T) {
 			declensions, err := handler.StartFindingRules(word)
 			assert.Nil(t, err)
 			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results{
+				for _, declension := range declensions.Results {
 					assert.Contains(t, declension.Rule, "masc")
 				}
 			} else {
@@ -287,7 +287,7 @@ func TestSecondDeclensionMascNouns(t *testing.T) {
 			declensions, err := handler.StartFindingRules(word)
 			assert.Nil(t, err)
 			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results{
+				for _, declension := range declensions.Results {
 					assert.Contains(t, declension.Rule, "masc")
 				}
 			} else {
@@ -302,7 +302,7 @@ func TestSecondDeclensionMascNouns(t *testing.T) {
 			declensions, err := handler.StartFindingRules(word)
 			assert.Nil(t, err)
 			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results{
+				for _, declension := range declensions.Results {
 					assert.Contains(t, declension.Rule, "masc")
 				}
 			} else {
@@ -317,7 +317,7 @@ func TestSecondDeclensionMascNouns(t *testing.T) {
 			declensions, err := handler.StartFindingRules(word)
 			assert.Nil(t, err)
 			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results{
+				for _, declension := range declensions.Results {
 					assert.Contains(t, declension.Rule, "masc")
 				}
 			} else {
@@ -332,7 +332,7 @@ func TestSecondDeclensionMascNouns(t *testing.T) {
 			declensions, err := handler.StartFindingRules(word)
 			assert.Nil(t, err)
 			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results{
+				for _, declension := range declensions.Results {
 					assert.Contains(t, declension.Rule, "masc")
 				}
 			} else {
@@ -347,7 +347,7 @@ func TestSecondDeclensionMascNouns(t *testing.T) {
 			declensions, err := handler.StartFindingRules(word)
 			assert.Nil(t, err)
 			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results{
+				for _, declension := range declensions.Results {
 					assert.Contains(t, declension.Rule, "gen")
 				}
 			} else {
@@ -362,7 +362,7 @@ func TestSecondDeclensionMascNouns(t *testing.T) {
 			declensions, err := handler.StartFindingRules(word)
 			assert.Nil(t, err)
 			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results{
+				for _, declension := range declensions.Results {
 					assert.Contains(t, declension.Rule, "masc")
 				}
 			} else {
@@ -377,7 +377,7 @@ func TestSecondDeclensionMascNouns(t *testing.T) {
 			declensions, err := handler.StartFindingRules(word)
 			assert.Nil(t, err)
 			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results{
+				for _, declension := range declensions.Results {
 					assert.Contains(t, declension.Rule, "masc")
 				}
 			} else {
@@ -397,10 +397,10 @@ func TestSecondDeclensionNeuterNouns(t *testing.T) {
 	assert.Nil(t, err)
 
 	testConfig := DionysosConfig{
-		ElasticClient:      *elasticClient,
-		DictionaryIndex: dictionaryIndexDefault,
-		Index:             elasticIndexDefault,
-		DeclensionConfig:   *declensionConfig,
+		ElasticClient:    *elasticClient,
+		DictionaryIndex:  dictionaryIndexDefault,
+		Index:            elasticIndexDefault,
+		DeclensionConfig: *declensionConfig,
 	}
 
 	handler := DionysosHandler{Config: &testConfig}
@@ -411,7 +411,7 @@ func TestSecondDeclensionNeuterNouns(t *testing.T) {
 			declensions, err := handler.StartFindingRules(word)
 			assert.Nil(t, err)
 			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results{
+				for _, declension := range declensions.Results {
 					assert.Contains(t, declension.Rule, "neut")
 				}
 			} else {
@@ -421,12 +421,12 @@ func TestSecondDeclensionNeuterNouns(t *testing.T) {
 	})
 
 	t.Run("GenitivusNeuterSing", func(t *testing.T) {
-		words := []string{"μῆλου", "δῶρου" }
+		words := []string{"μῆλου", "δῶρου"}
 		for _, word := range words {
 			declensions, err := handler.StartFindingRules(word)
 			assert.Nil(t, err)
 			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results{
+				for _, declension := range declensions.Results {
 					assert.Contains(t, declension.Rule, "gen")
 				}
 			} else {
@@ -450,7 +450,7 @@ func TestSecondDeclensionNeuterNouns(t *testing.T) {
 			declensions, err := handler.StartFindingRules(word)
 			assert.Nil(t, err)
 			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results{
+				for _, declension := range declensions.Results {
 					assert.Contains(t, declension.Rule, "neut")
 				}
 			} else {
@@ -465,7 +465,7 @@ func TestSecondDeclensionNeuterNouns(t *testing.T) {
 			declensions, err := handler.StartFindingRules(word)
 			assert.Nil(t, err)
 			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results{
+				for _, declension := range declensions.Results {
 					assert.Contains(t, declension.Rule, "neut")
 				}
 			} else {
@@ -475,12 +475,12 @@ func TestSecondDeclensionNeuterNouns(t *testing.T) {
 	})
 
 	t.Run("GenitivusNeuterPlural", func(t *testing.T) {
-		words := []string{"μήλων", "δῶρων" }
+		words := []string{"μήλων", "δῶρων"}
 		for _, word := range words {
 			declensions, err := handler.StartFindingRules(word)
 			assert.Nil(t, err)
 			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results{
+				for _, declension := range declensions.Results {
 					assert.Contains(t, declension.Rule, "gen")
 				}
 			} else {
@@ -504,7 +504,7 @@ func TestSecondDeclensionNeuterNouns(t *testing.T) {
 			declensions, err := handler.StartFindingRules(word)
 			assert.Nil(t, err)
 			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results{
+				for _, declension := range declensions.Results {
 					assert.Contains(t, declension.Rule, "neut")
 				}
 			} else {

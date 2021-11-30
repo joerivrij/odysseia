@@ -2,6 +2,8 @@ package app
 
 import (
 	"github.com/kpango/glg"
+	"github.com/odysseia/plato/configuration"
+	"github.com/odysseia/plato/kubernetes"
 	"github.com/odysseia/plato/models"
 	"net/url"
 	"os"
@@ -10,13 +12,14 @@ import (
 
 const (
 	defaultSolonService = "http://localhost:5000"
-	defaultNamespace = "odysseia"
+	defaultNamespace    = "odysseia"
 )
 
 type PeriandrosConfig struct {
-	Namespace string
-	SolonService url.URL
+	Namespace            string
+	SolonService         url.URL
 	SolonCreationRequest models.SolonCreationRequest
+	Kube                 *kubernetes.Kube
 }
 
 func Get() *PeriandrosConfig {
@@ -42,20 +45,28 @@ func Get() *PeriandrosConfig {
 	splitPodName := strings.Split(podName, "-")
 	username := splitPodName[0]
 
-	glg.Infof("username from podname is: %s", username)
+	glg.Infof("username from pod is: %s", username)
 
 	creationRequest := models.SolonCreationRequest{
-		Role:    role,
-		Access:  access,
-		PodName: podName,
+		Role:     role,
+		Access:   access,
+		PodName:  podName,
 		Username: username,
 	}
 
 	solonUrl, _ := url.Parse(solonService)
 
+	cfgManager, _ := configuration.NewConfig()
+	kube, err := cfgManager.GetKubeClient("", namespace)
+	if err != nil {
+		glg.Error(err)
+		glg.Fatal("death has come, no kube config created")
+	}
+
 	config := &PeriandrosConfig{
-		Namespace: namespace,
-		SolonService: *solonUrl,
+		Kube:                 kube,
+		Namespace:            namespace,
+		SolonService:         *solonUrl,
 		SolonCreationRequest: creationRequest,
 	}
 

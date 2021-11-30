@@ -39,10 +39,7 @@ type CreateSecretRequest struct {
 }
 
 type ElasticConfigVault struct {
-	Username 	string `json:"elasticUsername"`
+	Username    string `json:"elasticUsername"`
 	Password    string `json:"elasticPassword"`
 	ElasticCERT string `json:"elasticCert"`
 }
-
-
-

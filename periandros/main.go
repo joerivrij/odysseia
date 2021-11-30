@@ -4,7 +4,6 @@ import (
 	"context"
 	"github.com/kpango/glg"
 	"github.com/odysseia/periandros/app"
-	"github.com/odysseia/plato/kubernetes"
 	"k8s.io/client-go/tools/leaderelection"
 	"k8s.io/client-go/tools/leaderelection/resourcelock"
 	"os"
@@ -12,8 +11,6 @@ import (
 	"sync"
 	"time"
 )
-
-const testingEnv = "TEST"
 
 func init() {
 	errlog := glg.FileWriter("/tmp/error.log", 0666)
@@ -26,7 +23,7 @@ func init() {
 
 func getLeaderConfig(lock *resourcelock.LeaseLock, id string, config *app.PeriandrosConfig) leaderelection.LeaderElectionConfig {
 	leaderConfig := leaderelection.LeaderElectionConfig{
-		Lock: lock,
+		Lock:            lock,
 		ReleaseOnCancel: true,
 		LeaseDuration:   15 * time.Second,
 		RenewDeadline:   10 * time.Second,
@@ -58,7 +55,6 @@ func getLeaderConfig(lock *resourcelock.LeaseLock, id string, config *app.Perian
 	return leaderConfig
 }
 
-
 func main() {
 	//https://patorjk.com/software/taag/#p=display&f=Crawford2&t=PERIANDROS
 	glg.Info("\n ____   ___  ____   ____   ____  ____   ___    ____   ___   _____\n|    \\ /  _]|    \\ |    | /    ||    \\ |   \\  |    \\ /   \\ / ___/\n|  o  )  [_ |  D  ) |  | |  o  ||  _  ||    \\ |  D  )     (   \\_ \n|   _/    _]|    /  |  | |     ||  |  ||  D  ||    /|  O  |\\__  |\n|  | |   [_ |    \\  |  | |  _  ||  |  ||     ||    \\|     |/  \\ |\n|  | |     ||  .  \\ |  | |  |  ||  |  ||     ||  .  \\     |\\    |\n|__| |_____||__|\\_||____||__|__||__|__||_____||__|\\_|\\___/  \\___|\n                                                                 \n")
@@ -68,13 +64,6 @@ func main() {
 	glg.Info(strings.Repeat("~", 37))
 
 	glg.Debug("creating config")
-
-	env := os.Getenv("ENV")
-	if env == "" {
-		env = testingEnv
-	}
-
-	glg.Infof("env set to: %s", env)
 
 	config := app.Get()
 
@@ -89,8 +78,7 @@ func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
-	kube := kubernetes.CreateEnvBasedKube(env)
-	lock := kube.GetNewLock(leaseLockName, config.SolonCreationRequest.PodName, config.Namespace)
+	lock := config.Kube.GetNewLock(leaseLockName, config.SolonCreationRequest.PodName, config.Namespace)
 
 	leaderConfig := getLeaderConfig(lock, config.SolonCreationRequest.PodName, config)
 	leader, err := leaderelection.NewLeaderElector(leaderConfig)
