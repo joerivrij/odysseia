@@ -43,7 +43,7 @@ func CreateElasticClientFromEnvVariables() (*elasticsearch.Client, error) {
 	return es, nil
 }
 
-func CreateElasticClientFromEnvVariablesWithVaultData(config models.SecretData) (*elasticsearch.Client, error) {
+func CreateElasticClientWithTlS(config models.ElasticConfigVault) (*elasticsearch.Client, error) {
 	elasticService := os.Getenv("ELASTIC_SEARCH_SERVICE")
 	if elasticService == "" {
 		glg.Debugf("setting ELASTIC_SEARCH_SERVICE to default: %s", serviceDefaultTlS)

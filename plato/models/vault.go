@@ -28,17 +28,17 @@ func (r *CreateSecretRequest) Marshal() ([]byte, error) {
 	return json.Marshal(r)
 }
 
-func UnmarshalSecretData(data []byte) (SecretData, error) {
-	var r SecretData
+func UnmarshalSecretData(data []byte) (ElasticConfigVault, error) {
+	var r ElasticConfigVault
 	err := json.Unmarshal(data, &r)
 	return r, err
 }
 
 type CreateSecretRequest struct {
-	Data SecretData `json:"data"`
+	Data ElasticConfigVault `json:"data"`
 }
 
-type SecretData struct {
+type ElasticConfigVault struct {
 	Username 	string `json:"elasticUsername"`
 	Password    string `json:"elasticPassword"`
 	ElasticCERT string `json:"elasticCert"`

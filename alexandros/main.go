@@ -3,8 +3,7 @@ package main
 import (
 	"github.com/kpango/glg"
 	"github.com/odysseia/alexandros/app"
-	"github.com/odysseia/plato/config"
-	"github.com/odysseia/plato/elastic"
+	"github.com/odysseia/plato/configuration"
 	"net/http"
 	"os"
 )
@@ -33,24 +32,19 @@ func main() {
 	glg.Info("starting up.....")
 	glg.Debug("starting up and getting env variables")
 
-	configBuilder, _ := config.NewConfBuilderWithSidecar()
 
-	esConf, err := configBuilder.GetConfigFromSidecar()
+	confManager, err := configuration.NewConfig()
 	if err != nil {
-		glg.Fatalf("error getting config from sidecar, shutting down: %s", err)
+		glg.Error(err)
+		glg.Fatal("unable to fetch configuration")
 	}
-
-	esClient, err := elastic.CreateElasticClientFromEnvVariablesWithVaultData(*esConf)
+	config, err := app.GetFromConfig(confManager)
 	if err != nil {
-		glg.Fatalf("Error creating ElasticClient shutting down: %s", err)
+		glg.Error(err)
+		glg.Fatal("unable to fetch configuration")
 	}
 
-	healthy, conf := app.Get(200, esClient)
-	if !healthy {
-		glg.Fatal("death has found me")
-	}
-
-	srv := app.InitRoutes(*conf)
+	srv := app.InitRoutes(*config)
 
 	glg.Infof("%s : %s", "running on port", port)
 	err = http.ListenAndServe(port, srv)
