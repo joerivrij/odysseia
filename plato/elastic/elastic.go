@@ -6,8 +6,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/elastic/go-elasticsearch/v7"
+	"github.com/elastic/go-elasticsearch/v7/esapi"
 	"github.com/kpango/glg"
 	"github.com/odysseia/plato/models"
+	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -67,18 +69,9 @@ func CheckHealthyStatusElasticSearch(es *elasticsearch.Client, ticks time.Durati
 				glg.Errorf("Error getting response: %s", err)
 				continue
 			}
-			defer res.Body.Close()
-			// Check response status
-			if res.IsError() {
-				glg.Errorf("Error: %s", res.String())
-				continue
-			}
 
-			var r map[string]interface{}
-
-			// Deserialize the response into a map.
-			if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
-				glg.Errorf("Error parsing the response body: %s", err)
+			r, err := parseBody(res)
+			if err != nil {
 				continue
 			}
 
@@ -95,6 +88,30 @@ func CheckHealthyStatusElasticSearch(es *elasticsearch.Client, ticks time.Durati
 	}
 
 	return healthy
+}
+
+func parseBody(res *esapi.Response) (map[string]interface{}, error) {
+	defer func(Body io.ReadCloser) {
+		err := Body.Close()
+		if err != nil {
+			glg.Errorf("error closing elastic response body: %w", err)
+		}
+	}(res.Body)
+	// Check response status
+	if res.IsError() {
+		glg.Errorf("Error: %s", res.String())
+		return nil, fmt.Errorf(res.String())
+	}
+
+	var r map[string]interface{}
+
+	// Deserialize the response into a map.
+	if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
+		glg.Errorf("Error parsing the response body: %s", err)
+		return nil, err
+	}
+
+	return r, nil
 }
 
 // CheckHealth Check if elastic connection is healthy
