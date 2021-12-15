@@ -49,7 +49,7 @@ func CreateSecret() *cobra.Command {
 				filePath = filepath.Join(homeDir, defaultKubeConfig)
 			}
 
-			kubeManager, err := kubernetes.NewKubeClient(filePath)
+			kubeManager, err := kubernetes.NewKubeClient(filePath, namespace)
 			if err != nil {
 				glg.Fatal("error creating kubeclient")
 			}
@@ -68,7 +68,7 @@ func CreateSecret() *cobra.Command {
 	return cmd
 }
 
-func createSecret(secretName, namespace string, secretLength int, kube kubernetes.KubeClient) {
+func createSecret(secretName, namespace string, secretLength int, kube *kubernetes.Kube) {
 	password, err := generator.RandomPassword(secretLength)
 	if err != nil {
 		glg.Error(err)

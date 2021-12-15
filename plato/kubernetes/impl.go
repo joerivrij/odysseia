@@ -2,6 +2,7 @@ package kubernetes
 
 import (
 	"github.com/kpango/glg"
+	"io/ioutil"
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -74,6 +75,20 @@ func New(config []byte, ns string) (*Kube, error) {
 	}
 
 	return &Kube{set: clientSet, config: config, Access: access}, nil
+}
+
+func NewKubeClient(filePath, ns string) (*Kube, error) {
+	cfg, err := ioutil.ReadFile(filePath)
+	if err != nil {
+		glg.Error("error getting kubeconfig")
+	}
+
+	kube, err := New(cfg, ns)
+	if err != nil {
+		glg.Fatal("error creating kubeclient")
+	}
+
+	return kube, err
 }
 
 func NewInClusterKube(ns string) (*Kube, error) {
