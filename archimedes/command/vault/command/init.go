@@ -68,7 +68,7 @@ func initVault(namespace string, kube *kubernetes.Kube) {
 	vaultSelector := "app.kubernetes.io/name=vault"
 	var podName string
 
-	pods, err := kube.GetPodsBySelector(namespace, vaultSelector)
+	pods, err := kube.Workload().GetPodsBySelector(namespace, vaultSelector)
 	if err != nil {
 		glg.Error(err)
 	}
@@ -84,7 +84,7 @@ func initVault(namespace string, kube *kubernetes.Kube) {
 
 	command := []string{"vault", "operator", "init", "-key-shares=1", "-key-threshold=1", "-format=json"}
 
-	vaultInit, err := kube.ExecNamedPod(namespace, podName, command)
+	vaultInit, err := kube.Workload().ExecNamedPod(namespace, podName, command)
 	if err != nil {
 		glg.Error(err)
 		return

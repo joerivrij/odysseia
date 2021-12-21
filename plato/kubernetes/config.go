@@ -4,14 +4,26 @@ import (
 	"context"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/client-go/kubernetes"
+	v1 "k8s.io/client-go/kubernetes/typed/core/v1"
 	"time"
 )
 
-func (k *Kube) GetSecrets(namespace string) (*corev1.SecretList, error) {
+type ConfigurationImpl struct {
+	client v1.CoreV1Interface
+}
+
+func NewConfigurationClient(kube *kubernetes.Clientset) (*ConfigurationImpl, error) {
+	coreClient := kube.CoreV1()
+
+	return &ConfigurationImpl{client: coreClient}, nil
+}
+
+func (c *ConfigurationImpl) GetSecrets(namespace string) (*corev1.SecretList, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
 	defer cancel()
 
-	secrets, err := k.GetK8sClientSet().CoreV1().Secrets(namespace).List(ctx, metav1.ListOptions{
+	secrets, err := c.client.Secrets(namespace).List(ctx, metav1.ListOptions{
 		TypeMeta: metav1.TypeMeta{
 			Kind:       "",
 			APIVersion: "",
@@ -32,7 +44,7 @@ func (k *Kube) GetSecrets(namespace string) (*corev1.SecretList, error) {
 	return secrets, nil
 }
 
-func (k *Kube) CreateSecret(namespace, secretName string, data map[string][]byte) error {
+func (c *ConfigurationImpl) CreateSecret(namespace, secretName string, data map[string][]byte) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
 	defer cancel()
 
@@ -50,7 +62,7 @@ func (k *Kube) CreateSecret(namespace, secretName string, data map[string][]byte
 		Type:       corev1.SecretTypeOpaque,
 	}
 
-	_, err := k.GetK8sClientSet().CoreV1().Secrets(namespace).Create(ctx, &secret, metav1.CreateOptions{})
+	_, err := c.client.Secrets(namespace).Create(ctx, &secret, metav1.CreateOptions{})
 	if err != nil {
 		return err
 	}

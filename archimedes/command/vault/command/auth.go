@@ -85,7 +85,7 @@ func enableKubernetesAsAuth(namespace, policyName string, kube *kubernetes.Kube)
 	var podName string
 	var serviceAccountName string
 
-	sets, err := kube.GetStatefulSets(namespace)
+	sets, err := kube.Workload().GetStatefulSets(namespace)
 	if err != nil {
 		glg.Error(err)
 	}
@@ -101,7 +101,7 @@ func enableKubernetesAsAuth(namespace, policyName string, kube *kubernetes.Kube)
 		}
 	}
 
-	pods, err := kube.GetPodsBySelector(namespace, vaultSelector)
+	pods, err := kube.Workload().GetPodsBySelector(namespace, vaultSelector)
 	if err != nil {
 		glg.Error(err)
 	}
@@ -117,11 +117,11 @@ func enableKubernetesAsAuth(namespace, policyName string, kube *kubernetes.Kube)
 
 	glg.Debugf("found vault pod running as %s", podName)
 
-	kubeHost, _ := kube.GetHostServer()
+	kubeHost, _ := kube.Cluster().GetHostServer()
 
 	glg.Debugf("kubehost found: %s", kubeHost)
 
-	secrets, err := kube.GetSecrets(namespace)
+	secrets, err := kube.Configuration().GetSecrets(namespace)
 	if err != nil {
 		glg.Error(err)
 	}
@@ -139,7 +139,7 @@ func enableKubernetesAsAuth(namespace, policyName string, kube *kubernetes.Kube)
 	glg.Debugf("found token in cluster: %s", jwtToken)
 
 	filePath := "/tmp/ca-cert-vault-archimedes"
-	ca, err := kube.GetHostCaCert()
+	ca, err := kube.Cluster().GetHostCaCert()
 	if err != nil {
 		glg.Error(err)
 	}
@@ -148,7 +148,7 @@ func enableKubernetesAsAuth(namespace, policyName string, kube *kubernetes.Kube)
 
 	util.WriteFile(ca, filePath)
 
-	writeResult, err := kube.Copier.CopyFileToPod(podName, filePath, filePath)
+	writeResult, err := kube.Util().CopyFileToPod(podName, filePath, filePath)
 	if err != nil {
 		glg.Error(err)
 	}
@@ -167,7 +167,7 @@ func enableKubernetesAsAuth(namespace, policyName string, kube *kubernetes.Kube)
 
 	loginCommand := []string{"vault", "login", rootToken}
 
-	login, err := kube.ExecNamedPod(namespace, podName, loginCommand)
+	login, err := kube.Workload().ExecNamedPod(namespace, podName, loginCommand)
 	if err != nil {
 		glg.Error(err)
 	}
@@ -177,7 +177,7 @@ func enableKubernetesAsAuth(namespace, policyName string, kube *kubernetes.Kube)
 	glg.Info("step 1: enable kubernetes as auth method")
 	command := []string{"vault", "auth", "enable", "kubernetes"}
 
-	enableAuth, err := kube.ExecNamedPod(namespace, podName, command)
+	enableAuth, err := kube.Workload().ExecNamedPod(namespace, podName, command)
 	if err != nil {
 		glg.Error(err)
 	}
@@ -193,7 +193,7 @@ func enableKubernetesAsAuth(namespace, policyName string, kube *kubernetes.Kube)
 
 	addConfigCommand := []string{"vault", "write", "auth/kubernetes/config", reviewer, configHost, caCert}
 
-	configAdded, err := kube.ExecNamedPod(namespace, podName, addConfigCommand)
+	configAdded, err := kube.Workload().ExecNamedPod(namespace, podName, addConfigCommand)
 	if err != nil {
 		glg.Error(err)
 	}
@@ -211,7 +211,7 @@ func enableKubernetesAsAuth(namespace, policyName string, kube *kubernetes.Kube)
 
 	roleCommand := []string{"vault", "write", "auth/kubernetes/role/solon", boundServiceName, boundNamespace, policies}
 
-	roleOutput, err := kube.ExecNamedPod(namespace, podName, roleCommand)
+	roleOutput, err := kube.Workload().ExecNamedPod(namespace, podName, roleCommand)
 	if err != nil {
 		glg.Error(err)
 	}

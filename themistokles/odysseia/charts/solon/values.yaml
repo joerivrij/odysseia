@@ -4,6 +4,7 @@
 
 config:
   environment: minikube
+  tls: true
   pullPolicy: Never
   replicas:
     low: 1
@@ -26,11 +27,15 @@ services:
     limits:
       memory: "128Mi"
       cpu: "250m"
+  drakon:
+    name: "drakon"
 
 images:
   tag: 8152f2b
   solon:
     repo: solon
+  drakon:
+    repo: drakon
 
 envVariables:
   solon:
@@ -42,11 +47,11 @@ envVariables:
         value: kubernetes
       - name: VAULT_ROLE
         value: solon
-      - name: VAULT_JWT
-        valueFrom:
-          secretKeyRef:
-            name: vault-token-w6b4p
-            key: token
+#      - name: VAULT_JWT
+#        valueFrom:
+#          secretKeyRef:
+#            name: vault-token-w6b4p
+#            key: token
       - name: ELASTIC_SEARCH_PASSWORD
         valueFrom:
           secretKeyRef:

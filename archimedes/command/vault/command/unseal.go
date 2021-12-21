@@ -42,7 +42,7 @@ func Unseal() *cobra.Command {
 				filePath = filepath.Join(homeDir, defaultKubeConfig)
 			}
 
-			kubeManager, err := kubernetes.NewKubeClient(filePath)
+			kubeManager, err := kubernetes.NewKubeClient(filePath, namespace)
 			if err != nil {
 				glg.Fatal("error creating kubeclient")
 			}
@@ -60,7 +60,7 @@ func Unseal() *cobra.Command {
 	return cmd
 }
 
-func unsealVault(key, namespace string, kube kubernetes.Client) {
+func unsealVault(key, namespace string, kube *kubernetes.Kube) {
 	if key == "" {
 		glg.Info("key was not given, trying to get key from cluster-keys.json")
 		clusterKeys := vault.GetClusterKeys(namespace)
@@ -71,7 +71,7 @@ func unsealVault(key, namespace string, kube kubernetes.Client) {
 	vaultSelector := "app.kubernetes.io/name=vault"
 	var podName string
 
-	pods, err := kube.GetPodsBySelector(namespace, vaultSelector)
+	pods, err := kube.Workload().GetPodsBySelector(namespace, vaultSelector)
 	if err != nil {
 		glg.Error(err)
 	}
@@ -87,7 +87,7 @@ func unsealVault(key, namespace string, kube kubernetes.Client) {
 
 	command := []string{"vault", "operator", "unseal", key}
 
-	vaultUnsealed, err := kube.ExecNamedPod(namespace, podName, command)
+	vaultUnsealed, err := kube.Workload().ExecNamedPod(namespace, podName, command)
 	if err != nil {
 		glg.Error(err)
 	}

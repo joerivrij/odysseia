@@ -1,17 +1,14 @@
 package app
 
 import (
-	"fmt"
 	"github.com/elastic/go-elasticsearch/v7"
 	"github.com/kpango/glg"
 	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/kubernetes"
-	"github.com/odysseia/plato/models"
 	"github.com/odysseia/plato/vault"
 	"io/ioutil"
 	"os"
 	"path/filepath"
-	"strings"
 	"time"
 )
 
@@ -146,58 +143,4 @@ func Get(ticks time.Duration, es *elasticsearch.Client, cert []byte, env string)
 	}
 
 	return healthy, config
-}
-
-func InitRoot(config SolonConfig) bool {
-	glg.Debug("creating secrets at startup and validating functioning of vault connection")
-
-	unparsedIndexes := os.Getenv("ELASTIC_INDEXES")
-	unparsedRoles := os.Getenv("ELASTIC_ROLES")
-	roles := strings.Split(unparsedRoles, ";")
-	indexes := strings.Split(unparsedIndexes, ";")
-
-	var created bool
-	for _, index := range indexes {
-		for _, role := range roles {
-			glg.Debugf("creating a role for index %s with role %s", index, role)
-
-			var privileges []string
-			if role == "seeder" {
-				privileges = append(privileges, "delete")
-				privileges = append(privileges, "create")
-			} else {
-				privileges = append(privileges, "read")
-			}
-
-			names := []string{index}
-
-			indices := []models.Index{
-				{
-					Names:      names,
-					Privileges: privileges,
-					Query:      "",
-				},
-			}
-
-			application := []models.Application{}
-
-			putRole := models.CreateRoleRequest{
-				Cluster:      []string{"all"},
-				Indices:      indices,
-				Applications: application,
-				RunAs:        nil,
-				Metadata:     models.Metadata{Version: 1},
-			}
-
-			roleName := fmt.Sprintf("%s_%s", index, role)
-			roleCreated, err := elastic.CreateRole(&config.ElasticClient, roleName, putRole)
-			if err != nil {
-				glg.Error(err)
-			}
-
-			created = roleCreated
-		}
-	}
-
-	return created
 }

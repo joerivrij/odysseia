@@ -93,3 +93,12 @@ Allow the release namespace to be overridden for multi-namespace deployments in 
     {{- .Release.Namespace -}}
   {{- end -}}
 {{- end -}}
+
+
+{{- define "drakon.uname" -}}
+{{- if empty .Values.services.drakon.name -}}
+{{ .Values.images.drakon }}
+{{- else -}}
+{{ .Values.services.drakon.name }}
+{{- end -}}
+{{- end -}}

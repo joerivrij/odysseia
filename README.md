@@ -24,6 +24,7 @@ The goal is for people to learn or rehearse ancient Greek. Some of it is in Dutc
 - [Frontend](#frontend)
   - [Pheidias - Φειδίας](#pheidias---φειδίας)
 - [Init](#init)
+  - [Drakon - Δράκων](#drakon---δράκων)
   - [Periandros - Περίανδρος](#periandros---περίανδρος)
 - [Ops](#ops)
   - [Archimedes - Ἀρχιμήδης](#archimedes---ἀρχιμήδης)
@@ -141,6 +142,15 @@ Ploutarchos (or Plutarch) is most well known for his Parallel Lives, a series of
 Pheidias (or Phidias) is one of the great artists of the Greek world, most famous for his work on the Athenian Akropolis. An apt choice for the frontend of the app.
 
 ## Init
+
+### Drakon - Δράκων
+
+ἐν τοίνυν τοῖς περὶ τούτων νόμοις ὁ Δράκων φοβερὸν κατασκευάζων καὶ δεινὸν τό τινʼ αὐτόχειρʼ ἄλλον ἄλλου γίγνεσθαι - Now Draco, in this group of laws, marked the terrible wickedness of homicide by banning the offender from the lustral water
+
+<img src="https://www.greekboston.com/wp-content/uploads/2014/12/draco-720x484.jpg" alt="Drakon" width="200"/>
+
+Drakon is one of the ancient lawgivers in Athens.
+
 
 ### Periandros - Περίανδρος
 

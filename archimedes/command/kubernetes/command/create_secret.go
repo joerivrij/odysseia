@@ -9,10 +9,6 @@ import (
 	"path/filepath"
 )
 
-const defaultKubeConfig = "/.kube/config"
-const defaultNamespace = "odysseia"
-const defaultSecretName = "elastic-root-secret"
-
 func CreateSecret() *cobra.Command {
 	var (
 		secretName   string
@@ -56,6 +52,7 @@ func CreateSecret() *cobra.Command {
 
 			glg.Info("is it secret? Is it safe? Well no longer!")
 			glg.Debug("creating a kube secret")
+
 			createSecret(secretName, namespace, secretLength, kubeManager)
 		},
 	}
@@ -81,7 +78,7 @@ func createSecret(secretName, namespace string, secretLength int, kube *kubernet
 	data["password"] = []byte(password)
 	data["username"] = []byte("elastic")
 
-	err = kube.CreateSecret(namespace, secretName, data)
+	err = kube.Configuration().CreateSecret(namespace, secretName, data)
 	if err != nil {
 		glg.Error(err)
 		return

@@ -28,6 +28,30 @@ spec:
         elastic/roles: "api;seeder"
     spec:
       serviceAccountName: {{ template "solon.serviceAccountName" . }}
+      initContainers:
+        - image: {{ .Values.images.drakon.repo }}:{{ .Values.images.tag }}
+          name: "{{ template "drakon.uname" . }}"
+          env:
+            - name: ENV
+              value: {{ .Values.config.environment }}
+            - name: TLSENABLED
+              value: {{ .Values.config.tls }}
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: ELASTIC_INDEXES
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.annotations['elastic/indices']
+            - name: ELASTIC_ROLES
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.annotations['elastic/roles']
       containers:
         - image: {{ .Values.images.solon.repo }}:{{ .Values.images.tag }}
           name: "{{ template "solon.uname" . }}"
@@ -39,14 +63,6 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
-          - name: ELASTIC_INDEXES
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.annotations['elastic/indices']
-          - name: ELASTIC_ROLES
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.annotations['elastic/roles']
 {{- if .Values.envVariables.solon.extraEnvs }}
 {{ toYaml .Values.envVariables.solon.extraEnvs | indent 10 }}
 {{- end }}

@@ -96,7 +96,7 @@ func (s *SolonHandler) RegisterService(w http.ResponseWriter, req *http.Request)
 
 	glg.Debug("checking pod for correct label")
 	//check if pod has the correct labels
-	pod, err := s.Config.Kube.GetPodByName(s.Config.Namespace, creationRequest.PodName)
+	pod, err := s.Config.Kube.Workload().GetPodByName(s.Config.Namespace, creationRequest.PodName)
 	var validAccess bool
 	var validRole bool
 	for key, value := range pod.Annotations {

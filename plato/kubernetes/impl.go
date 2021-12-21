@@ -13,11 +13,11 @@ import (
 )
 
 type KubeClient interface {
-	Access
-	Configuration
-	Cluster
-	Copier
-	Workload
+	Access() Access
+	Configuration() Configuration
+	Cluster() Cluster
+	Util() Util
+	Workload() Workload
 }
 
 type Access interface {
@@ -34,7 +34,7 @@ type Cluster interface {
 	GetHostCaCert() ([]byte, error)
 }
 
-type Copier interface {
+type Util interface {
 	CopyFileToPod(podName, destPath, srcPath string) (string, error)
 }
 
@@ -47,10 +47,13 @@ type Workload interface {
 }
 
 type Kube struct {
-	set    *kubernetes.Clientset
-	Access Access
-	Copier Copier
-	config []byte
+	set           *kubernetes.Clientset
+	access        *AccessImpl
+	util          *UtilImpl
+	cluster       *ClusterImpl
+	configuration *ConfigurationImpl
+	workload      *WorkloadImpl
+	config        []byte
 }
 
 func New(config []byte, ns string) (*Kube, error) {
@@ -74,7 +77,35 @@ func New(config []byte, ns string) (*Kube, error) {
 		return nil, err
 	}
 
-	return &Kube{set: clientSet, config: config, Access: access}, nil
+	cluster, err := NewClusterClient(config)
+	if err != nil {
+		return nil, err
+	}
+
+	configuration, err := NewConfigurationClient(clientSet)
+	if err != nil {
+		return nil, err
+	}
+
+	workload, err := NewWorkloadClient(clientSet)
+	if err != nil {
+		return nil, err
+	}
+
+	util, err := NewUtilClient(clientSet, ns)
+	if err != nil {
+		return nil, err
+	}
+
+	return &Kube{
+		set:           clientSet,
+		config:        config,
+		access:        access,
+		cluster:       cluster,
+		configuration: configuration,
+		workload:      workload,
+		util:          util,
+	}, nil
 }
 
 func NewKubeClient(filePath, ns string) (*Kube, error) {
@@ -105,12 +136,69 @@ func NewInClusterKube(ns string) (*Kube, error) {
 		return nil, err
 	}
 
-	copier, err := NewCopierClient(clientSet, ns)
+	util, err := NewUtilClient(clientSet, ns)
 	if err != nil {
 		return nil, err
 	}
 
-	return &Kube{set: clientSet, config: config.CAData, Access: access, Copier: copier}, nil
+	configuration, err := NewConfigurationClient(clientSet)
+	if err != nil {
+		return nil, err
+	}
+
+	workload, err := NewWorkloadClient(clientSet)
+	if err != nil {
+		return nil, err
+	}
+
+	return &Kube{
+		set:           clientSet,
+		config:        config.CAData,
+		access:        access,
+		util:          util,
+		cluster:       nil,
+		configuration: configuration,
+		workload:      workload,
+	}, nil
+}
+
+func (k *Kube) Access() Access {
+	if k == nil {
+		return nil
+	}
+	return k.access
+}
+
+func (k *Kube) Util() Util {
+	if k == nil {
+		return nil
+	}
+
+	return k.util
+}
+
+func (k *Kube) Cluster() Cluster {
+	if k == nil {
+		return nil
+	}
+
+	return k.cluster
+}
+
+func (k *Kube) Configuration() Configuration {
+	if k == nil {
+		return nil
+	}
+
+	return k.configuration
+}
+
+func (k *Kube) Workload() Workload {
+	if k == nil {
+		return nil
+	}
+
+	return k.workload
 }
 
 func (k *Kube) GetK8sClientSet() *kubernetes.Clientset {

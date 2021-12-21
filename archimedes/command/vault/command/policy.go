@@ -104,7 +104,7 @@ func createPolicy(policyName, namespace string, kube *kubernetes.Kube) {
 		var vaultSelector string
 		var podName string
 
-		sets, err := kube.GetStatefulSets(namespace)
+		sets, err := kube.Workload().GetStatefulSets(namespace)
 		if err != nil {
 			glg.Error(err)
 		}
@@ -119,7 +119,7 @@ func createPolicy(policyName, namespace string, kube *kubernetes.Kube) {
 			}
 		}
 
-		pods, err := kube.GetPodsBySelector(namespace, vaultSelector)
+		pods, err := kube.Workload().GetPodsBySelector(namespace, vaultSelector)
 		if err != nil {
 			glg.Error(err)
 		}
@@ -138,7 +138,7 @@ func createPolicy(policyName, namespace string, kube *kubernetes.Kube) {
 		srcPath := fmt.Sprintf("/tmp/%s.hcl", policyName)
 		util.WriteFile(policyToCreate, srcPath)
 
-		copy, err := kube.Copier.CopyFileToPod(podName, srcPath, srcPath)
+		copy, err := kube.Util().CopyFileToPod(podName, srcPath, srcPath)
 		if err != nil {
 			glg.Error(err)
 		}
@@ -149,7 +149,7 @@ func createPolicy(policyName, namespace string, kube *kubernetes.Kube) {
 
 		command := []string{"vault", "policy", "write", policyName, srcPath}
 
-		vaultCreatePolicy, err := kube.ExecNamedPod(namespace, podName, command)
+		vaultCreatePolicy, err := kube.Workload().ExecNamedPod(namespace, podName, command)
 		if err != nil {
 			glg.Error(err)
 		}

@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"github.com/elastic/go-elasticsearch/v7/esapi"
 	"github.com/kpango/glg"
-	"github.com/odysseia/plato/config"
+	config "github.com/odysseia/plato/configuration"
 	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/models"
 	"io/ioutil"

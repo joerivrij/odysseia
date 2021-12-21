@@ -66,8 +66,6 @@ func main() {
 		glg.Fatal("death has found me")
 	}
 
-	created := app.InitRoot(*config)
-	glg.Info(created)
 	srv := app.InitRoutes(*config)
 
 	glg.Infof("%s : %s", "running on port", port)

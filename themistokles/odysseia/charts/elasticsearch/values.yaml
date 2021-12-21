@@ -109,7 +109,9 @@ networkHost: "0.0.0.0"
 # Request smaller persistent volumes.
 volumeClaimTemplate:
   accessModes: [ "ReadWriteOnce" ]
-  storageClassName: "standard"
+  # storageClassName: "standard"
+  # macos
+  storageClassName: "hostpath"
   resources:
     requests:
       storage: 100M

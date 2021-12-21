@@ -5,10 +5,17 @@ import (
 	"io/ioutil"
 )
 
-func (k *Kube) GetHostServer() (string, error) {
+type ClusterImpl struct {
+	kubeConfig []byte
+}
+
+func NewClusterClient(config []byte) (*ClusterImpl, error) {
+	return &ClusterImpl{kubeConfig: config}, nil
+}
+
+func (c *ClusterImpl) GetHostServer() (string, error) {
 	var server string
-	kubeConfig := k.GetConfig()
-	config, err := models.UnmarshalKubeConfig(kubeConfig)
+	config, err := models.UnmarshalKubeConfig(c.kubeConfig)
 	if err != nil {
 		return "", err
 	}
@@ -24,9 +31,8 @@ func (k *Kube) GetHostServer() (string, error) {
 	return server, nil
 }
 
-func (k *Kube) GetHostCaCert() ([]byte, error) {
-	kubeConfig := k.GetConfig()
-	config, err := models.UnmarshalKubeConfig(kubeConfig)
+func (c *ClusterImpl) GetHostCaCert() ([]byte, error) {
+	config, err := models.UnmarshalKubeConfig(c.kubeConfig)
 	if err != nil {
 		return nil, err
 	}

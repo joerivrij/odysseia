@@ -14,6 +14,7 @@ func Manager() *cobra.Command {
 
 	cmd.AddCommand(
 		command.CreateSecret(),
+		command.CreateElasticCerts(),
 	)
 
 	return cmd

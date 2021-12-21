@@ -148,6 +148,7 @@ func (c *ConfigImpl) GetKubeClient(kubePath, namespace string) (*kubernetes.Kube
 		if err != nil {
 			glg.Fatal("error creating kubeclient")
 		}
+
 		kubeManager = *kube
 	} else {
 		glg.Debug("creating in cluster kube client")

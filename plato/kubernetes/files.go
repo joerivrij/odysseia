@@ -18,18 +18,18 @@ import (
 	"strings"
 )
 
-type CopierImpl struct {
+type UtilImpl struct {
 	rest rest.Interface
 	ns   string
 }
 
-func NewCopierClient(kube *kubernetes.Clientset, namespace string) (*CopierImpl, error) {
+func NewUtilClient(kube *kubernetes.Clientset, namespace string) (*UtilImpl, error) {
 	set := kube.CoreV1().RESTClient()
 
-	return &CopierImpl{rest: set, ns: namespace}, nil
+	return &UtilImpl{rest: set, ns: namespace}, nil
 }
 
-func (c *CopierImpl) CopyFileToPod(podName, destPath, srcPath string) (string, error) {
+func (c *UtilImpl) CopyFileToPod(podName, destPath, srcPath string) (string, error) {
 	kubeCfg := clientcmd.NewNonInteractiveDeferredLoadingClientConfig(
 		clientcmd.NewDefaultClientConfigLoadingRules(),
 		&clientcmd.ConfigOverrides{},
