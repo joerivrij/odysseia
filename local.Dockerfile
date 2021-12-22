@@ -15,4 +15,4 @@ ENV TMPDIR=/tmp
 ENV GOMAXPROCS=8
 
 EXPOSE 5000
-ENTRYPOINT ["/app/${project_name}"]
+ENTRYPOINT [ "sh", "-c", "/app/${project_name}" ]
