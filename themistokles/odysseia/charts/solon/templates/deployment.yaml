@@ -31,27 +31,31 @@ spec:
       initContainers:
         - image: {{ .Values.images.drakon.repo }}:{{ .Values.images.tag }}
           name: "{{ template "drakon.uname" . }}"
+          imagePullPolicy: {{ .Values.config.pullPolicy }}
           env:
-            - name: ENV
-              value: {{ .Values.config.environment }}
-            - name: TLSENABLED
-              value: {{ .Values.config.tls }}
-            - name: POD_NAME
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.name
-            - name: NAMESPACE
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.namespace
-            - name: ELASTIC_INDEXES
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.annotations['elastic/indices']
-            - name: ELASTIC_ROLES
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.annotations['elastic/roles']
+          - name: ENV
+            value: {{ .Values.config.environment }}
+          - name: TLSENABLED
+            value: {{ .Values.config.tls | quote }}
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: ELASTIC_INDEXES
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.annotations['elastic/indices']
+          - name: ELASTIC_ROLES
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.annotations['elastic/roles']
+{{- if .Values.envVariables.drakon.extraEnvs }}
+{{ toYaml .Values.envVariables.drakon.extraEnvs | indent 10 }}
+{{- end }}
       containers:
         - image: {{ .Values.images.solon.repo }}:{{ .Values.images.tag }}
           name: "{{ template "solon.uname" . }}"
@@ -59,6 +63,8 @@ spec:
           env:
           - name: ENV
             value: {{ .Values.config.environment }}
+          - name: TLSENABLED
+            value: {{ .Values.config.tls | quote }}
           - name: NAMESPACE
             valueFrom:
               fieldRef:

@@ -4,7 +4,9 @@ import (
 	"github.com/elastic/go-elasticsearch/v7"
 	"github.com/kpango/glg"
 	"github.com/odysseia/plato/configuration"
+	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/kubernetes"
+	"io/ioutil"
 	"os"
 	"strings"
 )
@@ -58,10 +60,25 @@ func Get() *DrakonConfig {
 		env = "TEST"
 	}
 
-	esClient, err := cfgManager.GetElasticClient()
-	if err != nil {
-		glg.Error(err)
-		glg.Fatal("death has come, no ES created")
+	var cert []byte
+	var esClient *elasticsearch.Client
+	if env != "TEST" {
+		glg.Info("trying to read cert file from pod")
+		cert, _ = ioutil.ReadFile("/app/config/certs/elastic-certificate.pem")
+		es, err := elastic.CreateElasticClientFromEnvVariablesWithTLS(cert)
+		if err != nil {
+			glg.Fatalf("Error creating ElasticClient shutting down: %s", err)
+		}
+
+		esClient = es
+	} else {
+		cert, _ = ioutil.ReadFile("/home/joerivrij/go/src/github.com/odysseia/solon/vault_config/elastic-certificate.pem")
+		es, err := elastic.CreateElasticClientFromEnvVariablesWithTLS(cert)
+		if err != nil {
+			glg.Fatalf("Error creating ElasticClient shutting down: %s", err)
+		}
+
+		esClient = es
 	}
 
 	config := &DrakonConfig{

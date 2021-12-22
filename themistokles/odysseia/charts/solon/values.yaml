@@ -31,7 +31,7 @@ services:
     name: "drakon"
 
 images:
-  tag: 8152f2b
+  tag: a4b66b8
   solon:
     repo: solon
   drakon:
@@ -47,20 +47,22 @@ envVariables:
         value: kubernetes
       - name: VAULT_ROLE
         value: solon
-#      - name: VAULT_JWT
-#        valueFrom:
-#          secretKeyRef:
-#            name: vault-token-w6b4p
-#            key: token
+      - name: VAULT_JWT
+        valueFrom:
+          secretKeyRef:
+            name: vault-token-5cpfs
+            key: token
+  drakon:
+    extraEnvs:
+      - name: ELASTIC_SEARCH_SERVICE
+        value: https://elastic-master:9200
+      - name: ELASTIC_SEARCH_USER
+        value: elastic
       - name: ELASTIC_SEARCH_PASSWORD
         valueFrom:
           secretKeyRef:
             name: elastic-root-secret
             key: password
-      - name: ELASTIC_SEARCH_SERVICE
-        value: https://elastic-master:9200
-      - name: ELASTIC_SEARCH_USER
-        value: elastic
 
 esConfig:
   elasticService: https://elastic-master:9200

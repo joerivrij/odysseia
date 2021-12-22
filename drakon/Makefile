@@ -2,17 +2,19 @@ git_short_hash=`git rev-parse --short HEAD`
 current_dir=`pwd`
 project_name := $(shell basename ${current_dir})
 base_name='odysseia'
+UNAME := `uname -s`
+BUILD_SYSTEM := $(shell echo $(UNAME) | tr A-Z a-z)
 
 setup:
 	if [ -e ./dist ]; then rm -rf ./dist; fi
 
 dist:
 	mkdir -p ./dist
-	mkdir -p ./dist/linux/bin
+	mkdir -p ./dist/bin
 
 build: test setup dist
 	go fmt ./...
-	cd ..; GO111MODULE=on GOOS=linux CGO_ENABLED=0 go build $(project_name)/main.go;mv main ./$(project_name)/dist/linux/bin/$(project_name)
+	cd ..; GO111MODULE=on GOOS=$(BUILD_SYSTEM) CGO_ENABLED=0 go build $(project_name)/main.go;mv main ./$(project_name)/dist/bin/$(project_name)
 
 test:
 	go test ./... -cover
@@ -21,9 +23,21 @@ test-with-coverage:
 	go test ./... -coverprofile=coverage.out
 	go tool cover -html=coverage.out
 
+copy-dockerfile:
+	cp ../api.Dockerfile .
+
+copy-local-dockerfile:
+	cp ../local.Dockerfile .
+
 create-base-image:
 	cd ..; make create-image
 
-create-image: test create-base-image
+create-image: test create-base-image copy-dockerfile
 	echo "docker build ${project_name}:$(git_short_hash)"
-	cd ..; docker build --build-arg project_name=$(project_name) --build-arg git_hash=$(git_short_hash) -f $(project_name)/Dockerfile -t $(project_name):$(git_short_hash) . --no-cache
+	cd ..; docker build --build-arg project_name=$(project_name) --build-arg git_hash=$(git_short_hash) -f $(project_name)/api.Dockerfile -t $(project_name):$(git_short_hash) . --no-cache
+
+create-local-image: build copy-local-dockerfile
+	echo "docker build ${project_name}"
+	cp -r dist/bin/$(project_name) .
+	docker build --build-arg project_name=$(project_name) -f local.Dockerfile -t $(project_name):$(git_short_hash) . --no-cache
+	rm $(project_name)

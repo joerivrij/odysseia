@@ -48,6 +48,7 @@ func Get(ticks time.Duration, es *elasticsearch.Client, cert []byte, env string)
 	vaultRootToken := os.Getenv("VAULT_ROOT_TOKEN")
 	vaultAuthMethod := os.Getenv("AUTH_METHOD")
 	vaultService := os.Getenv("VAULT_SERVICE")
+	//test with jwt from own serviceaccount
 	vaultJwtToken := os.Getenv("VAULT_JWT")
 
 	if vaultService == "" {
