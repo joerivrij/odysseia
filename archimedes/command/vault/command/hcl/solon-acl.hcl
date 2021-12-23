@@ -14,3 +14,8 @@ path "secret/configs/*"
 {
   capabilities = ["create", "read", "update", "delete", "list", "sudo"]
 }
+
+# List, create, update, and delete key/value secrets for configs
+path "configs/*" {
+  capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+}

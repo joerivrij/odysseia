@@ -36,6 +36,6 @@ func GetFromConfig(configManager configuration.Config) (*AlexandrosConfig, error
 
 	return &AlexandrosConfig{
 		ElasticClient: *es,
-		Index:         "",
+		Index:         "dictionary",
 	}, nil
 }

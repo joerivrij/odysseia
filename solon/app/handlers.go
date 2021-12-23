@@ -154,14 +154,14 @@ func (s *SolonHandler) RegisterService(w http.ResponseWriter, req *http.Request)
 	}
 
 	var response models.SolonResponse
-	userCreated, err := elastic.CreateUser(&s.Config.ElasticClient, creationRequest.PodName, putUser)
+	userCreated, err := elastic.CreateUser(&s.Config.ElasticClient, creationRequest.Username, putUser)
 	if err != nil {
 		glg.Error(err)
 	}
 
 	createRequest := models.CreateSecretRequest{
 		Data: models.ElasticConfigVault{
-			Username:    creationRequest.PodName,
+			Username:    creationRequest.Username,
 			Password:    password,
 			ElasticCERT: string(s.Config.ElasticCert),
 		},
