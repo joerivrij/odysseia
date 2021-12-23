@@ -31,7 +31,7 @@ services:
     name: "drakon"
 
 images:
-  tag: 76d7eae
+  tag: a94adc7
   solon:
     repo: solon
   drakon:

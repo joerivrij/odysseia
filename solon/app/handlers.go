@@ -169,7 +169,22 @@ func (s *SolonHandler) RegisterService(w http.ResponseWriter, req *http.Request)
 
 	payload, _ := createRequest.Marshal()
 
-	secretCreated, _ := s.Config.Vault.CreateNewSecret(creationRequest.PodName, payload)
+	secretCreated, err := s.Config.Vault.CreateNewSecret(creationRequest.PodName, payload)
+	if err != nil {
+		glg.Error(err)
+		e := models.ValidationError{
+			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
+			Messages: []models.ValidationMessages{
+				{
+					Field:   "createSecret",
+					Message: err.Error(),
+				},
+			},
+		}
+		middleware.ResponseWithJson(w, e)
+		return
+	}
+
 	glg.Debugf("secret created in vault %t", secretCreated)
 
 	response.Created = userCreated
