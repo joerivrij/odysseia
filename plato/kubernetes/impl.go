@@ -18,6 +18,7 @@ type KubeClient interface {
 	Cluster() Cluster
 	Util() Util
 	Workload() Workload
+	Nodes() Nodes
 }
 
 type Access interface {
@@ -46,6 +47,10 @@ type Workload interface {
 	GetDeploymentStatus(namespace string) (bool, error)
 }
 
+type Nodes interface {
+	List() (*corev1.NodeList, error)
+}
+
 type Kube struct {
 	set           *kubernetes.Clientset
 	access        *AccessImpl
@@ -53,6 +58,7 @@ type Kube struct {
 	cluster       *ClusterImpl
 	configuration *ConfigurationImpl
 	workload      *WorkloadImpl
+	nodes         *NodesImpl
 	config        []byte
 }
 
@@ -97,6 +103,11 @@ func New(config []byte, ns string) (*Kube, error) {
 		return nil, err
 	}
 
+	nodes, err := NewNodesClient(clientSet)
+	if err != nil {
+		return nil, err
+	}
+
 	return &Kube{
 		set:           clientSet,
 		config:        config,
@@ -105,6 +116,7 @@ func New(config []byte, ns string) (*Kube, error) {
 		configuration: configuration,
 		workload:      workload,
 		util:          util,
+		nodes:         nodes,
 	}, nil
 }
 
@@ -199,6 +211,14 @@ func (k *Kube) Workload() Workload {
 	}
 
 	return k.workload
+}
+
+func (k *Kube) Nodes() Nodes {
+	if k == nil {
+		return nil
+	}
+
+	return k.nodes
 }
 
 func (k *Kube) GetK8sClientSet() *kubernetes.Clientset {

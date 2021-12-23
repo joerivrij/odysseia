@@ -56,6 +56,14 @@ spec:
 {{- if .Values.envVariables.drakon.extraEnvs }}
 {{ toYaml .Values.envVariables.drakon.extraEnvs | indent 10 }}
 {{- end }}
+          volumeMounts:
+            {{- range .Values.secretMounts }}
+            - name: {{ .name }}
+              mountPath: {{ .path }}
+              {{- if .subPath }}
+              subPath: {{ .subPath }}
+            {{- end }}
+          {{- end }}
       containers:
         - image: {{ .Values.images.solon.repo }}:{{ .Values.images.tag }}
           name: "{{ template "solon.uname" . }}"

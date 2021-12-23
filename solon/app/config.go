@@ -49,7 +49,12 @@ func Get(ticks time.Duration, es *elasticsearch.Client, cert []byte, env string)
 	vaultAuthMethod := os.Getenv("AUTH_METHOD")
 	vaultService := os.Getenv("VAULT_SERVICE")
 	//test with jwt from own serviceaccount
-	vaultJwtToken := os.Getenv("VAULT_JWT")
+	filePath := "/var/run/secrets/kubernetes.io/serviceaccount/token"
+	jwtToken, err := os.ReadFile(filePath)
+	if err != nil {
+		glg.Fatal(err)
+	}
+	vaultJwtToken := string(jwtToken)
 
 	if vaultService == "" {
 		vaultService = defaultVaultService

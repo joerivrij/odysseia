@@ -1,6 +1,7 @@
 package command
 
 import (
+	"encoding/base64"
 	"fmt"
 	"github.com/kpango/glg"
 	"github.com/odysseia/archimedes/util"
@@ -10,10 +11,12 @@ import (
 	"github.com/spf13/cobra"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 )
 
 const defaultMethod = "kubernetes"
+const KubernetesVersionVault = 21
 
 func Auth() *cobra.Command {
 	var (
@@ -138,15 +141,15 @@ func enableKubernetesAsAuth(namespace, policyName string, kube *kubernetes.Kube)
 
 	glg.Debugf("found token in cluster: %s", jwtToken)
 
-	filePath := "/tmp/ca-cert-vault-archimedes"
+	filePath := "/tmp/ca-cert-vault-archimedes.crt"
 	ca, err := kube.Cluster().GetHostCaCert()
 	if err != nil {
 		glg.Error(err)
 	}
 
-	glg.Debug(ca)
+	decodedBase64, _ := base64.StdEncoding.DecodeString(string(ca))
 
-	util.WriteFile(ca, filePath)
+	util.WriteFile(decodedBase64, filePath)
 
 	writeResult, err := kube.Util().CopyFileToPod(podName, filePath, filePath)
 	if err != nil {
@@ -192,6 +195,33 @@ func enableKubernetesAsAuth(namespace, policyName string, kube *kubernetes.Kube)
 	caCert := fmt.Sprintf("kubernetes_ca_cert=@%s", filePath)
 
 	addConfigCommand := []string{"vault", "write", "auth/kubernetes/config", reviewer, configHost, caCert}
+
+	//get kubernetes version
+	//if the version is greater than 21 we need to disable checking of tokens
+	//a more robust solution is needed here for the future
+	nodes, err := kube.Nodes().List()
+	if err != nil {
+		glg.Fatal(err)
+	}
+
+	var kubeVersion string
+	kubeletVersion := nodes.Items[0].Status.NodeInfo.KubeletVersion
+	splitVersions := strings.Split(kubeletVersion, ".")
+
+	if len(splitVersions) <= 3 && len(splitVersions) > 1 {
+		kubeVersion = splitVersions[1]
+	} else {
+		kubeVersion = splitVersions[0]
+	}
+
+	kubeVersionAsInt, err := strconv.Atoi(kubeVersion)
+	if err != nil {
+		glg.Fatal(err)
+	}
+	if kubeVersionAsInt >= KubernetesVersionVault {
+		extraCommand := "disable_iss_validation=true"
+		addConfigCommand = append(addConfigCommand, extraCommand)
+	}
 
 	configAdded, err := kube.Workload().ExecNamedPod(namespace, podName, addConfigCommand)
 	if err != nil {
