@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "{{ template "ptolemaios.uname" . }}"
+  name: "{{ template "alexandros.uname" . }}"
   namespace: {{ template "ptolemaios.namespace" . }}
   labels:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
     chart: "{{ .Chart.Name }}"
     env: {{ .Values.config.environment }}
-    app: "{{ template "ptolemaios.uname" . }}"
+    app: "{{ template "alexandros.uname" . }}"
     {{- range $key, $value := .Values.services.backend.labels }}
     {{ $key }}: {{ $value | quote }}
     {{- end }}
@@ -16,11 +16,11 @@ spec:
   replicas: {{ int .Values.config.replicas.high }}
   selector:
     matchLabels:
-      app: "{{ template "ptolemaios.uname" . }}"
+      app: "{{ template "alexandros.uname" . }}"
   template:
     metadata:
       labels:
-        app: {{ template "ptolemaios.uname" . }}
+        app: {{ template "alexandros.uname" . }}
         release: {{ .Release.Name }}
         version: {{ .Values.images.tag }}
       annotations:
@@ -65,6 +65,8 @@ spec:
               fieldRef:
                 fieldPath: metadata.name
           imagePullPolicy: {{ .Values.config.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.envVariables.ptolemaios.port }}
           resources:
             requests:
               memory: {{ .Values.services.ptolemaios.requests.memory }}
@@ -72,32 +74,36 @@ spec:
             limits:
               memory: {{.Values.services.ptolemaios.limits.memory}}
               cpu: {{.Values.services.ptolemaios.limits.memory}}
-{{/*        - image: {{ .Values.images.alexandros.repo }}:{{ .Values.images.tag }}*/}}
-{{/*          name: "{{ template "alexandros.uname" . }}"*/}}
-{{/*          env:*/}}
-{{/*            - name: POD_NAME*/}}
-{{/*              valueFrom:*/}}
-{{/*                fieldRef:*/}}
-{{/*                  fieldPath: metadata.name*/}}
-{{/*          imagePullPolicy: {{ .Values.config.pullPolicy }}*/}}
-{{/*          ports:*/}}
-{{/*            - containerPort: {{ .Values.envVariables.alexandros.port }}*/}}
-{{/*          livenessProbe:*/}}
-{{/*            httpGet:*/}}
-{{/*              path: /alexandros/v1/health*/}}
-{{/*              port: {{ .Values.envVariables.alexandros.port }}*/}}
-{{/*            initialDelaySeconds: {{ .Values.config.initialDelayLiveness }}*/}}
-{{/*            periodSeconds: {{ .Values.config.periodSeconds }}*/}}
-{{/*          readinessProbe:*/}}
-{{/*            httpGet:*/}}
-{{/*              path: /alexandros/v1/ping*/}}
-{{/*              port: {{ .Values.envVariables.alexandros.port }}*/}}
-{{/*            initialDelaySeconds: {{ .Values.config.initialDelayReadiness }}*/}}
-{{/*            periodSeconds: {{ .Values.config.periodSeconds }}*/}}
-{{/*          resources:*/}}
-{{/*            requests:*/}}
-{{/*              memory: {{ .Values.services.alexandros.requests.memory }}*/}}
-{{/*              cpu: {{ .Values.services.alexandros.requests.cpu }}*/}}
-{{/*            limits:*/}}
-{{/*              memory: {{.Values.services.alexandros.limits.memory}}*/}}
-{{/*              cpu: {{.Values.services.alexandros.limits.memory}}*/}}
+        - image: {{ .Values.images.alexandros.repo }}:{{ .Values.images.tag }}
+          name: "{{ template "alexandros.uname" . }}"
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: ENV
+              value: {{ .Values.config.environment }}
+            - name: TLSENABLED
+              value: {{ .Values.config.tls | quote }}
+          imagePullPolicy: {{ .Values.config.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.envVariables.alexandros.port }}
+          livenessProbe:
+            httpGet:
+              path: /alexandros/v1/health
+              port: {{ .Values.envVariables.alexandros.port }}
+            initialDelaySeconds: {{ .Values.config.initialDelayLiveness }}
+            periodSeconds: {{ .Values.config.periodSeconds }}
+          readinessProbe:
+            httpGet:
+              path: /alexandros/v1/ping
+              port: {{ .Values.envVariables.alexandros.port }}
+            initialDelaySeconds: {{ .Values.config.initialDelayReadiness }}
+            periodSeconds: {{ .Values.config.periodSeconds }}
+          resources:
+            requests:
+              memory: {{ .Values.services.alexandros.requests.memory }}
+              cpu: {{ .Values.services.alexandros.requests.cpu }}
+            limits:
+              memory: {{.Values.services.alexandros.limits.memory}}
+              cpu: {{.Values.services.alexandros.limits.memory}}

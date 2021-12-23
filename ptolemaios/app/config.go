@@ -4,6 +4,7 @@ import (
 	"github.com/kpango/glg"
 	"net/url"
 	"os"
+	"strings"
 )
 
 const defaultVaultService = "http://127.0.0.1:8200"
@@ -29,7 +30,9 @@ func Get() *PtolemaiosConfig {
 
 	solonUrl, _ := url.Parse(solonService)
 
-	podName := os.Getenv("POD_NAME")
+	envPodName := os.Getenv("POD_NAME")
+	splitPodName := strings.Split(envPodName, "-")
+	podName := splitPodName[0]
 
 	config := &PtolemaiosConfig{
 		VaultService: vaultService,

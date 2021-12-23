@@ -4,6 +4,7 @@
 
 config:
   environment: minikube
+  tls: true
   pullPolicy: Never
   replicas:
     low: 1
@@ -38,7 +39,7 @@ services:
       cpu: "250m"
 
 images:
-  tag: 83964a0
+  tag: 498a828
   ptolemaios:
     repo: ptolemaios
   periandros:
@@ -53,6 +54,8 @@ envVariables:
   vaultService: http://vault:8200
   alexandros:
     port: 5000
+  ptolemaios:
+    port: 5001
 
 serviceAccount:
   name: leaderelection-sa

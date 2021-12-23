@@ -1,0 +1,70 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: demokritos
+  labels:
+    app: demokritos
+spec:
+  template:
+    metadata:
+      labels:
+        app: demokritos
+        release: {{ .Release.Name }}
+        version: {{ .Values.images.tag }}
+      annotations:
+        odysseia-greek/role: "seeder"
+        odysseia-greek/access: "dictionary"
+    spec:
+      serviceAccountName: leaderelection-sa
+      initContainers:
+        - image: {{ .Values.images.periandros.repo }}:{{ .Values.images.tag }}
+          name: "{{ template "periandros.uname" . }}"
+          env:
+            - name: SOLON_SERVICE
+              value: {{ .Values.envVariables.solonService }}
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: ELASTIC_ROLE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.annotations['odysseia-greek/role']
+            - name: ELASTIC_ACCESS
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.annotations['odysseia-greek/access']
+      containers:
+        - image: {{ .Values.images.ptolemaios.repo }}:{{ .Values.images.tag }}
+          name: "{{ template "ptolemaios.uname" . }}"
+          env:
+            - name: ENV
+              value: {{ .Values.config.environment }}
+            - name: TLSENABLED
+              value: {{ .Values.config.tls | quote }}
+            - name: VAULT_SERVICE
+              value: {{ .Values.envVariables.vaultService }}
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          imagePullPolicy: {{ .Values.config.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.envVariables.ptolemaios.port }}
+          resources:
+            requests:
+              memory: {{ .Values.services.ptolemaios.requests.memory }}
+              cpu: {{ .Values.services.ptolemaios.requests.cpu }}
+            limits:
+              memory: {{.Values.services.ptolemaios.limits.memory}}
+              cpu: {{.Values.services.ptolemaios.limits.memory}}
+        - image: {{ .Values.images.demokritos.repo }}:{{ .Values.images.tag }}
+          name: demokritos
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          imagePullPolicy: {{ .Values.config.pullPolicy }}
+      restartPolicy: Never
+  backoffLimit: 3

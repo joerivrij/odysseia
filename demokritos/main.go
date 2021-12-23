@@ -8,6 +8,7 @@ import (
 	"github.com/elastic/go-elasticsearch/v7"
 	"github.com/elastic/go-elasticsearch/v7/esapi"
 	"github.com/kpango/glg"
+	"github.com/odysseia/plato/configuration"
 	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/models"
 	"golang.org/x/text/runes"
@@ -42,13 +43,15 @@ func main() {
 	glg.Info("\"By convention sweet is sweet, bitter is bitter, hot is hot, cold is cold, color is color; but in truth there are only atoms and the void.\"")
 	glg.Info(strings.Repeat("~", 37))
 
-	elasticClient, err := elastic.CreateElasticClientFromEnvVariables()
+	confManager, err := configuration.NewConfig()
+	if err != nil {
+		glg.Error(err)
+		glg.Fatal("unable to fetch configuration")
+	}
+
+	elasticClient, err := confManager.GetElasticClient()
 	if err != nil {
 		glg.Fatal("failed to create client")
-	}
-	healthy := elastic.CheckHealthyStatusElasticSearch(elasticClient, 180)
-	if !healthy {
-		glg.Fatal("death has found me")
 	}
 
 	root := "lexiko"

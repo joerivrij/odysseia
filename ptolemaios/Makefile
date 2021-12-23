@@ -34,8 +34,8 @@ create-image: test create-base-image copy-dockerfile
 	echo "docker build ${project_name}:$(git_short_hash)"
 	cd ..; docker build --build-arg project_name=$(project_name) --build-arg git_hash=$(git_short_hash) -f $(project_name)/api.Dockerfile -t $(project_name):$(git_short_hash) . --no-cache
 
-create-local-image: copy-local-dockerfile build
+create-local-image: build
 	echo "docker build ${project_name}"
 	cp -r dist/bin/$(project_name) .
-	docker build --build-arg project_name=$(project_name) -f local.Dockerfile -t $(project_name):$(git_short_hash) . --no-cache
+	docker build --build-arg project_name=$(project_name) -f Dockerfile -t $(project_name):$(git_short_hash) . --no-cache
 	rm $(project_name)

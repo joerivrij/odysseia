@@ -169,7 +169,7 @@ func (s *SolonHandler) RegisterService(w http.ResponseWriter, req *http.Request)
 
 	payload, _ := createRequest.Marshal()
 
-	secretCreated, err := s.Config.Vault.CreateNewSecret(creationRequest.PodName, payload)
+	secretCreated, err := s.Config.Vault.CreateNewSecret(creationRequest.Username, payload)
 	if err != nil {
 		glg.Error(err)
 		e := models.ValidationError{
