@@ -119,9 +119,10 @@ func (p *PtolemaiosHandler) CheckForJobExit() {
 		for _, container := range pod.Status.ContainerStatuses {
 			if container.Name == p.Config.PodName {
 				glg.Debug(container.Name)
-				glg.Debug(container.State.String())
-				glg.Debug(container.State.Terminated.String())
-				glg.Debug(container.State.Terminated.ExitCode)
+				if container.State.Terminated == nil {
+					glg.Debugf("%s not done yet", container.Name)
+					continue
+				}
 				if container.State.Terminated.ExitCode == 0 {
 					glg.Debug("exiting because of condition")
 					os.Exit(0)
