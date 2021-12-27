@@ -23,6 +23,9 @@ func (p *PtolemaiosHandler) PingPong(w http.ResponseWriter, req *http.Request) {
 }
 
 func (p *PtolemaiosHandler) GetSecretFromVault(w http.ResponseWriter, req *http.Request) {
+	if p.Config.IsPartOfJob {
+		defer exitOneTimeJob()
+	}
 	oneTimeToken, err := p.getOneTimeToken()
 	if err != nil {
 		e := models.ValidationError{
@@ -77,10 +80,11 @@ func (p *PtolemaiosHandler) GetSecretFromVault(w http.ResponseWriter, req *http.
 	}
 
 	middleware.ResponseWithJson(w, elasticModel)
-	if p.Config.IsPartOfJob {
-		time.Sleep(5 * time.Second)
-		os.Exit(0)
-	}
+}
+
+func exitOneTimeJob() {
+	time.Sleep(10 * time.Second)
+	os.Exit(0)
 }
 
 func (p *PtolemaiosHandler) getOneTimeToken() (string, error) {
