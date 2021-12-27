@@ -20,6 +20,7 @@ type PtolemaiosConfig struct {
 	PodName      string
 	Namespace    string
 	IsPartOfJob  bool
+	FullPodName  string
 }
 
 func Get() *PtolemaiosConfig {
@@ -68,6 +69,7 @@ func Get() *PtolemaiosConfig {
 		Namespace:    namespace,
 		IsPartOfJob:  isJob,
 		PodName:      podName,
+		FullPodName:  envPodName,
 	}
 
 	return config

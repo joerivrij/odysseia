@@ -50,6 +50,8 @@ spec:
               value: {{ .Values.envVariables.vaultService }}
             - name: ISJOB
               value: "true"
+            - name: ENV
+              value: {{ .Values.config.environment }}
             - name: POD_NAME
               valueFrom:
                 fieldRef:

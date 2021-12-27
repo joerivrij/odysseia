@@ -77,6 +77,11 @@ func (p *PtolemaiosHandler) GetSecretFromVault(w http.ResponseWriter, req *http.
 	}
 
 	middleware.ResponseWithJson(w, elasticModel)
+	if p.Config.IsPartOfJob {
+		go p.CheckForJobExit()
+	}
+
+	return
 }
 
 func (p *PtolemaiosHandler) getOneTimeToken() (string, error) {
@@ -106,7 +111,7 @@ func (p *PtolemaiosHandler) CheckForJobExit() {
 		counter++
 		glg.Debug("run number: %d", counter)
 		time.Sleep(10 * time.Second)
-		pod, err := p.Config.Kube.Workload().GetPodByName(p.Config.Namespace, p.Config.PodName)
+		pod, err := p.Config.Kube.Workload().GetPodByName(p.Config.Namespace, p.Config.FullPodName)
 		if err != nil {
 			glg.Errorf("error getting kube response %s", err)
 		}
