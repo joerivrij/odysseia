@@ -2,6 +2,7 @@ package configuration
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/elastic/go-elasticsearch/v7"
 	"github.com/kpango/glg"
 	"github.com/odysseia/plato/elastic"
@@ -57,33 +58,55 @@ func NewConfig() (Config, error) {
 
 func (c *ConfigImpl) GetElasticClient() (*elasticsearch.Client, error) {
 	var es *elasticsearch.Client
-	if c.tlsEnabled {
-		glg.Debug("getting es config from vault")
-		esConf, err := c.GetSecretFromVault()
-		if err != nil {
-			glg.Fatalf("error getting config from sidecar, shutting down: %s", err)
-		}
-
-		glg.Debug("creating es client with TLS enabled")
-		client, err := elastic.CreateElasticClientWithTlS(*esConf)
-		if err != nil {
-			glg.Fatalf("Error creating ElasticClient shutting down: %s", err)
-		}
-
-		es = client
-	}
-
 	if c.env == "TEST" {
-		glg.Debug("creating es client from env variables")
-		client, err := elastic.CreateElasticClientFromEnvVariables()
-		if err != nil {
-			glg.Fatalf("Error creating ElasticClient shutting down: %s", err)
-		}
+		if c.tlsEnabled {
+			glg.Debug("creating local es client with tls enabled")
 
-		es = client
+			elasticUser := os.Getenv("ELASTIC_SEARCH_USER")
+			elasticPassword := os.Getenv("ELASTIC_SEARCH_PASSWORD")
+			homeDir, _ := os.UserHomeDir()
+			elasticCert, err := os.ReadFile(fmt.Sprintf("%s/go/src/github.com/odysseia/solon/vault_config/elastic-cert.pem", homeDir))
+
+			esConf := models.ElasticConfigVault{
+				Username:    elasticUser,
+				Password:    elasticPassword,
+				ElasticCERT: string(elasticCert),
+			}
+
+			client, err := elastic.CreateElasticClientWithTlS(esConf)
+			if err != nil {
+				glg.Fatalf("Error creating ElasticClient shutting down: %s", err)
+			}
+
+			es = client
+		} else {
+			glg.Debug("creating local es client from env variables")
+			client, err := elastic.CreateElasticClientFromEnvVariables()
+			if err != nil {
+				glg.Fatalf("Error creating ElasticClient shutting down: %s", err)
+			}
+
+			es = client
+		}
+	} else {
+		if c.tlsEnabled {
+			glg.Debug("getting es config from vault")
+			esConf, err := c.GetSecretFromVault()
+			if err != nil {
+				glg.Fatalf("error getting config from sidecar, shutting down: %s", err)
+			}
+
+			glg.Debug("creating es client with TLS enabled")
+			client, err := elastic.CreateElasticClientWithTlS(*esConf)
+			if err != nil {
+				glg.Fatalf("Error creating ElasticClient shutting down: %s", err)
+			}
+
+			es = client
+		}
 	}
 
-	standardTicks := time.Minute * 2
+	standardTicks := 120 * time.Second
 
 	healthy := elastic.CheckHealthyStatusElasticSearch(es, standardTicks)
 	if !healthy {

@@ -58,7 +58,7 @@ func CheckHealthyStatusElasticSearch(es *elasticsearch.Client, ticks time.Durati
 	healthy := false
 
 	ticker := time.NewTicker(1 * time.Second)
-	timeout := time.After(ticks * time.Second)
+	timeout := time.After(ticks)
 
 	for {
 		select {

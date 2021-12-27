@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"github.com/kpango/glg"
 	"github.com/odysseia/periandros/app"
 	"k8s.io/client-go/tools/leaderelection"
@@ -73,7 +74,7 @@ func main() {
 	}
 
 	var wg sync.WaitGroup
-	leaseLockName := "periandros-lock"
+	leaseLockName := fmt.Sprintf("%s-periandros-lock", config.SolonCreationRequest.PodName)
 
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
