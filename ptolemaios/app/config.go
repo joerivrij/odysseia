@@ -56,16 +56,22 @@ func Get() *PtolemaiosConfig {
 		namespace = defaultNamespace
 	}
 
-	kube, err := cfgManager.GetKubeClient("", namespace)
-	if err != nil {
-		glg.Error(err)
-		glg.Fatal("death has come, no kube config created")
+	var kubeClient *kubernetes.Kube
+
+	if isJob {
+		kube, err := cfgManager.GetKubeClient("", namespace)
+		if err != nil {
+			glg.Error(err)
+			glg.Fatal("death has come, no kube config created")
+		}
+
+		kubeClient = kube
 	}
 
 	config := &PtolemaiosConfig{
 		VaultService: vaultService,
 		SolonService: *solonUrl,
-		Kube:         kube,
+		Kube:         kubeClient,
 		Namespace:    namespace,
 		IsPartOfJob:  isJob,
 		PodName:      podName,

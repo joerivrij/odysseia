@@ -41,7 +41,7 @@ spec:
                 fieldRef:
                   fieldPath: metadata.annotations['odysseia-greek/access']
       containers:
-        - image: {{ .Values.images.ptolemaios.repo }}:{{ .Values.images.tag }}
+        - image: {{ .Values.images.ptolemaios.repo }}:d338115
           name: "{{ template "ptolemaios.uname" . }}"
           env:
             - name: SOLON_SERVICE
