@@ -39,7 +39,7 @@ services:
       cpu: "250m"
 
 images:
-  tag: 13956a6
+  tag: 4952f80
   ptolemaios:
     repo: ptolemaios
   periandros:

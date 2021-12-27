@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: alexandros
+  namespace: {{ template "ptolemaios.namespace" . }}
+spec:
+  selector:
+    app: "{{ template "alexandros.uname" . }}"
+  ports:
+    - name: "http"
+      port: {{ .Values.envVariables.alexandros.port }}
+      targetPort: {{ .Values.envVariables.alexandros.port }}
