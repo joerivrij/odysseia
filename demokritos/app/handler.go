@@ -12,10 +12,13 @@ import (
 	"golang.org/x/text/transform"
 	"golang.org/x/text/unicode/norm"
 	"strings"
+	"sync"
 	"unicode"
 )
 
-func (d *DemokritosConfig) AddDirectoryToElastic(biblos models.Biblos) {
+func (d *DemokritosConfig) AddDirectoryToElastic(biblos models.Biblos, wg *sync.WaitGroup) {
+	defer wg.Done()
+	var innerWaitGroup sync.WaitGroup
 	for _, word := range biblos.Biblos {
 		jsonifiedLogos, _ := word.Marshal()
 		esRequest := esapi.IndexRequest{
@@ -41,7 +44,8 @@ func (d *DemokritosConfig) AddDirectoryToElastic(biblos models.Biblos) {
 				glg.Errorf("Error parsing the response body: %s", err)
 			} else {
 				// Print the response status and indexed document version.
-				go d.transformWord(word)
+				innerWaitGroup.Add(1)
+				go d.transformWord(word, &innerWaitGroup)
 				d.Created++
 			}
 		}
@@ -102,7 +106,8 @@ func (d *DemokritosConfig) CreateIndexAtStartup() {
 	}
 }
 
-func (d *DemokritosConfig) transformWord(m models.Meros) {
+func (d *DemokritosConfig) transformWord(m models.Meros, wg *sync.WaitGroup) {
+	defer wg.Done()
 	strippedWord := removeAccents(m.Greek)
 	word := models.Meros{
 		Greek:      strippedWord,

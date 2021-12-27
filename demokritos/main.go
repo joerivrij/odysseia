@@ -11,6 +11,7 @@ import (
 	"path"
 	"strconv"
 	"strings"
+	"sync"
 )
 
 var documents int
@@ -47,6 +48,8 @@ func main() {
 	config.DeleteIndexAtStartUp()
 	config.CreateIndexAtStartup()
 
+	var wg sync.WaitGroup
+
 	for _, dir := range rootDir {
 		glg.Debug("working on the following directory: " + dir.Name())
 		if dir.IsDir() {
@@ -66,10 +69,12 @@ func main() {
 
 				documents += len(biblos.Biblos)
 
-				go config.AddDirectoryToElastic(biblos)
+				wg.Add(1)
+				go config.AddDirectoryToElastic(biblos, &wg)
 			}
 		}
 	}
+	wg.Wait()
 	glg.Infof("created: %s", strconv.Itoa(config.Created))
 	glg.Infof("words found in sullego: %s", strconv.Itoa(documents))
 	os.Exit(0)

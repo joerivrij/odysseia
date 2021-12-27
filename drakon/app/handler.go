@@ -17,7 +17,8 @@ func (d *DrakonConfig) CreateRoles() (bool, error) {
 
 			var privileges []string
 			if role == "seeder" {
-				privileges = append(privileges, "delete")
+				privileges = append(privileges, "delete_index")
+				privileges = append(privileges, "create_index")
 				privileges = append(privileges, "create")
 			} else {
 				privileges = append(privileges, "read")
