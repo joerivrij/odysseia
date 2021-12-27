@@ -44,6 +44,8 @@ spec:
         - image: {{ .Values.images.ptolemaios.repo }}:{{ .Values.images.tag }}
           name: "{{ template "ptolemaios.uname" . }}"
           env:
+            - name: SOLON_SERVICE
+              value: {{ .Values.envVariables.solonService }}
             - name: VAULT_SERVICE
               value: {{ .Values.envVariables.vaultService }}
             - name: POD_NAME

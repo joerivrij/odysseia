@@ -1,0 +1,144 @@
+package app
+
+import (
+	"bytes"
+	"context"
+	"encoding/json"
+	"github.com/elastic/go-elasticsearch/v7/esapi"
+	"github.com/kpango/glg"
+	"github.com/odysseia/plato/elastic"
+	"github.com/odysseia/plato/models"
+	"golang.org/x/text/runes"
+	"golang.org/x/text/transform"
+	"golang.org/x/text/unicode/norm"
+	"strings"
+	"unicode"
+)
+
+func (d *DemokritosConfig) AddDirectoryToElastic(biblos models.Biblos) {
+	for _, word := range biblos.Biblos {
+		jsonifiedLogos, _ := word.Marshal()
+		esRequest := esapi.IndexRequest{
+			Body:       strings.NewReader(string(jsonifiedLogos)),
+			Refresh:    "true",
+			Index:      d.Index,
+			DocumentID: "",
+		}
+
+		// Perform the request with the client.
+		res, err := esRequest.Do(context.Background(), &d.ElasticClient)
+		if err != nil {
+			glg.Fatalf("Error getting response: %s", err)
+		}
+		defer res.Body.Close()
+
+		if res.IsError() {
+			glg.Debugf("[%s]", res.Status())
+		} else {
+			// Deserialize the response into a map.
+			var r map[string]interface{}
+			if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
+				glg.Errorf("Error parsing the response body: %s", err)
+			} else {
+				// Print the response status and indexed document version.
+				go d.transformWord(word)
+				d.Created++
+			}
+		}
+	}
+}
+
+func removeAccents(s string) string {
+	t := transform.Chain(norm.NFD, runes.Remove(runes.In(unicode.Mn)), norm.NFC)
+	output, _, e := transform.String(t, s)
+	if e != nil {
+		panic(e)
+	}
+	return output
+}
+
+func (d *DemokritosConfig) DeleteIndexAtStartUp() {
+	elastic.DeleteIndex(&d.ElasticClient, d.Index)
+}
+
+func (d *DemokritosConfig) CreateIndexAtStartup() {
+	var buf bytes.Buffer
+	indexMapping := map[string]interface{}{
+		"mappings": map[string]interface{}{
+			"properties": map[string]interface{}{
+				d.SearchWord: map[string]interface{}{
+					"type": "search_as_you_type",
+				},
+			},
+		},
+	}
+
+	if err := json.NewEncoder(&buf).Encode(indexMapping); err != nil {
+		glg.Fatalf("Error encoding query: %s", err)
+	}
+
+	indexRequest := esapi.IndicesCreateRequest{
+		Index: d.Index,
+		Body:  &buf,
+	}
+	// Perform the request with the client.
+	res, err := indexRequest.Do(context.Background(), &d.ElasticClient)
+	if err != nil {
+		glg.Fatalf("Error getting response: %s", err)
+	}
+	defer res.Body.Close()
+
+	if res.IsError() {
+		glg.Debugf("[%s]", res.Status())
+	} else {
+		// Deserialize the response into a map.
+		var r map[string]interface{}
+		if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
+			glg.Errorf("Error parsing the response body: %s", err)
+		} else {
+			// Print the response status and indexed document version.
+			glg.Info("created index: %s", r)
+		}
+	}
+}
+
+func (d *DemokritosConfig) transformWord(m models.Meros) {
+	strippedWord := removeAccents(m.Greek)
+	word := models.Meros{
+		Greek:      strippedWord,
+		English:    m.English,
+		LinkedWord: m.LinkedWord,
+		Original:   m.Greek,
+	}
+
+	jsonifiedLogos, _ := word.Marshal()
+	esRequest := esapi.IndexRequest{
+		Body:       strings.NewReader(string(jsonifiedLogos)),
+		Refresh:    "true",
+		Index:      d.Index,
+		DocumentID: "",
+	}
+
+	// Perform the request with the client.
+	res, err := esRequest.Do(context.Background(), &d.ElasticClient)
+	if err != nil {
+		glg.Fatalf("Error getting response: %s", err)
+	}
+	defer res.Body.Close()
+
+	if res.IsError() {
+		glg.Debugf("[%s]", res.Status())
+	} else {
+		// Deserialize the response into a map.
+		var r map[string]interface{}
+		if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
+			glg.Errorf("Error parsing the response body: %s", err)
+		} else {
+			// Print the response status and indexed document version.
+			glg.Debugf("created parsed word: %s", strippedWord)
+			d.Created++
+		}
+	}
+
+	return
+}
