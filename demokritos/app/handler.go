@@ -46,6 +46,7 @@ func (d *DemokritosConfig) AddDirectoryToElastic(biblos models.Biblos, wg *sync.
 				// Print the response status and indexed document version.
 				innerWaitGroup.Add(1)
 				go d.transformWord(word, &innerWaitGroup)
+				glg.Debugf("created root word: %s", word.Greek)
 				d.Created++
 			}
 		}
