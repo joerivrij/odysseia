@@ -23,9 +23,6 @@ func (p *PtolemaiosHandler) PingPong(w http.ResponseWriter, req *http.Request) {
 }
 
 func (p *PtolemaiosHandler) GetSecretFromVault(w http.ResponseWriter, req *http.Request) {
-	if p.Config.IsPartOfJob {
-		defer exitOneTimeJob()
-	}
 	oneTimeToken, err := p.getOneTimeToken()
 	if err != nil {
 		e := models.ValidationError{
@@ -82,11 +79,6 @@ func (p *PtolemaiosHandler) GetSecretFromVault(w http.ResponseWriter, req *http.
 	middleware.ResponseWithJson(w, elasticModel)
 }
 
-func exitOneTimeJob() {
-	time.Sleep(10 * time.Second)
-	os.Exit(0)
-}
-
 func (p *PtolemaiosHandler) getOneTimeToken() (string, error) {
 	u := p.Config.SolonService
 	u.Path = "/solon/v1/token"
@@ -106,4 +98,26 @@ func (p *PtolemaiosHandler) getOneTimeToken() (string, error) {
 	glg.Debugf("found token: %s", tokenModel.Token)
 
 	return tokenModel.Token, nil
+}
+
+func (p *PtolemaiosHandler) CheckForJobExit() {
+	var counter int
+	for {
+		counter++
+		glg.Debug("run number: %d", counter)
+		time.Sleep(10 * time.Second)
+		pod, err := p.Config.Kube.Workload().GetPodByName(p.Config.Namespace, p.Config.PodName)
+		if err != nil {
+			glg.Errorf("error getting kube response %s", err)
+		}
+		for _, container := range pod.Status.ContainerStatuses {
+			if container.Name == p.Config.PodName {
+				glg.Debug(container.Name)
+				if container.State.Terminated.ExitCode == 0 {
+					glg.Debug("exiting because of condition")
+					os.Exit(0)
+				}
+			}
+		}
+	}
 }

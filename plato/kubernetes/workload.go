@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	appsv1 "k8s.io/api/apps/v1"
+	batchv1 "k8s.io/api/batch/v1"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
@@ -57,6 +58,18 @@ func (w *WorkloadImpl) GetStatefulSets(namespace string) (*appsv1.StatefulSetLis
 	}
 
 	return sets, nil
+}
+
+func (w *WorkloadImpl) GetJob(namespace, name string) (*batchv1.Job, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
+	defer cancel()
+
+	job, err := w.client.BatchV1().Jobs(namespace).Get(ctx, name, metav1.GetOptions{})
+	if err != nil {
+		return nil, err
+	}
+
+	return job, nil
 }
 
 func (w *WorkloadImpl) GetPodsBySelector(namespace, selector string) (*corev1.PodList, error) {

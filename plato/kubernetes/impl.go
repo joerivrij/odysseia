@@ -4,6 +4,7 @@ import (
 	"github.com/kpango/glg"
 	"io/ioutil"
 	appsv1 "k8s.io/api/apps/v1"
+	batchv1 "k8s.io/api/batch/v1"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
@@ -45,6 +46,7 @@ type Workload interface {
 	GetPodsBySelector(namespace, selector string) (*corev1.PodList, error)
 	GetPodByName(namespace, name string) (*corev1.Pod, error)
 	GetDeploymentStatus(namespace string) (bool, error)
+	GetJob(namespace, name string) (*batchv1.Job, error)
 }
 
 type Nodes interface {

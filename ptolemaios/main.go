@@ -32,7 +32,6 @@ func main() {
 	glg.Debug("starting up and getting env variables")
 
 	config := app.Get()
-
 	srv := app.InitRoutes(*config)
 
 	glg.Infof("%s : %s", "running on port", port)
