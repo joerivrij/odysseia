@@ -9,6 +9,7 @@ import (
 	"github.com/odysseia/plato/vault"
 	"net/http"
 	"os"
+	"time"
 )
 
 type PtolemaiosHandler struct {
@@ -76,7 +77,10 @@ func (p *PtolemaiosHandler) GetSecretFromVault(w http.ResponseWriter, req *http.
 	}
 
 	middleware.ResponseWithJson(w, elasticModel)
-	os.Exit(0)
+	if p.Config.IsPartOfJob {
+		time.Sleep(5 * time.Second)
+		os.Exit(0)
+	}
 }
 
 func (p *PtolemaiosHandler) getOneTimeToken() (string, error) {

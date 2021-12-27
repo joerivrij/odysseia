@@ -14,6 +14,7 @@ type PtolemaiosConfig struct {
 	VaultService string
 	SolonService url.URL
 	PodName      string
+	IsPartOfJob  bool
 }
 
 func Get() *PtolemaiosConfig {
@@ -34,9 +35,18 @@ func Get() *PtolemaiosConfig {
 	splitPodName := strings.Split(envPodName, "-")
 	podName := splitPodName[0]
 
+	var isJob bool
+	job := os.Getenv("ISJOB")
+	if job == "" {
+		isJob = false
+	} else {
+		isJob = true
+	}
+
 	config := &PtolemaiosConfig{
 		VaultService: vaultService,
 		SolonService: *solonUrl,
+		IsPartOfJob:  isJob,
 		PodName:      podName,
 	}
 
