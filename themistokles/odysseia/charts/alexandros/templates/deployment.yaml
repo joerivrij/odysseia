@@ -85,6 +85,8 @@ spec:
               value: {{ .Values.config.environment }}
             - name: TLSENABLED
               value: {{ .Values.config.tls | quote }}
+            - name: ELASTIC_SEARCH_SERVICE
+              value: {{ .Values.envVariables.elasticService }}
           imagePullPolicy: {{ .Values.config.pullPolicy }}
           ports:
             - containerPort: {{ .Values.envVariables.alexandros.port }}

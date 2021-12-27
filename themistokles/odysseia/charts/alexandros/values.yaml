@@ -39,7 +39,7 @@ services:
       cpu: "250m"
 
 images:
-  tag: 498a828
+  tag: 900de92
   ptolemaios:
     repo: ptolemaios
   periandros:
@@ -52,6 +52,7 @@ images:
 envVariables:
   solonService: http://solon-service:5000
   vaultService: http://vault:8200
+  elasticService: https://elastic-master:9200
   alexandros:
     port: 5000
   ptolemaios:

@@ -49,6 +49,8 @@ func NewConfig() (Config, error) {
 		tls = false
 	}
 
+	glg.Infof("created config based on the following env vars: ENV: %s TLS: %t", env, tls)
+
 	return &ConfigImpl{env: env,
 		tlsEnabled: tls}, nil
 }
@@ -56,11 +58,13 @@ func NewConfig() (Config, error) {
 func (c *ConfigImpl) GetElasticClient() (*elasticsearch.Client, error) {
 	var es *elasticsearch.Client
 	if c.tlsEnabled {
+		glg.Debug("getting es config from vault")
 		esConf, err := c.GetSecretFromVault()
 		if err != nil {
 			glg.Fatalf("error getting config from sidecar, shutting down: %s", err)
 		}
 
+		glg.Debug("creating es client with TLS enabled")
 		client, err := elastic.CreateElasticClientWithTlS(*esConf)
 		if err != nil {
 			glg.Fatalf("Error creating ElasticClient shutting down: %s", err)
@@ -70,6 +74,7 @@ func (c *ConfigImpl) GetElasticClient() (*elasticsearch.Client, error) {
 	}
 
 	if c.env == "TEST" {
+		glg.Debug("creating es client from env variables")
 		client, err := elastic.CreateElasticClientFromEnvVariables()
 		if err != nil {
 			glg.Fatalf("Error creating ElasticClient shutting down: %s", err)
