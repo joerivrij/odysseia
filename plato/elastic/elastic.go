@@ -6,10 +6,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/elastic/go-elasticsearch/v7"
+	"github.com/elastic/go-elasticsearch/v7/esapi"
 	"github.com/kpango/glg"
 	"github.com/odysseia/plato/models"
+	"io"
 	"io/ioutil"
 	"log"
+	"net/http"
 	"strconv"
 	"time"
 )
@@ -32,12 +35,30 @@ func CreateElasticClient(password, username string, elasticService []string) (*e
 	return es, nil
 }
 
+func CreateElasticClientWithTLS(password, username string, elasticService []string, tp http.RoundTripper) (*elasticsearch.Client, error) {
+	glg.Info("creating elasticClient")
+
+	cfg := elasticsearch.Config{
+		Username:  username,
+		Password:  password,
+		Addresses: elasticService,
+		Transport: tp,
+	}
+	es, err := elasticsearch.NewClient(cfg)
+	if err != nil {
+		glg.Errorf("Error creating the client: %s", err)
+		return nil, err
+	}
+
+	return es, nil
+}
+
 // CheckHealthyStatusElasticSearch Check if elastic is ready to receive requests
 func CheckHealthyStatusElasticSearch(es *elasticsearch.Client, ticks time.Duration) bool {
 	healthy := false
 
 	ticker := time.NewTicker(1 * time.Second)
-	timeout := time.After(ticks * time.Second)
+	timeout := time.After(ticks)
 
 	for {
 		select {
@@ -48,17 +69,10 @@ func CheckHealthyStatusElasticSearch(es *elasticsearch.Client, ticks time.Durati
 				glg.Errorf("Error getting response: %s", err)
 				continue
 			}
-			defer res.Body.Close()
-			// Check response status
-			if res.IsError() {
-				glg.Errorf("Error: %s", res.String())
-			}
 
-			var r map[string]interface{}
-
-			// Deserialize the response into a map.
-			if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
-				glg.Errorf("Error parsing the response body: %s", err)
+			r, err := parseBody(res)
+			if err != nil {
+				continue
 			}
 
 			glg.Infof("serverVersion: %s", r["version"].(map[string]interface{})["number"])
@@ -74,6 +88,30 @@ func CheckHealthyStatusElasticSearch(es *elasticsearch.Client, ticks time.Durati
 	}
 
 	return healthy
+}
+
+func parseBody(res *esapi.Response) (map[string]interface{}, error) {
+	defer func(Body io.ReadCloser) {
+		err := Body.Close()
+		if err != nil {
+			glg.Errorf("error closing elastic response body: %w", err)
+		}
+	}(res.Body)
+	// Check response status
+	if res.IsError() {
+		glg.Errorf("Error: %s", res.String())
+		return nil, fmt.Errorf(res.String())
+	}
+
+	var r map[string]interface{}
+
+	// Deserialize the response into a map.
+	if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
+		glg.Errorf("Error parsing the response body: %s", err)
+		return nil, err
+	}
+
+	return r, nil
 }
 
 // CheckHealth Check if elastic connection is healthy
@@ -107,6 +145,30 @@ func CheckHealth(es *elasticsearch.Client) (elasticHealth models.DatabaseHealth)
 	elasticHealth.Healthy = true
 
 	return elasticHealth
+}
+
+// CreateRole to create a role in ES
+func CreateRole(elasticClient *elasticsearch.Client, name string, roleRequest models.CreateRoleRequest) (bool, error) {
+	jsonRole, err := roleRequest.Marshal()
+	if err != nil {
+		return false, err
+	}
+	buffer := bytes.NewBuffer(jsonRole)
+	res, _ := elasticClient.Security.PutRole(name, buffer)
+	glg.Debug(res)
+	return true, nil
+}
+
+// CreateUser Creates a new user
+func CreateUser(elasticClient *elasticsearch.Client, name string, userCreation models.CreateUserRequest) (bool, error) {
+	jsonUser, err := userCreation.Marshal()
+	if err != nil {
+		return false, err
+	}
+	buffer := bytes.NewBuffer(jsonUser)
+	res, _ := elasticClient.Security.PutUser(name, buffer)
+	glg.Debug(res)
+	return true, nil
 }
 
 // DeleteIndex delete an index without checking for success
@@ -360,7 +422,7 @@ func QueryWithScroll(elasticClient elasticsearch.Client, index, term, word strin
 
 	scrollID := firstResponse.ScrollId
 
-	for _, hit := range firstResponse.Hits.Hits{
+	for _, hit := range firstResponse.Hits.Hits {
 		elasticResult.Hits.Hits = append(elasticResult.Hits.Hits, hit)
 	}
 
@@ -392,7 +454,7 @@ func QueryWithScroll(elasticClient elasticsearch.Client, index, term, word strin
 			break
 		}
 
-		for _, hit := range scrollResponse.Hits.Hits{
+		for _, hit := range scrollResponse.Hits.Hits {
 			elasticResult.Hits.Hits = append(elasticResult.Hits.Hits, hit)
 		}
 	}

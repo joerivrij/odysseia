@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/elastic/go-elasticsearch/v7/esapi"
 	"github.com/kpango/glg"
+	config "github.com/odysseia/plato/configuration"
 	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/models"
 	"io/ioutil"
@@ -34,23 +35,31 @@ func main() {
 	glg.Info("\"He declares that at first human beings arose in the inside of fishes, and after having been reared like sharks, and become capable of protecting themselves, they were finally cast ashore and took to land\"")
 	glg.Info(strings.Repeat("~", 37))
 
-	elasticClient, err := elastic.CreateElasticClientFromEnvVariables()
+	configBuilder, _ := config.NewConfBuilderWithSidecar()
+
+	esConf, err := configBuilder.GetConfigFromSidecar()
 	if err != nil {
-		glg.Fatal("failed to create client")
+		glg.Fatalf("error getting config from sidecar, shutting down: %s", err)
 	}
-	healthy := elastic.CheckHealthyStatusElasticSearch(elasticClient, 180)
+
+	esClient, err := elastic.CreateElasticClientFromEnvVariablesWithTLS(*esConf)
+	if err != nil {
+		glg.Fatalf("Error creating ElasticClient shutting down: %s", err)
+	}
+
+	healthy := elastic.CheckHealthyStatusElasticSearch(esClient, 180)
 	if !healthy {
 		glg.Fatal("death has found me")
 	}
 
 	root := "arkho"
-	indexName := "dionysos"
+	indexName := "grammar"
 
 	rootDir, err := ioutil.ReadDir(root)
 	if err != nil {
 		glg.Fatal(err)
 	}
-	elastic.DeleteIndex(elasticClient, indexName)
+	elastic.DeleteIndex(esClient, indexName)
 
 	for _, dir := range rootDir {
 		glg.Debug("working on the following directory: " + dir.Name())
@@ -74,7 +83,7 @@ func main() {
 				}
 
 				// Perform the request with the client.
-				res, err := esRequest.Do(context.Background(), elasticClient)
+				res, err := esRequest.Do(context.Background(), esClient)
 				if err != nil {
 					glg.Fatalf("Error getting response: %s", err)
 				}

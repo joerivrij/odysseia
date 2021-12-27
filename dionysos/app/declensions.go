@@ -45,7 +45,6 @@ func (d *DionysosHandler) queryWordInElastic(word string) ([]models.Meros, error
 		return nil, &e
 	}
 
-
 	for _, hit := range response.Hits.Hits {
 		jsonHit, _ := json.Marshal(hit.Source)
 		meros, _ := models.UnmarshalMeros(jsonHit)
@@ -59,7 +58,7 @@ func (d *DionysosHandler) queryWordInElastic(word string) ([]models.Meros, error
 	return searchResults, nil
 }
 
-func (d *DionysosHandler)removeAccents(s string) string {
+func (d *DionysosHandler) removeAccents(s string) string {
 	t := transform.Chain(norm.NFD, runes.Remove(runes.In(unicode.Mn)), norm.NFC)
 	output, _, e := transform.String(t, s)
 	if e != nil {
@@ -68,7 +67,7 @@ func (d *DionysosHandler)removeAccents(s string) string {
 	return output
 }
 
-func (d *DionysosHandler) parseDictResults(dictionaryHits models.Meros) (translation, article string){
+func (d *DionysosHandler) parseDictResults(dictionaryHits models.Meros) (translation, article string) {
 	translation = dictionaryHits.English
 	greek := strings.Split(dictionaryHits.Greek, ",")
 	if len(greek) > 1 {

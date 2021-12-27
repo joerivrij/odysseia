@@ -1,0 +1,120 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ template "solon.uname" . }}"
+  namespace: {{ template "solon.namespace" . }}
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: "{{ .Chart.Name }}"
+    env: {{ .Values.config.environment }}
+    app: "{{ template "solon.uname" . }}"
+    {{- range $key, $value := .Values.services.backend.labels }}
+    {{ $key }}: {{ $value | quote }}
+  {{- end }}
+spec:
+  replicas: {{ int .Values.config.replicas.low }}
+  selector:
+    matchLabels:
+      app: "{{ template "solon.uname" . }}"
+  template:
+    metadata:
+      labels:
+        app: {{ template "solon.uname" . }}
+        release: {{ .Release.Name }}
+        version: {{ .Values.images.tag }}
+      annotations:
+        elastic/indices: "dictionary;grammar;authors;text"
+        elastic/roles: "api;seeder"
+    spec:
+      serviceAccountName: {{ template "solon.serviceAccountName" . }}
+      initContainers:
+        - image: {{ .Values.images.drakon.repo }}:{{ .Values.images.tag }}
+          name: "{{ template "drakon.uname" . }}"
+          imagePullPolicy: {{ .Values.config.pullPolicy }}
+          env:
+          - name: ENV
+            value: {{ .Values.config.environment }}
+          - name: TLSENABLED
+            value: {{ .Values.config.tls | quote }}
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: ELASTIC_INDEXES
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.annotations['elastic/indices']
+          - name: ELASTIC_ROLES
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.annotations['elastic/roles']
+{{- if .Values.envVariables.drakon.extraEnvs }}
+{{ toYaml .Values.envVariables.drakon.extraEnvs | indent 10 }}
+{{- end }}
+          volumeMounts:
+            {{- range .Values.secretMounts }}
+            - name: {{ .name }}
+              mountPath: {{ .path }}
+              {{- if .subPath }}
+              subPath: {{ .subPath }}
+            {{- end }}
+          {{- end }}
+      containers:
+        - image: {{ .Values.images.solon.repo }}:{{ .Values.images.tag }}
+          name: "{{ template "solon.uname" . }}"
+          imagePullPolicy: {{ .Values.config.pullPolicy }}
+          env:
+          - name: ENV
+            value: {{ .Values.config.environment }}
+          - name: TLSENABLED
+            value: {{ .Values.config.tls | quote }}
+          - name: NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+{{- if .Values.envVariables.solon.extraEnvs }}
+{{ toYaml .Values.envVariables.solon.extraEnvs | indent 10 }}
+{{- end }}
+          volumeMounts:
+            {{- range .Values.secretMounts }}
+            - name: {{ .name }}
+              mountPath: {{ .path }}
+              {{- if .subPath }}
+              subPath: {{ .subPath }}
+            {{- end }}
+          {{- end }}
+          ports:
+            - containerPort: {{ .Values.envVariables.solon.port }}
+          livenessProbe:
+            httpGet:
+              path: /solon/v1/health
+              port: {{ .Values.envVariables.solon.port }}
+            initialDelaySeconds: {{ .Values.config.initialDelayLiveness }}
+            periodSeconds: {{ .Values.config.periodSeconds }}
+          readinessProbe:
+            httpGet:
+              path: /solon/v1/ping
+              port: {{ .Values.envVariables.solon.port }}
+            initialDelaySeconds: {{ .Values.config.initialDelayReadiness }}
+            periodSeconds: {{ .Values.config.periodSeconds }}
+          resources:
+            requests:
+              memory: {{ .Values.services.solon.requests.memory }}
+              cpu: {{ .Values.services.solon.requests.cpu }}
+            limits:
+              memory: {{.Values.services.solon.limits.memory}}
+              cpu: {{.Values.services.solon.limits.memory}}
+      volumes:
+        {{- range .Values.secretMounts }}
+        - name: {{ .name }}
+          secret:
+            secretName: {{ .secretName }}
+            {{- if .defaultMode }}
+            defaultMode: {{ .defaultMode }}
+        {{- end }}
+  {{- end }}

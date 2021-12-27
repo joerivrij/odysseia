@@ -66,7 +66,7 @@ func (h *HerodotosHandler) createQuestion(w http.ResponseWriter, req *http.Reque
 			}
 			middleware.ResponseWithJson(w, e)
 			return
-	}
+		}
 
 		e := models.ElasticSearchError{
 			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},

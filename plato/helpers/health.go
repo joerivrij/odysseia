@@ -36,6 +36,23 @@ func GetHealthOfApp(elasticClient elasticsearch.Client) models.Health {
 	return health
 }
 
+func GetHealthWithVault(vaultHealth bool) models.Health {
+	currentTime := time.Now()
+	memUsage := GetMemoryUsage()
+	cpuUsage := GetCPUSample()
+
+	cpuPercentage := strconv.FormatUint(cpuUsage, 10)
+
+	health := models.Health{
+		Healthy:       vaultHealth,
+		Time:          currentTime.String(),
+		Memory:        memUsage,
+		CPUPercentage: fmt.Sprintf("%s%%", cpuPercentage),
+	}
+
+	return health
+}
+
 func GetMemoryUsage() models.Memory {
 	var m runtime.MemStats
 	runtime.ReadMemStats(&m)

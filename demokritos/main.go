@@ -1,29 +1,23 @@
 package main
 
 import (
-	"bytes"
-	"context"
+	"embed"
 	"encoding/json"
 	"fmt"
-	"github.com/elastic/go-elasticsearch/v7"
-	"github.com/elastic/go-elasticsearch/v7/esapi"
 	"github.com/kpango/glg"
-	"github.com/odysseia/plato/elastic"
+	"github.com/odysseia/demokritos/app"
 	"github.com/odysseia/plato/models"
-	"golang.org/x/text/runes"
-	"golang.org/x/text/transform"
-	"golang.org/x/text/unicode/norm"
-	"io/ioutil"
-	"log"
 	"os"
 	"path"
 	"strconv"
 	"strings"
-	"unicode"
+	"sync"
 )
 
-var created int
 var documents int
+
+//go:embed lexiko
+var lexiko embed.FS
 
 func init() {
 	errlog := glg.FileWriter("/tmp/error.log", 0666)
@@ -42,75 +36,31 @@ func main() {
 	glg.Info("\"By convention sweet is sweet, bitter is bitter, hot is hot, cold is cold, color is color; but in truth there are only atoms and the void.\"")
 	glg.Info(strings.Repeat("~", 37))
 
-	elasticClient, err := elastic.CreateElasticClientFromEnvVariables()
-	if err != nil {
-		glg.Fatal("failed to create client")
-	}
-	healthy := elastic.CheckHealthyStatusElasticSearch(elasticClient, 180)
-	if !healthy {
-		glg.Fatal("death has found me")
-	}
+	config := app.Get()
 
 	root := "lexiko"
-	indexName := "alexandros"
-	searchWord := "greek"
 
-	rootDir, err := ioutil.ReadDir(root)
+	rootDir, err := lexiko.ReadDir(root)
 	if err != nil {
 		glg.Fatal(err)
 	}
 
-	elastic.DeleteIndex(elasticClient, indexName)
-	var buf bytes.Buffer
-	indexMapping := map[string]interface{}{
-		"mappings": map[string]interface{}{
-			"properties": map[string]interface{}{
-				searchWord: map[string]interface{}{
-					"type": "search_as_you_type",
-				},
-			},
-		},
-	}
+	config.DeleteIndexAtStartUp()
+	config.CreateIndexAtStartup()
 
-	if err := json.NewEncoder(&buf).Encode(indexMapping); err != nil {
-		log.Fatalf("Error encoding query: %s", err)
-	}
-
-	indexRequest := esapi.IndicesCreateRequest{
-		Index: indexName,
-		Body:  &buf,
-	}
-	// Perform the request with the client.
-	res, err := indexRequest.Do(context.Background(), elasticClient)
-	if err != nil {
-		glg.Fatalf("Error getting response: %s", err)
-	}
-	defer res.Body.Close()
-
-	if res.IsError() {
-		glg.Debugf("[%s]", res.Status())
-	} else {
-		// Deserialize the response into a map.
-		var r map[string]interface{}
-		if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
-			glg.Errorf("Error parsing the response body: %s", err)
-		} else {
-			// Print the response status and indexed document version.
-			glg.Info("created index: %s", r)
-		}
-	}
+	var wg sync.WaitGroup
 
 	for _, dir := range rootDir {
 		glg.Debug("working on the following directory: " + dir.Name())
 		if dir.IsDir() {
 			filePath := path.Join(root, dir.Name())
-			files, err := ioutil.ReadDir(filePath)
+			files, err := lexiko.ReadDir(filePath)
 			if err != nil {
 				glg.Fatal(err)
 			}
 			for _, f := range files {
 				glg.Debug(fmt.Sprintf("found %s in %s", f.Name(), filePath))
-				plan, _ := ioutil.ReadFile(path.Join(filePath, f.Name()))
+				plan, _ := lexiko.ReadFile(path.Join(filePath, f.Name()))
 				var biblos models.Biblos
 				err := json.Unmarshal(plan, &biblos)
 				if err != nil {
@@ -119,90 +69,13 @@ func main() {
 
 				documents += len(biblos.Biblos)
 
-				for _, word := range biblos.Biblos {
-					jsonifiedLogos, _ := word.Marshal()
-					esRequest := esapi.IndexRequest{
-						Body:       strings.NewReader(string(jsonifiedLogos)),
-						Refresh:    "true",
-						Index:      indexName,
-						DocumentID: "",
-					}
-
-					// Perform the request with the client.
-					res, err := esRequest.Do(context.Background(), elasticClient)
-					if err != nil {
-						glg.Fatalf("Error getting response: %s", err)
-					}
-					defer res.Body.Close()
-
-					if res.IsError() {
-						glg.Debugf("[%s]", res.Status())
-					} else {
-						// Deserialize the response into a map.
-						var r map[string]interface{}
-						if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
-							glg.Errorf("Error parsing the response body: %s", err)
-						} else {
-							// Print the response status and indexed document version.
-							go transformWord(word, indexName, elasticClient)
-							created++
-						}
-					}
-				}
+				wg.Add(1)
+				go config.AddDirectoryToElastic(biblos, &wg)
 			}
 		}
 	}
-	glg.Infof("created: %s", strconv.Itoa(created))
+	wg.Wait()
+	glg.Infof("created: %s", strconv.Itoa(config.Created))
 	glg.Infof("words found in sullego: %s", strconv.Itoa(documents))
 	os.Exit(0)
-}
-
-func removeAccents(s string) string {
-	t := transform.Chain(norm.NFD, runes.Remove(runes.In(unicode.Mn)), norm.NFC)
-	output, _, e := transform.String(t, s)
-	if e != nil {
-		panic(e)
-	}
-	return output
-}
-
-func transformWord(m models.Meros, indexName string, client *elasticsearch.Client) {
-	strippedWord := removeAccents(m.Greek)
-	word := models.Meros{
-		Greek:      strippedWord,
-		English:    m.English,
-		LinkedWord: m.LinkedWord,
-		Original:   m.Greek,
-	}
-
-	jsonifiedLogos, _ := word.Marshal()
-	esRequest := esapi.IndexRequest{
-		Body:       strings.NewReader(string(jsonifiedLogos)),
-		Refresh:    "true",
-		Index:      indexName,
-		DocumentID: "",
-	}
-
-	// Perform the request with the client.
-	res, err := esRequest.Do(context.Background(), client)
-	if err != nil {
-		glg.Fatalf("Error getting response: %s", err)
-	}
-	defer res.Body.Close()
-
-	if res.IsError() {
-		glg.Debugf("[%s]", res.Status())
-	} else {
-		// Deserialize the response into a map.
-		var r map[string]interface{}
-		if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
-			glg.Errorf("Error parsing the response body: %s", err)
-		} else {
-			// Print the response status and indexed document version.
-			glg.Debugf("created parsed word: %s", strippedWord)
-			created++
-		}
-	}
-
-	return
 }

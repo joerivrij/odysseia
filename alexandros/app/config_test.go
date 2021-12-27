@@ -4,6 +4,7 @@ import (
 	"github.com/odysseia/plato/elastic"
 	"github.com/stretchr/testify/assert"
 	"testing"
+	"time"
 )
 
 func TestElasticIsNotHealthy(t *testing.T) {
@@ -18,6 +19,7 @@ func TestElasticIsHealthy(t *testing.T) {
 	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
-	healthy, _ := Get(1, mockElasticClient)
+	ticks := 1 * time.Second
+	healthy, _ := Get(ticks, mockElasticClient)
 	assert.True(t, healthy)
 }

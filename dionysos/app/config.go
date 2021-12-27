@@ -15,16 +15,16 @@ import (
 )
 
 type DionysosConfig struct {
-	ElasticClient elasticsearch.Client
-	DictionaryIndex string
-	Index string
+	ElasticClient    elasticsearch.Client
+	DictionaryIndex  string
+	Index            string
 	DeclensionConfig models.DeclensionConfig
 }
 
 const dictionaryIndexDefault = "alexandros"
-const elasticIndexDefault = "dionysos"
+const elasticIndexDefault = "grammar"
 
-func Get(es *elasticsearch.Client, declensionConfig *models.DeclensionConfig) (*DionysosConfig) {
+func Get(es *elasticsearch.Client, declensionConfig *models.DeclensionConfig) *DionysosConfig {
 	dictIndex := os.Getenv("DICTIONARY_INDEX")
 	if dictIndex == "" {
 		glg.Debugf("setting DICTIONARY_INDEX to default: %s", dictionaryIndexDefault)
@@ -38,9 +38,9 @@ func Get(es *elasticsearch.Client, declensionConfig *models.DeclensionConfig) (*
 	}
 
 	config := &DionysosConfig{
-		DictionaryIndex: dictIndex,
-		Index: elasticIndex,
-		ElasticClient: *es,
+		DictionaryIndex:  dictIndex,
+		Index:            elasticIndex,
+		ElasticClient:    *es,
 		DeclensionConfig: *declensionConfig,
 	}
 
@@ -93,7 +93,7 @@ func QueryRuleSet(es *elasticsearch.Client, index string) *models.DeclensionConf
 	}
 }
 
-func getJsonFilesFromAnaximander() (*models.DeclensionConfig, error){
+func getJsonFilesFromAnaximander() (*models.DeclensionConfig, error) {
 	var declensionConfig models.DeclensionConfig
 	_, callingFile, _, _ := runtime.Caller(0)
 	callingDir := filepath.Dir(callingFile)
@@ -121,9 +121,9 @@ func getJsonFilesFromAnaximander() (*models.DeclensionConfig, error){
 		}
 
 		declension, err := models.UnmarshalDeclension(f)
-		 if err != nil {
-		 	return nil, err
-		 }
+		if err != nil {
+			return nil, err
+		}
 
 		switch declension.Name {
 		case "firstDeclension":

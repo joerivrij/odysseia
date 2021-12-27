@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  namespace: {{ template "ptolemaios.namespace" . }}
+  name: {{ template "periandros.bindingName" $ }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ template "periandros.roleName" . }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ template "periandros.serviceAccountName" . }}
+    namespace: {{ template "ptolemaios.namespace" . }}

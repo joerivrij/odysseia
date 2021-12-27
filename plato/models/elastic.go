@@ -45,3 +45,60 @@ type Shards struct {
 	Skipped    int64 `json:"skipped"`
 	Failed     int64 `json:"failed"`
 }
+
+func UnmarshalCreateRoleRequest(data []byte) (CreateRoleRequest, error) {
+	var r CreateRoleRequest
+	err := json.Unmarshal(data, &r)
+	return r, err
+}
+
+func (r *CreateRoleRequest) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+type CreateRoleRequest struct {
+	Cluster      []string      `json:"cluster"`
+	Indices      []Index       `json:"indices"`
+	Applications []Application `json:"applications"`
+	RunAs        []string      `json:"run_as,omitempty"`
+	Metadata     Metadata      `json:"metadata,omitempty"`
+}
+
+type Application struct {
+	Application string   `json:"application"`
+	Privileges  []string `json:"privileges"`
+	Resources   []string `json:"resources"`
+}
+
+type Index struct {
+	Names         []string       `json:"names"`
+	Privileges    []string       `json:"privileges"`
+	FieldSecurity *FieldSecurity `json:"field_security,omitempty"`
+	Query         string         `json:"query,omitempty"`
+}
+
+type FieldSecurity struct {
+	Grant []string `json:"grant"`
+}
+
+type Metadata struct {
+	Version int64 `json:"version,omitempty"`
+}
+
+func UnmarshalCreateUserRequest(data []byte) (CreateUserRequest, error) {
+	var r CreateUserRequest
+	err := json.Unmarshal(data, &r)
+	return r, err
+}
+
+func (r *CreateUserRequest) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+type CreateUserRequest struct {
+	Password string    `json:"password"`
+	Roles    []string  `json:"roles"`
+	FullName string    `json:"full_name"`
+	Email    string    `json:"email"`
+	Metadata *Metadata `json:"metadata"`
+}

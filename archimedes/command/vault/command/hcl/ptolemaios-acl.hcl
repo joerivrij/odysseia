@@ -1,0 +1,3 @@
+path "configs/*" {
+  capabilities = ["read"]
+}

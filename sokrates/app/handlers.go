@@ -101,7 +101,7 @@ func (s *SokratesHandler) CheckAnswer(w http.ResponseWriter, req *http.Request) 
 	var logoi models.Logos
 	answer := models.CheckAnswerResponse{Correct: false}
 	for _, hit := range elasticResult.Hits.Hits {
-		elasticJson, _  := json.Marshal(hit.Source)
+		elasticJson, _ := json.Marshal(hit.Source)
 		logos, _ := models.UnmarshalWord(elasticJson)
 		logoi.Logos = append(logoi.Logos, logos)
 	}

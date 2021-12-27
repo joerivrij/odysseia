@@ -7,7 +7,6 @@ import (
 	"github.com/odysseia/plato/models"
 	"gopkg.in/oauth2.v3/utils/uuid"
 	"net/http"
-	"reflect"
 	"strconv"
 )
 
@@ -70,9 +69,9 @@ func SetCorsHeaders() Adapter {
 func ResponseWithJson(w http.ResponseWriter, payload interface{}) {
 	code := 500
 
-	glg.Debug(reflect.TypeOf(payload))
-
 	switch payload.(type) {
+	case models.SolonResponse:
+		code = 200
 	case models.ResultModel:
 		code = 200
 	case models.Word:
@@ -94,6 +93,10 @@ func ResponseWithJson(w http.ResponseWriter, payload interface{}) {
 	case models.Health:
 		code = 200
 	case models.DeclensionTranslationResults:
+		code = 200
+	case models.TokenResponse:
+		code = 200
+	case models.ElasticConfigVault:
 		code = 200
 	case map[string]interface{}:
 		code = 200
@@ -136,7 +139,7 @@ func ResponseWithCustomCode(w http.ResponseWriter, code int, payload interface{}
 	w.Write([]byte(resp))
 }
 
-// creates a Guid for error tracing
+// CreateGUID creates a Guid for error tracing
 func CreateGUID() string {
 	b, _ := uuid.NewRandom()
 	uuid := fmt.Sprintf("%x-%x-%x-%x-%x",

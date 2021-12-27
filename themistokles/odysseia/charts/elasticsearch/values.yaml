@@ -1,5 +1,5 @@
 ---
-clusterName: "elasticsearch"
+clusterName: "elastic"
 nodeGroup: "master"
 
 # The service that non master groups will try to connect to when joining the cluster
@@ -12,8 +12,6 @@ roles:
   master: "true"
   ingest: "true"
   data: "true"
-  remote_cluster_client: "true"
-  ml: "true"
 
 replicas: 3
 minimumMasterNodes: 2
@@ -22,19 +20,33 @@ esMajorVersion: ""
 
 # Allows you to add any config files in /usr/share/elasticsearch/config/
 # such as elasticsearch.yml and log4j2.properties
-esConfig: {}
-#  elasticsearch.yml: |
-#    key:
-#      nestedkey: value
-#  log4j2.properties: |
-#    key = value
+esConfig:
+  elasticsearch.yml: |
+    xpack.security.enabled: true
+    xpack.security.transport.ssl.enabled: true
+    xpack.security.transport.ssl.verification_mode: certificate
+    xpack.security.transport.ssl.keystore.path: /usr/share/elasticsearch/config/certs/elastic-certificates.p12
+    xpack.security.transport.ssl.truststore.path: /usr/share/elasticsearch/config/certs/elastic-certificates.p12
+    xpack.security.http.ssl.enabled: true
+    xpack.security.http.ssl.truststore.path: /usr/share/elasticsearch/config/certs/elastic-certificates.p12
+    xpack.security.http.ssl.keystore.path: /usr/share/elasticsearch/config/certs/elastic-certificates.p12
 
 # Extra environment variables to append to this nodeGroup
 # This will be appended to the current 'env:' key. You can use any of the kubernetes env
 # syntax here
 extraEnvs:
   - name: ELASTIC_PASSWORD
-    value: odysseia
+    valueFrom:
+      secretKeyRef:
+        name: elastic-root-secret
+        key: password
+  - name: ELASTIC_USERNAME
+    valueFrom:
+      secretKeyRef:
+        name: elastic-root-secret
+        key: username
+#  - name: MY_ENVIRONMENT_VAR
+#    value: the_value_goes_here
 
 # Allows you to load environment variables from kubernetes secret or config map
 envFrom: []
@@ -46,7 +58,10 @@ envFrom: []
 # A list of secrets and their paths to mount inside the pod
 # This is useful for mounting certificates for security and for mounting
 # the X-Pack license
-secretMounts: []
+secretMounts:
+  - name: elastic-certificates
+    secretName: elastic-certificates
+    path: /usr/share/elasticsearch/config/certs
 #  - name: elastic-certificates
 #    secretName: elastic-certificates
 #    path: /usr/share/elasticsearch/config/certs
@@ -59,49 +74,44 @@ hostAliases: []
 #  - "bar.local"
 
 image: "docker.elastic.co/elasticsearch/elasticsearch"
-imageTag: "7.12.0"
+imageTag: "7.15.0"
 imagePullPolicy: "IfNotPresent"
 
-podAnnotations: {}
-  # iam.amazonaws.com/role: es-cluster
+podAnnotations:
+  {}
+# iam.amazonaws.com/role: es-cluster
 
 # additionals labels
 labels: {}
 
 esJavaOpts: "-Xmx128m -Xms128m"
 
+# Allocate smaller chunks of memory per pod.
 resources:
   requests:
-    cpu: "250m"
-    memory: "1024M"
+    cpu: "100m"
+    memory: "512M"
   limits:
     cpu: "1000m"
-    memory: "1024M"
+    memory: "512M"
 
-initResources: {}
+initResources:
+  {}
   # limits:
   #   cpu: "25m"
   #   # memory: "128Mi"
-  # requests:
-  #   cpu: "25m"
-  #   memory: "128Mi"
-
-sidecarResources: {}
-  # limits:
-  #   cpu: "25m"
-  #   # memory: "128Mi"
-  # requests:
-  #   cpu: "25m"
-  #   memory: "128Mi"
+# requests:
+#   cpu: "25m"
+#   memory: "128Mi"
 
 networkHost: "0.0.0.0"
 
+# Request smaller persistent volumes.
 volumeClaimTemplate:
   accessModes: [ "ReadWriteOnce" ]
-  #minikube
-  storageClassName: "standard"
-  #docker for windows
-#  storageClassName: "hostpath"
+  # storageClassName: "standard"
+  # macos
+  storageClassName: "hostpath"
   resources:
     requests:
       storage: 100M
@@ -110,6 +120,7 @@ rbac:
   create: false
   serviceAccountAnnotations: {}
   serviceAccountName: ""
+  automountToken: true
 
 podSecurityPolicy:
   create: false
@@ -137,24 +148,28 @@ persistence:
     enabled: false
   annotations: {}
 
-extraVolumes: []
-  # - name: extras
-  #   emptyDir: {}
+extraVolumes:
+  []
+# - name: extras
+#   emptyDir: {}
 
-extraVolumeMounts: []
-  # - name: extras
-  #   mountPath: /usr/share/extras
-  #   readOnly: true
+extraVolumeMounts:
+  []
+# - name: extras
+#   mountPath: /usr/share/extras
+#   readOnly: true
 
-extraContainers: []
-  # - name: do-something
-  #   image: busybox
-  #   command: ['do', 'something']
+extraContainers:
+  []
+# - name: do-something
+#   image: busybox
+#   command: ['do', 'something']
 
-extraInitContainers: []
-  # - name: do-something
-  #   image: busybox
-  #   command: ['do', 'something']
+extraInitContainers:
+  []
+# - name: do-something
+#   image: busybox
+#   command: ['do', 'something']
 
 # This is the PriorityClass settings as defined in
 # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
@@ -181,11 +196,12 @@ podManagementPolicy: "Parallel"
 # If you experience slow pod startups you probably want to set this to `false`.
 enableServiceLinks: true
 
-protocol: http
+protocol: https
 httpPort: 9200
 transportPort: 9300
 
 service:
+  enabled: true
   labels: {}
   labelsHeadless: {}
   type: ClusterIP
@@ -211,7 +227,7 @@ podSecurityContext:
 securityContext:
   capabilities:
     drop:
-    - ALL
+      - ALL
   # readOnlyRootFilesystem: true
   runAsNonRoot: true
   runAsUser: 1000
@@ -228,8 +244,8 @@ readinessProbe:
   successThreshold: 3
   timeoutSeconds: 5
 
-# https://www.elastic.co/guide/en/elasticsearch/reference/7.12/cluster-health.html#request-params wait_for_status
-clusterHealthCheckParams: "wait_for_status=green&timeout=1s"
+# https://www.elastic.co/guide/en/elasticsearch/reference/7.15/cluster-health.html#request-params wait_for_status
+clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
 
 ## Use an alternate scheduler.
 ## ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
@@ -240,13 +256,14 @@ imagePullSecrets: []
 nodeSelector: {}
 tolerations: []
 
-# Enabling this will publically expose your Elasticsearch instance.
+# Enabling this will publicly expose your Elasticsearch instance.
 # Only enable this if you have security enabled on your cluster
 ingress:
   enabled: false
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
+  annotations:
+    {}
+  # kubernetes.io/ingress.class: nginx
+  # kubernetes.io/tls-acme: "true"
   hosts:
     - host: chart-example.local
       paths:
@@ -258,11 +275,10 @@ ingress:
 
 nameOverride: ""
 fullnameOverride: ""
+healthNameOverride: ""
 
-# https://github.com/elastic/helm-charts/issues/63
-masterTerminationFix: false
-
-lifecycle: {}
+lifecycle:
+  {}
   # preStop:
   #   exec:
   #     command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
@@ -278,9 +294,9 @@ lifecycle: {}
   #         INDEX_PATTERN="logstash-*"
   #         SHARD_COUNT=8
   #         REPLICA_COUNT=1
-  #         ES_URL=http://localhost:9200
-  #         while [[ "$(curl -s -o /dev/null -w '%{http_code}\n' $ES_URL)" != "200" ]]; do sleep 1; done
-  #         curl -XPUT "$ES_URL/_template/$TEMPLATE_NAME" -H 'Content-Type: application/json' -d'{"index_patterns":['\""$INDEX_PATTERN"\"'],"settings":{"number_of_shards":'$SHARD_COUNT',"number_of_replicas":'$REPLICA_COUNT'}}'
+#         ES_URL=http://localhost:9200
+#         while [[ "$(curl -s -o /dev/null -w '%{http_code}\n' $ES_URL)" != "200" ]]; do sleep 1; done
+#         curl -XPUT "$ES_URL/_template/$TEMPLATE_NAME" -H 'Content-Type: application/json' -d'{"index_patterns":['\""$INDEX_PATTERN"\"'],"settings":{"number_of_shards":'$SHARD_COUNT',"number_of_replicas":'$REPLICA_COUNT'}}'
 
 sysctlInitContainer:
   enabled: true
@@ -309,7 +325,6 @@ networkPolicy:
     #     role: frontend
     #   matchExpressions:
     #     - {key: role, operator: In, values: [frontend]}
-
     ## Additional NetworkPolicy Ingress "from" rules to set. Note that all rules are OR-ed.
     ##
     # additionalRules:
@@ -324,7 +339,7 @@ networkPolicy:
     #             - frontend
 
   transport:
-    ## Note that all Elasticsearch Pods can talks to themselves using transport port even if enabled.
+    ## Note that all Elasticsearch Pods can talk to themselves using transport port even if enabled.
     enabled: false
     # explicitNamespacesSelector:
     #   matchLabels:
@@ -341,6 +356,9 @@ networkPolicy:
     #           operator: In
     #           values:
     #             - frontend
+
+tests:
+  enabled: true
 
 # Deprecated
 # please use the above podSecurityContext.fsGroup instead
