@@ -986,6 +986,31 @@
       "greek": "τολμάω",
       "dutch": "durven, wagen",
       "chapter": 18
+    },
+    {
+      "greek": "δοκέω + dat (en inf.)",
+      "dutch": "(toe)schijnen, de indruk maken (te)",
+      "chapter": 19
+    },
+    {
+      "greek": "δοκέω + AcI",
+      "dutch": "menen",
+      "chapter": 19
+    },
+    {
+      "greek": "ζηλόω",
+      "dutch": "nastreven",
+      "chapter": 19
+    },
+    {
+      "greek": "ὁμιλέω + dat.",
+      "dutch": "omgaan met, verbonden zijn met",
+      "chapter": 19
+    },
+    {
+      "greek": "τρέφω",
+      "dutch": "voeden, grootbrengen, onderhouden",
+      "chapter": 19
     }
   ]
 }
