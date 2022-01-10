@@ -705,6 +705,31 @@
       "greek": "τοίνυν",
       "dutch": "welnu, dus",
       "chapter": 18
+    },
+    {
+      "greek": "εἰ",
+      "dutch": "1. indien, als (conditioneel); 2. of (vraagnzin)",
+      "chapter": 19
+    },
+    {
+      "greek": "ἐκ/ἐξ + gen.",
+      "dutch": "1. uit; 2. sinds",
+      "chapter": 19
+    },
+    {
+      "greek": "ἕνεκα (meestal) + gen.",
+      "dutch": "ter wille van, wegens, om",
+      "chapter": 19
+    },
+    {
+      "greek": "μέντοι",
+      "dutch": "maar, echter",
+      "chapter": 19
+    },
+    {
+      "greek": "πρός + gen.",
+      "dutch": "van/aan de kant van",
+      "chapter": 19
     }
   ]
 }

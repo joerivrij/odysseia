@@ -1420,6 +1420,76 @@
       "greek": "ὕδωρ, ὕδατος, τό",
       "dutch": "water",
       "chapter": 18
+    },
+    {
+      "greek": "ἀλήθεια, ἡ",
+      "dutch": "waarheid",
+      "chapter": 19
+    },
+    {
+      "greek": "ἀνάγκη, ἡ  ",
+      "dutch": "noodzaak, dwang",
+      "chapter": 19
+    },
+    {
+      "greek": "ἀσθενής, ἀσθενοῦς",
+      "dutch": "zwak, ziek",
+      "chapter": 19
+    },
+    {
+      "greek": "δουλεία, ἡ",
+      "dutch": "slavernij",
+      "chapter": 19
+    },
+    {
+      "greek": "δυνατός",
+      "dutch": "in staat",
+      "chapter": 19
+    },
+    {
+      "greek": "εἰκός (ἐστιν)",
+      "dutch": "1. het is passend (voor iemand om te ... ); 2. het is waarschijnlijk/evident",
+      "chapter": 19
+    },
+    {
+      "greek": "εὐμενής, εὐμενοῧς",
+      "dutch": "welgezind",
+      "chapter": 19
+    },
+    {
+      "greek": "ἰσχυρός",
+      "dutch": "krachtig, sterk",
+      "chapter": 19
+    },
+    {
+      "greek": "μάχη, ἡ",
+      "dutch": "strijd",
+      "chapter": 19
+    },
+    {
+      "greek": "τάξις, τάξεως, ἡ",
+      "dutch": "opstelling, slagorde, gelid",
+      "chapter": 19
+    },
+    {
+      "greek": "τόσοσδε",
+      "dutch": "1. zo groot; 2. zoveel",
+      "chapter": 19
+    },
+    {
+      "greek": "φίλος adi.; + dat.",
+      "dutch": "geliefd, dierbaar",
+      "chapter": 19
+    },
+    {
+      "greek": "φίλος subst.",
+      "dutch": "vriend",
+      "chapter": 19
+    },
+    {
+      "greek": "κινδυνός, ὁ",
+      "dutch": "gevaar, risico",
+      "chapter": 19
     }
   ]
 }
