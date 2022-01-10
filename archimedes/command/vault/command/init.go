@@ -5,6 +5,7 @@ import (
 	"github.com/kpango/glg"
 	"github.com/odysseia/archimedes/util"
 	"github.com/odysseia/aristoteles"
+	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/plato/kubernetes"
 	"github.com/spf13/cobra"
 	"os"
@@ -41,20 +42,20 @@ func Init() *cobra.Command {
 				filePath = filepath.Join(homeDir, defaultKubeConfig)
 			}
 
-			config, err := aristoteles.NewConfig()
+			baseConfig := configs.ArchimedesConfig{}
+			unparsedConfig, err := aristoteles.NewConfig(baseConfig)
 			if err != nil {
 				glg.Error(err)
-				os.Exit(1)
+				glg.Fatal("death has found me")
 			}
-
-			kube, err := config.GetKubeClient(filePath, namespace)
-			if err != nil {
-				glg.Fatal("error creating kubeclient")
+			archimedesConfig, ok := unparsedConfig.(*configs.ArchimedesConfig)
+			if !ok {
+				glg.Fatal("could not parse config")
 			}
 
 			glg.Info("is it secret? Is it safe? Well no longer!")
 			glg.Debug("unsealing kube vault")
-			initVault(namespace, kube)
+			initVault(namespace, archimedesConfig.Kube)
 		},
 	}
 
@@ -64,7 +65,7 @@ func Init() *cobra.Command {
 	return cmd
 }
 
-func initVault(namespace string, kube *kubernetes.Kube) {
+func initVault(namespace string, kube kubernetes.KubeClient) {
 	vaultSelector := "app.kubernetes.io/name=vault"
 	var podName string
 

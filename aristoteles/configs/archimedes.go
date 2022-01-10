@@ -5,5 +5,5 @@ import (
 )
 
 type ArchimedesConfig struct {
-	Kube *kubernetes.KubeClient
+	Kube kubernetes.KubeClient
 }

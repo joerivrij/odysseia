@@ -2,6 +2,7 @@ package aristoteles
 
 import (
 	"github.com/odysseia/aristoteles/configs"
+	"github.com/odysseia/plato/models"
 	"github.com/stretchr/testify/assert"
 	"os"
 	"testing"
@@ -14,7 +15,8 @@ func TestAlexandrosConfigCreation(t *testing.T) {
 		os.Setenv(EnvHealthCheckOverwrite, "yes")
 		cfg := configs.AlexandrosConfig{}
 
-		sut := NewConfig(cfg)
+		sut, err := NewConfig(cfg)
+		assert.Nil(t, err)
 		assert.NotNil(t, sut)
 
 		alexandrosConfig, ok := sut.(*configs.AlexandrosConfig)
@@ -33,7 +35,8 @@ func TestAlexandrosConfigCreation(t *testing.T) {
 		os.Setenv(EnvKey, "test")
 		cfg := configs.AlexandrosConfig{}
 
-		sut := NewConfig(cfg)
+		sut, err := NewConfig(cfg)
+		assert.Nil(t, err)
 		assert.NotNil(t, sut)
 
 		alexandrosConfig, ok := sut.(*configs.AlexandrosConfig)
@@ -54,7 +57,8 @@ func TestAlexandrosConfigCreation(t *testing.T) {
 		os.Setenv(EnvTlSKey, "no")
 		cfg := configs.AlexandrosConfig{}
 
-		sut := NewConfig(cfg)
+		sut, err := NewConfig(cfg)
+		assert.Nil(t, err)
 		assert.NotNil(t, sut)
 
 		alexandrosConfig, ok := sut.(*configs.AlexandrosConfig)
@@ -76,7 +80,8 @@ func TestAnaximanderCreation(t *testing.T) {
 		os.Setenv(EnvHealthCheckOverwrite, "yes")
 		cfg := configs.AnaximanderConfig{}
 
-		sut := NewConfig(cfg)
+		sut, err := NewConfig(cfg)
+		assert.Nil(t, err)
 		assert.NotNil(t, sut)
 
 		config, ok := sut.(*configs.AnaximanderConfig)
@@ -95,7 +100,8 @@ func TestArchimedesCreation(t *testing.T) {
 		os.Setenv(EnvKey, "archimedes")
 		cfg := configs.ArchimedesConfig{}
 
-		sut := NewConfig(cfg)
+		sut, err := NewConfig(cfg)
+		assert.Nil(t, err)
 		assert.NotNil(t, sut)
 
 		config, ok := sut.(*configs.ArchimedesConfig)
@@ -113,7 +119,8 @@ func TestDemokritosConfigCreation(t *testing.T) {
 		os.Setenv(EnvHealthCheckOverwrite, "yes")
 		cfg := configs.DemokritosConfig{}
 
-		sut := NewConfig(cfg)
+		sut, err := NewConfig(cfg)
+		assert.Nil(t, err)
 		assert.NotNil(t, sut)
 
 		config, ok := sut.(*configs.DemokritosConfig)
@@ -130,7 +137,8 @@ func TestDemokritosConfigCreation(t *testing.T) {
 		os.Setenv(EnvSearchWord, expected)
 		cfg := configs.DemokritosConfig{}
 
-		sut := NewConfig(cfg)
+		sut, err := NewConfig(cfg)
+		assert.Nil(t, err)
 		assert.NotNil(t, sut)
 
 		config, ok := sut.(*configs.DemokritosConfig)
@@ -149,7 +157,8 @@ func TestDionysosConfigCreation(t *testing.T) {
 		os.Setenv(EnvHealthCheckOverwrite, "yes")
 		cfg := configs.DionysosConfig{}
 
-		sut := NewConfig(cfg)
+		sut, err := NewConfig(cfg)
+		assert.Nil(t, err)
 		assert.NotNil(t, sut)
 
 		dionysosConfig, ok := sut.(*configs.DionysosConfig)
@@ -174,7 +183,8 @@ func TestDrakonCreation(t *testing.T) {
 		os.Setenv(EnvHealthCheckOverwrite, "yes")
 		cfg := configs.DrakonConfig{}
 
-		sut := NewConfig(cfg)
+		sut, err := NewConfig(cfg)
+		assert.Nil(t, err)
 		assert.NotNil(t, sut)
 
 		config, ok := sut.(*configs.DrakonConfig)
@@ -208,7 +218,8 @@ func TestHerakleitosCreation(t *testing.T) {
 		os.Setenv(EnvHealthCheckOverwrite, "yes")
 		cfg := configs.HerakleitosConfig{}
 
-		sut := NewConfig(cfg)
+		sut, err := NewConfig(cfg)
+		assert.Nil(t, err)
 		assert.NotNil(t, sut)
 
 		config, ok := sut.(*configs.HerakleitosConfig)
@@ -229,7 +240,8 @@ func TestHerodotosConfigCreation(t *testing.T) {
 		os.Setenv(EnvHealthCheckOverwrite, "yes")
 		cfg := configs.HerodotosConfig{}
 
-		sut := NewConfig(cfg)
+		sut, err := NewConfig(cfg)
+		assert.Nil(t, err)
 		assert.NotNil(t, sut)
 
 		alexandrosConfig, ok := sut.(*configs.HerodotosConfig)
@@ -248,7 +260,8 @@ func TestHerodotosConfigCreation(t *testing.T) {
 		os.Setenv(EnvKey, "test")
 		cfg := configs.HerodotosConfig{}
 
-		sut := NewConfig(cfg)
+		sut, err := NewConfig(cfg)
+		assert.Nil(t, err)
 		assert.NotNil(t, sut)
 
 		alexandrosConfig, ok := sut.(*configs.HerodotosConfig)
@@ -267,15 +280,16 @@ func TestHerodotosConfigCreation(t *testing.T) {
 		os.Setenv(EnvHealthCheckOverwrite, "yes")
 		os.Setenv(EnvKey, "minikube")
 		os.Setenv(EnvTlSKey, "no")
-		cfg := configs.AlexandrosConfig{}
+		cfg := configs.HerodotosConfig{}
 
-		sut := NewConfig(cfg)
+		sut, err := NewConfig(cfg)
+		assert.Nil(t, err)
 		assert.NotNil(t, sut)
 
-		alexandrosConfig, ok := sut.(*configs.AlexandrosConfig)
+		config, ok := sut.(*configs.HerodotosConfig)
 		assert.True(t, ok)
-		assert.Equal(t, expected, alexandrosConfig.Index)
-		assert.NotNil(t, alexandrosConfig.ElasticClient)
+		assert.Equal(t, expected, config.Index)
+		assert.NotNil(t, config.ElasticClient)
 
 		os.Unsetenv(EnvIndex)
 		os.Unsetenv(EnvKey)
@@ -291,7 +305,8 @@ func TestParmenidesCreation(t *testing.T) {
 		os.Setenv(EnvHealthCheckOverwrite, "yes")
 		cfg := configs.ParmenidesConfig{}
 
-		sut := NewConfig(cfg)
+		sut, err := NewConfig(cfg)
+		assert.Nil(t, err)
 		assert.NotNil(t, sut)
 
 		config, ok := sut.(*configs.ParmenidesConfig)
@@ -311,7 +326,8 @@ func TestPeriandrosCreation(t *testing.T) {
 		os.Setenv(EnvHealthCheckOverwrite, "yes")
 		cfg := configs.PeriandrosConfig{}
 
-		sut := NewConfig(cfg)
+		sut, err := NewConfig(cfg)
+		assert.Nil(t, err)
 		assert.NotNil(t, sut)
 
 		config, ok := sut.(*configs.PeriandrosConfig)
@@ -336,7 +352,8 @@ func TestPeriandrosCreation(t *testing.T) {
 		os.Setenv(EnvSolonService, expectedSolonService)
 		cfg := configs.PeriandrosConfig{}
 
-		sut := NewConfig(cfg)
+		sut, err := NewConfig(cfg)
+		assert.Nil(t, err)
 		assert.NotNil(t, sut)
 
 		config, ok := sut.(*configs.PeriandrosConfig)
@@ -366,7 +383,8 @@ func TestPtolemaiosConfigCreation(t *testing.T) {
 		expected := "http://localhost:5000"
 		cfg := configs.PtolemaiosConfig{}
 
-		sut := NewConfig(cfg)
+		sut, err := NewConfig(cfg)
+		assert.Nil(t, err)
 		assert.NotNil(t, sut)
 
 		config, ok := sut.(*configs.PtolemaiosConfig)
@@ -382,7 +400,8 @@ func TestPtolemaiosConfigCreation(t *testing.T) {
 		os.Setenv(EnvSolonService, expected)
 		cfg := configs.PtolemaiosConfig{}
 
-		sut := NewConfig(cfg)
+		sut, err := NewConfig(cfg)
+		assert.Nil(t, err)
 		assert.NotNil(t, sut)
 
 		config, ok := sut.(*configs.PtolemaiosConfig)
@@ -399,7 +418,8 @@ func TestPtolemaiosConfigCreation(t *testing.T) {
 		os.Setenv(EnvVaultService, expected)
 		cfg := configs.PtolemaiosConfig{}
 
-		sut := NewConfig(cfg)
+		sut, err := NewConfig(cfg)
+		assert.Nil(t, err)
 		assert.NotNil(t, sut)
 
 		config, ok := sut.(*configs.PtolemaiosConfig)
@@ -417,7 +437,8 @@ func TestPtolemaiosConfigCreation(t *testing.T) {
 		os.Setenv(EnvPodName, expected)
 		cfg := configs.PtolemaiosConfig{}
 
-		sut := NewConfig(cfg)
+		sut, err := NewConfig(cfg)
+		assert.Nil(t, err)
 		assert.NotNil(t, sut)
 
 		config, ok := sut.(*configs.PtolemaiosConfig)
@@ -434,7 +455,8 @@ func TestPtolemaiosConfigCreation(t *testing.T) {
 		os.Setenv(EnvRunOnce, "true")
 		cfg := configs.PtolemaiosConfig{}
 
-		sut := NewConfig(cfg)
+		sut, err := NewConfig(cfg)
+		assert.Nil(t, err)
 		assert.NotNil(t, sut)
 
 		config, ok := sut.(*configs.PtolemaiosConfig)
@@ -447,12 +469,78 @@ func TestPtolemaiosConfigCreation(t *testing.T) {
 	})
 }
 
+func TestSokratesConfigCreation(t *testing.T) {
+	t.Run("StandardConfig", func(t *testing.T) {
+		expected := "testrole"
+		os.Setenv(EnvSearchWord, expected)
+		os.Setenv(EnvHealthCheckOverwrite, "yes")
+		cfg := configs.SokratesConfig{}
+
+		sut, err := NewConfig(cfg)
+		assert.Nil(t, err)
+		assert.NotNil(t, sut)
+
+		sokartesConfig, ok := sut.(*configs.SokratesConfig)
+		assert.True(t, ok)
+		assert.Equal(t, expected, sokartesConfig.SearchWord)
+		assert.NotNil(t, sokartesConfig.ElasticClient)
+
+		os.Unsetenv(EnvSearchWord)
+		os.Unsetenv(EnvHealthCheckOverwrite)
+	})
+
+	t.Run("ElasticAccessThroughLabel", func(t *testing.T) {
+		expected := "testrole"
+		os.Setenv(EnvSearchWord, expected)
+		os.Setenv(EnvHealthCheckOverwrite, "yes")
+		os.Setenv(EnvKey, "test")
+		cfg := configs.SokratesConfig{}
+
+		sut, err := NewConfig(cfg)
+		assert.Nil(t, err)
+		assert.NotNil(t, sut)
+
+		sokartesConfig, ok := sut.(*configs.SokratesConfig)
+		assert.True(t, ok)
+		assert.Equal(t, expected, sokartesConfig.SearchWord)
+		assert.NotNil(t, sokartesConfig.ElasticClient)
+
+		os.Unsetenv(EnvSearchWord)
+		os.Unsetenv(EnvKey)
+		os.Unsetenv(EnvHealthCheckOverwrite)
+	})
+
+	t.Run("OverwriteEnvVariables", func(t *testing.T) {
+		expected := "testrole"
+		os.Setenv(EnvSearchWord, expected)
+		os.Setenv(EnvHealthCheckOverwrite, "yes")
+		os.Setenv(EnvKey, "minikube")
+		os.Setenv(EnvTlSKey, "no")
+		cfg := configs.SokratesConfig{}
+
+		sut, err := NewConfig(cfg)
+		assert.Nil(t, err)
+		assert.NotNil(t, sut)
+
+		sokartesConfig, ok := sut.(*configs.SokratesConfig)
+		assert.True(t, ok)
+		assert.Equal(t, expected, sokartesConfig.SearchWord)
+		assert.NotNil(t, sokartesConfig.ElasticClient)
+
+		os.Unsetenv(EnvIndex)
+		os.Unsetenv(EnvKey)
+		os.Unsetenv(EnvHealthCheckOverwrite)
+		os.Unsetenv(EnvTlSKey)
+	})
+}
+
 func TestSolonConfigCreation(t *testing.T) {
 	t.Run("StandardConfigCanBeParsed", func(t *testing.T) {
 		os.Setenv(EnvHealthCheckOverwrite, "yes")
 		cfg := configs.SolonConfig{}
 
-		sut := NewConfig(cfg)
+		sut, err := NewConfig(cfg)
+		assert.Nil(t, err)
 		assert.NotNil(t, sut)
 
 		config, ok := sut.(*configs.SolonConfig)
@@ -472,7 +560,8 @@ func TestSolonConfigCreation(t *testing.T) {
 		os.Setenv(EnvVaultService, expected)
 		cfg := configs.PtolemaiosConfig{}
 
-		sut := NewConfig(cfg)
+		sut, err := NewConfig(cfg)
+		assert.Nil(t, err)
 		assert.NotNil(t, sut)
 
 		config, ok := sut.(*configs.PtolemaiosConfig)
@@ -483,4 +572,127 @@ func TestSolonConfigCreation(t *testing.T) {
 
 		os.Unsetenv(EnvVaultService)
 	})
+}
+
+func TestElasticClient(t *testing.T) {
+	t.Run("SetElasticService", func(t *testing.T) {
+		expectedService := "http://test-service:9200"
+		os.Setenv(EnvElasticService, expectedService)
+		configManager := Config{
+			env:        "test",
+			BaseConfig: configs.BaseConfig{},
+		}
+
+		sut := configManager.getElasticConfig(false)
+
+		assert.Equal(t, expectedService, sut.Service)
+		assert.Equal(t, elasticUsernameDefault, sut.Username)
+		assert.Equal(t, elasticPasswordDefault, sut.Password)
+		assert.Equal(t, "", sut.ElasticCERT)
+
+		os.Unsetenv(EnvElasticService)
+	})
+
+	t.Run("SetElasticUser", func(t *testing.T) {
+		expectedUser := "test-user"
+		os.Setenv(EnvElasticUser, expectedUser)
+		configManager := Config{
+			env:        "test",
+			BaseConfig: configs.BaseConfig{},
+		}
+
+		sut := configManager.getElasticConfig(false)
+
+		assert.Equal(t, elasticServiceDefault, sut.Service)
+		assert.Equal(t, expectedUser, sut.Username)
+		assert.Equal(t, elasticPasswordDefault, sut.Password)
+		assert.Equal(t, "", sut.ElasticCERT)
+
+		os.Unsetenv(EnvElasticUser)
+	})
+
+	t.Run("SetElasticPassword", func(t *testing.T) {
+		expectedPassword := "test-password"
+		os.Setenv(EnvElasticPassword, expectedPassword)
+		configManager := Config{
+			env:        "test",
+			BaseConfig: configs.BaseConfig{},
+		}
+
+		sut := configManager.getElasticConfig(false)
+
+		assert.Equal(t, elasticServiceDefault, sut.Service)
+		assert.Equal(t, elasticUsernameDefault, sut.Username)
+		assert.Equal(t, expectedPassword, sut.Password)
+		assert.Equal(t, "", sut.ElasticCERT)
+
+		os.Unsetenv(EnvElasticPassword)
+	})
+
+	t.Run("StandardTlsIsRead", func(t *testing.T) {
+		configManager := Config{
+			env: "test",
+			BaseConfig: configs.BaseConfig{
+				TestOverwrite: true,
+			},
+		}
+
+		sut := configManager.getElasticConfig(true)
+
+		assert.Equal(t, elasticServiceDefaultTlS, sut.Service)
+		assert.Equal(t, elasticUsernameDefault, sut.Username)
+		assert.Equal(t, elasticPasswordDefault, sut.Password)
+		assert.NotEqual(t, "", sut.ElasticCERT)
+	})
+
+	t.Run("VaultToConf", func(t *testing.T) {
+		configManager := Config{
+			env: "test",
+			BaseConfig: configs.BaseConfig{
+				TestOverwrite: true,
+			},
+		}
+
+		vaultModel := models.ElasticConfigVault{
+			Username:    "testuser",
+			Password:    "testpassword",
+			ElasticCERT: "amegahugecert",
+		}
+
+		sut := configManager.mapVaultToConf(&vaultModel, true)
+
+		assert.Equal(t, elasticServiceDefaultTlS, sut.Service)
+		assert.Equal(t, vaultModel.Username, sut.Username)
+		assert.Equal(t, vaultModel.Password, sut.Password)
+		assert.Equal(t, vaultModel.ElasticCERT, sut.ElasticCERT)
+	})
+
+	t.Run("TlSDisabledTestConf", func(t *testing.T) {
+		configManager := Config{
+			env: "somethingelse",
+			BaseConfig: configs.BaseConfig{
+				TLSEnabled:    false,
+				TestOverwrite: true,
+				HealthCheck:   false,
+			},
+		}
+		elasticClient, err := configManager.getElasticClient()
+		assert.Nil(t, err)
+		assert.NotNil(t, elasticClient)
+	})
+
+	t.Run("TLSEnabledTestConf", func(t *testing.T) {
+		configManager := Config{
+			env: "TEST",
+			BaseConfig: configs.BaseConfig{
+				TLSEnabled:    true,
+				TestOverwrite: true,
+				HealthCheck:   false,
+			},
+		}
+		elasticClient, err := configManager.getElasticClient()
+		assert.Nil(t, err)
+		assert.NotNil(t, elasticClient)
+	})
+
 }

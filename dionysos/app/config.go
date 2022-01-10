@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/elastic/go-elasticsearch/v7"
-	"github.com/kpango/glg"
 	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/models"
 	"io/ioutil"
@@ -13,39 +12,6 @@ import (
 	"runtime"
 	"strings"
 )
-
-type DionysosConfig struct {
-	ElasticClient    elasticsearch.Client
-	DictionaryIndex  string
-	Index            string
-	DeclensionConfig models.DeclensionConfig
-}
-
-const dictionaryIndexDefault = "alexandros"
-const elasticIndexDefault = "grammar"
-
-func Get(es *elasticsearch.Client, declensionConfig *models.DeclensionConfig) *DionysosConfig {
-	dictIndex := os.Getenv("DICTIONARY_INDEX")
-	if dictIndex == "" {
-		glg.Debugf("setting DICTIONARY_INDEX to default: %s", dictionaryIndexDefault)
-		dictIndex = dictionaryIndexDefault
-	}
-
-	elasticIndex := os.Getenv("ELASTIC_INDEX")
-	if elasticIndex == "" {
-		glg.Debugf("setting ELASTIC_INDEX to default: %s", elasticIndexDefault)
-		elasticIndex = elasticIndexDefault
-	}
-
-	config := &DionysosConfig{
-		DictionaryIndex:  dictIndex,
-		Index:            elasticIndex,
-		ElasticClient:    *es,
-		DeclensionConfig: *declensionConfig,
-	}
-
-	return config
-}
 
 func QueryRuleSet(es *elasticsearch.Client, index string) *models.DeclensionConfig {
 	var local bool

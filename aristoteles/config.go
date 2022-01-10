@@ -2,24 +2,18 @@ package aristoteles
 
 import (
 	"embed"
-	"encoding/json"
 	"fmt"
 	"github.com/elastic/go-elasticsearch/v7"
 	"github.com/kpango/glg"
 	"github.com/odysseia/aristoteles/configs"
-	"github.com/odysseia/plato/elastic"
-	"github.com/odysseia/plato/helpers"
 	"github.com/odysseia/plato/kubernetes"
 	"github.com/odysseia/plato/models"
 	"github.com/odysseia/plato/vault"
 	"gopkg.in/yaml.v3"
-	"io/ioutil"
 	"net/url"
 	"os"
-	"path/filepath"
 	"reflect"
 	"strings"
-	"time"
 )
 
 type Config struct {
@@ -30,7 +24,7 @@ type Config struct {
 //go:embed base
 var base embed.FS
 
-func NewConfig(v interface{}) interface{} {
+func NewConfig(v interface{}) (interface{}, error) {
 	//https://patorjk.com/software/taag/#p=display&f=Crawford2&t=ARISTOTELES
 	glg.Info("\n  ____  ____   ____ _____ ______   ___   ______    ___  _        ___  _____\n /    ||    \\ |    / ___/|      | /   \\ |      |  /  _]| |      /  _]/ ___/\n|  o  ||  D  ) |  (   \\_ |      ||     ||      | /  [_ | |     /  [_(   \\_ \n|     ||    /  |  |\\__  ||_|  |_||  O  ||_|  |_||    _]| |___ |    _]\\__  |\n|  _  ||    \\  |  |/  \\ |  |  |  |     |  |  |  |   [_ |     ||   [_ /  \\ |\n|  |  ||  .  \\ |  |\\    |  |  |  |     |  |  |  |     ||     ||     |\\    |\n|__|__||__|\\_||____|\\___|  |__|   \\___/   |__|  |_____||_____||_____| \\___|\n                                                                           \n")
 	glg.Info(strings.Repeat("~", 37))
@@ -38,24 +32,24 @@ func NewConfig(v interface{}) interface{} {
 	glg.Info("\"Education needs these three: natural endowment, study, practice.\"")
 	glg.Info(strings.Repeat("~", 37))
 
-	envDir := os.Getenv(EnvKey)
-	if envDir == "" {
-		envDir = "local"
+	env := os.Getenv(EnvKey)
+	if env == "" {
+		env = "LOCAL"
 	}
+
+	envDir := strings.ToLower(env)
 
 	glg.Infof("getting config: %s from yaml files", envDir)
 
 	config, err := base.ReadFile(fmt.Sprintf("%s/%s/%s", baseDir, envDir, configFileName))
 	if err != nil {
-		glg.Error(err)
-		glg.Fatal("could not read base config")
+		return nil, err
 	}
 
 	var baseConfig configs.BaseConfig
 	err = yaml.Unmarshal(config, &baseConfig)
 	if err != nil {
-		glg.Error(err)
-		glg.Fatal("could not unmarshal base config")
+		return nil, err
 	}
 
 	envTls := os.Getenv(EnvTlSKey)
@@ -69,7 +63,7 @@ func NewConfig(v interface{}) interface{} {
 	}
 
 	newConfig := Config{BaseConfig: baseConfig}
-	newConfig.env = strings.ToUpper(envDir)
+	newConfig.env = env
 
 	glg.Infof("env set to: %s", newConfig.env)
 
@@ -88,21 +82,19 @@ func NewConfig(v interface{}) interface{} {
 	glg.Info("validating config")
 	valid, err := newConfig.configValidator(v)
 	if !valid || err != nil {
-		glg.Error(err)
-		glg.Fatal("invalid config found, shutting down")
+		return nil, err
 	}
 
 	glg.Info("config is valid")
 	glg.Info("setting remaining fields")
 	readConfig, err := newConfig.New(v)
 	if err != nil {
-		glg.Error(err)
-		glg.Fatal("could not create config, shutting down")
+		return nil, err
 	}
 
 	glg.Info("config created returning")
 
-	return readConfig
+	return readConfig, nil
 }
 
 func (c *Config) New(v interface{}) (interface{}, error) {
@@ -198,22 +190,22 @@ func (c *Config) fillFields(e *reflect.Value) {
 		switch fieldType {
 		case reflect.TypeOf(elasticsearch.Client{}):
 
-			es, err := c.getElasticClient(c.BaseConfig.HealthCheck)
+			es, err := c.getElasticClient()
 			if err != nil {
 				glg.Fatal("error getting es config")
 				esv := reflect.ValueOf(es)
 				e.FieldByName(fieldName).Set(esv)
 			}
 
-		case reflect.TypeOf((*kubernetes.KubeClient)(nil)):
-			k, err := c.getKubeClient("", "")
+		case reflect.TypeOf((*kubernetes.KubeClient)(nil)).Elem():
+			k, err := c.getKubeClient()
 			if err != nil {
 				glg.Fatal("error getting kubeconfig")
 			}
 			kv := reflect.ValueOf(k)
 			e.FieldByName(fieldName).Set(kv)
 
-		case reflect.TypeOf((*vault.Client)(nil)):
+		case reflect.TypeOf((*vault.Client)(nil)).Elem():
 			vault, err := c.getVaultClient()
 			if err != nil {
 				glg.Fatal("error getting vaultClient")
@@ -329,280 +321,4 @@ func (c *Config) getInitCreation() models.SolonCreationRequest {
 	}
 
 	return creationRequest
-}
-
-func (c *Config) getElasticClient(healthCheck bool) (*elasticsearch.Client, error) {
-	var es *elasticsearch.Client
-	if c.env == "LOCAL" {
-		if c.BaseConfig.TLSEnabled {
-			glg.Debug("creating local es client with tls enabled")
-
-			elasticCert := c.getCert()
-			esConf := c.getElasticConfig(c.BaseConfig.TLSEnabled, elasticCert)
-
-			client, err := elastic.CreateElasticClientWithTlS(esConf)
-			if err != nil {
-				glg.Fatalf("Error creating ElasticClient shutting down: %s", err)
-			}
-
-			es = client
-		} else {
-			esConf := c.getElasticConfig(c.BaseConfig.TLSEnabled, nil)
-			glg.Debug("creating local es client from env variables")
-			client, err := elastic.CreateElasticClientFromEnvVariables(esConf)
-			if err != nil {
-				glg.Fatalf("Error creating ElasticClient shutting down: %s", err)
-			}
-
-			es = client
-		}
-	} else {
-		if c.BaseConfig.TLSEnabled {
-			glg.Debug("getting es config from vault")
-			esConf, err := c.getConfigFromVault()
-			if err != nil {
-				glg.Fatalf("error getting config from sidecar, shutting down: %s", err)
-			}
-
-			glg.Debug("creating es client with TLS enabled")
-			client, err := elastic.CreateElasticClientWithTlS(*esConf)
-			if err != nil {
-				glg.Fatalf("Error creating ElasticClient shutting down: %s", err)
-			}
-
-			es = client
-		} else {
-			glg.Debug("creating local es client from env variables")
-			client, err := elastic.CreateElasticClientFromEnvVariables()
-			if err != nil {
-				glg.Fatalf("Error creating ElasticClient shutting down: %s", err)
-			}
-
-			es = client
-		}
-	}
-
-	if healthCheck {
-		standardTicks := 120 * time.Second
-
-		healthy := elastic.CheckHealthyStatusElasticSearch(es, standardTicks)
-		if !healthy {
-			glg.Fatalf("elasticClient unhealthy after %s ticks", standardTicks)
-		}
-	}
-
-	return es, nil
-}
-
-func (c *Config) getElasticConfig(tls bool, cert []byte) models.ElasticConfig {
-	elasticService := os.Getenv(EnvElasticService)
-	if elasticService == "" {
-		if tls {
-			glg.Debugf("setting %s to default: %s", EnvElasticService, elasticServiceDefaultTlS)
-			elasticService = elasticServiceDefaultTlS
-		} else {
-			glg.Debugf("setting %s to default: %s", EnvElasticService, elasticServiceDefault)
-			elasticService = elasticServiceDefault
-		}
-	}
-	elasticUser := os.Getenv(EnvElasticUser)
-	if elasticUser == "" {
-		glg.Debugf("setting %s to default: %s", EnvElasticUser, elasticUsernameDefault)
-		elasticUser = elasticUsernameDefault
-	}
-	elasticPassword := os.Getenv(EnvElasticPassword)
-	if elasticPassword == "" {
-		glg.Debugf("setting %s to default: %s", EnvElasticPassword, elasticPasswordDefault)
-		elasticPassword = elasticPasswordDefault
-	}
-
-	var elasticCert string
-	if cert != nil {
-		elasticCert = string(cert)
-	} else {
-		elasticCert = ""
-	}
-
-	esConf := models.ElasticConfig{
-		Service:     elasticService,
-		Username:    elasticUser,
-		Password:    elasticPassword,
-		ElasticCERT: elasticCert,
-	}
-
-	return esConf
-}
-
-func (c *Config) getConfigFromVault() (*models.ElasticConfigVault, error) {
-	sidecarService := os.Getenv(EnvPtolemaiosService)
-	if sidecarService == "" {
-		glg.Info("defaulting to %s for sidecar")
-		sidecarService = defaultSidecarService
-	}
-
-	u, err := url.Parse(sidecarService)
-	if err != nil {
-		return nil, err
-	}
-
-	u.Path = defaultSidecarPath
-
-	response, err := helpers.GetRequest(u)
-	if err != nil {
-		return nil, err
-	}
-
-	defer response.Body.Close()
-
-	var secret models.ElasticConfigVault
-	err = json.NewDecoder(response.Body).Decode(&secret)
-	if err != nil {
-		return nil, err
-	}
-
-	return &secret, nil
-}
-
-func (c *Config) getKubeClient(kubePath, namespace string) (*kubernetes.KubeClient, error) {
-	var kubeManager kubernetes.KubeClient
-
-	if namespace == "" {
-		namespace = defaultNamespace
-	}
-
-	if c.BaseConfig.OutOfClusterKube {
-		var filePath string
-		if kubePath == "" {
-			glg.Debugf("defaulting to %s", defaultKubeConfig)
-			homeDir, err := os.UserHomeDir()
-			if err != nil {
-				glg.Error(err)
-			}
-
-			filePath = filepath.Join(homeDir, defaultKubeConfig)
-		} else {
-			filePath = kubePath
-		}
-
-		cfg, err := ioutil.ReadFile(filePath)
-		if err != nil {
-			glg.Error("error getting kubeconfig")
-		}
-
-		kube, err := kubernetes.NewKubeClient(cfg, namespace)
-		if err != nil {
-			glg.Fatal("error creating kubeclient")
-		}
-
-		kubeManager = kube
-	} else {
-		glg.Debug("creating in cluster kube client")
-		kube, err := kubernetes.NewKubeClient(nil, namespace)
-		if err != nil {
-			glg.Fatal("error creating kubeclient")
-		}
-		kubeManager = kube
-	}
-
-	return &kubeManager, nil
-}
-
-func (c *Config) getVaultClient() (*vault.Client, error) {
-	var vaultClient vault.Client
-
-	vaultRootToken := c.getStringFromEnv(EnvRootToken, "")
-	vaultAuthMethod := c.getStringFromEnv(EnvAuthMethod, AuthMethodToken)
-	vaultService := c.getStringFromEnv(EnvVaultService, c.BaseConfig.VaultService)
-
-	vaultRole := c.getStringFromEnv(EnvVaultRole, defaultRoleName)
-
-	glg.Debugf("vaultAuthMethod set to %s", vaultAuthMethod)
-
-	if vaultAuthMethod == AuthMethodKube {
-		jwtToken, err := os.ReadFile(serviceAccountTokenPath)
-		if err != nil {
-			glg.Error(err)
-			return nil, err
-		}
-
-		vaultJwtToken := string(jwtToken)
-
-		client, err := vault.CreateVaultClientKubernetes(vaultService, vaultRole, vaultJwtToken)
-		if err != nil {
-			glg.Error(err)
-			return nil, err
-		}
-
-		vaultClient = client
-	} else {
-		if vaultRootToken == "" {
-			glg.Debug("root token empty getting from file for local testing")
-			vaultRootToken, err := c.getTokenFromFile(defaultNamespace)
-			if err != nil {
-				glg.Error(err)
-				return nil, err
-			}
-			client, err := vault.CreateVaultClient(vaultService, vaultRootToken)
-			if err != nil {
-				glg.Error(err)
-				return nil, err
-			}
-
-			vaultClient = client
-		} else {
-			client, err := vault.CreateVaultClient(vaultService, vaultRootToken)
-			if err != nil {
-				glg.Error(err)
-				return nil, err
-			}
-
-			vaultClient = client
-		}
-	}
-
-	if c.BaseConfig.HealthCheckOverwrite {
-		healthy := vaultClient.CheckHealthyStatus(120)
-		if !healthy {
-			return nil, fmt.Errorf("error getting healthy status from vault")
-		}
-	}
-
-	return &vaultClient, nil
-}
-
-func (c *Config) getTokenFromFile(namespace string) (string, error) {
-	rootPath := helpers.OdysseiaRootPath()
-	clusterKeys := filepath.Join(rootPath, "solon", "vault_config", fmt.Sprintf("cluster-keys-%s.json", namespace))
-
-	f, err := ioutil.ReadFile(clusterKeys)
-	if err != nil {
-		glg.Error(fmt.Sprintf("Cannot read fixture file: %s", err))
-		return "", err
-	}
-
-	var result map[string]interface{}
-
-	// Unmarshal or Decode the JSON to the interface.
-	json.Unmarshal(f, &result)
-
-	return result["root_token"].(string), nil
-}
-
-func (c *Config) getCert() []byte {
-	var cert []byte
-
-	if c.BaseConfig.TestOverwrite {
-		glg.Info("trying to read cert file from file")
-		rootPath := helpers.OdysseiaRootPath()
-		certPath := filepath.Join(rootPath, "eratosthenes", "fixture", "elastic-test-cert.pem")
-
-		cert, _ = ioutil.ReadFile(certPath)
-
-		return cert
-	}
-
-	glg.Info("trying to read cert file from pod")
-	cert, _ = ioutil.ReadFile(certPathInPod)
-
-	return cert
 }

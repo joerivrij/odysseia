@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/kpango/glg"
+	"github.com/odysseia/aristoteles"
+	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/demokritos/app"
 	"github.com/odysseia/plato/models"
 	"os"
@@ -36,7 +38,16 @@ func main() {
 	glg.Info("\"By convention sweet is sweet, bitter is bitter, hot is hot, cold is cold, color is color; but in truth there are only atoms and the void.\"")
 	glg.Info(strings.Repeat("~", 37))
 
-	config := app.Get()
+	baseConfig := configs.DemokritosConfig{}
+	unparsedConfig, err := aristoteles.NewConfig(baseConfig)
+	if err != nil {
+		glg.Error(err)
+		glg.Fatal("death has found me")
+	}
+	demokritosConfig, ok := unparsedConfig.(*configs.DemokritosConfig)
+	if !ok {
+		glg.Fatal("could not parse config")
+	}
 
 	root := "lexiko"
 
@@ -45,8 +56,10 @@ func main() {
 		glg.Fatal(err)
 	}
 
-	config.DeleteIndexAtStartUp()
-	config.CreateIndexAtStartup()
+	handler := app.DemokritosHandler{Config: demokritosConfig}
+
+	handler.DeleteIndexAtStartUp()
+	handler.CreateIndexAtStartup()
 
 	var wg sync.WaitGroup
 
@@ -70,12 +83,12 @@ func main() {
 				documents += len(biblos.Biblos)
 
 				wg.Add(1)
-				go config.AddDirectoryToElastic(biblos, &wg)
+				go handler.AddDirectoryToElastic(biblos, &wg)
 			}
 		}
 	}
 	wg.Wait()
-	glg.Infof("created: %s", strconv.Itoa(config.Created))
+	glg.Infof("created: %s", strconv.Itoa(handler.Config.Created))
 	glg.Infof("words found in sullego: %s", strconv.Itoa(documents))
 	os.Exit(0)
 }

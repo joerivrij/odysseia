@@ -8,7 +8,7 @@ import (
 type DrakonConfig struct {
 	Namespace     string
 	PodName       string
-	Kube          *kubernetes.KubeClient
+	Kube          kubernetes.KubeClient
 	ElasticClient elasticsearch.Client
 	Roles         []string
 	Indexes       []string

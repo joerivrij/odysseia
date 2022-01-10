@@ -6,6 +6,7 @@ import (
 	"github.com/kpango/glg"
 	"github.com/odysseia/archimedes/util"
 	"github.com/odysseia/aristoteles"
+	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/plato/kubernetes"
 	"github.com/odysseia/plato/vault"
 	"github.com/spf13/cobra"
@@ -58,19 +59,19 @@ func Auth() *cobra.Command {
 				method = defaultMethod
 			}
 
-			config, err := aristoteles.NewConfig()
+			baseConfig := configs.ArchimedesConfig{}
+			unparsedConfig, err := aristoteles.NewConfig(baseConfig)
 			if err != nil {
 				glg.Error(err)
-				os.Exit(1)
+				glg.Fatal("death has found me")
 			}
-
-			kube, err := config.GetKubeClient(filePath, namespace)
-			if err != nil {
-				glg.Fatal("error creating kubeclient")
+			archimedesConfig, ok := unparsedConfig.(*configs.ArchimedesConfig)
+			if !ok {
+				glg.Fatal("could not parse config")
 			}
 
 			glg.Infof("enabling the following auth method %s", method)
-			enableKubernetesAsAuth(namespace, policyName, kube)
+			enableKubernetesAsAuth(namespace, policyName, archimedesConfig.Kube)
 		},
 	}
 
@@ -82,7 +83,7 @@ func Auth() *cobra.Command {
 	return cmd
 }
 
-func enableKubernetesAsAuth(namespace, policyName string, kube *kubernetes.Kube) {
+func enableKubernetesAsAuth(namespace, policyName string, kube kubernetes.KubeClient) {
 	vaultSubString := "vault"
 	var vaultSelector string
 	var podName string

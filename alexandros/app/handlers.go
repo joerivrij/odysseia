@@ -3,6 +3,7 @@ package app
 import (
 	"encoding/json"
 	"github.com/kpango/glg"
+	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/helpers"
 	"github.com/odysseia/plato/middleware"
@@ -11,7 +12,7 @@ import (
 )
 
 type AlexandrosHandler struct {
-	Config *AlexandrosConfig
+	Config *configs.AlexandrosConfig
 }
 
 // PingPong pongs the ping

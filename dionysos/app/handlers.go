@@ -2,6 +2,7 @@ package app
 
 import (
 	"github.com/kpango/glg"
+	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/plato/helpers"
 	"github.com/odysseia/plato/middleware"
 	"github.com/odysseia/plato/models"
@@ -9,7 +10,7 @@ import (
 )
 
 type DionysosHandler struct {
-	Config *DionysosConfig
+	Config *configs.DionysosConfig
 }
 
 // PingPong pongs the ping

@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 	"github.com/kpango/glg"
+	"github.com/odysseia/aristoteles"
+	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/periandros/app"
 	"k8s.io/client-go/tools/leaderelection"
 	"k8s.io/client-go/tools/leaderelection/resourcelock"
@@ -22,7 +24,7 @@ func init() {
 		AddLevelWriter(glg.ERR, errlog)
 }
 
-func getLeaderConfig(lock *resourcelock.LeaseLock, id string, config *app.PeriandrosConfig) leaderelection.LeaderElectionConfig {
+func getLeaderConfig(lock *resourcelock.LeaseLock, id string, app *app.PeriandrosHandler) leaderelection.LeaderElectionConfig {
 	leaderConfig := leaderelection.LeaderElectionConfig{
 		Lock:            lock,
 		ReleaseOnCancel: true,
@@ -31,13 +33,13 @@ func getLeaderConfig(lock *resourcelock.LeaseLock, id string, config *app.Perian
 		RetryPeriod:     2 * time.Second,
 		Callbacks: leaderelection.LeaderCallbacks{
 			OnStartedLeading: func(ctx context.Context) {
-				created, err := config.CreateUser()
+				created, err := app.CreateUser()
 				if err != nil {
 					glg.Error("error occurred while creating user")
 					glg.Error(err)
 				}
 				if created {
-					glg.Infof("created user while being leader: %s", config.SolonCreationRequest.Username)
+					glg.Infof("created user while being leader: %s", app.Config.SolonCreationRequest.Username)
 				}
 			},
 			OnStoppedLeading: func() {
@@ -66,22 +68,28 @@ func main() {
 
 	glg.Debug("creating config")
 
-	config := app.Get()
-
-	healthy := config.CheckSolonHealth(120)
-	if !healthy {
+	baseConfig := configs.PeriandrosConfig{}
+	unparsedConfig, err := aristoteles.NewConfig(baseConfig)
+	if err != nil {
+		glg.Error(err)
 		glg.Fatal("death has found me")
+	}
+	periandrosConfig, ok := unparsedConfig.(*configs.PeriandrosConfig)
+	if !ok {
+		glg.Fatal("could not parse config")
 	}
 
 	var wg sync.WaitGroup
-	leaseLockName := fmt.Sprintf("%s-periandros-lock", config.SolonCreationRequest.PodName)
+	leaseLockName := fmt.Sprintf("%s-periandros-lock", periandrosConfig.SolonCreationRequest.PodName)
 
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
-	lock := config.Kube.GetNewLock(leaseLockName, config.SolonCreationRequest.PodName, config.Namespace)
+	handler := app.PeriandrosHandler{Config: periandrosConfig}
 
-	leaderConfig := getLeaderConfig(lock, config.SolonCreationRequest.PodName, config)
+	lock := handler.Config.Kube.Workload().GetNewLock(leaseLockName, handler.Config.SolonCreationRequest.PodName, handler.Config.Namespace)
+
+	leaderConfig := getLeaderConfig(lock, handler.Config.SolonCreationRequest.PodName, &handler)
 	leader, err := leaderelection.NewLeaderElector(leaderConfig)
 	if err != nil {
 		glg.Error(err)

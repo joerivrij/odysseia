@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/kpango/glg"
+	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/generator"
 	"github.com/odysseia/plato/helpers"
@@ -15,7 +16,7 @@ import (
 )
 
 type SolonHandler struct {
-	Config *SolonConfig
+	Config *configs.SolonConfig
 }
 
 // PingPong pongs the ping
@@ -160,7 +161,7 @@ func (s *SolonHandler) RegisterService(w http.ResponseWriter, req *http.Request)
 	}
 
 	createRequest := models.CreateSecretRequest{
-		Data: models.ElasticConfig{
+		Data: models.ElasticConfigVault{
 			Username:    creationRequest.Username,
 			Password:    password,
 			ElasticCERT: string(s.Config.ElasticCert),

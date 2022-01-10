@@ -8,7 +8,7 @@ import (
 type PtolemaiosConfig struct {
 	VaultService string
 	SolonService *url.URL
-	Kube         *kubernetes.KubeClient
+	Kube         kubernetes.KubeClient
 	PodName      string
 	Namespace    string
 	RunOnce      bool

@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/models"
 	"github.com/stretchr/testify/assert"
@@ -14,7 +15,7 @@ import (
 )
 
 func TestPingPongRoute(t *testing.T) {
-	testConfig := SokratesConfig{}
+	testConfig := configs.SokratesConfig{}
 	router := InitRoutes(testConfig)
 	expected := "{\"result\":\"pong\"}"
 
@@ -29,9 +30,9 @@ func TestHealthEndpointHealthy(t *testing.T) {
 	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
-	testConfig := SokratesConfig{
+	testConfig := configs.SokratesConfig{
 		ElasticClient: *mockElasticClient,
-		SearchTerm:    "test",
+		SearchWord:    "test",
 	}
 
 	router := InitRoutes(testConfig)
@@ -51,9 +52,9 @@ func TestHealthEndpointElasticDown(t *testing.T) {
 	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
-	testConfig := SokratesConfig{
+	testConfig := configs.SokratesConfig{
 		ElasticClient: *mockElasticClient,
-		SearchTerm:    "test",
+		SearchWord:    "test",
 	}
 
 	router := InitRoutes(testConfig)
@@ -74,9 +75,9 @@ func TestLastChapterEndPointHappyPath(t *testing.T) {
 	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
-	testConfig := SokratesConfig{
+	testConfig := configs.SokratesConfig{
 		ElasticClient: *mockElasticClient,
-		SearchTerm:    "greek",
+		SearchWord:    "greek",
 	}
 
 	router := InitRoutes(testConfig)
@@ -97,9 +98,9 @@ func TestLastChapterShardFailure(t *testing.T) {
 	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
-	testConfig := SokratesConfig{
+	testConfig := configs.SokratesConfig{
 		ElasticClient: *mockElasticClient,
-		SearchTerm:    "greek",
+		SearchWord:    "greek",
 	}
 
 	router := InitRoutes(testConfig)
@@ -122,9 +123,9 @@ func TestLastChapterEmptyQuery(t *testing.T) {
 	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
-	testConfig := SokratesConfig{
+	testConfig := configs.SokratesConfig{
 		ElasticClient: *mockElasticClient,
-		SearchTerm:    "greek",
+		SearchWord:    "greek",
 	}
 
 	router := InitRoutes(testConfig)
@@ -150,9 +151,9 @@ func TestCheckAnswerEndPointHappyPath(t *testing.T) {
 	jsonBody, _ := json.Marshal(body)
 	bodyInBytes := bytes.NewReader(jsonBody)
 
-	testConfig := SokratesConfig{
+	testConfig := configs.SokratesConfig{
 		ElasticClient: *mockElasticClient,
-		SearchTerm:    "greek",
+		SearchWord:    "greek",
 	}
 
 	router := InitRoutes(testConfig)
@@ -177,9 +178,9 @@ func TestCheckAnswerElasticDown(t *testing.T) {
 	jsonBody, _ := json.Marshal(body)
 	bodyInBytes := bytes.NewReader(jsonBody)
 
-	testConfig := SokratesConfig{
+	testConfig := configs.SokratesConfig{
 		ElasticClient: *mockElasticClient,
-		SearchTerm:    "greek",
+		SearchWord:    "greek",
 	}
 
 	router := InitRoutes(testConfig)
@@ -206,9 +207,9 @@ func TestCheckQuestionBadJson(t *testing.T) {
 	jsonBody, _ := json.Marshal(body)
 	bodyInBytes := bytes.NewReader(jsonBody)
 
-	testConfig := SokratesConfig{
+	testConfig := configs.SokratesConfig{
 		ElasticClient: *mockElasticClient,
-		SearchTerm:    "greek",
+		SearchWord:    "greek",
 	}
 
 	router := InitRoutes(testConfig)
@@ -232,9 +233,9 @@ func TestCreateQuestionEndPointHappyPath(t *testing.T) {
 	category := "verba"
 	chapter := "1"
 
-	testConfig := SokratesConfig{
+	testConfig := configs.SokratesConfig{
 		ElasticClient: *mockElasticClient,
-		SearchTerm:    "greek",
+		SearchWord:    "greek",
 	}
 
 	router := InitRoutes(testConfig)
@@ -260,9 +261,9 @@ func TestCreateQuestionEndPointCanCreateShorterQuiz(t *testing.T) {
 	category := "verba"
 	chapter := "1"
 
-	testConfig := SokratesConfig{
+	testConfig := configs.SokratesConfig{
 		ElasticClient: *mockElasticClient,
-		SearchTerm:    "greek",
+		SearchWord:    "greek",
 	}
 
 	router := InitRoutes(testConfig)
@@ -285,9 +286,9 @@ func TestCreateQuestionEmptyQuery(t *testing.T) {
 	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
-	testConfig := SokratesConfig{
+	testConfig := configs.SokratesConfig{
 		ElasticClient: *mockElasticClient,
-		SearchTerm:    "test",
+		SearchWord:    "test",
 	}
 
 	category := "verba"
@@ -312,9 +313,9 @@ func TestCreateQuestionElasticDown(t *testing.T) {
 	category := "verba"
 	chapter := "1"
 
-	testConfig := SokratesConfig{
+	testConfig := configs.SokratesConfig{
 		ElasticClient: *mockElasticClient,
-		SearchTerm:    "greek",
+		SearchWord:    "greek",
 	}
 
 	router := InitRoutes(testConfig)

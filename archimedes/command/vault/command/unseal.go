@@ -3,6 +3,8 @@ package command
 import (
 	"fmt"
 	"github.com/kpango/glg"
+	"github.com/odysseia/aristoteles"
+	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/plato/kubernetes"
 	"github.com/odysseia/plato/vault"
 	"github.com/spf13/cobra"
@@ -42,14 +44,20 @@ func Unseal() *cobra.Command {
 				filePath = filepath.Join(homeDir, defaultKubeConfig)
 			}
 
-			kubeManager, err := kubernetes.NewKubeClient(filePath, namespace)
+			baseConfig := configs.ArchimedesConfig{}
+			unparsedConfig, err := aristoteles.NewConfig(baseConfig)
 			if err != nil {
-				glg.Fatal("error creating kubeclient")
+				glg.Error(err)
+				glg.Fatal("death has found me")
+			}
+			archimedesConfig, ok := unparsedConfig.(*configs.ArchimedesConfig)
+			if !ok {
+				glg.Fatal("could not parse config")
 			}
 
 			glg.Info("is it secret? Is it safe? Well no longer!")
 			glg.Debug("unsealing kube vault")
-			unsealVault(key, namespace, kubeManager)
+			unsealVault(key, namespace, archimedesConfig.Kube)
 		},
 	}
 
@@ -60,7 +68,7 @@ func Unseal() *cobra.Command {
 	return cmd
 }
 
-func unsealVault(key, namespace string, kube *kubernetes.Kube) {
+func unsealVault(key, namespace string, kube kubernetes.KubeClient) {
 	if key == "" {
 		glg.Info("key was not given, trying to get key from cluster-keys.json")
 		clusterKeys := vault.GetClusterKeys(namespace)

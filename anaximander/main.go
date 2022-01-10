@@ -6,7 +6,8 @@ import (
 	"fmt"
 	"github.com/elastic/go-elasticsearch/v7/esapi"
 	"github.com/kpango/glg"
-	config "github.com/odysseia/plato/configuration"
+	"github.com/odysseia/aristoteles"
+	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/models"
 	"io/ioutil"
@@ -15,8 +16,6 @@ import (
 	"strconv"
 	"strings"
 )
-
-var created int
 
 func init() {
 	errlog := glg.FileWriter("/tmp/error.log", 0666)
@@ -35,31 +34,24 @@ func main() {
 	glg.Info("\"He declares that at first human beings arose in the inside of fishes, and after having been reared like sharks, and become capable of protecting themselves, they were finally cast ashore and took to land\"")
 	glg.Info(strings.Repeat("~", 37))
 
-	configBuilder, _ := config.NewConfBuilderWithSidecar()
-
-	esConf, err := configBuilder.GetConfigFromSidecar()
+	baseConfig := configs.AnaximanderConfig{}
+	unparsedConfig, err := aristoteles.NewConfig(baseConfig)
 	if err != nil {
-		glg.Fatalf("error getting config from sidecar, shutting down: %s", err)
-	}
-
-	esClient, err := elastic.CreateElasticClientFromEnvVariablesWithTLS(*esConf)
-	if err != nil {
-		glg.Fatalf("Error creating ElasticClient shutting down: %s", err)
-	}
-
-	healthy := elastic.CheckHealthyStatusElasticSearch(esClient, 180)
-	if !healthy {
+		glg.Error(err)
 		glg.Fatal("death has found me")
+	}
+	anaximanderConfig, ok := unparsedConfig.(*configs.AnaximanderConfig)
+	if !ok {
+		glg.Fatal("could not parse config")
 	}
 
 	root := "arkho"
-	indexName := "grammar"
 
 	rootDir, err := ioutil.ReadDir(root)
 	if err != nil {
 		glg.Fatal(err)
 	}
-	elastic.DeleteIndex(esClient, indexName)
+	elastic.DeleteIndex(&anaximanderConfig.ElasticClient, anaximanderConfig.Index)
 
 	for _, dir := range rootDir {
 		glg.Debug("working on the following directory: " + dir.Name())
@@ -78,12 +70,12 @@ func main() {
 				esRequest := esapi.IndexRequest{
 					Body:       strings.NewReader(string(upload)),
 					Refresh:    "true",
-					Index:      indexName,
+					Index:      anaximanderConfig.Index,
 					DocumentID: "",
 				}
 
 				// Perform the request with the client.
-				res, err := esRequest.Do(context.Background(), esClient)
+				res, err := esRequest.Do(context.Background(), &anaximanderConfig.ElasticClient)
 				if err != nil {
 					glg.Fatalf("Error getting response: %s", err)
 				}
@@ -98,13 +90,13 @@ func main() {
 						glg.Errorf("Error parsing the response body: %s", err)
 					} else {
 						// Print the response status and indexed document version.
-						created++
+						anaximanderConfig.Created++
 					}
 				}
 			}
 		}
 	}
-	glg.Infof("created: %s", strconv.Itoa(created))
+	glg.Infof("created: %s", strconv.Itoa(anaximanderConfig.Created))
 	os.Exit(0)
 
 }

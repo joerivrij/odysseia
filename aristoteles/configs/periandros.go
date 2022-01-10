@@ -10,5 +10,5 @@ type PeriandrosConfig struct {
 	Namespace            string
 	SolonService         *url.URL
 	SolonCreationRequest models.SolonCreationRequest
-	Kube                 *kubernetes.KubeClient
+	Kube                 kubernetes.KubeClient
 }

@@ -3,6 +3,7 @@ package command
 import (
 	"github.com/kpango/glg"
 	"github.com/odysseia/aristoteles"
+	"github.com/odysseia/aristoteles/configs"
 	"github.com/spf13/cobra"
 	"os"
 	"path/filepath"
@@ -33,31 +34,31 @@ func New() *cobra.Command {
 				filePath = filepath.Join(homeDir, defaultKubeConfig)
 			}
 
-			config, err := aristoteles.NewConfig()
+			baseConfig := configs.ArchimedesConfig{}
+			unparsedConfig, err := aristoteles.NewConfig(baseConfig)
 			if err != nil {
 				glg.Error(err)
-				os.Exit(1)
+				glg.Fatal("death has found me")
 			}
-
-			kube, err := config.GetKubeClient(filePath, namespace)
-			if err != nil {
-				glg.Fatal("error creating kubeclient")
+			archimedesConfig, ok := unparsedConfig.(*configs.ArchimedesConfig)
+			if !ok {
+				glg.Fatal("could not parse config")
 			}
 
 			glg.Info("1. vault init started")
-			initVault(namespace, kube)
+			initVault(namespace, archimedesConfig.Kube)
 			glg.Info("1. vault init completed")
 			glg.Info("2. vault unseal started")
-			unsealVault("", namespace, kube)
+			unsealVault("", namespace, archimedesConfig.Kube)
 			glg.Info("2. vault unseal completed")
 			glg.Info("3. adding admin")
-			createPolicy(defaultAdminPolicyName, namespace, kube)
+			createPolicy(defaultAdminPolicyName, namespace, archimedesConfig.Kube)
 			glg.Info("3. finished adding admin")
 			glg.Info("4. adding user")
-			createPolicy(defaultUserPolicyName, namespace, kube)
+			createPolicy(defaultUserPolicyName, namespace, archimedesConfig.Kube)
 			glg.Info("4. finished adding user")
 			glg.Info("5. adding kuberentes as auth method")
-			enableKubernetesAsAuth(namespace, defaultAdminPolicyName, kube)
+			enableKubernetesAsAuth(namespace, defaultAdminPolicyName, archimedesConfig.Kube)
 			glg.Info("5. finished adding kuberentes as auth method")
 
 		},

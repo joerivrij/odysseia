@@ -7,10 +7,10 @@ import (
 )
 
 type SolonConfig struct {
-	Vault            *vault.Client
+	Vault            vault.Client
 	ElasticClient    elasticsearch.Client
 	ElasticCert      []byte
-	Kube             *kubernetes.KubeClient
+	Kube             kubernetes.KubeClient
 	Namespace        string
 	AccessAnnotation string
 	RoleAnnotation   string

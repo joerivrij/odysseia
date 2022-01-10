@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/models"
 	"github.com/stretchr/testify/assert"
@@ -15,7 +16,7 @@ import (
 )
 
 func TestPingPongRoute(t *testing.T) {
-	testConfig := HerodotosConfig{}
+	testConfig := configs.HerodotosConfig{}
 	router := InitRoutes(testConfig)
 	expected := "{\"result\":\"pong\"}"
 
@@ -30,7 +31,7 @@ func TestHealthEndpointHealthy(t *testing.T) {
 	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
-	testConfig := HerodotosConfig{
+	testConfig := configs.HerodotosConfig{
 		ElasticClient: *mockElasticClient,
 		Index:         "test",
 	}
@@ -52,7 +53,7 @@ func TestHealthEndpointElasticDown(t *testing.T) {
 	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
-	testConfig := HerodotosConfig{
+	testConfig := configs.HerodotosConfig{
 		ElasticClient: *mockElasticClient,
 		Index:         "test",
 	}
@@ -73,7 +74,7 @@ func TestAuthorsEndPointHappyPath(t *testing.T) {
 	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
-	testConfig := HerodotosConfig{
+	testConfig := configs.HerodotosConfig{
 		ElasticClient: *mockElasticClient,
 		Index:         "test",
 	}
@@ -101,7 +102,7 @@ func TestAuthorsEndPointShardFailure(t *testing.T) {
 	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
-	testConfig := HerodotosConfig{
+	testConfig := configs.HerodotosConfig{
 		ElasticClient: *mockElasticClient,
 		Index:         "test",
 	}
@@ -125,7 +126,7 @@ func TestAuthorsEndPointReturnsBadJson(t *testing.T) {
 	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
-	testConfig := HerodotosConfig{
+	testConfig := configs.HerodotosConfig{
 		ElasticClient: *mockElasticClient,
 		Index:         "test",
 	}
@@ -150,7 +151,7 @@ func TestCreateQuestionHappyPath(t *testing.T) {
 	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
-	testConfig := HerodotosConfig{
+	testConfig := configs.HerodotosConfig{
 		ElasticClient: *mockElasticClient,
 		Index:         "test",
 	}
@@ -175,7 +176,7 @@ func TestCreateQuestionMissingAuthor(t *testing.T) {
 	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
-	testConfig := HerodotosConfig{
+	testConfig := configs.HerodotosConfig{
 		ElasticClient: *mockElasticClient,
 		Index:         "test",
 	}
@@ -200,7 +201,7 @@ func TestCreateQuestionMissingAuthorInElastic(t *testing.T) {
 	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
-	testConfig := HerodotosConfig{
+	testConfig := configs.HerodotosConfig{
 		ElasticClient: *mockElasticClient,
 		Index:         "test",
 	}
@@ -225,7 +226,7 @@ func TestCreateQuestionShardFailure(t *testing.T) {
 	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
-	testConfig := HerodotosConfig{
+	testConfig := configs.HerodotosConfig{
 		ElasticClient: *mockElasticClient,
 		Index:         "test",
 	}
@@ -250,7 +251,7 @@ func TestCreateQuestionUnParseableJson(t *testing.T) {
 	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
-	testConfig := HerodotosConfig{
+	testConfig := configs.HerodotosConfig{
 		ElasticClient: *mockElasticClient,
 		Index:         "test",
 	}
@@ -283,7 +284,7 @@ func TestCheckAnswerEndPointHappyPath(t *testing.T) {
 	jsonBody, _ := json.Marshal(body)
 	bodyInBytes := bytes.NewReader(jsonBody)
 
-	testConfig := HerodotosConfig{
+	testConfig := configs.HerodotosConfig{
 		ElasticClient: *mockElasticClient,
 		Index:         "test",
 	}
@@ -312,7 +313,7 @@ func TestCheckAnswerEndPointBadJsonRequest(t *testing.T) {
 
 	bodyInBytes := bytes.NewReader(body)
 
-	testConfig := HerodotosConfig{
+	testConfig := configs.HerodotosConfig{
 		ElasticClient: *mockElasticClient,
 		Index:         "test",
 	}
@@ -342,7 +343,7 @@ func TestCheckSentenceShardFailure(t *testing.T) {
 	jsonBody, _ := json.Marshal(body)
 	bodyInBytes := bytes.NewReader(jsonBody)
 
-	testConfig := HerodotosConfig{
+	testConfig := configs.HerodotosConfig{
 		ElasticClient: *mockElasticClient,
 		Index:         "test",
 	}
@@ -373,7 +374,7 @@ func TestCheckSentenceUnparseableJson(t *testing.T) {
 	jsonBody, _ := json.Marshal(body)
 	bodyInBytes := bytes.NewReader(jsonBody)
 
-	testConfig := HerodotosConfig{
+	testConfig := configs.HerodotosConfig{
 		ElasticClient: *mockElasticClient,
 		Index:         "test",
 	}

@@ -3,6 +3,7 @@ package app
 import (
 	"encoding/json"
 	"github.com/kpango/glg"
+	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/plato/helpers"
 	"github.com/odysseia/plato/middleware"
 	"github.com/odysseia/plato/models"
@@ -13,7 +14,7 @@ import (
 )
 
 type PtolemaiosHandler struct {
-	Config *PtolemaiosConfig
+	Config *configs.PtolemaiosConfig
 }
 
 // PingPong pongs the ping
@@ -68,7 +69,7 @@ func (p *PtolemaiosHandler) GetSecretFromVault(w http.ResponseWriter, req *http.
 		return
 	}
 
-	var elasticModel models.ElasticConfig
+	var elasticModel models.ElasticConfigVault
 	for key, value := range secret.Data {
 		if key == "data" {
 			j, _ := json.Marshal(value)
@@ -77,7 +78,7 @@ func (p *PtolemaiosHandler) GetSecretFromVault(w http.ResponseWriter, req *http.
 	}
 
 	middleware.ResponseWithJson(w, elasticModel)
-	if p.Config.IsPartOfJob {
+	if p.Config.RunOnce {
 		go p.CheckForJobExit()
 	}
 

@@ -5,6 +5,7 @@ import (
 	"github.com/odysseia/plato/generator"
 	"github.com/odysseia/plato/kubernetes"
 	"github.com/spf13/cobra"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 )
@@ -45,7 +46,12 @@ func CreateSecret() *cobra.Command {
 				filePath = filepath.Join(homeDir, defaultKubeConfig)
 			}
 
-			kubeManager, err := kubernetes.NewKubeClient(filePath, namespace)
+			cfg, err := ioutil.ReadFile(filePath)
+			if err != nil {
+				glg.Error("error getting kubeconfig")
+			}
+
+			kubeManager, err := kubernetes.NewKubeClient(cfg, namespace)
 			if err != nil {
 				glg.Fatal("error creating kubeclient")
 			}
@@ -65,7 +71,7 @@ func CreateSecret() *cobra.Command {
 	return cmd
 }
 
-func createSecret(secretName, namespace string, secretLength int, kube *kubernetes.KubeClient) {
+func createSecret(secretName, namespace string, secretLength int, kube kubernetes.KubeClient) {
 	password, err := generator.RandomPassword(secretLength)
 	if err != nil {
 		glg.Error(err)

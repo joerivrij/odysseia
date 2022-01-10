@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"github.com/elastic/go-elasticsearch/v7/esapi"
 	"github.com/kpango/glg"
+	"github.com/odysseia/aristoteles"
+	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/models"
 	"io/ioutil"
@@ -32,13 +34,15 @@ func main() {
 	glg.Info("\"everything flows\"")
 	glg.Info(strings.Repeat("~", 37))
 
-	elasticClient, err := elastic.CreateElasticClientFromEnvVariables()
+	baseConfig := configs.HerakleitosConfig{}
+	unparsedConfig, err := aristoteles.NewConfig(baseConfig)
 	if err != nil {
-		glg.Fatal("failed to create client")
-	}
-	healthy := elastic.CheckHealthyStatusElasticSearch(elasticClient, 180)
-	if !healthy {
+		glg.Error(err)
 		glg.Fatal("death has found me")
+	}
+	herakleitosConfig, ok := unparsedConfig.(*configs.HerakleitosConfig)
+	if !ok {
+		glg.Fatal("could not parse config")
 	}
 
 	root := "rhema"
@@ -47,7 +51,6 @@ func main() {
 		glg.Fatal(err)
 	}
 
-	created := 0
 	documents := 0
 	var authors models.Authors
 	for _, dir := range rootDir {
@@ -72,18 +75,18 @@ func main() {
 
 				documents += len(rhemai.Rhemai)
 
-				elastic.DeleteIndex(elasticClient, dir.Name())
+				elastic.DeleteIndex(&herakleitosConfig.ElasticClient, herakleitosConfig.Index)
 				for _, logos := range rhemai.Rhemai {
 					jsonifiedLogos, _ := logos.Marshal()
 					esRequest := esapi.IndexRequest{
 						Body:       strings.NewReader(string(jsonifiedLogos)),
 						Refresh:    "true",
-						Index:      dir.Name(),
+						Index:      herakleitosConfig.Index,
 						DocumentID: "",
 					}
 
 					// Perform the request with the client.
-					res, err := esRequest.Do(context.Background(), elasticClient)
+					res, err := esRequest.Do(context.Background(), &herakleitosConfig.ElasticClient)
 					if err != nil {
 						glg.Fatalf("Error getting response: %s", err)
 					}
@@ -98,7 +101,7 @@ func main() {
 							glg.Errorf("Error parsing the response body: %s", err)
 						} else {
 							// Print the response status and indexed document version.
-							created++
+							herakleitosConfig.Created++
 						}
 					}
 				}
@@ -107,7 +110,7 @@ func main() {
 	}
 
 	authorIndex := "authors"
-	elastic.DeleteIndex(elasticClient, authorIndex)
+	elastic.DeleteIndex(&herakleitosConfig.ElasticClient, authorIndex)
 
 	for _, author := range authors.Authors {
 		jsonifiedAuthor, _ := author.Marshal()
@@ -119,7 +122,7 @@ func main() {
 		}
 
 		// Perform the request with the client.
-		res, err := esRequest.Do(context.Background(), elasticClient)
+		res, err := esRequest.Do(context.Background(), &herakleitosConfig.ElasticClient)
 		if err != nil {
 			glg.Fatalf("Error getting response: %s", err)
 		}
@@ -134,12 +137,12 @@ func main() {
 				glg.Errorf("Error parsing the response body: %s", err)
 			} else {
 				// Print the response status and indexed document version.
-				created++
+				herakleitosConfig.Created++
 			}
 		}
 	}
 
-	glg.Infof("created: %s", strconv.Itoa(created))
+	glg.Infof("created: %s", strconv.Itoa(herakleitosConfig.Created))
 	glg.Infof("words found in rhema: %s", strconv.Itoa(documents))
 	glg.Infof("authors added: %s", strconv.Itoa(len(authors.Authors)))
 

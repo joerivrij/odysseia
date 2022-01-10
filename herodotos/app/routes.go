@@ -2,11 +2,12 @@ package app
 
 import (
 	"github.com/gorilla/mux"
+	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/plato/middleware"
 )
 
 // InitRoutes to start up a mux router and return the routes
-func InitRoutes(config HerodotosConfig) *mux.Router {
+func InitRoutes(config configs.HerodotosConfig) *mux.Router {
 	serveMux := mux.NewRouter()
 
 	herodotosHandler := HerodotosHandler{Config: &config}
