@@ -1330,6 +1330,96 @@
       "greek": "φύλαξ, φύλακος, ὁ",
       "dutch": "wachter, bewaker",
       "chapter": 17
+    },
+    {
+      "greek": "ἀριθμός, ὁ",
+      "dutch": "getal, aantal",
+      "chapter": 18
+    },
+    {
+      "greek": "βάρβαρος, ὁ",
+      "dutch": "niet-Griek, vreemdeling",
+      "chapter": 18
+    },
+    {
+      "greek": "γνώμη, ἡ",
+      "dutch": "inzicht, oordeel, mening",
+      "chapter": 18
+    },
+    {
+      "greek": "δέος, δέους, τό",
+      "dutch": "vrees",
+      "chapter": 18
+    },
+    {
+      "greek": "δῆλος",
+      "dutch": "duidelijk",
+      "chapter": 18
+    },
+    {
+      "greek": "δῆλός εἰμί + ptc.",
+      "dutch": "het is duidelijk dat ik",
+      "chapter": 18
+    },
+    {
+      "greek": "δῆλοι ἤσαν ἀληθῆ λέγοντες",
+      "dutch": "het was duidelijk dat ze de waarheid spraken",
+      "chapter": 18
+    },
+    {
+      "greek": "δῆμος, ὁ",
+      "dutch": "volk, gemeenschap, burgerij",
+      "chapter": 18
+    },
+    {
+      "greek": "ἐλεύθερος",
+      "dutch": "vrij",
+      "chapter": 18
+    },
+    {
+      "greek": "ἔπος, ἔπους, τό",
+      "dutch": "verhaal, vers, woord",
+      "chapter": 18
+    },
+    {
+      "greek": "ἱκανός",
+      "dutch": "voldoende, geschikt, in staat",
+      "chapter": 18
+    },
+    {
+      "greek": "λοιπός",
+      "dutch": "overig",
+      "chapter": 18
+    },
+    {
+      "greek": "τὸ λοιπόν",
+      "dutch": "in het vervolg, voortaan",
+      "chapter": 18
+    },
+    {
+      "greek": "οἱ μέν ... οἱ δέ",
+      "dutch": "sommigen ... anderen",
+      "chapter": 18
+    },
+    {
+      "greek": "πάτρις, πατρίδος, ἡ",
+      "dutch": "vaderland",
+      "chapter": 18
+    },
+    {
+      "greek": "πόλεμος, ὁ",
+      "dutch": "oorlog",
+      "chapter": 18
+    },
+    {
+      "greek": "τεῖχος, τείχους, τό",
+      "dutch": "muur",
+      "chapter": 18
+    },
+    {
+      "greek": "ὕδωρ, ὕδατος, τό",
+      "dutch": "water",
+      "chapter": 18
     }
   ]
 }

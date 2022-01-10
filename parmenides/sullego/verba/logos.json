@@ -901,6 +901,91 @@
       "greek": "χαίρω + ptc.",
       "dutch": "plezier hebben in, graag ...",
       "chapter": 17
+    },
+    {
+      "greek": "ἀμύνω + acc.",
+      "dutch": "afweren",
+      "chapter": 18
+    },
+    {
+      "greek": "ἀμύνω + dat.",
+      "dutch": "helpen",
+      "chapter": 18
+    },
+    {
+      "greek": "γράφω",
+      "dutch": "schrijven",
+      "chapter": 18
+    },
+    {
+      "greek": "δοκεῖ μοι + AcI",
+      "dutch": "1. het schijnt me dat; 2. het schijnt met goed toe om...",
+      "chapter": 18
+    },
+    {
+      "greek": "δοκεῖ μοι + AcI: ἔδοξε τῷ δήμῳ",
+      "dutch": "ik besluit:. het volk besloot",
+      "chapter": 18
+    },
+    {
+      "greek": "δουλεύω + dat.",
+      "dutch": "slaaf zijn van, dienen",
+      "chapter": 18
+    },
+    {
+      "greek": "ἐγείρω",
+      "dutch": "wakker maken, (op)wekken",
+      "chapter": 18
+    },
+    {
+      "greek": "ἐλαύνω",
+      "dutch": "rijden, varen",
+      "chapter": 18
+    },
+    {
+      "greek": "καθίστημι",
+      "dutch": "1. neerzetten, neerleggen; 2. brengen (tot/in)",
+      "chapter": 18
+    },
+    {
+      "greek": "κομίζω",
+      "dutch": "brengen, halen, meenemen",
+      "chapter": 18
+    },
+    {
+      "greek": "κρίνω",
+      "dutch": "(be)oordelen",
+      "chapter": 18
+    },
+    {
+      "greek": "μείγνυμι",
+      "dutch": "(ver)mengen",
+      "chapter": 18
+    },
+    {
+      "greek": "νέμω",
+      "dutch": "verdelen, toedelen",
+      "chapter": 18
+    },
+    {
+      "greek": "στρατεύω",
+      "dutch": "een veldtocht ondernemen, optrekken",
+      "chapter": 18
+    },
+    {
+      "greek": "σῴζω",
+      "dutch": "redden, behouden",
+      "chapter": 18
+    },
+    {
+      "greek": "τάττω",
+      "dutch": "opstellen, ordenen",
+      "chapter": 18
+    },
+    {
+      "greek": "τολμάω",
+      "dutch": "durven, wagen",
+      "chapter": 18
     }
   ]
 }
