@@ -160,7 +160,7 @@ func (s *SolonHandler) RegisterService(w http.ResponseWriter, req *http.Request)
 	}
 
 	createRequest := models.CreateSecretRequest{
-		Data: models.ElasticConfigVault{
+		Data: models.ElasticConfig{
 			Username:    creationRequest.Username,
 			Password:    password,
 			ElasticCERT: string(s.Config.ElasticCert),

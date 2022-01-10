@@ -3,7 +3,7 @@ package app
 import (
 	"github.com/elastic/go-elasticsearch/v7"
 	"github.com/kpango/glg"
-	"github.com/odysseia/plato/configuration"
+	"github.com/odysseia/aristoteles"
 )
 
 type DemokritosConfig struct {
@@ -17,7 +17,7 @@ func Get() *DemokritosConfig {
 	index := "dictionary"
 	searchWord := "greek"
 
-	confManager, err := configuration.NewConfig()
+	confManager, err := aristoteles.NewConfig()
 	if err != nil {
 		glg.Error(err)
 		glg.Fatal("unable to fetch configuration")

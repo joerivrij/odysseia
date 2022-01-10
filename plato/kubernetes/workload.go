@@ -10,6 +10,7 @@ import (
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/kubernetes/scheme"
 	"k8s.io/client-go/tools/clientcmd"
+	"k8s.io/client-go/tools/leaderelection/resourcelock"
 	"k8s.io/client-go/tools/remotecommand"
 	"time"
 )
@@ -141,4 +142,17 @@ func (w *WorkloadImpl) ExecNamedPod(namespace, podName string, command []string)
 	}
 
 	return commandBuffer.String(), nil
+}
+
+func (w *WorkloadImpl) GetNewLock(lockName, podName, namespace string) *resourcelock.LeaseLock {
+	return &resourcelock.LeaseLock{
+		LeaseMeta: metav1.ObjectMeta{
+			Name:      lockName,
+			Namespace: namespace,
+		},
+		Client: w.client.CoordinationV1(),
+		LockConfig: resourcelock.ResourceLockConfig{
+			Identity: podName,
+		},
+	}
 }

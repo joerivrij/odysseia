@@ -2,7 +2,7 @@ package app
 
 import (
 	"github.com/kpango/glg"
-	"github.com/odysseia/plato/configuration"
+	"github.com/odysseia/aristoteles"
 	"github.com/odysseia/plato/kubernetes"
 	"github.com/odysseia/plato/models"
 	"net/url"
@@ -17,7 +17,7 @@ const (
 
 type PeriandrosConfig struct {
 	Namespace            string
-	SolonService         url.URL
+	SolonService         *url.URL
 	SolonCreationRequest models.SolonCreationRequest
 	Kube                 *kubernetes.Kube
 }
@@ -56,7 +56,7 @@ func Get() *PeriandrosConfig {
 
 	solonUrl, _ := url.Parse(solonService)
 
-	cfgManager, _ := configuration.NewConfig()
+	cfgManager, _ := aristoteles.NewConfig()
 	kube, err := cfgManager.GetKubeClient("", namespace)
 	if err != nil {
 		glg.Error(err)
@@ -66,7 +66,7 @@ func Get() *PeriandrosConfig {
 	config := &PeriandrosConfig{
 		Kube:                 kube,
 		Namespace:            namespace,
-		SolonService:         *solonUrl,
+		SolonService:         solonUrl,
 		SolonCreationRequest: creationRequest,
 	}
 

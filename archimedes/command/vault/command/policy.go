@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"github.com/kpango/glg"
 	"github.com/odysseia/archimedes/util"
-	"github.com/odysseia/plato/configuration"
+	"github.com/odysseia/aristoteles"
 	"github.com/odysseia/plato/kubernetes"
 	"github.com/spf13/cobra"
 	"os"
@@ -54,7 +54,7 @@ func Policy() *cobra.Command {
 				filePath = filepath.Join(homeDir, defaultKubeConfig)
 			}
 
-			config, err := configuration.NewConfig()
+			config, err := aristoteles.NewConfig()
 			if err != nil {
 				glg.Error(err)
 				os.Exit(1)

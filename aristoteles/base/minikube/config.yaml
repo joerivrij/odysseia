@@ -1,0 +1,5 @@
+TLSENABLED: true
+VAULT_SERVICE: http://vault:8200
+SOLON_SERVICE: http://solon:5000
+NAMESPACE: "odysseia"
+INDEX: "default"

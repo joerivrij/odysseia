@@ -3,7 +3,7 @@ package app
 import (
 	"github.com/elastic/go-elasticsearch/v7"
 	"github.com/kpango/glg"
-	"github.com/odysseia/plato/configuration"
+	"github.com/odysseia/aristoteles"
 	"github.com/odysseia/plato/elastic"
 	"time"
 )
@@ -28,8 +28,8 @@ func Get(ticks time.Duration, es *elasticsearch.Client) (bool, *AlexandrosConfig
 	return healthy, config
 }
 
-func GetFromConfig(configManager configuration.Config) (*AlexandrosConfig, error) {
-	es, err := configManager.GetElasticClient()
+func GetFromConfig(configManager aristoteles.Config) (*AlexandrosConfig, error) {
+	es, err := configManager.getElasticClient(false)
 	if err != nil {
 		return nil, err
 	}

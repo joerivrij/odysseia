@@ -3,7 +3,7 @@ package app
 import (
 	"github.com/elastic/go-elasticsearch/v7"
 	"github.com/kpango/glg"
-	"github.com/odysseia/plato/configuration"
+	"github.com/odysseia/aristoteles"
 	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/kubernetes"
 	"io/ioutil"
@@ -45,7 +45,7 @@ func Get() *DrakonConfig {
 
 	glg.Infof("username from pod is: %s", username)
 
-	cfgManager, _ := configuration.NewConfig()
+	cfgManager, _ := aristoteles.NewConfig()
 	kube, err := cfgManager.GetKubeClient("", namespace)
 	if err != nil {
 		glg.Error(err)

@@ -96,7 +96,7 @@ func ResponseWithJson(w http.ResponseWriter, payload interface{}) {
 		code = 200
 	case models.TokenResponse:
 		code = 200
-	case models.ElasticConfigVault:
+	case models.ElasticConfig:
 		code = 200
 	case map[string]interface{}:
 		code = 200

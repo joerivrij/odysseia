@@ -68,7 +68,7 @@ func (p *PtolemaiosHandler) GetSecretFromVault(w http.ResponseWriter, req *http.
 		return
 	}
 
-	var elasticModel models.ElasticConfigVault
+	var elasticModel models.ElasticConfig
 	for key, value := range secret.Data {
 		if key == "data" {
 			j, _ := json.Marshal(value)

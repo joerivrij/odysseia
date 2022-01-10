@@ -2,7 +2,7 @@ package command
 
 import (
 	"github.com/kpango/glg"
-	"github.com/odysseia/plato/configuration"
+	"github.com/odysseia/aristoteles"
 	"github.com/spf13/cobra"
 	"os"
 	"path/filepath"
@@ -33,7 +33,7 @@ func New() *cobra.Command {
 				filePath = filepath.Join(homeDir, defaultKubeConfig)
 			}
 
-			config, err := configuration.NewConfig()
+			config, err := aristoteles.NewConfig()
 			if err != nil {
 				glg.Error(err)
 				os.Exit(1)

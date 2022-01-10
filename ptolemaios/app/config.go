@@ -2,7 +2,7 @@ package app
 
 import (
 	"github.com/kpango/glg"
-	"github.com/odysseia/plato/configuration"
+	"github.com/odysseia/aristoteles"
 	"github.com/odysseia/plato/kubernetes"
 	"net/url"
 	"os"
@@ -15,7 +15,7 @@ const defaultNamespace = "odysseia"
 
 type PtolemaiosConfig struct {
 	VaultService string
-	SolonService url.URL
+	SolonService *url.URL
 	Kube         *kubernetes.Kube
 	PodName      string
 	Namespace    string
@@ -49,7 +49,7 @@ func Get() *PtolemaiosConfig {
 		isJob = true
 	}
 
-	cfgManager, _ := configuration.NewConfig()
+	cfgManager, _ := aristoteles.NewConfig()
 
 	namespace := os.Getenv("NAMESPACE")
 	if namespace == "" {
@@ -70,7 +70,7 @@ func Get() *PtolemaiosConfig {
 
 	config := &PtolemaiosConfig{
 		VaultService: vaultService,
-		SolonService: *solonUrl,
+		SolonService: solonUrl,
 		Kube:         kubeClient,
 		Namespace:    namespace,
 		IsPartOfJob:  isJob,

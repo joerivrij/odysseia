@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/kpango/glg"
 	"github.com/odysseia/archimedes/util"
-	"github.com/odysseia/plato/configuration"
+	"github.com/odysseia/aristoteles"
 	"github.com/odysseia/plato/kubernetes"
 	"github.com/odysseia/plato/vault"
 	"github.com/spf13/cobra"
@@ -58,7 +58,7 @@ func Auth() *cobra.Command {
 				method = defaultMethod
 			}
 
-			config, err := configuration.NewConfig()
+			config, err := aristoteles.NewConfig()
 			if err != nil {
 				glg.Error(err)
 				os.Exit(1)

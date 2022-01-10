@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/kpango/glg"
 	"github.com/odysseia/alexandros/app"
-	"github.com/odysseia/plato/configuration"
+	"github.com/odysseia/aristoteles"
 	"net/http"
 	"os"
 )
@@ -32,7 +32,7 @@ func main() {
 	glg.Info("starting up.....")
 	glg.Debug("starting up and getting env variables")
 
-	confManager, err := configuration.NewConfig()
+	confManager, err := aristoteles.NewConfig()
 	if err != nil {
 		glg.Error(err)
 		glg.Fatal("unable to fetch configuration")

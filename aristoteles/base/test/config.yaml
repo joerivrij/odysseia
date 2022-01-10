@@ -1,0 +1,8 @@
+TLSENABLED: false
+VAULT_SERVICE: http://localhost:8200
+SOLON_SERVICE: http://localhost:5000
+NAMESPACE: "odysseia"
+INDEX: "default"
+HEALTH_CHECK_OVERWRITE: true
+OUT_OF_CLUSTER_KUBE: true
+TEST_OVERWRITE: true
