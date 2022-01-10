@@ -670,6 +670,41 @@
       "greek": "χωρίς + gen.,",
       "dutch": "apart van, zonder",
       "chapter": 17
+    },
+    {
+      "greek": "ἅμα adverbium",
+      "dutch": "tegelijk",
+      "chapter": 18
+    },
+    {
+      "greek": "ἅμα + dat.",
+      "dutch": "tegelijk/samen met",
+      "chapter": 18
+    },
+    {
+      "greek": "ἅμα + ptc.",
+      "dutch": "terwijl",
+      "chapter": 18
+    },
+    {
+      "greek": "εἰ",
+      "dutch": "indien, als (conditioneel)",
+      "chapter": 18
+    },
+    {
+      "greek": "ἐπεί/ἐπειδή",
+      "dutch": "toen, nadat (+ indic. verleden tijd)",
+      "chapter": 18
+    },
+    {
+      "greek": "ἤ",
+      "dutch": "1. of; 2. dan (in een vergelijking)",
+      "chapter": 18
+    },
+    {
+      "greek": "τοίνυν",
+      "dutch": "welnu, dus",
+      "chapter": 18
     }
   ]
 }
