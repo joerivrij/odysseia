@@ -1,0 +1,2 @@
+NAMESPACE: "odysseia"
+OUT_OF_CLUSTER_KUBE: true

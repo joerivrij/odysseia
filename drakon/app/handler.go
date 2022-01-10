@@ -3,16 +3,21 @@ package app
 import (
 	"fmt"
 	"github.com/kpango/glg"
+	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/models"
 )
 
-func (d *DrakonConfig) CreateRoles() (bool, error) {
+type DrakonHandler struct {
+	Config *configs.DrakonConfig
+}
+
+func (d *DrakonHandler) CreateRoles() (bool, error) {
 	glg.Debug("creating elastic roles based on labels")
 
 	var created bool
-	for _, index := range d.Indexes {
-		for _, role := range d.Roles {
+	for _, index := range d.Config.Indexes {
+		for _, role := range d.Config.Roles {
 			glg.Debugf("creating a role for index %s with role %s", index, role)
 
 			var privileges []string
@@ -45,7 +50,7 @@ func (d *DrakonConfig) CreateRoles() (bool, error) {
 			}
 
 			roleName := fmt.Sprintf("%s_%s", index, role)
-			roleCreated, err := elastic.CreateRole(&d.ElasticClient, roleName, putRole)
+			roleCreated, err := elastic.CreateRole(&d.Config.ElasticClient, roleName, putRole)
 			if err != nil {
 				glg.Error(err)
 				return false, err

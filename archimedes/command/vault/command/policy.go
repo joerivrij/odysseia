@@ -6,7 +6,8 @@ import (
 	"fmt"
 	"github.com/kpango/glg"
 	"github.com/odysseia/archimedes/util"
-	"github.com/odysseia/plato/configuration"
+	"github.com/odysseia/aristoteles"
+	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/plato/kubernetes"
 	"github.com/spf13/cobra"
 	"os"
@@ -54,20 +55,20 @@ func Policy() *cobra.Command {
 				filePath = filepath.Join(homeDir, defaultKubeConfig)
 			}
 
-			config, err := configuration.NewConfig()
+			baseConfig := configs.ArchimedesConfig{}
+			unparsedConfig, err := aristoteles.NewConfig(baseConfig)
 			if err != nil {
 				glg.Error(err)
-				os.Exit(1)
+				glg.Fatal("death has found me")
 			}
-
-			kube, err := config.GetKubeClient(filePath, namespace)
-			if err != nil {
-				glg.Fatal("error creating kubeclient")
+			archimedesConfig, ok := unparsedConfig.(*configs.ArchimedesConfig)
+			if !ok {
+				glg.Fatal("could not parse config")
 			}
 
 			glg.Info("is it secret? Is it safe? Well no longer!")
 			glg.Debug("creating a vault policy")
-			createPolicy(policyName, namespace, kube)
+			createPolicy(policyName, namespace, archimedesConfig.Kube)
 		},
 	}
 
@@ -78,7 +79,7 @@ func Policy() *cobra.Command {
 	return cmd
 }
 
-func createPolicy(policyName, namespace string, kube *kubernetes.Kube) {
+func createPolicy(policyName, namespace string, kube kubernetes.KubeClient) {
 	for key, value := range policies {
 		var policyToCreate []byte
 

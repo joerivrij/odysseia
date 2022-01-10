@@ -3,18 +3,23 @@ package app
 import (
 	"encoding/json"
 	"github.com/kpango/glg"
+	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/plato/helpers"
 	"github.com/odysseia/plato/models"
 	"time"
 )
 
-func (p *PeriandrosConfig) CreateUser() (bool, error) {
+type PeriandrosHandler struct {
+	Config *configs.PeriandrosConfig
+}
+
+func (p *PeriandrosHandler) CreateUser() (bool, error) {
 	path := "solon/v1/register"
-	p.SolonService.Path = path
+	p.Config.SolonService.Path = path
 
-	body, _ := p.SolonCreationRequest.Marshal()
+	body, _ := p.Config.SolonCreationRequest.Marshal()
 
-	response, err := helpers.PostRequest(p.SolonService, body)
+	response, err := helpers.PostRequest(p.Config.SolonService, body)
 	if err != nil {
 		return false, err
 	}
@@ -30,9 +35,9 @@ func (p *PeriandrosConfig) CreateUser() (bool, error) {
 	return solonResponse.Created, nil
 }
 
-func (p *PeriandrosConfig) CheckSolonHealth(ticks time.Duration) bool {
+func (p *PeriandrosHandler) CheckSolonHealth(ticks time.Duration) bool {
 	path := "solon/v1/health"
-	p.SolonService.Path = path
+	p.Config.SolonService.Path = path
 
 	healthy := false
 
@@ -43,7 +48,7 @@ func (p *PeriandrosConfig) CheckSolonHealth(ticks time.Duration) bool {
 		select {
 		case t := <-ticker.C:
 			glg.Infof("tick: %s", t)
-			response, err := helpers.GetRequest(p.SolonService)
+			response, err := helpers.GetRequest(p.Config.SolonService)
 			if err != nil {
 				glg.Errorf("Error getting response: %s", err)
 				continue

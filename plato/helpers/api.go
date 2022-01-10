@@ -6,7 +6,7 @@ import (
 	"net/url"
 )
 
-func GetRequest(u url.URL) (*http.Response, error) {
+func GetRequest(u *url.URL) (*http.Response, error) {
 	req, err := http.NewRequest(http.MethodGet, u.String(), nil)
 	req.Header.Set("Content-Type", "application/json")
 
@@ -19,7 +19,7 @@ func GetRequest(u url.URL) (*http.Response, error) {
 	return resp, nil
 }
 
-func PostRequest(u url.URL, body []byte) (*http.Response, error) {
+func PostRequest(u *url.URL, body []byte) (*http.Response, error) {
 	req, err := http.NewRequest(http.MethodPost, u.String(), bytes.NewBuffer(body))
 	req.Header.Set("Content-Type", "application/json")
 

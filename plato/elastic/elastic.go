@@ -94,7 +94,7 @@ func parseBody(res *esapi.Response) (map[string]interface{}, error) {
 	defer func(Body io.ReadCloser) {
 		err := Body.Close()
 		if err != nil {
-			glg.Errorf("error closing elastic response body: %w", err)
+			glg.Errorf("error closing elastic response body: %v", err)
 		}
 	}(res.Body)
 	// Check response status
@@ -107,7 +107,7 @@ func parseBody(res *esapi.Response) (map[string]interface{}, error) {
 
 	// Deserialize the response into a map.
 	if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
-		glg.Errorf("Error parsing the response body: %s", err)
+		glg.Errorf("Error parsing the response body: %v", err)
 		return nil, err
 	}
 

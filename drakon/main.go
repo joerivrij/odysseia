@@ -2,7 +2,10 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"github.com/kpango/glg"
+	"github.com/odysseia/aristoteles"
+	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/drakon/app"
 	"k8s.io/client-go/tools/leaderelection"
 	"k8s.io/client-go/tools/leaderelection/resourcelock"
@@ -21,7 +24,7 @@ func init() {
 		AddLevelWriter(glg.ERR, errlog)
 }
 
-func getLeaderConfig(lock *resourcelock.LeaseLock, id string, config *app.DrakonConfig) leaderelection.LeaderElectionConfig {
+func getLeaderConfig(lock *resourcelock.LeaseLock, id string, config *app.DrakonHandler) leaderelection.LeaderElectionConfig {
 	leaderConfig := leaderelection.LeaderElectionConfig{
 		Lock:            lock,
 		ReleaseOnCancel: true,
@@ -65,17 +68,28 @@ func main() {
 
 	glg.Debug("creating config")
 
-	config := app.Get()
+	baseConfig := configs.DrakonConfig{}
+	unparsedConfig, err := aristoteles.NewConfig(baseConfig)
+	if err != nil {
+		glg.Error(err)
+		glg.Fatal("death has found me")
+	}
+	drakonConfig, ok := unparsedConfig.(*configs.DrakonConfig)
+	if !ok {
+		glg.Fatal("could not parse config")
+	}
 
 	var wg sync.WaitGroup
-	leaseLockName := "drakon-lock"
+	leaseLockName := fmt.Sprintf("%s-drakon-lock", drakonConfig.PodName)
 
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
-	lock := config.Kube.GetNewLock(leaseLockName, config.Podname, config.Namespace)
+	handler := app.DrakonHandler{Config: drakonConfig}
 
-	leaderConfig := getLeaderConfig(lock, config.Podname, config)
+	lock := handler.Config.Kube.Workload().GetNewLock(leaseLockName, handler.Config.PodName, handler.Config.Namespace)
+
+	leaderConfig := getLeaderConfig(lock, drakonConfig.PodName, &handler)
 	leader, err := leaderelection.NewLeaderElector(leaderConfig)
 	if err != nil {
 		glg.Error(err)

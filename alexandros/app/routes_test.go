@@ -3,6 +3,7 @@ package app
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/models"
 	"github.com/stretchr/testify/assert"
@@ -12,7 +13,7 @@ import (
 )
 
 func TestPingPongRoute(t *testing.T) {
-	testConfig := AlexandrosConfig{}
+	testConfig := configs.AlexandrosConfig{}
 	router := InitRoutes(testConfig)
 	expected := "{\"result\":\"pong\"}"
 
@@ -27,7 +28,7 @@ func TestHealthEndpointHealthy(t *testing.T) {
 	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
-	testConfig := AlexandrosConfig{
+	testConfig := configs.AlexandrosConfig{
 		ElasticClient: *mockElasticClient,
 		Index:         "test",
 	}
@@ -49,7 +50,7 @@ func TestHealthEndpointElasticDown(t *testing.T) {
 	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
-	testConfig := AlexandrosConfig{
+	testConfig := configs.AlexandrosConfig{
 		ElasticClient: *mockElasticClient,
 		Index:         "test",
 	}
@@ -70,7 +71,7 @@ func TestSearchShardFailure(t *testing.T) {
 	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
-	testConfig := AlexandrosConfig{
+	testConfig := configs.AlexandrosConfig{
 		ElasticClient: *mockElasticClient,
 		Index:         "test",
 	}
@@ -94,7 +95,7 @@ func TestSearchEndPointHappyPath(t *testing.T) {
 	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
-	testConfig := AlexandrosConfig{
+	testConfig := configs.AlexandrosConfig{
 		ElasticClient: *mockElasticClient,
 		Index:         "test",
 	}
@@ -121,7 +122,7 @@ func TestSearchEndPointElasticDown(t *testing.T) {
 	elasticClient, err := elastic.CreateElasticClient("test", "test", []string{"http://localhost:9200"})
 	assert.Nil(t, err)
 
-	testConfig := AlexandrosConfig{
+	testConfig := configs.AlexandrosConfig{
 		ElasticClient: *elasticClient,
 		Index:         "test",
 	}
@@ -142,7 +143,7 @@ func TestSearchEndPointNoResults(t *testing.T) {
 	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
-	testConfig := AlexandrosConfig{
+	testConfig := configs.AlexandrosConfig{
 		ElasticClient: *mockElasticClient,
 		Index:         "test",
 	}
@@ -166,7 +167,7 @@ func TestSearchEndpointEmptyWord(t *testing.T) {
 	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
-	testConfig := AlexandrosConfig{
+	testConfig := configs.AlexandrosConfig{
 		ElasticClient: *mockElasticClient,
 		Index:         "test",
 	}

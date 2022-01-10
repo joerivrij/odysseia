@@ -102,3 +102,10 @@ type CreateUserRequest struct {
 	Email    string    `json:"email"`
 	Metadata *Metadata `json:"metadata"`
 }
+
+type ElasticConfig struct {
+	Service     string `json:"elasticService"`
+	Username    string `json:"elasticUsername"`
+	Password    string `json:"elasticPassword"`
+	ElasticCERT string `json:"elasticCert"`
+}

@@ -2,11 +2,9 @@ package kubernetes
 
 import (
 	"github.com/kpango/glg"
-	"io/ioutil"
 	appsv1 "k8s.io/api/apps/v1"
 	batchv1 "k8s.io/api/batch/v1"
 	corev1 "k8s.io/api/core/v1"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
@@ -47,6 +45,7 @@ type Workload interface {
 	GetPodByName(namespace, name string) (*corev1.Pod, error)
 	GetDeploymentStatus(namespace string) (bool, error)
 	GetJob(namespace, name string) (*batchv1.Job, error)
+	GetNewLock(lockName, podName, namespace string) *resourcelock.LeaseLock
 }
 
 type Nodes interface {
@@ -64,7 +63,32 @@ type Kube struct {
 	config        []byte
 }
 
-func New(config []byte, ns string) (*Kube, error) {
+func NewKubeClient(cfg []byte, ns string) (KubeClient, error) {
+	var kube *Kube
+	var err error
+
+	inCluster := true
+
+	if cfg != nil {
+		inCluster = false
+	}
+
+	if inCluster {
+		kube, err = NewInClusterKube(ns)
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		kube, err = NewConfigBasedKube(cfg, ns)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	return kube, err
+}
+
+func NewConfigBasedKube(config []byte, ns string) (*Kube, error) {
 	c, err := clientcmd.NewClientConfigFromBytes(config)
 	if err != nil {
 		return nil, err
@@ -120,20 +144,6 @@ func New(config []byte, ns string) (*Kube, error) {
 		util:          util,
 		nodes:         nodes,
 	}, nil
-}
-
-func NewKubeClient(filePath, ns string) (*Kube, error) {
-	cfg, err := ioutil.ReadFile(filePath)
-	if err != nil {
-		glg.Error("error getting kubeconfig")
-	}
-
-	kube, err := New(cfg, ns)
-	if err != nil {
-		glg.Fatal("error creating kubeclient")
-	}
-
-	return kube, err
 }
 
 func NewInClusterKube(ns string) (*Kube, error) {
@@ -223,23 +233,10 @@ func (k *Kube) Nodes() Nodes {
 	return k.nodes
 }
 
-func (k *Kube) GetK8sClientSet() *kubernetes.Clientset {
-	return k.set
-}
-
-func (k *Kube) GetConfig() []byte {
-	return k.config
-}
-
-func (k *Kube) GetNewLock(lockName, podName, namespace string) *resourcelock.LeaseLock {
-	return &resourcelock.LeaseLock{
-		LeaseMeta: metav1.ObjectMeta{
-			Name:      lockName,
-			Namespace: namespace,
-		},
-		Client: k.GetK8sClientSet().CoordinationV1(),
-		LockConfig: resourcelock.ResourceLockConfig{
-			Identity: podName,
-		},
-	}
-}
+//func (k *Kube) GetK8sClientSet() *kubernetes.Clientset {
+//	return k.set
+//}
+//
+//func (k *Kube) GetConfig() []byte {
+//	return k.config
+//}

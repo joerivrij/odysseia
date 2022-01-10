@@ -2,11 +2,12 @@ package app
 
 import (
 	"github.com/gorilla/mux"
+	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/plato/middleware"
 )
 
 // InitRoutes to start up a mux router and return the routes
-func InitRoutes(config SolonConfig) *mux.Router {
+func InitRoutes(config configs.SolonConfig) *mux.Router {
 	serveMux := mux.NewRouter()
 
 	handler := SolonHandler{Config: &config}

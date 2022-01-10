@@ -2,8 +2,9 @@ package main
 
 import (
 	"github.com/kpango/glg"
+	"github.com/odysseia/aristoteles"
+	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/dionysos/app"
-	"github.com/odysseia/plato/elastic"
 	"net/http"
 	"os"
 )
@@ -32,21 +33,21 @@ func main() {
 	glg.Info("starting up.....")
 	glg.Debug("starting up and getting env variables")
 
-	esClient, err := elastic.CreateElasticClientFromEnvVariables()
+	baseConfig := configs.DionysosConfig{}
+	unparsedConfig, err := aristoteles.NewConfig(baseConfig)
 	if err != nil {
-		glg.Fatalf("Error creating ElasticClient shutting down: %s", err)
-	}
-
-	healthy := elastic.CheckHealthyStatusElasticSearch(esClient, 200)
-	if !healthy {
-		glg.Errorf("elasticClient unhealthy after %d ticks", 200)
+		glg.Error(err)
 		glg.Fatal("death has found me")
 	}
+	dionysosConfig, ok := unparsedConfig.(*configs.DionysosConfig)
+	if !ok {
+		glg.Fatal("could not parse config")
+	}
 
-	declensionConfig := app.QueryRuleSet(esClient, "dionysos")
-	config := app.Get(esClient, declensionConfig)
+	declensionConfig := app.QueryRuleSet(&dionysosConfig.ElasticClient, dionysosConfig.Index)
+	dionysosConfig.DeclensionConfig = *declensionConfig
 
-	srv := app.InitRoutes(*config)
+	srv := app.InitRoutes(*dionysosConfig)
 
 	glg.Infof("%s : %s", "running on port", port)
 	err = http.ListenAndServe(port, srv)

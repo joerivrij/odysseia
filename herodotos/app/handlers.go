@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/kpango/glg"
+	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/helpers"
 	"github.com/odysseia/plato/middleware"
@@ -13,7 +14,7 @@ import (
 )
 
 type HerodotosHandler struct {
-	Config *HerodotosConfig
+	Config *configs.HerodotosConfig
 }
 
 // PingPong pongs the ping

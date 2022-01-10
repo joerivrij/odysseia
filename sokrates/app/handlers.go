@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"github.com/gorilla/mux"
 	"github.com/kpango/glg"
+	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/helpers"
 	"github.com/odysseia/plato/middleware"
@@ -12,7 +13,7 @@ import (
 )
 
 type SokratesHandler struct {
-	Config *SokratesConfig
+	Config *configs.SokratesConfig
 }
 
 // PingPong pongs the ping
@@ -87,7 +88,7 @@ func (s *SokratesHandler) CheckAnswer(w http.ResponseWriter, req *http.Request) 
 		return
 	}
 
-	elasticResult, err := elastic.QueryWithMatch(s.Config.ElasticClient, checkAnswerRequest.Category, s.Config.SearchTerm, checkAnswerRequest.QuizWord)
+	elasticResult, err := elastic.QueryWithMatch(s.Config.ElasticClient, checkAnswerRequest.Category, s.Config.SearchWord, checkAnswerRequest.QuizWord)
 	if err != nil {
 		e := models.ElasticSearchError{
 			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},

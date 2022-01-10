@@ -4,6 +4,7 @@ import (
 	"github.com/kpango/glg"
 	"github.com/odysseia/plato/kubernetes"
 	"github.com/spf13/cobra"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 )
@@ -36,7 +37,12 @@ func CreateElasticCerts() *cobra.Command {
 				filePath = filepath.Join(homeDir, defaultKubeConfig)
 			}
 
-			kubeManager, err := kubernetes.NewKubeClient(filePath, namespace)
+			cfg, err := ioutil.ReadFile(filePath)
+			if err != nil {
+				glg.Error("error getting kubeconfig")
+			}
+
+			kubeManager, err := kubernetes.NewKubeClient(cfg, namespace)
 			if err != nil {
 				glg.Fatal("error creating kubeclient")
 			}
@@ -54,6 +60,6 @@ func CreateElasticCerts() *cobra.Command {
 	return cmd
 }
 
-func createElasticCerts(namespace string, kube *kubernetes.Kube) {
+func createElasticCerts(namespace string, kube kubernetes.KubeClient) {
 	glg.Error("not implemented yet")
 }

@@ -3,7 +3,8 @@ package main
 import (
 	"github.com/kpango/glg"
 	"github.com/odysseia/alexandros/app"
-	"github.com/odysseia/plato/configuration"
+	"github.com/odysseia/aristoteles"
+	"github.com/odysseia/aristoteles/configs"
 	"net/http"
 	"os"
 )
@@ -32,18 +33,18 @@ func main() {
 	glg.Info("starting up.....")
 	glg.Debug("starting up and getting env variables")
 
-	confManager, err := configuration.NewConfig()
+	baseConfig := configs.AlexandrosConfig{}
+	unparsedConfig, err := aristoteles.NewConfig(baseConfig)
 	if err != nil {
 		glg.Error(err)
-		glg.Fatal("unable to fetch configuration")
+		glg.Fatal("death has found me")
 	}
-	config, err := app.GetFromConfig(confManager)
-	if err != nil {
-		glg.Error(err)
-		glg.Fatal("unable to fetch configuration")
+	alexandrosConfig, ok := unparsedConfig.(*configs.AlexandrosConfig)
+	if !ok {
+		glg.Fatal("could not parse config")
 	}
 
-	srv := app.InitRoutes(*config)
+	srv := app.InitRoutes(*alexandrosConfig)
 
 	glg.Infof("%s : %s", "running on port", port)
 	err = http.ListenAndServe(port, srv)

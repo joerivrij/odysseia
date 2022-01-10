@@ -2,7 +2,8 @@ package main
 
 import (
 	"github.com/kpango/glg"
-	"github.com/odysseia/plato/elastic"
+	"github.com/odysseia/aristoteles"
+	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/sokrates/app"
 	"net/http"
 	"os"
@@ -32,17 +33,18 @@ func main() {
 	glg.Info("starting up.....")
 	glg.Debug("starting up and getting env variables")
 
-	esClient, err := elastic.CreateElasticClientFromEnvVariables()
+	baseConfig := configs.SokratesConfig{}
+	unparsedConfig, err := aristoteles.NewConfig(baseConfig)
 	if err != nil {
-		glg.Fatalf("Error creating ElasticClient shutting down: %s", err)
-	}
-
-	healthy, config := app.Get(200, esClient)
-	if !healthy {
+		glg.Error(err)
 		glg.Fatal("death has found me")
 	}
+	sokratesConfig, ok := unparsedConfig.(*configs.SokratesConfig)
+	if !ok {
+		glg.Fatal("could not parse config")
+	}
 
-	srv := app.InitRoutes(*config)
+	srv := app.InitRoutes(*sokratesConfig)
 
 	glg.Infof("%s : %s", "running on port", port)
 	err = http.ListenAndServe(port, srv)

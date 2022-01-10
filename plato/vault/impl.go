@@ -2,16 +2,9 @@ package vault
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"github.com/hashicorp/vault/api"
 	auth "github.com/hashicorp/vault/api/auth/kubernetes"
-	"github.com/kpango/glg"
-	"io/ioutil"
-	"os"
-	"path/filepath"
-	"runtime"
-	"strings"
 	"time"
 )
 
@@ -69,34 +62,4 @@ func CreateVaultClientKubernetes(address, vaultRole, jwt string) (Client, error)
 	client.SetToken(resp.Auth.ClientToken)
 
 	return &Vault{Connection: client}, nil
-}
-
-func GetTokenFromFile() (string, error) {
-	_, callingFile, _, _ := runtime.Caller(0)
-	callingDir := filepath.Dir(callingFile)
-	dirParts := strings.Split(callingDir, string(os.PathSeparator))
-	var odysseiaPath []string
-	for i, part := range dirParts {
-		if part == "odysseia" {
-			odysseiaPath = dirParts[0 : i+1]
-		}
-	}
-	l := "/"
-	for _, path := range odysseiaPath {
-		l = filepath.Join(l, path)
-	}
-	clusterKeys := filepath.Join(l, "solon", "vault_config", "cluster-keys-odysseia.json")
-
-	f, err := ioutil.ReadFile(clusterKeys)
-	if err != nil {
-		glg.Error(fmt.Sprintf("Cannot read fixture file: %s", err))
-		return "", err
-	}
-
-	var result map[string]interface{}
-
-	// Unmarshal or Decode the JSON to the interface.
-	json.Unmarshal(f, &result)
-
-	return result["root_token"].(string), nil
 }

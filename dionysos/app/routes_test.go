@@ -5,6 +5,7 @@ package app
 
 import (
 	"encoding/json"
+	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/models"
 	"github.com/stretchr/testify/assert"
@@ -13,8 +14,13 @@ import (
 	"testing"
 )
 
+const (
+	dictionaryIndexDefault = "dictionary"
+	elasticIndexDefault    = "grammar"
+)
+
 func TestPingPongRoute(t *testing.T) {
-	testConfig := DionysosConfig{}
+	testConfig := configs.DionysosConfig{}
 	router := InitRoutes(testConfig)
 	expected := "{\"result\":\"pong\"}"
 
@@ -29,7 +35,7 @@ func TestHealthEndpointHealthy(t *testing.T) {
 	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
-	testConfig := DionysosConfig{
+	testConfig := configs.DionysosConfig{
 		ElasticClient: *mockElasticClient,
 	}
 
@@ -50,7 +56,7 @@ func TestHealthEndpointElasticDown(t *testing.T) {
 	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
-	testConfig := DionysosConfig{
+	testConfig := configs.DionysosConfig{
 		ElasticClient: *mockElasticClient,
 	}
 
@@ -74,7 +80,7 @@ func TestQueryWordEndpointHappyPathFemFirst(t *testing.T) {
 	declensionConfig := QueryRuleSet(nil, "dionysos")
 	assert.Nil(t, err)
 
-	testConfig := DionysosConfig{
+	testConfig := configs.DionysosConfig{
 		ElasticClient:    *mockElasticClient,
 		DictionaryIndex:  dictionaryIndexDefault,
 		Index:            elasticIndexDefault,
@@ -101,7 +107,7 @@ func TestQueryWordEndpointHappyPathMascSecond(t *testing.T) {
 	declensionConfig := QueryRuleSet(nil, "dionysos")
 	assert.Nil(t, err)
 
-	testConfig := DionysosConfig{
+	testConfig := configs.DionysosConfig{
 		ElasticClient:    *mockElasticClient,
 		DictionaryIndex:  dictionaryIndexDefault,
 		Index:            elasticIndexDefault,
@@ -127,7 +133,7 @@ func TestSearchEndPointElasticNoResults(t *testing.T) {
 	declensionConfig := QueryRuleSet(nil, "dionysos")
 	assert.Nil(t, err)
 
-	testConfig := DionysosConfig{
+	testConfig := configs.DionysosConfig{
 		ElasticClient:    *elasticClient,
 		DictionaryIndex:  dictionaryIndexDefault,
 		Index:            elasticIndexDefault,
@@ -154,7 +160,7 @@ func TestSearchEndPointPrespositionFound(t *testing.T) {
 	declensionConfig := QueryRuleSet(nil, "dionysos")
 	assert.Nil(t, err)
 
-	testConfig := DionysosConfig{
+	testConfig := configs.DionysosConfig{
 		ElasticClient:    *mockElasticClient,
 		DictionaryIndex:  dictionaryIndexDefault,
 		Index:            elasticIndexDefault,
@@ -181,7 +187,7 @@ func TestSearchEndPointWithoutQueryParam(t *testing.T) {
 	declensionConfig := QueryRuleSet(nil, "dionysos")
 	assert.Nil(t, err)
 
-	testConfig := DionysosConfig{
+	testConfig := configs.DionysosConfig{
 		ElasticClient:    *elasticClient,
 		DictionaryIndex:  dictionaryIndexDefault,
 		Index:            elasticIndexDefault,

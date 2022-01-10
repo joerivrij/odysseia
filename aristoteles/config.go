@@ -1,0 +1,324 @@
+package aristoteles
+
+import (
+	"embed"
+	"fmt"
+	"github.com/elastic/go-elasticsearch/v7"
+	"github.com/kpango/glg"
+	"github.com/odysseia/aristoteles/configs"
+	"github.com/odysseia/plato/kubernetes"
+	"github.com/odysseia/plato/models"
+	"github.com/odysseia/plato/vault"
+	"gopkg.in/yaml.v3"
+	"net/url"
+	"os"
+	"reflect"
+	"strings"
+)
+
+type Config struct {
+	env        string
+	BaseConfig configs.BaseConfig
+}
+
+//go:embed base
+var base embed.FS
+
+func NewConfig(v interface{}) (interface{}, error) {
+	//https://patorjk.com/software/taag/#p=display&f=Crawford2&t=ARISTOTELES
+	glg.Info("\n  ____  ____   ____ _____ ______   ___   ______    ___  _        ___  _____\n /    ||    \\ |    / ___/|      | /   \\ |      |  /  _]| |      /  _]/ ___/\n|  o  ||  D  ) |  (   \\_ |      ||     ||      | /  [_ | |     /  [_(   \\_ \n|     ||    /  |  |\\__  ||_|  |_||  O  ||_|  |_||    _]| |___ |    _]\\__  |\n|  _  ||    \\  |  |/  \\ |  |  |  |     |  |  |  |   [_ |     ||   [_ /  \\ |\n|  |  ||  .  \\ |  |\\    |  |  |  |     |  |  |  |     ||     ||     |\\    |\n|__|__||__|\\_||____|\\___|  |__|   \\___/   |__|  |_____||_____||_____| \\___|\n                                                                           \n")
+	glg.Info(strings.Repeat("~", 37))
+	glg.Info("\"Τριών δει παιδεία: φύσεως, μαθήσεως, ασκήσεως.\"")
+	glg.Info("\"Education needs these three: natural endowment, study, practice.\"")
+	glg.Info(strings.Repeat("~", 37))
+
+	env := os.Getenv(EnvKey)
+	if env == "" {
+		env = "LOCAL"
+	}
+
+	envDir := strings.ToLower(env)
+
+	glg.Infof("getting config: %s from yaml files", envDir)
+
+	config, err := base.ReadFile(fmt.Sprintf("%s/%s/%s", baseDir, envDir, configFileName))
+	if err != nil {
+		return nil, err
+	}
+
+	var baseConfig configs.BaseConfig
+	err = yaml.Unmarshal(config, &baseConfig)
+	if err != nil {
+		return nil, err
+	}
+
+	envTls := os.Getenv(EnvTlSKey)
+	if envTls != "" {
+		glg.Infof("%s overwritten by env variable", EnvTlSKey)
+		if envTls == "true" || envTls == "yes" {
+			baseConfig.TLSEnabled = true
+		} else {
+			baseConfig.TLSEnabled = false
+		}
+	}
+
+	newConfig := Config{BaseConfig: baseConfig}
+	newConfig.env = env
+
+	glg.Infof("env set to: %s", newConfig.env)
+
+	healthCheck := true
+	healthCheckOverwrite := os.Getenv(EnvHealthCheckOverwrite)
+	if healthCheckOverwrite == "yes" || healthCheckOverwrite == "true" {
+		healthCheck = false
+	}
+
+	if newConfig.BaseConfig.HealthCheckOverwrite {
+		healthCheck = !newConfig.BaseConfig.HealthCheckOverwrite
+	}
+
+	newConfig.BaseConfig.HealthCheck = healthCheck
+
+	glg.Info("validating config")
+	valid, err := newConfig.configValidator(v)
+	if !valid || err != nil {
+		return nil, err
+	}
+
+	glg.Info("config is valid")
+	glg.Info("setting remaining fields")
+	readConfig, err := newConfig.New(v)
+	if err != nil {
+		return nil, err
+	}
+
+	glg.Info("config created returning")
+
+	return readConfig, nil
+}
+
+func (c *Config) New(v interface{}) (interface{}, error) {
+	cfg := reflect.New(reflect.TypeOf(v)).Interface()
+	elements := reflect.ValueOf(cfg).Elem()
+	c.fillFields(&elements)
+
+	return cfg, nil
+}
+
+func (c *Config) configValidator(v interface{}) (bool, error) {
+	elements := reflect.TypeOf(v)
+	for i := 0; i < elements.NumField(); i++ {
+		fieldName := elements.Field(i).Name
+		inList := false
+		for _, validField := range validFields {
+			if validField == fieldName {
+				inList = true
+				break
+			}
+		}
+
+		if !inList {
+			return false, fmt.Errorf("value: %s could not be found in valid fields, configuration file malformed", fieldName)
+		}
+
+	}
+
+	return true, nil
+}
+
+func (c *Config) fillFields(e *reflect.Value) {
+	for i := 0; i < e.NumField(); i++ {
+		fieldName := e.Type().Field(i).Name
+		fieldType := e.Type().Field(i).Type
+
+		if fieldType.Kind() == reflect.String {
+			switch fieldName {
+			case "Index":
+				indexName := c.getStringFromEnv(EnvIndex, c.BaseConfig.Index)
+				e.FieldByName(fieldName).SetString(indexName)
+			case "PodName":
+				podName := c.getParsedPodNameFromEnv()
+				e.FieldByName(fieldName).SetString(podName)
+			case "FullPodName":
+				podName := c.getStringFromEnv(EnvPodName, defaultPodName)
+				e.FieldByName(fieldName).SetString(podName)
+			case "Namespace":
+				ns := c.getStringFromEnv(EnvNamespace, c.BaseConfig.Namespace)
+				e.FieldByName(fieldName).SetString(ns)
+			case "VaultService":
+				vs := c.getStringFromEnv(EnvVaultService, c.BaseConfig.VaultService)
+				e.FieldByName(fieldName).SetString(vs)
+			case "SearchWord":
+				vs := c.getStringFromEnv(EnvSearchWord, defaultSearchWord)
+				e.FieldByName(fieldName).SetString(vs)
+			case "DictionaryIndex":
+				e.FieldByName(fieldName).SetString(defaultDictionaryIndex)
+			case "RoleAnnotation":
+				e.FieldByName(fieldName).SetString(defaultRoleAnnotation)
+			case "AccessAnnotation":
+				e.FieldByName(fieldName).SetString(defaultAccessAnnotation)
+			}
+		}
+
+		if fieldType.Kind() == reflect.Slice {
+			switch fieldName {
+			case "Roles":
+				roles := c.getSliceFromEnv(EnvRoles)
+				rRoles := reflect.ValueOf(roles)
+				e.FieldByName(fieldName).Set(rRoles)
+
+			case "Indexes":
+				indexes := c.getSliceFromEnv(EnvIndexes)
+				rIndexes := reflect.ValueOf(indexes)
+				e.FieldByName(fieldName).Set(rIndexes)
+
+			case "ElasticCert":
+				cert := c.getCert()
+				rCert := reflect.ValueOf(cert)
+				e.FieldByName(fieldName).Set(rCert)
+			}
+		}
+
+		if fieldType.Kind() == reflect.Bool {
+			switch fieldName {
+			case "RunOnce":
+				vb := c.getBoolFromEnv(EnvRunOnce)
+				e.FieldByName(fieldName).SetBool(vb)
+			}
+		}
+
+		switch fieldType {
+		case reflect.TypeOf(elasticsearch.Client{}):
+
+			es, err := c.getElasticClient()
+			if err != nil {
+				glg.Fatal("error getting es config")
+				esv := reflect.ValueOf(es)
+				e.FieldByName(fieldName).Set(esv)
+			}
+
+		case reflect.TypeOf((*kubernetes.KubeClient)(nil)).Elem():
+			k, err := c.getKubeClient()
+			if err != nil {
+				glg.Fatal("error getting kubeconfig")
+			}
+			kv := reflect.ValueOf(k)
+			e.FieldByName(fieldName).Set(kv)
+
+		case reflect.TypeOf((*vault.Client)(nil)).Elem():
+			vault, err := c.getVaultClient()
+			if err != nil {
+				glg.Fatal("error getting vaultClient")
+			}
+			vv := reflect.ValueOf(vault)
+			e.FieldByName(fieldName).Set(vv)
+
+		case reflect.TypeOf((*url.URL)(nil)):
+			var defaultValue string
+			elem := reflect.ValueOf(&c.BaseConfig).Elem()
+			for i := 0; i < elem.NumField(); i++ {
+				innerFieldName := elem.Type().Field(i).Name
+				if innerFieldName == fieldName {
+					defaultValue = elem.Field(i).String()
+					break
+				}
+			}
+
+			u, _ := c.getUrl(fieldName, defaultValue)
+			uv := reflect.ValueOf(u)
+			e.FieldByName(fieldName).Set(uv)
+
+		case reflect.TypeOf(models.SolonCreationRequest{}):
+			request := c.getInitCreation()
+			rv := reflect.ValueOf(request)
+			e.FieldByName(fieldName).Set(rv)
+		}
+	}
+
+}
+
+func (c *Config) getParsedPodNameFromEnv() string {
+	envPodName := os.Getenv(EnvPodName)
+	if envPodName == "" {
+		glg.Debugf("%s empty set as env variable - defaulting to %s", EnvPodName, defaultPodName)
+		envPodName = defaultPodName
+	}
+	splitPodName := strings.Split(envPodName, "-")
+	podName := splitPodName[0]
+
+	return podName
+}
+
+func (c *Config) getStringFromEnv(envName, defaultValue string) string {
+	var value string
+	value = os.Getenv(envName)
+	if value == "" {
+		glg.Debugf("%s empty set as env variable - defaulting to %s", envName, defaultValue)
+		value = defaultValue
+	}
+
+	return value
+}
+
+func (c *Config) getSliceFromEnv(sliceName string) []string {
+	slice := os.Getenv(sliceName)
+
+	if slice == "" {
+		glg.Error("ELASTIC_ROLES or ELASTIC_INDEXES env variables not set!")
+	}
+
+	splitSlice := strings.Split(slice, ";")
+
+	return splitSlice
+}
+
+func (c *Config) getBoolFromEnv(envName string) bool {
+	var value bool
+	envValue := os.Getenv(envName)
+	if envValue == "" {
+		value = false
+	} else {
+		value = true
+	}
+
+	return value
+}
+
+func (c *Config) getUrl(serviceName, defaultValue string) (*url.URL, error) {
+	var envVar string
+	for key, value := range serviceMapping {
+		if key == serviceName {
+			envVar = value
+		}
+	}
+	service := os.Getenv(envVar)
+	if service == "" {
+		service = defaultValue
+	}
+
+	u, err := url.Parse(service)
+	if err != nil {
+		return nil, err
+	}
+
+	return u, nil
+}
+
+func (c *Config) getInitCreation() models.SolonCreationRequest {
+	role := c.getStringFromEnv(EnvRole, "")
+	envAccess := c.getSliceFromEnv(EnvIndex)
+	podName := c.getStringFromEnv(EnvPodName, defaultPodName)
+	splitPodName := strings.Split(podName, "-")
+	username := splitPodName[0]
+
+	glg.Infof("username from pod is: %s", username)
+
+	creationRequest := models.SolonCreationRequest{
+		Role:     role,
+		Access:   envAccess,
+		PodName:  podName,
+		Username: username,
+	}
+
+	return creationRequest
+}

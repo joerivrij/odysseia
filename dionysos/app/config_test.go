@@ -10,19 +10,6 @@ import (
 	"testing"
 )
 
-func TestElasticIsHealthy(t *testing.T) {
-	fixtureFile := "info"
-	mockCode := 200
-	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
-	assert.Nil(t, err)
-
-	declensionConfig := QueryRuleSet(nil, "dionysos")
-	assert.Nil(t, err)
-
-	config := Get(mockElasticClient, declensionConfig)
-	assert.NotNil(t, config)
-}
-
 func TestCreateElasticConfig(t *testing.T) {
 	os.Setenv("ENV", "testing")
 
