@@ -27,6 +27,7 @@ const (
 	EnvAuthMethod            = "AUTH_METHOD"
 	EnvVaultRole             = "VAULT_ROLE"
 	EnvKubePath              = "KUBE_PATH"
+	EnvSidecarOverwrite      = "SIDECAR_OVERWRITE"
 	AuthMethodKube           = "kubernetes"
 	AuthMethodToken          = "token"
 	baseDir                  = "base"

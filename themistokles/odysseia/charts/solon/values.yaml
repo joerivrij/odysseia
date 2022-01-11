@@ -3,9 +3,14 @@
 # Declare variables to be passed into your templates.
 
 config:
+  inClusterHarbor: true
+  inClusterElastic: true
+  inClusterVault: true
   environment: minikube
   tls: true
+  sidecarOverwrite: true
   pullPolicy: Never
+  harborPullPolicy: Always
   replicas:
     low: 1
     medium: 2
@@ -31,7 +36,8 @@ services:
     name: "drakon"
 
 images:
-  tag: 498a828
+  harborRepo: core.harbor.domain:30003/odysseia/
+  tag: 566cb3e
   solon:
     repo: solon
   drakon:

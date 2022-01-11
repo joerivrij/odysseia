@@ -9,5 +9,6 @@ type BaseConfig struct {
 	HealthCheckOverwrite bool   `yaml:"HEALTH_CHECK_OVERWRITE"`
 	OutOfClusterKube     bool   `yaml:"OUT_OF_CLUSTER_KUBE"`
 	TestOverwrite        bool   `yaml:"TEST_OVERWRITE"`
+	SidecarOverwrite     bool
 	HealthCheck          bool
 }

@@ -14,7 +14,7 @@ import (
 
 func (c *Config) getElasticClient() (*elasticsearch.Client, error) {
 	var es *elasticsearch.Client
-	if c.env == "LOCAL" || c.env == "TEST" {
+	if c.env == "LOCAL" || c.env == "TEST" || c.BaseConfig.SidecarOverwrite {
 		if c.BaseConfig.TLSEnabled {
 			glg.Debug("creating local es client with tls enabled")
 
