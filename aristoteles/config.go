@@ -25,8 +25,7 @@ type Config struct {
 var base embed.FS
 
 func NewConfig(v interface{}) (interface{}, error) {
-	//https://patorjk.com/software/taag/#p=display&f=Crawford2&t=ARISTOTELES
-	glg.Info("\n  ____  ____   ____ _____ ______   ___   ______    ___  _        ___  _____\n /    ||    \\ |    / ___/|      | /   \\ |      |  /  _]| |      /  _]/ ___/\n|  o  ||  D  ) |  (   \\_ |      ||     ||      | /  [_ | |     /  [_(   \\_ \n|     ||    /  |  |\\__  ||_|  |_||  O  ||_|  |_||    _]| |___ |    _]\\__  |\n|  _  ||    \\  |  |/  \\ |  |  |  |     |  |  |  |   [_ |     ||   [_ /  \\ |\n|  |  ||  .  \\ |  |\\    |  |  |  |     |  |  |  |     ||     ||     |\\    |\n|__|__||__|\\_||____|\\___|  |__|   \\___/   |__|  |_____||_____||_____| \\___|\n                                                                           \n")
+	glg.Info("ARISTOTELES")
 	glg.Info(strings.Repeat("~", 37))
 	glg.Info("\"Τριών δει παιδεία: φύσεως, μαθήσεως, ασκήσεως.\"")
 	glg.Info("\"Education needs these three: natural endowment, study, practice.\"")
@@ -72,6 +71,14 @@ func NewConfig(v interface{}) (interface{}, error) {
 	if healthCheckOverwrite == "yes" || healthCheckOverwrite == "true" {
 		healthCheck = false
 	}
+
+	sidecarOverwrite := false
+	envSidecarOverwrite := os.Getenv(EnvSidecarOverwrite)
+	if envSidecarOverwrite == "yes" || envSidecarOverwrite == "true" {
+		sidecarOverwrite = true
+	}
+
+	newConfig.BaseConfig.SidecarOverwrite = sidecarOverwrite
 
 	if newConfig.BaseConfig.HealthCheckOverwrite {
 		healthCheck = !newConfig.BaseConfig.HealthCheckOverwrite

@@ -28,15 +28,24 @@ spec:
         elastic/roles: "api;seeder"
     spec:
       serviceAccountName: {{ template "solon.serviceAccountName" . }}
+      imagePullSecrets:
+        - name: harbor-images
       initContainers:
-        - image: {{ .Values.images.drakon.repo }}:{{ .Values.images.tag }}
-          name: "{{ template "drakon.uname" . }}"
+        - name: "{{ template "drakon.uname" . }}"
+          {{- if .Values.config.inClusterHarbor | quote }}
+          image: {{ .Values.images.harborRepo}}{{ .Values.images.drakon.repo }}:{{ .Values.images.tag }}
+          imagePullPolicy: {{ .Values.config.harborPullPolicy }}
+          {{ else }}
+          image: {{ .Values.images.drakon.repo }}:{{ .Values.images.tag }}
           imagePullPolicy: {{ .Values.config.pullPolicy }}
+          {{- end}}
           env:
           - name: ENV
             value: {{ .Values.config.environment }}
           - name: TLSENABLED
             value: {{ .Values.config.tls | quote }}
+          - name: SIDECAR_OVERWRITE
+            value:  {{ .Values.config.sidecarOverwrite | quote }}
           - name: POD_NAME
             valueFrom:
               fieldRef:
@@ -65,14 +74,21 @@ spec:
             {{- end }}
           {{- end }}
       containers:
-        - image: {{ .Values.images.solon.repo }}:{{ .Values.images.tag }}
-          name: "{{ template "solon.uname" . }}"
+        - name: "{{ template "solon.uname" . }}"
+          {{- if .Values.config.inClusterHarbor | quote }}
+          image: {{ .Values.images.harborRepo}}{{ .Values.images.solon.repo }}:{{ .Values.images.tag }}
+          imagePullPolicy: {{ .Values.config.harborPullPolicy }}
+          {{ else }}
+          image: {{ .Values.images.solon.repo }}:{{ .Values.images.tag }}
           imagePullPolicy: {{ .Values.config.pullPolicy }}
+          {{- end}}
           env:
           - name: ENV
             value: {{ .Values.config.environment }}
           - name: TLSENABLED
             value: {{ .Values.config.tls | quote }}
+          - name: SIDECAR_OVERWRITE
+            value:  {{ .Values.config.sidecarOverwrite | quote }}
           - name: NAMESPACE
             valueFrom:
               fieldRef:
