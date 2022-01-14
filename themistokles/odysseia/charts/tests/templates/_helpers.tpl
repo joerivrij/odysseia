@@ -50,65 +50,20 @@ app.kubernetes.io/name: {{ include "odysseia.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
-{{- define "odysseiaapi.uname" -}}
-{{- if empty .Values.services.odysseiaapi.name -}}
-{{ .Values.images.odysseiaapi }}
+{{- define "load.uname" -}}
+{{- if empty .Values.services.load.name -}}
+{{ .Values.images.load }}
 {{- else -}}
 {{ .Chart.Name }}
 {{- end -}}
 {{- end -}}
 
-{{- define "sidecar.uname" -}}
-{{- if empty .Values.services.sidecar.name -}}
-{{ .Values.images.sidecar }}
+{{- define "system.uname" -}}
+{{- if empty .Values.services.system.name -}}
+{{ .Values.images.system }}
 {{- else -}}
-{{ .Values.services.sidecar.name }}
+{{ .Chart.Name }}
 {{- end -}}
-{{- end -}}
-
-{{- define "init.uname" -}}
-{{- if empty .Values.services.init.name -}}
-{{ .Values.images.init }}
-{{- else -}}
-{{ .Values.services.init.name }}
-{{- end -}}
-{{- end -}}
-
-{{- define "seeder.uname" -}}
-{{- if empty .Values.services.seeder.name -}}
-{{ .Values.images.seeder }}
-{{- else -}}
-{{ .Values.services.seeder.name }}
-{{- end -}}
-{{- end -}}
-
-{{/*
-Create the name of the service account to use
-*/}}
-{{- define "serviceAccountName" -}}
-  {{- if .Values.serviceAccountOverride -}}
-    {{- .Values.serviceAccountOverride -}}
-  {{- else -}}
-    {{- .Chart.Name -}}
-  {{- end -}}
-{{- end -}}
-
-{{/*
-Create the name of the role to use
-*/}}
-{{- define "roleName" -}}
-  {{- if .Values.roleNameOverride -}}
-    {{- .Values.roleNameOverride -}}
-  {{- else -}}
-    {{- .Chart.Name -}}
-  {{- end -}}
-{{- end -}}
-
-{{/*
-Create the name of the roleBinding to use
-*/}}
-{{- define "bindingName" -}}
-{{- default (include "roleName" .) "-binding" }}
 {{- end -}}
 
 {{/*

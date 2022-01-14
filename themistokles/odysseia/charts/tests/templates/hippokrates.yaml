@@ -1,0 +1,53 @@
+{{- if .Values.config.systemTests -}}
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: "{{ template "system.uname" . }}"
+  namespace: {{ template "namespace" . }}
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: "{{ .Chart.Name }}"
+    env: {{ .Values.config.environment }}
+    app: "{{ template "system.uname" . }}"
+    {{- range $key, $value := .Values.services.labels }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+spec:
+  schedule: "*/2 * * * *"
+  jobTemplate:
+    metadata:
+      labels:
+        app: {{ template "system.uname" . }}
+        release: {{ .Release.Name }}
+        version: {{ .Values.images.tag }}
+    spec:
+      backoffLimit: 5
+      template:
+        spec:
+          containers:
+            - name: {{ template "system.uname" . }}
+            {{- if .Values.config.inClusterHarbor | quote }}
+              image: {{ .Values.images.harborRepo}}{{ .Values.images.system.repo }}:{{ .Values.images.tag }}
+              imagePullPolicy: {{ .Values.config.pullPolicy }}
+            {{ else }}
+              image: {{ .Values.images.system.repo }}:{{ .Values.images.tag }}
+              imagePullPolicy: {{ .Values.config.pullPolicy }}
+            {{- end}}
+              env:
+                - name: SOKRATES_URL
+                  value: http://sokrates-service:5000
+                - name: ALEXANDROS_URL
+                  value: http://alexandros-service:5000
+                - name: HERODOTOS_URL
+                  value: http://herodotos-service:5000
+                - name: DIONYSOS_URL
+                  value: http://dionysos-service:5000
+              command:
+              - /bin/sh
+              - -c
+              - godog
+          restartPolicy: OnFailure
+  successfulJobsHistoryLimit: 5
+  failedJobsHistoryLimit: 2
+{{- end }}

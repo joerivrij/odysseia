@@ -1,0 +1,23 @@
+{{- if .Values.config.loadTests -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "load.uname" . }}
+  namespace: {{ template "namespace" . }}
+spec:
+  selector:
+    app: {{ template "load.uname" . }}
+  ports:
+    - name: "alexandros"
+      port: {{ .Values.envVariables.load.alexandrosPort }}
+      targetPort: {{ .Values.envVariables.load.alexandrosPort }}
+    - name: "herodotos"
+      port: {{ .Values.envVariables.load.herodotosPort }}
+      targetPort: {{ .Values.envVariables.load.herodotosPort }}
+    - name: "sokrates"
+      port: {{ .Values.envVariables.load.sokratesPort }}
+      targetPort: {{ .Values.envVariables.load.sokratesPort }}
+    - name: "dionysos"
+      port: {{ .Values.envVariables.load.dionysosPort }}
+      targetPort: {{ .Values.envVariables.load.dionysosPort }}
+{{- end }}
