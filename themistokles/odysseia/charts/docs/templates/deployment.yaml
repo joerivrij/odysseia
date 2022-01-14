@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ template "docs.uname" . }}"
+  namespace: {{ template "docs.namespace" . }}
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: "{{ .Chart.Name }}"
+    env: {{ .Values.config.environment }}
+    app: "{{ template "docs.uname" . }}"
+    {{- range $key, $value := .Values.services.docs.labels }}
+    {{ $key }}: {{ $value | quote }}
+    {{ end }}
+spec:
+  replicas: {{ int .Values.config.replicas.low }}
+  selector:
+    matchLabels:
+      app: "{{ template "docs.uname" . }}"
+  template:
+    metadata:
+      labels:
+        app: {{ template "docs.uname" . }}
+        release: {{ .Release.Name }}
+        version: {{ .Values.images.tag }}
+    spec:
+      containers:
+        - image: {{ .Values.images.docs.repo }}:{{ .Values.images.tag }}
+          name: ploutarchos
+          imagePullPolicy: {{ .Values.config.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.config.port }}

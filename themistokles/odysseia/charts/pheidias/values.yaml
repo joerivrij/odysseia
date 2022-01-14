@@ -16,28 +16,12 @@ config:
   periodSeconds: 20
 
 services:
-  backend:
+  frontend:
     labels: {
-      domain: backend
+      domain: frontend
     }
-  sidecar:
-    name: "ptolemaios"
-    requests:
-      memory: "64Mi"
-      cpu: "100m"
-    limits:
-      memory: "128Mi"
-      cpu: "250m"
-  seeder:
-    name: "demokritos"
-    role: "seeder"
-    access: "dictionary"
-  init:
-    name: "periandros"
   odysseiaapi:
-    name: "alexandros"
-    role: "api"
-    access: "dictionary"
+    name: "pheidias"
     requests:
       memory: "64Mi"
       cpu: "100m"
@@ -48,22 +32,12 @@ services:
 images:
   tag: 4952f80
   harborRepo: core.harbor.domain:30003/odysseia/
-  sidecar:
-    repo: ptolemaios
-  init:
-    repo: periandros
   odysseiaapi:
-    repo: alexandros
-  seeder:
-    repo: demokritos
+    repo: pheidias
 
 envVariables:
-  solonService: http://solon-service:5000
-  vaultService: http://vault:8200
-  elasticService: https://elastic-master:9200
+  nodeEnv: production
   odysseiaapi:
-    port: 5000
-  sidecar:
-    port: 5001
+    port: 3000
 
 namespaceOverride: odysseia

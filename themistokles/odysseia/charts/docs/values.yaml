@@ -1,0 +1,32 @@
+# Default values for Odysseia.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+config:
+  inClusterHarbor: true
+  environment: minikube
+  pullPolicy: Never
+  harborPullPolicy: Always
+  port: 8080
+  replicas:
+    low: 1
+    medium: 2
+    high: 4
+
+services:
+  docs:
+    labels: {
+      domain: docs
+    }
+  ploutarchos:
+    name: "ploutarchos"
+
+
+images:
+  harborRepo: core.harbor.domain:30003/odysseia/
+  tag: 566cb3e
+  docs:
+    repo: ploutarchos
+
+
+namespaceOverride: odysseia

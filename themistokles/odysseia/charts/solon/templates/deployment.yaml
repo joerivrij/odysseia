@@ -24,12 +24,14 @@ spec:
         release: {{ .Release.Name }}
         version: {{ .Values.images.tag }}
       annotations:
-        elastic/indices: "dictionary;grammar;authors;text"
+        elastic/indices: "dictionary;grammar;authors;text;quiz"
         elastic/roles: "api;seeder"
     spec:
       serviceAccountName: {{ template "solon.serviceAccountName" . }}
+      {{- if .Values.config.inClusterHarbor | quote }}
       imagePullSecrets:
         - name: harbor-images
+      {{- end}}
       initContainers:
         - name: "{{ template "drakon.uname" . }}"
           {{- if .Values.config.inClusterHarbor | quote }}

@@ -29,15 +29,15 @@ services:
       memory: "128Mi"
       cpu: "250m"
   seeder:
-    name: "demokritos"
+    name: "herakleitos"
     role: "seeder"
-    access: "dictionary"
+    access: "author;text"
   init:
     name: "periandros"
   odysseiaapi:
-    name: "alexandros"
+    name: "herodotos"
     role: "api"
-    access: "dictionary"
+    access: "author;text"
     requests:
       memory: "64Mi"
       cpu: "100m"
@@ -53,9 +53,9 @@ images:
   init:
     repo: periandros
   odysseiaapi:
-    repo: alexandros
+    repo: herodotos
   seeder:
-    repo: demokritos
+    repo: herakleitos
 
 envVariables:
   solonService: http://solon-service:5000

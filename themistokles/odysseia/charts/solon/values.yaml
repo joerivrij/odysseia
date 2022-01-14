@@ -4,8 +4,6 @@
 
 config:
   inClusterHarbor: true
-  inClusterElastic: true
-  inClusterVault: true
   environment: minikube
   tls: true
   sidecarOverwrite: true
@@ -85,7 +83,7 @@ secretMounts:
     path: /app/config/certs
 
 serviceAccount:
-  name: access-sa
+  name: solon-access-sa
 
 namespaceOverride: odysseia
 

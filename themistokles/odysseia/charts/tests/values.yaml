@@ -4,9 +4,10 @@
 
 config:
   environment: minikube
+  pullPolicy: Always
   inClusterHarbor: true
-  tls: true
-  pullPolicy: Never
+  loadTests: true
+  systemTests: true
   replicas:
     low: 1
     medium: 2
@@ -16,28 +17,22 @@ config:
   periodSeconds: 20
 
 services:
-  backend:
+  labels:
+    testing: true
+    name: "tests"
     labels: {
-      domain: backend
+      domain: testing
     }
-  sidecar:
-    name: "ptolemaios"
+  system:
+    name: "hippokratos"
     requests:
       memory: "64Mi"
       cpu: "100m"
     limits:
       memory: "128Mi"
       cpu: "250m"
-  seeder:
-    name: "demokritos"
-    role: "seeder"
-    access: "dictionary"
-  init:
-    name: "periandros"
-  odysseiaapi:
-    name: "alexandros"
-    role: "api"
-    access: "dictionary"
+  load:
+    name: "xerxes"
     requests:
       memory: "64Mi"
       cpu: "100m"
@@ -48,22 +43,21 @@ services:
 images:
   tag: 4952f80
   harborRepo: core.harbor.domain:30003/odysseia/
-  sidecar:
-    repo: ptolemaios
-  init:
-    repo: periandros
-  odysseiaapi:
-    repo: alexandros
-  seeder:
-    repo: demokritos
+  system:
+    repo: hipporkratos
+  load:
+    repo: xerxes
 
 envVariables:
-  solonService: http://solon-service:5000
-  vaultService: http://vault:8200
-  elasticService: https://elastic-master:9200
-  odysseiaapi:
-    port: 5000
-  sidecar:
-    port: 5001
-
-namespaceOverride: odysseia
+  load:
+    alexandrosHost: http://alexandros-service:5000
+    alexandrosPort: 8086
+    dionysosHost: http://dionysos-service:5000
+    dionysosPort: 8087
+    herodotosHost: http://herodotos-service:5000
+    herodotosPort: 8088
+    sokratesHost: http://sokrates-service:5000
+    sokratesPort: 8089
+    port: 8089
+    locustUsers: 100
+    spawnRate: 5
