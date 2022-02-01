@@ -2,6 +2,7 @@ package command
 
 import (
 	"github.com/kpango/glg"
+	"github.com/odysseia/archimedes/command"
 	"github.com/odysseia/plato/generator"
 	"github.com/odysseia/plato/kubernetes"
 	"github.com/spf13/cobra"
@@ -27,23 +28,23 @@ func CreateSecret() *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 
 			if namespace == "" {
-				glg.Debugf("defaulting to %s", defaultNamespace)
-				namespace = defaultNamespace
+				glg.Debugf("defaulting to %s", command.DefaultNamespace)
+				namespace = command.DefaultNamespace
 			}
 
 			if secretName == "" {
-				glg.Debugf("defaulting to %s", defaultSecretName)
-				secretName = defaultSecretName
+				glg.Debugf("defaulting to %s", command.DefaultSecretName)
+				secretName = command.DefaultSecretName
 			}
 
 			if filePath == "" {
-				glg.Debugf("defaulting to %s", defaultKubeConfig)
+				glg.Debugf("defaulting to %s", command.DefaultKubeConfig)
 				homeDir, err := os.UserHomeDir()
 				if err != nil {
 					glg.Error(err)
 				}
 
-				filePath = filepath.Join(homeDir, defaultKubeConfig)
+				filePath = filepath.Join(homeDir, command.DefaultKubeConfig)
 			}
 
 			cfg, err := ioutil.ReadFile(filePath)
@@ -90,5 +91,5 @@ func createSecret(secretName, namespace string, secretLength int, kube kubernete
 		return
 	}
 
-	glg.Infof("create secret with name %s", secretName)
+	glg.Infof("created secret with name %s", secretName)
 }

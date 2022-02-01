@@ -125,7 +125,7 @@ func enableKubernetesAsAuth(namespace, policyName string, kube kubernetes.KubeCl
 
 	glg.Debugf("kubehost found: %s", kubeHost)
 
-	secrets, err := kube.Configuration().GetSecrets(namespace)
+	secrets, err := kube.Configuration().ListSecrets(namespace)
 	if err != nil {
 		glg.Error(err)
 	}
