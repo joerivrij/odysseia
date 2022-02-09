@@ -26,7 +26,7 @@ spec:
     spec:
       {{- if .Values.config.inClusterHarbor | quote }}
       imagePullSecrets:
-        - name: harbor-images
+        - name: {{ .Values.images.pullSecret}}
       {{- end}}
       containers:
         - name: "{{ template "odysseiaapi.uname" . }}"
@@ -39,7 +39,7 @@ spec:
           {{- end}}
           env:
             - name: NODE_ENV
-              value: {{ .Values.envVariables.nodeEnv }}
+              value: kubect{{ .Values.envVariables.nodeEnv }}
           ports:
             - containerPort: {{ .Values.envVariables.odysseiaapi.port }}
           resources:

@@ -1,0 +1,17 @@
+envVariables:
+  pheidias:
+    port: 3000
+  alexandros:
+    port: 5000
+  dionysos:
+    port: 5000
+  sokrates:
+    port: 5000
+  herodotos:
+    port: 5000
+  solon:
+    port: 5000
+  ploutarchos:
+    port: 8080
+  xerxes:
+    port: 8089

@@ -148,6 +148,24 @@ func TestDemokritosConfigCreation(t *testing.T) {
 		os.Unsetenv(EnvHealthCheckOverwrite)
 		os.Unsetenv(EnvSearchWord)
 	})
+
+	t.Run("SearchWordOverwrite", func(t *testing.T) {
+		expected := "anotherterm"
+		os.Setenv(EnvHealthCheckOverwrite, "yes")
+		os.Setenv(EnvIndex, expected)
+		cfg := configs.DemokritosConfig{}
+
+		sut, err := NewConfig(cfg)
+		assert.Nil(t, err)
+		assert.NotNil(t, sut)
+
+		config, ok := sut.(*configs.DemokritosConfig)
+		assert.True(t, ok)
+		assert.NotNil(t, config.ElasticClient)
+		assert.Equal(t, expected, config.Index)
+		os.Unsetenv(EnvHealthCheckOverwrite)
+		os.Unsetenv(EnvIndex)
+	})
 }
 
 func TestDionysosConfigCreation(t *testing.T) {

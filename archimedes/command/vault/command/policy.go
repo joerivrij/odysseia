@@ -68,7 +68,7 @@ func Policy() *cobra.Command {
 
 			glg.Info("is it secret? Is it safe? Well no longer!")
 			glg.Debug("creating a vault policy")
-			createPolicy(policyName, namespace, archimedesConfig.Kube)
+			createPolicy(policyName, namespace, "", archimedesConfig.Kube)
 		},
 	}
 
@@ -79,7 +79,7 @@ func Policy() *cobra.Command {
 	return cmd
 }
 
-func createPolicy(policyName, namespace string, kube kubernetes.KubeClient) {
+func createPolicy(policyName, namespace, rootToken string, kube kubernetes.KubeClient) {
 	for key, value := range policies {
 		var policyToCreate []byte
 
@@ -147,6 +147,15 @@ func createPolicy(policyName, namespace string, kube kubernetes.KubeClient) {
 		glg.Debug(copy)
 
 		glg.Info("file copied to pod")
+
+		loginCommand := []string{"vault", "login", rootToken}
+
+		login, err := kube.Workload().ExecNamedPod(namespace, podName, loginCommand)
+		if err != nil {
+			glg.Error(err)
+		}
+
+		glg.Info(login)
 
 		command := []string{"vault", "policy", "write", policyName, srcPath}
 

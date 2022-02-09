@@ -13,9 +13,6 @@ metadata:
     {{ $key }}: {{ $value | quote }}
     {{- end }}
 spec:
-  selector:
-    matchLabels:
-      app: "{{ template "seeder.uname" . }}"
   template:
     metadata:
       labels:
@@ -29,7 +26,7 @@ spec:
       serviceAccountName: {{ template "serviceAccountName" . }}
       {{- if .Values.config.inClusterHarbor | quote }}
       imagePullSecrets:
-        - name: harbor-images
+        - name: {{ .Values.images.pullSecret}}
       {{- end}}
       initContainers:
         - name: "{{ template "init.uname" . }}"
@@ -75,7 +72,7 @@ spec:
               value: {{ .Values.envVariables.solonService }}
             - name: VAULT_SERVICE
               value: {{ .Values.envVariables.vaultService }}
-            - name: ISJOB
+            - name: RUN_ONCE
               value: "true"
             - name: ENV
               value: {{ .Values.config.environment }}
@@ -111,5 +108,9 @@ spec:
               value: {{ .Values.config.environment }}
             - name: TLSENABLED
               value: {{ .Values.config.tls | quote }}
+            - name: ELASTIC_ACCESS
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.annotations['odysseia-greek/access']
       restartPolicy: Never
   backoffLimit: 3

@@ -4,6 +4,7 @@ import (
 	"github.com/kpango/glg"
 	"github.com/odysseia/archimedes/command/images"
 	"github.com/odysseia/archimedes/command/kubernetes"
+	"github.com/odysseia/archimedes/command/odysseia"
 	"github.com/odysseia/archimedes/command/parse"
 	"github.com/odysseia/archimedes/command/vault"
 	"github.com/spf13/cobra"
@@ -34,6 +35,7 @@ func main() {
 		parse.Manager(),
 		vault.Manager(),
 		kubernetes.Manager(),
+		odysseia.Manager(),
 	)
 
 	err := rootCmd.Execute()

@@ -35,7 +35,8 @@ services:
 
 images:
   harborRepo: core.harbor.domain:30003/odysseia/
-  tag: 566cb3e
+  pullSecret: harbor-images
+  tag: 4952f80
   solon:
     repo: solon
   drakon:

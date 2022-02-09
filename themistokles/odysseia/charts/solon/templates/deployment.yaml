@@ -30,7 +30,7 @@ spec:
       serviceAccountName: {{ template "solon.serviceAccountName" . }}
       {{- if .Values.config.inClusterHarbor | quote }}
       imagePullSecrets:
-        - name: harbor-images
+        - name: {{ .Values.images.pullSecret }}
       {{- end}}
       initContainers:
         - name: "{{ template "drakon.uname" . }}"

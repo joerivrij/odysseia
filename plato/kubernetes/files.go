@@ -3,6 +3,7 @@ package kubernetes
 import (
 	"archive/tar"
 	"bytes"
+	"fmt"
 	"github.com/kpango/glg"
 	"io"
 	"io/ioutil"
@@ -85,6 +86,53 @@ func (c *UtilImpl) CopyFileToPod(podName, destPath, srcPath string) (string, err
 	return commandBuffer.String(), nil
 }
 
+func (c *UtilImpl) CopyFileFromPod(srcPath, destPath, namespace, podName string) error {
+	kubeCfg := clientcmd.NewNonInteractiveDeferredLoadingClientConfig(
+		clientcmd.NewDefaultClientConfigLoadingRules(),
+		&clientcmd.ConfigOverrides{},
+	)
+
+	restCfg, err := kubeCfg.ClientConfig()
+	if err != nil {
+		return err
+	}
+
+	reader, outStream := io.Pipe()
+	cmdArr := []string{"tar", "cf", "-", srcPath}
+	req := c.rest.Get().
+		Namespace(namespace).
+		Resource("pods").
+		Name(podName).
+		SubResource("exec").
+		VersionedParams(&corev1.PodExecOptions{
+			Command: cmdArr,
+			Stdin:   true,
+			Stdout:  true,
+			Stderr:  true,
+			TTY:     false,
+		}, scheme.ParameterCodec)
+
+	exec, err := remotecommand.NewSPDYExecutor(restCfg, "POST", req.URL())
+	if err != nil {
+		return err
+	}
+	go func() {
+		defer outStream.Close()
+		err = exec.Stream(remotecommand.StreamOptions{
+			Stdin:  os.Stdin,
+			Stdout: outStream,
+			Stderr: os.Stderr,
+			Tty:    false,
+		})
+	}()
+	prefix := getPrefix(srcPath)
+	prefix = path.Clean(prefix)
+	//prefix = cpStripPathShortcuts(prefix)
+	destPath = path.Join(destPath, path.Base(prefix))
+	err = untarAll(reader, destPath, prefix)
+	return err
+}
+
 func makeTar(srcPath, destPath string, writer io.Writer) error {
 	tarWriter := tar.NewWriter(writer)
 	defer tarWriter.Close()
@@ -162,4 +210,70 @@ func recursiveTar(srcBase, srcFile, destBase, destFile string, tw *tar.Writer) e
 		}
 	}
 	return nil
+}
+
+func untarAll(reader io.Reader, destDir, prefix string) error {
+	tarReader := tar.NewReader(reader)
+	for {
+		header, err := tarReader.Next()
+		if err != nil {
+			if err != io.EOF {
+				return err
+			}
+			break
+		}
+
+		if !strings.HasPrefix(header.Name, prefix) {
+			return fmt.Errorf("tar contents corrupted")
+		}
+
+		mode := header.FileInfo().Mode()
+		destFileName := filepath.Join(destDir, header.Name[len(prefix):])
+
+		baseName := filepath.Dir(destFileName)
+		if err := os.MkdirAll(baseName, 0755); err != nil {
+			return err
+		}
+		if header.FileInfo().IsDir() {
+			if err := os.MkdirAll(destFileName, 0755); err != nil {
+				return err
+			}
+			continue
+		}
+
+		evaledPath, err := filepath.EvalSymlinks(baseName)
+		if err != nil {
+			return err
+		}
+
+		if mode&os.ModeSymlink != 0 {
+			linkname := header.Linkname
+
+			if !filepath.IsAbs(linkname) {
+				_ = filepath.Join(evaledPath, linkname)
+			}
+
+			if err := os.Symlink(linkname, destFileName); err != nil {
+				return err
+			}
+		} else {
+			outFile, err := os.Create(destFileName)
+			if err != nil {
+				return err
+			}
+			defer outFile.Close()
+			if _, err := io.Copy(outFile, tarReader); err != nil {
+				return err
+			}
+			if err := outFile.Close(); err != nil {
+				return err
+			}
+		}
+	}
+
+	return nil
+}
+
+func getPrefix(file string) string {
+	return strings.TrimLeft(file, "/")
 }

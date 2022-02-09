@@ -65,7 +65,7 @@ func Init() *cobra.Command {
 	return cmd
 }
 
-func initVault(namespace string, kube kubernetes.KubeClient) {
+func initVault(namespace string, kube kubernetes.KubeClient) []byte {
 	vaultSelector := "app.kubernetes.io/name=vault"
 	var podName string
 
@@ -88,7 +88,7 @@ func initVault(namespace string, kube kubernetes.KubeClient) {
 	vaultInit, err := kube.Workload().ExecNamedPod(namespace, podName, command)
 	if err != nil {
 		glg.Error(err)
-		return
+		return nil
 	}
 
 	_, callingFile, _, _ := runtime.Caller(0)
@@ -111,4 +111,6 @@ func initVault(namespace string, kube kubernetes.KubeClient) {
 	util.WriteFile([]byte(vaultInit), clusterKeys)
 
 	glg.Debugf("wrote data: %s to dest: %s", vaultInit, clusterKeys)
+
+	return []byte(vaultInit)
 }

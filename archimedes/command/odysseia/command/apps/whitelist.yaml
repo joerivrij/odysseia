@@ -1,0 +1,12 @@
+appsToInstall:
+  - elasticsearch
+  - vault
+  - harbor
+  - solon
+  - alexandros
+  - dionysos
+  - herodotos
+  - sokrates
+  - pheidias
+  - docs
+  - tests

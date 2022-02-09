@@ -3,32 +3,3 @@ name: odysseia
 description: One cannot know before one has learned
 version: 0.1.0
 appVersion: "0.1.0"
-dependencies:
-  - name: elasticsearch
-    version: 7.15.0
-    repository: file://charts/elasticsearch
-    condition: config.inClusterElastic
-  - name: kibana
-    version: 7.15.0
-    repository: file://charts/kibana
-    condition: config.inClusterKibana
-  - name: apm-server
-    version: 7.15.0
-    repository: file://charts/apm-server
-    condition: config.inClusterElasticStack
-  - name: filebeat
-    version: 7.15.0
-    repository: file://charts/filebeat
-    condition: config.inClusterElasticStack
-  - name: logstash
-    version: 7.15.0
-    repository: file://charts/logstash
-    condition: config.inClusterElasticStack
-  - name: metricbeat
-    version: 7.15.0
-    repository: file://charts/metricbeat
-    condition: config.inClusterElasticStack
-  - name: vault
-    version: 0.16.1
-    repository: file://charts/vault
-    condition: config.inClusterVault

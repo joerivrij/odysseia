@@ -24,9 +24,19 @@ spec:
         release: {{ .Release.Name }}
         version: {{ .Values.images.tag }}
     spec:
+      {{- if .Values.config.inClusterHarbor | quote }}
+      imagePullSecrets:
+        - name: {{ .Values.images.pullSecret}}
+      {{- end}}
       containers:
-        - image: {{ .Values.images.docs.repo }}:{{ .Values.images.tag }}
-          name: ploutarchos
+        - name: ploutarchos
+          {{- if .Values.config.inClusterHarbor | quote }}
+          image: {{ .Values.images.harborRepo}}{{ .Values.images.docs.repo }}:{{ .Values.images.tag }}
+          imagePullPolicy: {{ .Values.config.pullPolicy }}
+          {{ else }}
+          image: {{ .Values.images.docs.repo }}:{{ .Values.images.tag }}
+          imagePullPolicy: {{ .Values.config.pullPolicy }}
+          {{- end}}
           imagePullPolicy: {{ .Values.config.pullPolicy }}
           ports:
             - containerPort: {{ .Values.config.port }}

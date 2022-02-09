@@ -30,7 +30,7 @@ spec:
       serviceAccountName: {{ template "serviceAccountName" . }}
       {{- if .Values.config.inClusterHarbor | quote }}
       imagePullSecrets:
-        - name: harbor-images
+        - name: {{ .Values.images.pullSecret}}
       {{- end}}
       initContainers:
         - name: "{{ template "init.uname" . }}"
@@ -113,13 +113,13 @@ spec:
             - containerPort: {{ .Values.envVariables.odysseiaapi.port }}
           livenessProbe:
             httpGet:
-              path: /odysseiaapi/v1/health
+              path: /sokrates/v1/health
               port: {{ .Values.envVariables.odysseiaapi.port }}
             initialDelaySeconds: {{ .Values.config.initialDelayLiveness }}
             periodSeconds: {{ .Values.config.periodSeconds }}
           readinessProbe:
             httpGet:
-              path: /odysseiaapi/v1/ping
+              path: /sokrates/v1/ping
               port: {{ .Values.envVariables.odysseiaapi.port }}
             initialDelaySeconds: {{ .Values.config.initialDelayReadiness }}
             periodSeconds: {{ .Values.config.periodSeconds }}

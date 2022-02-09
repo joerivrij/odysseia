@@ -32,6 +32,7 @@ services:
 images:
   tag: 4952f80
   harborRepo: core.harbor.domain:30003/odysseia/
+  pullSecret: harbor-images
   odysseiaapi:
     repo: pheidias
 

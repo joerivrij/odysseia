@@ -12,7 +12,7 @@ import (
 	"time"
 )
 
-func (c *Config) getElasticClient() (*elasticsearch.Client, error) {
+func (c *Config) getElasticClient() (elasticsearch.Client, error) {
 	var es *elasticsearch.Client
 	if c.env == "LOCAL" || c.env == "TEST" || c.BaseConfig.SidecarOverwrite {
 		if c.BaseConfig.TLSEnabled {
@@ -74,7 +74,7 @@ func (c *Config) getElasticClient() (*elasticsearch.Client, error) {
 		}
 	}
 
-	return es, nil
+	return *es, nil
 }
 
 func (c *Config) mapVaultToConf(vaultModel *models.ElasticConfigVault, tls bool) models.ElasticConfig {

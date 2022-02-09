@@ -50,6 +50,8 @@ func (d *DrakonHandler) CreateRoles() (bool, error) {
 			}
 
 			roleName := fmt.Sprintf("%s_%s", index, role)
+
+			glg.Info(roleName)
 			roleCreated, err := elastic.CreateRole(&d.Config.ElasticClient, roleName, putRole)
 			if err != nil {
 				glg.Error(err)

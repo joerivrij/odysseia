@@ -18,6 +18,7 @@ type KubeClient interface {
 	Util() Util
 	Workload() Workload
 	Nodes() Nodes
+	Namespaces() Namespace
 }
 
 type Access interface {
@@ -25,8 +26,10 @@ type Access interface {
 }
 
 type Configuration interface {
-	GetSecrets(namespace string) (*corev1.SecretList, error)
+	GetSecret(namespace, secretName string) (*corev1.Secret, error)
+	ListSecrets(namespace string) (*corev1.SecretList, error)
 	CreateSecret(namespace, secretName string, data map[string][]byte) error
+	CreateDockerSecret(namespace, secretName string, data map[string]string) error
 }
 
 type Cluster interface {
@@ -34,11 +37,22 @@ type Cluster interface {
 	GetHostCaCert() ([]byte, error)
 }
 
+type Namespace interface {
+	Create(namespace string) error
+	Delete(namespace string) error
+	List() (*corev1.NamespaceList, error)
+}
+
 type Util interface {
 	CopyFileToPod(podName, destPath, srcPath string) (string, error)
+	CopyFileFromPod(srcPath, destPath, namespace, podName string) error
 }
 
 type Workload interface {
+	List(namespace string) (*corev1.PodList, error)
+	CreatePodSpec(namespace, name, podImage string, command []string) *corev1.Pod
+	DeletePod(namespace, podName string) error
+	CreatePod(namespace string, pod *corev1.Pod) (*corev1.Pod, error)
 	ExecNamedPod(namespace, podName string, command []string) (string, error)
 	GetStatefulSets(namespace string) (*appsv1.StatefulSetList, error)
 	GetPodsBySelector(namespace, selector string) (*corev1.PodList, error)
@@ -60,6 +74,7 @@ type Kube struct {
 	configuration *ConfigurationImpl
 	workload      *WorkloadImpl
 	nodes         *NodesImpl
+	namespace     *NamespaceImpl
 	config        []byte
 }
 
@@ -119,6 +134,11 @@ func NewConfigBasedKube(config []byte, ns string) (*Kube, error) {
 		return nil, err
 	}
 
+	namespaceClient, err := NewNamespaceClient(clientSet)
+	if err != nil {
+		return nil, err
+	}
+
 	workload, err := NewWorkloadClient(clientSet)
 	if err != nil {
 		return nil, err
@@ -143,6 +163,7 @@ func NewConfigBasedKube(config []byte, ns string) (*Kube, error) {
 		workload:      workload,
 		util:          util,
 		nodes:         nodes,
+		namespace:     namespaceClient,
 	}, nil
 }
 
@@ -199,6 +220,14 @@ func (k *Kube) Util() Util {
 	}
 
 	return k.util
+}
+
+func (k *Kube) Namespaces() Namespace {
+	if k == nil {
+		return nil
+	}
+
+	return k.namespace
 }
 
 func (k *Kube) Cluster() Cluster {

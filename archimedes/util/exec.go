@@ -26,8 +26,9 @@ func ExecCommand(command, filePath string) error {
 	return nil
 }
 
-func ExecCommandWithReturn(command string) (string, error) {
+func ExecCommandWithReturn(command, filePath string) (string, error) {
 	cmd := exec.Command("/bin/sh", "-c", command)
+	cmd.Dir = filePath
 
 	stdOut, _ := cmd.StdoutPipe()
 	err := cmd.Start()

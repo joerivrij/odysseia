@@ -9,6 +9,8 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"runtime"
+	"strings"
 )
 
 func CreateImages() *cobra.Command {
@@ -24,11 +26,28 @@ func CreateImages() *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			glg.Green("creating")
 			if filePath == "" {
-				glg.Error(fmt.Sprintf("filepath is empty"))
-				return
+				_, callingFile, _, _ := runtime.Caller(0)
+				callingDir := filepath.Dir(callingFile)
+				dirParts := strings.Split(callingDir, string(os.PathSeparator))
+				var odysseiaPath []string
+				for i, part := range dirParts {
+					if part == "odysseia" {
+						odysseiaPath = dirParts[0 : i+1]
+						break
+					}
+				}
+				l := "/"
+				for _, path := range odysseiaPath {
+					l = filepath.Join(l, path)
+				}
+
+				filePath = l
 			}
 
-			createImages(filePath)
+			glg.Infof("filepath set to: %s", filePath)
+			command := "create-harbor"
+
+			LoopAndCreateImages(filePath, command)
 		},
 	}
 	cmd.PersistentFlags().StringVarP(&filePath, "filepath", "f", "", "where to find the source code")
@@ -36,7 +55,7 @@ func CreateImages() *cobra.Command {
 	return cmd
 }
 
-func createImages(odysseiaPath string) {
+func LoopAndCreateImages(odysseiaPath, command string) {
 	ploutarchosPath := fmt.Sprintf("%s/%s/yaml", odysseiaPath, "ploutarchos")
 	directories, err := ioutil.ReadDir(odysseiaPath)
 	if err != nil {
@@ -60,7 +79,6 @@ func createImages(odysseiaPath string) {
 
 			absolutePath, _ := filepath.Abs(dir.Name())
 			lookForYamlFile(absolutePath, ploutarchosPath)
-			command := "create-image"
 			lookForMakeFile(absolutePath, command)
 		case mode.IsRegular():
 		}

@@ -154,6 +154,7 @@ func CreateRole(elasticClient *elasticsearch.Client, name string, roleRequest mo
 		return false, err
 	}
 	buffer := bytes.NewBuffer(jsonRole)
+	glg.Debug(buffer)
 	res, _ := elasticClient.Security.PutRole(name, buffer)
 	glg.Debug(res)
 	return true, nil

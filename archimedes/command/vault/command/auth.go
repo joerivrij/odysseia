@@ -8,7 +8,6 @@ import (
 	"github.com/odysseia/aristoteles"
 	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/plato/kubernetes"
-	"github.com/odysseia/plato/vault"
 	"github.com/spf13/cobra"
 	"os"
 	"path/filepath"
@@ -71,7 +70,7 @@ func Auth() *cobra.Command {
 			}
 
 			glg.Infof("enabling the following auth method %s", method)
-			enableKubernetesAsAuth(namespace, policyName, archimedesConfig.Kube)
+			enableKubernetesAsAuth(namespace, policyName, "", archimedesConfig.Kube)
 		},
 	}
 
@@ -83,7 +82,7 @@ func Auth() *cobra.Command {
 	return cmd
 }
 
-func enableKubernetesAsAuth(namespace, policyName string, kube kubernetes.KubeClient) {
+func enableKubernetesAsAuth(namespace, policyName, rootToken string, kube kubernetes.KubeClient) {
 	vaultSubString := "vault"
 	var vaultSelector string
 	var podName string
@@ -125,7 +124,7 @@ func enableKubernetesAsAuth(namespace, policyName string, kube kubernetes.KubeCl
 
 	glg.Debugf("kubehost found: %s", kubeHost)
 
-	secrets, err := kube.Configuration().GetSecrets(namespace)
+	secrets, err := kube.Configuration().ListSecrets(namespace)
 	if err != nil {
 		glg.Error(err)
 	}
@@ -164,10 +163,6 @@ func enableKubernetesAsAuth(namespace, policyName string, kube kubernetes.KubeCl
 	glg.Info("gathered all data needed to start and enable kubernetes as auth and adding your current cluster")
 
 	glg.Info("step 0: logging in using roottoken")
-
-	clusterKeys := vault.GetClusterKeys(namespace)
-	rootToken := clusterKeys.RootToken
-	glg.Info("key found")
 
 	loginCommand := []string{"vault", "login", rootToken}
 
@@ -236,7 +231,7 @@ func enableKubernetesAsAuth(namespace, policyName string, kube kubernetes.KubeCl
 	glg.Info("role will be called Solon")
 
 	//add new serviceaccount: serviceAccountName,access-sa
-	boundServiceName := fmt.Sprintf("bound_service_account_names=%s,%s", serviceAccountName, "access-sa")
+	boundServiceName := fmt.Sprintf("bound_service_account_names=%s,%s", serviceAccountName, "solon-access-sa")
 	boundNamespace := fmt.Sprintf("bound_service_account_namespaces=%s", namespace)
 	policies := fmt.Sprintf("policies=%s", policyName)
 

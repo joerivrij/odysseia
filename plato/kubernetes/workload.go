@@ -73,6 +73,62 @@ func (w *WorkloadImpl) GetJob(namespace, name string) (*batchv1.Job, error) {
 	return job, nil
 }
 
+// List lists all pods within your cluster
+func (w *WorkloadImpl) List(namespace string) (*corev1.PodList, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Minute)
+	defer cancel()
+
+	pods, err := w.client.CoreV1().Pods(namespace).List(ctx, metav1.ListOptions{})
+	if err != nil {
+		return nil, err
+	}
+
+	return pods, nil
+}
+
+func (w *WorkloadImpl) DeletePod(namespace, podName string) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Minute)
+	defer cancel()
+
+	err := w.client.CoreV1().Pods(namespace).Delete(ctx, podName, metav1.DeleteOptions{})
+
+	return err
+}
+
+func (w *WorkloadImpl) CreatePod(namespace string, pod *corev1.Pod) (*corev1.Pod, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Minute)
+	defer cancel()
+
+	pod, err := w.client.CoreV1().Pods(namespace).Create(ctx, pod, metav1.CreateOptions{})
+
+	return pod, err
+}
+
+func (w *WorkloadImpl) CreatePodSpec(namespace, name, podImage string, command []string) *corev1.Pod {
+	pod := &corev1.Pod{
+		TypeMeta: metav1.TypeMeta{
+			Kind:       "Pod",
+			APIVersion: "v1",
+		},
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      name,
+			Namespace: namespace,
+		},
+		Spec: corev1.PodSpec{
+			Containers: []corev1.Container{
+				{
+					Name:            name,
+					Image:           podImage,
+					ImagePullPolicy: corev1.PullAlways,
+					Command:         command,
+				},
+			},
+		},
+	}
+
+	return pod
+}
+
 func (w *WorkloadImpl) GetPodsBySelector(namespace, selector string) (*corev1.PodList, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
 	defer cancel()

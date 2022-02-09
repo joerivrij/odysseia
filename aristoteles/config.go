@@ -196,13 +196,12 @@ func (c *Config) fillFields(e *reflect.Value) {
 
 		switch fieldType {
 		case reflect.TypeOf(elasticsearch.Client{}):
-
 			es, err := c.getElasticClient()
 			if err != nil {
 				glg.Fatal("error getting es config")
-				esv := reflect.ValueOf(es)
-				e.FieldByName(fieldName).Set(esv)
 			}
+			esv := reflect.ValueOf(es)
+			e.FieldByName(fieldName).Set(esv)
 
 		case reflect.TypeOf((*kubernetes.KubeClient)(nil)).Elem():
 			k, err := c.getKubeClient()

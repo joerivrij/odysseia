@@ -19,7 +19,7 @@ func NewConfigurationClient(kube *kubernetes.Clientset) (*ConfigurationImpl, err
 	return &ConfigurationImpl{client: coreClient}, nil
 }
 
-func (c *ConfigurationImpl) GetSecrets(namespace string) (*corev1.SecretList, error) {
+func (c *ConfigurationImpl) ListSecrets(namespace string) (*corev1.SecretList, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
 	defer cancel()
 
@@ -68,4 +68,42 @@ func (c *ConfigurationImpl) CreateSecret(namespace, secretName string, data map[
 	}
 
 	return nil
+}
+
+func (c *ConfigurationImpl) CreateDockerSecret(namespace, secretName string, data map[string]string) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
+	defer cancel()
+
+	secret := corev1.Secret{
+		TypeMeta: metav1.TypeMeta{
+			Kind:       "Secret",
+			APIVersion: "v1",
+		},
+		ObjectMeta: metav1.ObjectMeta{
+			Name: secretName,
+		},
+		Immutable:  nil,
+		StringData: data,
+		Type:       corev1.SecretTypeDockerConfigJson,
+	}
+
+	_, err := c.client.Secrets(namespace).Create(ctx, &secret, metav1.CreateOptions{})
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// GetSecret a secrets in a namespace in your kube cluster
+func (c *ConfigurationImpl) GetSecret(namespace, secretName string) (*corev1.Secret, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Minute)
+	defer cancel()
+
+	secret, err := c.client.Secrets(namespace).Get(ctx, secretName, metav1.GetOptions{})
+	if err != nil {
+		return nil, err
+	}
+
+	return secret, nil
 }
