@@ -2,6 +2,7 @@ git_short_hash=`git rev-parse --short HEAD`
 current_dir=`pwd`
 project_name := $(shell basename ${current_dir})
 base_name='odysseia'
+harbor_address='core.harbor.domain:30003'
 
 setup:
 	if [ -e ./dist ]; then rm -rf ./dist; fi
@@ -39,3 +40,7 @@ create-local-image: build
 	cp -r dist/bin/$(project_name) .
 	docker build --build-arg project_name=$(project_name) -f Dockerfile -t $(project_name):$(git_short_hash) . --no-cache
 	rm $(project_name)
+
+create-harbor: create-local-image
+	docker tag $(project_name):$(git_short_hash) $(harbor_address)/$(base_name)/$(project_name):$(git_short_hash)
+	docker push $(harbor_address)/$(base_name)/$(project_name):$(git_short_hash)

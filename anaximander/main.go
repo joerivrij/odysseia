@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"embed"
 	"encoding/json"
 	"fmt"
 	"github.com/elastic/go-elasticsearch/v7/esapi"
@@ -10,7 +11,6 @@ import (
 	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/models"
-	"io/ioutil"
 	"os"
 	"path"
 	"strconv"
@@ -25,6 +25,9 @@ func init() {
 		SetMode(glg.BOTH).
 		AddLevelWriter(glg.ERR, errlog)
 }
+
+//go:embed arkho
+var arkho embed.FS
 
 func main() {
 	//https://patorjk.com/software/taag/#p=display&f=Crawford2&t=ANAXIMANDER
@@ -47,23 +50,24 @@ func main() {
 
 	root := "arkho"
 
-	rootDir, err := ioutil.ReadDir(root)
+	rootDir, err := arkho.ReadDir(root)
 	if err != nil {
 		glg.Fatal(err)
 	}
+
 	elastic.DeleteIndex(&anaximanderConfig.ElasticClient, anaximanderConfig.Index)
 
 	for _, dir := range rootDir {
 		glg.Debug("working on the following directory: " + dir.Name())
 		if dir.IsDir() {
 			filePath := path.Join(root, dir.Name())
-			files, err := ioutil.ReadDir(filePath)
+			files, err := arkho.ReadDir(filePath)
 			if err != nil {
 				glg.Fatal(err)
 			}
 			for _, f := range files {
 				glg.Debug(fmt.Sprintf("found %s in %s", f.Name(), filePath))
-				plan, _ := ioutil.ReadFile(path.Join(filePath, f.Name()))
+				plan, _ := arkho.ReadFile(path.Join(filePath, f.Name()))
 				var declensions models.Declension
 				err := json.Unmarshal(plan, &declensions)
 				upload, _ := declensions.Marshal()

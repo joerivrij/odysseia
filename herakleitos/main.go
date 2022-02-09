@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"embed"
 	"encoding/json"
 	"fmt"
 	"github.com/elastic/go-elasticsearch/v7/esapi"
@@ -10,7 +11,6 @@ import (
 	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/models"
-	"io/ioutil"
 	"os"
 	"path"
 	"strconv"
@@ -25,6 +25,9 @@ func init() {
 		SetMode(glg.BOTH).
 		AddLevelWriter(glg.ERR, errlog)
 }
+
+//go:embed rhema
+var rhema embed.FS
 
 func main() {
 	//https://patorjk.com/software/taag/#p=display&f=Crawford2&t=HERAKLEITOS
@@ -46,7 +49,7 @@ func main() {
 	}
 
 	root := "rhema"
-	rootDir, err := ioutil.ReadDir(root)
+	rootDir, err := rhema.ReadDir(root)
 	if err != nil {
 		glg.Fatal(err)
 	}
@@ -60,13 +63,13 @@ func main() {
 				Author: dir.Name(),
 			})
 			filePath := path.Join(root, dir.Name())
-			files, err := ioutil.ReadDir(filePath)
+			files, err := rhema.ReadDir(filePath)
 			if err != nil {
 				glg.Fatal(err)
 			}
 			for _, f := range files {
 				glg.Debug(fmt.Sprintf("found %s in %s", f.Name(), filePath))
-				plan, _ := ioutil.ReadFile(path.Join(filePath, f.Name()))
+				plan, _ := rhema.ReadFile(path.Join(filePath, f.Name()))
 				var rhemai models.Rhema
 				err := json.Unmarshal(plan, &rhemai)
 				if err != nil {

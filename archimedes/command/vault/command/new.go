@@ -4,6 +4,8 @@ import (
 	"github.com/kpango/glg"
 	"github.com/odysseia/aristoteles"
 	"github.com/odysseia/aristoteles/configs"
+	"github.com/odysseia/plato/kubernetes"
+	"github.com/odysseia/plato/models"
 	"github.com/spf13/cobra"
 	"os"
 	"path/filepath"
@@ -45,21 +47,7 @@ func New() *cobra.Command {
 				glg.Fatal("could not parse config")
 			}
 
-			glg.Info("1. vault init started")
-			initVault(namespace, archimedesConfig.Kube)
-			glg.Info("1. vault init completed")
-			glg.Info("2. vault unseal started")
-			unsealVault("", namespace, archimedesConfig.Kube)
-			glg.Info("2. vault unseal completed")
-			glg.Info("3. adding admin")
-			createPolicy(defaultAdminPolicyName, namespace, archimedesConfig.Kube)
-			glg.Info("3. finished adding admin")
-			glg.Info("4. adding user")
-			createPolicy(defaultUserPolicyName, namespace, archimedesConfig.Kube)
-			glg.Info("4. finished adding user")
-			glg.Info("5. adding kuberentes as auth method")
-			enableKubernetesAsAuth(namespace, defaultAdminPolicyName, archimedesConfig.Kube)
-			glg.Info("5. finished adding kuberentes as auth method")
+			NewVaultFlow(namespace, archimedesConfig.Kube)
 
 		},
 	}
@@ -68,4 +56,30 @@ func New() *cobra.Command {
 	cmd.PersistentFlags().StringVarP(&filePath, "filepath", "f", "", "kubeconfig filepath defaults to ~/.kube/config")
 
 	return cmd
+}
+
+func NewVaultFlow(namespace string, kube kubernetes.KubeClient) (*models.ClusterKeys, error) {
+	glg.Info("1. vault init started")
+	vaultData := initVault(namespace, kube)
+	clusterKeys, err := models.UnmarshalClusterKeys(vaultData)
+	if err != nil {
+		return nil, err
+	}
+	glg.Info("1. vault init completed")
+	glg.Info("2. vault unseal started")
+	unsealVault(clusterKeys.UnsealKeysHex[0], namespace, kube)
+	glg.Info("2. vault unseal completed")
+	glg.Info("2b. creating secret engine")
+	enableSecrets(namespace, "configs", clusterKeys.RootToken, kube)
+	glg.Info("3. adding admin")
+	createPolicy(defaultAdminPolicyName, namespace, clusterKeys.RootToken, kube)
+	glg.Info("3. finished adding admin")
+	glg.Info("4. adding user")
+	createPolicy(defaultUserPolicyName, namespace, clusterKeys.RootToken, kube)
+	glg.Info("4. finished adding user")
+	glg.Info("5. adding kuberentes as auth method")
+	enableKubernetesAsAuth(namespace, defaultAdminPolicyName, clusterKeys.RootToken, kube)
+	glg.Info("5. finished adding kuberentes as auth method")
+
+	return &clusterKeys, nil
 }

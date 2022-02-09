@@ -27,7 +27,7 @@ spec:
         spec:
           {{- if .Values.config.inClusterHarbor | quote }}
           imagePullSecrets:
-            - name: {{ .Values.images.pullSecret}
+            - name: {{ .Values.images.pullSecret}}
           {{- end}}
           containers:
             - name: {{ template "system.uname" . }}

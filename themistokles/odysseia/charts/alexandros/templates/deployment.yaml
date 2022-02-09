@@ -30,7 +30,7 @@ spec:
       serviceAccountName: {{ template "serviceAccountName" . }}
       {{- if .Values.config.inClusterHarbor | quote }}
       imagePullSecrets:
-        - name: {{ .Values.images.pullSecret}
+        - name: {{ .Values.images.pullSecret}}
       {{- end}}
       initContainers:
         - name: "{{ template "init.uname" . }}"
@@ -109,17 +109,21 @@ spec:
               value: {{ .Values.config.tls | quote }}
             - name: ELASTIC_SEARCH_SERVICE
               value: {{ .Values.envVariables.elasticService }}
+            - name: ELASTIC_ACCESS
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.annotations['odysseia-greek/access']
           ports:
             - containerPort: {{ .Values.envVariables.odysseiaapi.port }}
           livenessProbe:
             httpGet:
-              path: /odysseiaapi/v1/health
+              path: /alexandros/v1/health
               port: {{ .Values.envVariables.odysseiaapi.port }}
             initialDelaySeconds: {{ .Values.config.initialDelayLiveness }}
             periodSeconds: {{ .Values.config.periodSeconds }}
           readinessProbe:
             httpGet:
-              path: /odysseiaapi/v1/ping
+              path: /alexandros/v1/ping
               port: {{ .Values.envVariables.odysseiaapi.port }}
             initialDelaySeconds: {{ .Values.config.initialDelayReadiness }}
             periodSeconds: {{ .Values.config.periodSeconds }}
