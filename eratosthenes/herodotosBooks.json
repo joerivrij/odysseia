@@ -1,5 +1,5 @@
 {
-  "took" : 5,
+  "took" : 26,
   "timed_out" : false,
   "_shards" : {
     "total" : 1,
@@ -9,28 +9,20 @@
   },
   "hits" : {
     "total" : {
-      "value" : 7,
+      "value" : 3,
       "relation" : "eq"
     },
     "max_score" : null,
     "hits" : [ ]
   },
   "aggregations" : {
-    "authors" : {
+    "books" : {
       "doc_count_error_upper_bound" : 0,
       "sum_other_doc_count" : 0,
       "buckets" : [
         {
-          "key" : "Herodotos",
+          "key" : 1,
           "doc_count" : 3
-        },
-        {
-          "key" : "Thucydides",
-          "doc_count" : 2
-        },
-        {
-          "key" : "Ploutarchos",
-          "doc_count" : 1
         }
       ]
     }

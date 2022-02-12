@@ -46,6 +46,41 @@ type Shards struct {
 	Failed     int64 `json:"failed"`
 }
 
+func UnmarshalElasticAggregations(data []byte) (ElasticAggregations, error) {
+	var r ElasticAggregations
+	err := json.Unmarshal(data, &r)
+	return r, err
+}
+
+func (r *ElasticAggregations) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+type ElasticAggregations struct {
+	Took         int64              `json:"took"`
+	TimedOut     bool               `json:"timed_out"`
+	Shards       Shards             `json:"_shards"`
+	Hits         Hits               `json:"hits"`
+	Aggregations AuthorAggregations `json:"aggregations"`
+}
+
+type AuthorAggregations struct {
+	AuthorAggregation   Aggregation `json:"authors"`
+	BookAggregation     Aggregation `json:"books"`
+	CategoryAggregation Aggregation `json:"categories"`
+}
+
+type Aggregation struct {
+	DocCountErrorUpperBound int64    `json:"doc_count_error_upper_bound"`
+	SumOtherDocCount        int64    `json:"sum_other_doc_count"`
+	Buckets                 []Bucket `json:"buckets"`
+}
+
+type Bucket struct {
+	Key      interface{} `json:"key"`
+	DocCount int64       `json:"doc_count"`
+}
+
 func UnmarshalCreateRoleRequest(data []byte) (CreateRoleRequest, error) {
 	var r CreateRoleRequest
 	err := json.Unmarshal(data, &r)

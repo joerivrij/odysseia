@@ -24,7 +24,7 @@ spec:
         release: {{ .Release.Name }}
         version: {{ .Values.images.tag }}
       annotations:
-        elastic/indices: "dictionary;grammar;authors;text;quiz"
+        elastic/indices: "dictionary;grammar;text;quiz"
         elastic/roles: "api;seeder"
     spec:
       serviceAccountName: {{ template "solon.serviceAccountName" . }}

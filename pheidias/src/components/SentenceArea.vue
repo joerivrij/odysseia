@@ -24,7 +24,25 @@
               <p class="text-h4 text--primary">
                 {{ this.selectedAuthor }}
               </p>
-              <p>RESERVED FOR CHAPTER</p>
+              <v-menu top :close-on-content-click="closeOnContentClick">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn color="primary" dark v-bind="attrs" v-on="on" rounded>
+                    Books
+                  </v-btn>
+                </template>
+                <v-list>
+                  <v-list-item
+                      v-for="(book, index) in books"
+                      :key="index"
+                      v-on:click="setBookTo(book)"
+                  >
+                    <v-list-item-title>{{ book }}</v-list-item-title>
+                  </v-list-item>
+              </v-list>
+              </v-menu>
+              <p class="text-h4 text--primary">
+                {{ this.selectedBook }}
+              </p>
               <div class="text--primary">
                 <v-textarea
                     readonly
@@ -145,8 +163,10 @@ export default {
   data() {
     return {
       authors: [],
+      books: [],
       grammarResults: [],
       selectedAuthor: "",
+      selectedBook: "",
       sentence: "",
       currentSentenceId: "",
       translationText: "",
@@ -160,6 +180,11 @@ export default {
   methods: {
     setAuthorTo(author) {
       this.selectedAuthor = author
+      this.getBooks(this.selectedAuthor)
+      this.getNewSentence()
+    },
+    setBookTo(book) {
+      this.selectedBook = book
       this.getNewSentence()
     },
     queryWord: function (e) {
@@ -204,9 +229,26 @@ export default {
             this.errors.push(e)
           })
     },
+    getBooks: function (author) {
+      this.books = []
+      let url = `${this.$herodotosUrl}/authors/${author}/books`
+      this.$apiClient.get(url)
+          .then((response) => {
+            let i;
+            for (i in response.data.books) {
+              const book = response.data.books[i].book
+              this.books.push(book)
+            }
+
+            this.selectedBook = response.data.books[0].book
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+    },
     getNewSentence: function () {
       const author = this.selectedAuthor.toLowerCase()
-      let url = `${this.$herodotosUrl}/createQuestion?author=${author}`
+      let url = `${this.$herodotosUrl}/createQuestion?author=${author}&book=${this.selectedBook}`
       this.$apiClient.get(url)
           .then((response) => {
             this.sentence = response.data.sentence
@@ -227,7 +269,6 @@ export default {
           "author": author
         }
       }).then((response) => {
-        console.log(response.data)
         this.translationPercentage = response.data.levenshteinPercentage
         this.databaseAnswer = response.data.quizSentence
       })
@@ -240,9 +281,9 @@ export default {
       }, 500)
       }
       this.selectedAuthor = this.authors[0]
+      this.getBooks(this.author[0])
       this.getNewSentence()
-
-    }
+    },
   },
   mounted() {
     this.getAuthors();

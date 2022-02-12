@@ -181,11 +181,31 @@ func TestDionysosConfigCreation(t *testing.T) {
 
 		dionysosConfig, ok := sut.(*configs.DionysosConfig)
 		assert.True(t, ok)
-		assert.Equal(t, expected, dionysosConfig.Index)
-		assert.Equal(t, defaultDictionaryIndex, dionysosConfig.DictionaryIndex)
+
 		assert.NotNil(t, dionysosConfig.ElasticClient)
+		assert.Equal(t, expected, dionysosConfig.Index)
 
 		os.Unsetenv(EnvIndex)
+		os.Unsetenv(EnvHealthCheckOverwrite)
+	})
+
+	t.Run("CanSetSecondaryIndex", func(t *testing.T) {
+		expected := "testrole"
+		os.Setenv(EnvSecondaryIndex, expected)
+		os.Setenv(EnvHealthCheckOverwrite, "yes")
+		cfg := configs.DionysosConfig{}
+
+		sut, err := NewConfig(cfg)
+		assert.Nil(t, err)
+		assert.NotNil(t, sut)
+
+		dionysosConfig, ok := sut.(*configs.DionysosConfig)
+		assert.True(t, ok)
+
+		assert.NotNil(t, dionysosConfig.ElasticClient)
+		assert.Equal(t, expected, dionysosConfig.SecondaryIndex)
+
+		os.Unsetenv(EnvSecondaryIndex)
 		os.Unsetenv(EnvHealthCheckOverwrite)
 	})
 }
@@ -390,6 +410,47 @@ func TestPeriandrosCreation(t *testing.T) {
 
 		os.Unsetenv(EnvHealthCheckOverwrite)
 		os.Unsetenv(EnvIndexes)
+		os.Unsetenv(EnvRole)
+		os.Unsetenv(EnvPodName)
+		os.Unsetenv(EnvSolonService)
+	})
+
+	t.Run("SecondaryIndex", func(t *testing.T) {
+		expectedSolonService := "http://overrwitten:235235"
+		expectedPodName := "iamapod-2100-24"
+		expectedUsername := "iamapod"
+		expectedRoleName := "accessRole"
+		expectedIndexName := "testindex"
+		expectedSecondayIndex := "anotherindex"
+		os.Setenv(EnvHealthCheckOverwrite, "yes")
+		os.Setenv(EnvRole, expectedRoleName)
+		os.Setenv(EnvIndex, expectedIndexName)
+		os.Setenv(EnvSecondaryIndex, expectedSecondayIndex)
+		os.Setenv(EnvPodName, expectedPodName)
+		os.Setenv(EnvSolonService, expectedSolonService)
+		cfg := configs.PeriandrosConfig{}
+
+		sut, err := NewConfig(cfg)
+		assert.Nil(t, err)
+		assert.NotNil(t, sut)
+
+		config, ok := sut.(*configs.PeriandrosConfig)
+		assert.True(t, ok)
+		assert.Equal(t, defaultNamespace, config.Namespace)
+		assert.NotNil(t, config.Kube)
+		assert.Equal(t, expectedSolonService, config.SolonService.String())
+
+		assert.Equal(t, expectedPodName, config.SolonCreationRequest.PodName)
+		assert.Equal(t, expectedUsername, config.SolonCreationRequest.Username)
+		assert.Equal(t, expectedRoleName, config.SolonCreationRequest.Role)
+
+		for _, index := range config.SolonCreationRequest.Access {
+			assert.Contains(t, index, "index")
+		}
+
+		os.Unsetenv(EnvHealthCheckOverwrite)
+		os.Unsetenv(EnvIndexes)
+		os.Unsetenv(EnvSecondaryIndex)
 		os.Unsetenv(EnvRole)
 		os.Unsetenv(EnvPodName)
 		os.Unsetenv(EnvSolonService)

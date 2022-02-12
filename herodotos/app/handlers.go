@@ -3,6 +3,7 @@ package app
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/gorilla/mux"
 	"github.com/kpango/glg"
 	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/plato/elastic"
@@ -37,13 +38,14 @@ func (h *HerodotosHandler) health(w http.ResponseWriter, req *http.Request) {
 // creates a new sentence for questions
 func (h *HerodotosHandler) createQuestion(w http.ResponseWriter, req *http.Request) {
 	author := req.URL.Query().Get("author")
+	book := req.URL.Query().Get("book")
 
-	if author == "" {
+	if author == "" || book == "" {
 		e := models.ValidationError{
 			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
 			Messages: []models.ValidationMessages{
 				{
-					Field:   "author",
+					Field:   "author and book",
 					Message: "cannot be empty",
 				},
 			},
@@ -52,7 +54,26 @@ func (h *HerodotosHandler) createQuestion(w http.ResponseWriter, req *http.Reque
 		return
 	}
 
-	response, err := elastic.QueryWithMatchAll(h.Config.ElasticClient, author)
+	query := map[string]interface{}{
+		"query": map[string]interface{}{
+			"bool": map[string]interface{}{
+				"must": []map[string]interface{}{
+					{
+						"match": map[string]interface{}{
+							"author": author,
+						},
+					},
+					{
+						"match": map[string]interface{}{
+							"book": book,
+						},
+					},
+				},
+			},
+		},
+	}
+
+	response, err := elastic.QueryWithMatchSupplied(h.Config.ElasticClient, h.Config.Index, query)
 
 	if err != nil {
 		errText := err.Error()
@@ -73,6 +94,18 @@ func (h *HerodotosHandler) createQuestion(w http.ResponseWriter, req *http.Reque
 			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
 			Message: models.ElasticErrorMessage{
 				ElasticError: err.Error(),
+			},
+		}
+		middleware.ResponseWithJson(w, e)
+		return
+	}
+
+	if len(response.Hits.Hits) == 0 {
+		e := models.NotFoundError{
+			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
+			Message: models.NotFoundMessage{
+				Type:   fmt.Sprintf("author: %s and book: %s", author, book),
+				Reason: "no hits for combination",
 			},
 		}
 		middleware.ResponseWithJson(w, e)
@@ -104,7 +137,6 @@ func (h *HerodotosHandler) createQuestion(w http.ResponseWriter, req *http.Reque
 		middleware.ResponseWithJson(w, e)
 		return
 	}
-	glg.Info(rhemaSource.Greek)
 
 	question := models.CreateSentenceResponse{Sentence: rhemaSource.Greek,
 		SentenceId: id}
@@ -130,7 +162,7 @@ func (h *HerodotosHandler) checkSentence(w http.ResponseWriter, req *http.Reques
 		return
 	}
 
-	elasticResult, err := elastic.QueryOnId(h.Config.ElasticClient, strings.ToLower(checkSentenceRequest.Author), checkSentenceRequest.SentenceId)
+	elasticResult, err := elastic.QueryOnId(h.Config.ElasticClient, h.Config.Index, checkSentenceRequest.SentenceId)
 	if err != nil {
 		e := models.ElasticSearchError{
 			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
@@ -197,7 +229,8 @@ func (h *HerodotosHandler) checkSentence(w http.ResponseWriter, req *http.Reques
 }
 
 func (h *HerodotosHandler) queryAuthors(w http.ResponseWriter, req *http.Request) {
-	elasticResult, err := elastic.QueryWithMatchAll(h.Config.ElasticClient, h.Config.Index)
+	field := "author.keyword"
+	elasticResult, err := elastic.QueryUniqueField(h.Config.ElasticClient, field, h.Config.Index)
 
 	if err != nil {
 		e := models.ElasticSearchError{
@@ -211,25 +244,37 @@ func (h *HerodotosHandler) queryAuthors(w http.ResponseWriter, req *http.Request
 	}
 
 	var authors models.Authors
-	for _, hit := range elasticResult.Hits.Hits {
-		elasticJson, _ := json.Marshal(hit.Source)
-		author, err := models.UnmarshalAuthors(elasticJson)
-		if err != nil || author.Author == "" {
-			errorMessage := fmt.Errorf("an error occurred while parsing %s", elasticJson)
-			glg.Error(errorMessage.Error())
-			e := models.ValidationError{
-				ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
-				Messages: []models.ValidationMessages{
-					{
-						Field:   "authors",
-						Message: errorMessage.Error(),
-					},
-				},
-			}
-			middleware.ResponseWithJson(w, e)
-			return
-		}
+	for _, bucket := range elasticResult.Aggregations.AuthorAggregation.Buckets {
+		author := models.Author{Author: strings.ToLower(fmt.Sprintf("%v", bucket.Key))}
 		authors.Authors = append(authors.Authors, author)
+	}
+
+	middleware.ResponseWithJson(w, authors)
+}
+
+func (h *HerodotosHandler) queryBooks(w http.ResponseWriter, req *http.Request) {
+	pathParams := mux.Vars(req)
+	author := pathParams["author"]
+	field := "book"
+	elasticResult, err := elastic.QueryUniqueFieldWithFilter(h.Config.ElasticClient, author, field, h.Config.Index)
+
+	if err != nil {
+		e := models.ElasticSearchError{
+			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
+			Message: models.ElasticErrorMessage{
+				ElasticError: err.Error(),
+			},
+		}
+		middleware.ResponseWithJson(w, e)
+		return
+	}
+
+	var authors models.Books
+	for _, bucket := range elasticResult.Aggregations.BookAggregation.Buckets {
+
+		book := models.Book{Book: int64(bucket.Key.(float64))}
+		authors.Books = append(authors.Books, book)
+
 	}
 
 	middleware.ResponseWithJson(w, authors)

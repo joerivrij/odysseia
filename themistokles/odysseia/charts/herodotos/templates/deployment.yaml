@@ -109,6 +109,10 @@ spec:
               value: {{ .Values.config.tls | quote }}
             - name: ELASTIC_SEARCH_SERVICE
               value: {{ .Values.envVariables.elasticService }}
+            - name: ELASTIC_ACCESS
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.annotations['odysseia-greek/access']
           ports:
             - containerPort: {{ .Values.envVariables.odysseiaapi.port }}
           livenessProbe:

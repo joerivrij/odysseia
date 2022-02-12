@@ -3,10 +3,9 @@ appsToInstall:
   - vault
   - harbor
   - solon
+  - pheidias
   - alexandros
   - dionysos
-  - herodotos
   - sokrates
-  - pheidias
   - docs
   - tests

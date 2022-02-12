@@ -26,6 +26,7 @@ spec:
       annotations:
         odysseia-greek/role: {{ .Values.services.odysseiaapi.role }}
         odysseia-greek/access: {{ .Values.services.odysseiaapi.access }}
+        odysseia-greek/secondary-access: {{ .Values.services.odysseiaapi.secondaryAccess }}
     spec:
       serviceAccountName: {{ template "serviceAccountName" . }}
       {{- if .Values.config.inClusterHarbor | quote }}
@@ -62,6 +63,10 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.annotations['odysseia-greek/access']
+          - name: ELASTIC_SECONDARY_ACCESS
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.annotations['odysseia-greek/secondary-access']
       containers:
         - name: "{{ template "sidecar.uname" . }}"
           {{- if .Values.config.inClusterHarbor | quote }}
@@ -113,17 +118,21 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.annotations['odysseia-greek/access']
+            - name: ELASTIC_SECONDARY_ACCESS
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.annotations['odysseia-greek/secondary-access']
           ports:
             - containerPort: {{ .Values.envVariables.odysseiaapi.port }}
           livenessProbe:
             httpGet:
-              path: /dioynsos/v1/health
+              path: /dionysos/v1/health
               port: {{ .Values.envVariables.odysseiaapi.port }}
             initialDelaySeconds: {{ .Values.config.initialDelayLiveness }}
             periodSeconds: {{ .Values.config.periodSeconds }}
           readinessProbe:
             httpGet:
-              path: /dioynsos/v1/ping
+              path: /dionysos/v1/ping
               port: {{ .Values.envVariables.odysseiaapi.port }}
             initialDelaySeconds: {{ .Values.config.initialDelayReadiness }}
             periodSeconds: {{ .Values.config.periodSeconds }}

@@ -135,6 +135,17 @@ func (c *Config) getElasticServiceFromEnv(tls bool) string {
 
 func (c *Config) getCert() []byte {
 	var cert []byte
+	if c.env == "LOCAL" {
+		homeDir, err := os.UserHomeDir()
+		if err != nil {
+			return nil
+		}
+		certPath := filepath.Join(homeDir, ".odysseia", "current", "elastic-certificate.pem")
+
+		cert, _ = ioutil.ReadFile(certPath)
+
+		return cert
+	}
 
 	if c.BaseConfig.TestOverwrite {
 		glg.Info("trying to read cert file from file")

@@ -82,7 +82,7 @@ func TestQueryWordEndpointHappyPathFemFirst(t *testing.T) {
 
 	testConfig := configs.DionysosConfig{
 		ElasticClient:    *mockElasticClient,
-		DictionaryIndex:  dictionaryIndexDefault,
+		SecondaryIndex:   dictionaryIndexDefault,
 		Index:            elasticIndexDefault,
 		DeclensionConfig: *declensionConfig,
 	}
@@ -109,7 +109,7 @@ func TestQueryWordEndpointHappyPathMascSecond(t *testing.T) {
 
 	testConfig := configs.DionysosConfig{
 		ElasticClient:    *mockElasticClient,
-		DictionaryIndex:  dictionaryIndexDefault,
+		SecondaryIndex:   dictionaryIndexDefault,
 		Index:            elasticIndexDefault,
 		DeclensionConfig: *declensionConfig,
 	}
@@ -135,7 +135,7 @@ func TestSearchEndPointElasticNoResults(t *testing.T) {
 
 	testConfig := configs.DionysosConfig{
 		ElasticClient:    *elasticClient,
-		DictionaryIndex:  dictionaryIndexDefault,
+		SecondaryIndex:   dictionaryIndexDefault,
 		Index:            elasticIndexDefault,
 		DeclensionConfig: *declensionConfig,
 	}
@@ -162,7 +162,7 @@ func TestSearchEndPointPrespositionFound(t *testing.T) {
 
 	testConfig := configs.DionysosConfig{
 		ElasticClient:    *mockElasticClient,
-		DictionaryIndex:  dictionaryIndexDefault,
+		SecondaryIndex:   dictionaryIndexDefault,
 		Index:            elasticIndexDefault,
 		DeclensionConfig: *declensionConfig,
 	}
@@ -189,7 +189,7 @@ func TestSearchEndPointWithoutQueryParam(t *testing.T) {
 
 	testConfig := configs.DionysosConfig{
 		ElasticClient:    *elasticClient,
-		DictionaryIndex:  dictionaryIndexDefault,
+		SecondaryIndex:   dictionaryIndexDefault,
 		Index:            elasticIndexDefault,
 		DeclensionConfig: *declensionConfig,
 	}

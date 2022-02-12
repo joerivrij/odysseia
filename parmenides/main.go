@@ -1,20 +1,19 @@
 package main
 
 import (
-	"context"
 	"embed"
 	"encoding/json"
 	"fmt"
-	"github.com/elastic/go-elasticsearch/v7/esapi"
 	"github.com/kpango/glg"
 	"github.com/odysseia/aristoteles"
 	"github.com/odysseia/aristoteles/configs"
-	"github.com/odysseia/plato/elastic"
+	"github.com/odysseia/parmenides/app"
 	"github.com/odysseia/plato/models"
 	"os"
 	"path"
 	"strconv"
 	"strings"
+	"sync"
 )
 
 func init() {
@@ -54,60 +53,50 @@ func main() {
 		glg.Fatal(err)
 	}
 
-	elastic.DeleteIndex(&parmenidesConfig.ElasticClient, parmenidesConfig.Index)
+	handler := app.ParmenidessHandler{Config: parmenidesConfig}
 
+	//handler.DeleteIndexAtStartUp()
+	//handler.CreateIndexAtStartup()
+
+	var wg sync.WaitGroup
 	documents := 0
+
 	for _, dir := range rootDir {
 		glg.Debug("working on the following directory: " + dir.Name())
 		if dir.IsDir() {
-			filePath := path.Join(root, dir.Name())
-			files, err := sullego.ReadDir(filePath)
+			method := dir.Name()
+			glg.Infof("working on %s", method)
+			methodPath := path.Join(root, dir.Name())
+			methodDir, err := sullego.ReadDir(methodPath)
 			if err != nil {
 				glg.Fatal(err)
 			}
-			for _, f := range files {
-				glg.Debug(fmt.Sprintf("found %s in %s", f.Name(), filePath))
-				plan, _ := sullego.ReadFile(path.Join(filePath, f.Name()))
-				var logoi models.Logos
-				err := json.Unmarshal(plan, &logoi)
+			for _, innerDir := range methodDir {
+				category := innerDir.Name()
+				filePath := path.Join(root, dir.Name(), innerDir.Name())
+				files, err := sullego.ReadDir(filePath)
 				if err != nil {
 					glg.Fatal(err)
 				}
-
-				documents += len(logoi.Logos)
-
-				for _, word := range logoi.Logos {
-					jsonifiedLogos, _ := word.Marshal()
-					esRequest := esapi.IndexRequest{
-						Body:       strings.NewReader(string(jsonifiedLogos)),
-						Refresh:    "true",
-						Index:      parmenidesConfig.Index,
-						DocumentID: "",
-					}
-
-					// Perform the request with the client.
-					res, err := esRequest.Do(context.Background(), &parmenidesConfig.ElasticClient)
+				for _, f := range files {
+					glg.Debug(fmt.Sprintf("found %s in %s", f.Name(), filePath))
+					plan, _ := sullego.ReadFile(path.Join(filePath, f.Name()))
+					var logoi models.Logos
+					err := json.Unmarshal(plan, &logoi)
 					if err != nil {
-						glg.Fatalf("Error getting response: %s", err)
+						glg.Fatal(err)
 					}
-					defer res.Body.Close()
 
-					if res.IsError() {
-						glg.Debugf("[%s]", res.Status())
-					} else {
-						// Deserialize the response into a map.
-						var r map[string]interface{}
-						if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
-							glg.Errorf("Error parsing the response body: %s", err)
-						} else {
-							// Print the response status and indexed document version.
-							parmenidesConfig.Created++
-						}
-					}
+					documents += len(logoi.Logos)
+
+					wg.Add(1)
+					go handler.Add(logoi, &wg, method, category)
 				}
 			}
 		}
+
 	}
+	wg.Wait()
 	glg.Infof("created: %s", strconv.Itoa(parmenidesConfig.Created))
 	glg.Infof("words found in sullego: %s", strconv.Itoa(documents))
 	os.Exit(0)

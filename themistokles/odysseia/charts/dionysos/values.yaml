@@ -38,6 +38,7 @@ services:
     name: "dionysos"
     role: "api"
     access: "grammar"
+    secondaryAccess: "dictionary"
     requests:
       memory: "64Mi"
       cpu: "100m"

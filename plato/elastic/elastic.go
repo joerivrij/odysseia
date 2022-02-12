@@ -245,6 +245,179 @@ func QueryWithMatch(elasticClient elasticsearch.Client, index, term, word string
 	return &elasticResult, nil
 }
 
+func QueryWithMatchSupplied(elasticClient elasticsearch.Client, index string, query map[string]interface{}) (*models.ElasticResponse, error) {
+	var elasticResult models.ElasticResponse
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(query); err != nil {
+		glg.Debug("Error encoding query: %s", err)
+		return nil, err
+	}
+
+	res, err := elasticClient.Search(
+		elasticClient.Search.WithContext(context.Background()),
+		elasticClient.Search.WithIndex(index),
+		elasticClient.Search.WithBody(&buf),
+		elasticClient.Search.WithTrackTotalHits(true),
+		elasticClient.Search.WithPretty(),
+	)
+
+	if err != nil {
+		glg.Debug("Error getting response: %s", err)
+		return nil, err
+	}
+	defer res.Body.Close()
+
+	if res.IsError() {
+		glg.Errorf("Error getting response: %s", res.Status())
+		return nil, fmt.Errorf("elasticSearch returned an error: %s", res.Status())
+	}
+
+	body, _ := ioutil.ReadAll(res.Body)
+	elasticResult, err = models.UnmarshalElasticResponse(body)
+	if err != nil {
+		return nil, err
+	}
+
+	return &elasticResult, nil
+}
+
+func QueryUniqueWithSupplied(elasticClient elasticsearch.Client, index string, query map[string]interface{}) (*models.ElasticAggregations, error) {
+	var elasticResult models.ElasticAggregations
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(query); err != nil {
+		glg.Debug("Error encoding query: %s", err)
+		return nil, err
+	}
+
+	res, err := elasticClient.Search(
+		elasticClient.Search.WithContext(context.Background()),
+		elasticClient.Search.WithIndex(index),
+		elasticClient.Search.WithBody(&buf),
+		elasticClient.Search.WithTrackTotalHits(true),
+		elasticClient.Search.WithPretty(),
+	)
+
+	if err != nil {
+		glg.Debug("Error getting response: %s", err)
+		return nil, err
+	}
+	defer res.Body.Close()
+
+	if res.IsError() {
+		glg.Errorf("Error getting response: %s", res.Status())
+		return nil, fmt.Errorf("elasticSearch returned an error: %s", res.Status())
+	}
+
+	body, _ := ioutil.ReadAll(res.Body)
+	elasticResult, err = models.UnmarshalElasticAggregations(body)
+	if err != nil {
+		return nil, err
+	}
+
+	return &elasticResult, nil
+}
+
+func QueryUniqueField(elasticClient elasticsearch.Client, keyword, index string) (*models.ElasticAggregations, error) {
+	var elasticResult models.ElasticAggregations
+	var buf bytes.Buffer
+
+	query := map[string]interface{}{
+		"size": 0,
+		"aggs": map[string]interface{}{
+			"authors": map[string]interface{}{
+				"terms": map[string]interface{}{
+					"field": keyword,
+					"size":  500,
+				},
+			},
+		},
+	}
+	if err := json.NewEncoder(&buf).Encode(query); err != nil {
+		glg.Debug("Error encoding query: %s", err)
+		return nil, err
+	}
+
+	res, err := elasticClient.Search(
+		elasticClient.Search.WithContext(context.Background()),
+		elasticClient.Search.WithIndex(index),
+		elasticClient.Search.WithBody(&buf),
+		elasticClient.Search.WithTrackTotalHits(true),
+		elasticClient.Search.WithPretty(),
+	)
+
+	if err != nil {
+		glg.Debug("Error getting response: %s", err)
+		return nil, err
+	}
+	defer res.Body.Close()
+
+	if res.IsError() {
+		glg.Errorf("Error getting response: %s", res.Status())
+		return nil, fmt.Errorf("elasticSearch returned an error: %s", res.Status())
+	}
+
+	body, _ := ioutil.ReadAll(res.Body)
+	elasticResult, err = models.UnmarshalElasticAggregations(body)
+	if err != nil {
+		return nil, err
+	}
+
+	return &elasticResult, nil
+}
+
+func QueryUniqueFieldWithFilter(elasticClient elasticsearch.Client, author, field, index string) (*models.ElasticAggregations, error) {
+	var elasticResult models.ElasticAggregations
+	var buf bytes.Buffer
+
+	query := map[string]interface{}{
+		"query": map[string]interface{}{
+			"match_phrase": map[string]interface{}{
+				"author": author,
+			},
+		},
+		"size": 0,
+		"aggs": map[string]interface{}{
+			"books": map[string]interface{}{
+				"terms": map[string]interface{}{
+					"field": field,
+					"size":  500,
+				},
+			},
+		},
+	}
+	if err := json.NewEncoder(&buf).Encode(query); err != nil {
+		glg.Debug("Error encoding query: %s", err)
+		return nil, err
+	}
+
+	res, err := elasticClient.Search(
+		elasticClient.Search.WithContext(context.Background()),
+		elasticClient.Search.WithIndex(index),
+		elasticClient.Search.WithBody(&buf),
+		elasticClient.Search.WithTrackTotalHits(true),
+		elasticClient.Search.WithPretty(),
+	)
+
+	if err != nil {
+		glg.Debug("Error getting response: %s", err)
+		return nil, err
+	}
+	defer res.Body.Close()
+
+	if res.IsError() {
+		glg.Errorf("Error getting response: %s", res.Status())
+		return nil, fmt.Errorf("elasticSearch returned an error: %s", res.Status())
+	}
+
+	body, _ := ioutil.ReadAll(res.Body)
+	elasticResult, err = models.UnmarshalElasticAggregations(body)
+	if err != nil {
+		return nil, err
+	}
+
+	return &elasticResult, nil
+}
+
 func QueryWithMatchAll(elasticClient elasticsearch.Client, index string) (*models.ElasticResponse, error) {
 	var elasticResult models.ElasticResponse
 	var buf bytes.Buffer
@@ -378,16 +551,9 @@ func QueryOnId(elasticClient elasticsearch.Client, index, id string) (*models.El
 	return &elasticResult, nil
 }
 
-func QueryWithScroll(elasticClient elasticsearch.Client, index, term, word string) (*models.ElasticResponse, error) {
+func QueryWithScroll(elasticClient elasticsearch.Client, index string, query map[string]interface{}) (*models.ElasticResponse, error) {
 	var elasticResult models.ElasticResponse
 	var buf bytes.Buffer
-	query := map[string]interface{}{
-		"query": map[string]interface{}{
-			"match_phrase": map[string]interface{}{
-				term: word,
-			},
-		},
-	}
 	if err := json.NewEncoder(&buf).Encode(query); err != nil {
 		glg.Debug("Error encoding query: %s", err)
 		return nil, err
@@ -462,14 +628,10 @@ func QueryWithScroll(elasticClient elasticsearch.Client, index, term, word strin
 	return &elasticResult, nil
 }
 
-func QueryWithDescendingSort(elasticClient elasticsearch.Client, index, sort string, results int) (*models.ElasticResponse, error) {
+func QueryWithDescendingSort(elasticClient elasticsearch.Client, index, sort string, results int, query map[string]interface{}) (*models.ElasticResponse, error) {
 	var elasticResult models.ElasticResponse
 	var buf bytes.Buffer
-	query := map[string]interface{}{
-		"query": map[string]interface{}{
-			"match_all": map[string]interface{}{},
-		},
-	}
+
 	if err := json.NewEncoder(&buf).Encode(query); err != nil {
 		glg.Errorf("Error getting response: %s", err)
 		return nil, err

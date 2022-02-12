@@ -30,10 +30,10 @@
           </v-row>
         </v-container>
       </v-card>
-    <v-content>
+    <v-main>
       <h2></h2>
       <router-view></router-view>
-    </v-content>
+    </v-main>
   </v-app>
 </template>
 
@@ -47,7 +47,7 @@ export default {
       sidebar: false,
       menuItems: [
         { title: 'Home', path: '/', icon: 'home' },
-        { title: 'Sokrates', path: '/multi', icon: 'list' },
+        { title: 'Sokrates', path: '/quiz', icon: 'list' },
         { title: 'Herodotos', path: '/texts', icon: 'subject' },
         { title: 'Alexandros', path: '/search', icon: 'search' }
       ]

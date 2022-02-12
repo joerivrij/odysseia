@@ -7,12 +7,12 @@ const (
 	defaultNamespace         = "odysseia"
 	defaultPodName           = "somepod-08595-383"
 	defaultSearchWord        = "greek"
-	defaultDictionaryIndex   = "dictionary"
 	defaultRoleName          = "solon"
 	EnvHealthCheckOverwrite  = "HEALTH_CHECK_OVERWRITE"
 	EnvPodName               = "POD_NAME"
 	EnvNamespace             = "NAMESPACE"
 	EnvIndex                 = "ELASTIC_ACCESS"
+	EnvSecondaryIndex        = "ELASTIC_SECONDARY_ACCESS"
 	EnvVaultService          = "VAULT_SERVICE"
 	EnvSolonService          = "SOLON_SERVICE"
 	EnvPtolemaiosService     = "PTOLEMAIOS_SERVICE"
@@ -52,6 +52,7 @@ var serviceMapping = map[string]string{
 var validFields = []string{
 	"SolonService",
 	"Index",
+	"SecondaryIndex",
 	"ElasticClient",
 	"Created",
 	"SearchWord",
@@ -61,7 +62,6 @@ var validFields = []string{
 	"PodName",
 	"RunOnce",
 	"Namespace",
-	"DictionaryIndex",
 	"DeclensionConfig",
 	"Roles",
 	"Indexes",

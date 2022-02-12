@@ -143,6 +143,9 @@ func (c *Config) fillFields(e *reflect.Value) {
 			case "Index":
 				indexName := c.getStringFromEnv(EnvIndex, c.BaseConfig.Index)
 				e.FieldByName(fieldName).SetString(indexName)
+			case "SecondaryIndex":
+				indexName := c.getStringFromEnv(EnvSecondaryIndex, c.BaseConfig.Index)
+				e.FieldByName(fieldName).SetString(indexName)
 			case "PodName":
 				podName := c.getParsedPodNameFromEnv()
 				e.FieldByName(fieldName).SetString(podName)
@@ -158,8 +161,6 @@ func (c *Config) fillFields(e *reflect.Value) {
 			case "SearchWord":
 				vs := c.getStringFromEnv(EnvSearchWord, defaultSearchWord)
 				e.FieldByName(fieldName).SetString(vs)
-			case "DictionaryIndex":
-				e.FieldByName(fieldName).SetString(defaultDictionaryIndex)
 			case "RoleAnnotation":
 				e.FieldByName(fieldName).SetString(defaultRoleAnnotation)
 			case "AccessAnnotation":
@@ -314,6 +315,10 @@ func (c *Config) getInitCreation() models.SolonCreationRequest {
 	role := c.getStringFromEnv(EnvRole, "")
 	envAccess := c.getSliceFromEnv(EnvIndex)
 	podName := c.getStringFromEnv(EnvPodName, defaultPodName)
+	secondaryAccess := c.getStringFromEnv(EnvSecondaryIndex, "")
+	if secondaryAccess != "" {
+		envAccess = append(envAccess, secondaryAccess)
+	}
 	splitPodName := strings.Split(podName, "-")
 	username := splitPodName[0]
 
