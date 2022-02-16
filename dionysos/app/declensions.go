@@ -143,15 +143,27 @@ func (d *DionysosHandler) StartFindingRules(word string) (*models.DeclensionTran
 		if len(singleSearchResult) > 0 {
 			for _, searchResult := range singleSearchResult {
 				translation, _ := d.parseDictResults(searchResult)
+				doNotAdd := false
+				for _, res := range results.Results {
+					if res.Translation == translation {
+						doNotAdd = true
+						break
+					}
+				}
+
+				if doNotAdd {
+					continue
+				}
+				
 				result := models.Result{
 					Word:        word,
 					Rule:        "preposition",
 					RootWord:    searchResult.Greek,
 					Translation: translation,
 				}
-
 				results.Results = append(results.Results, result)
 			}
+
 		}
 	}
 

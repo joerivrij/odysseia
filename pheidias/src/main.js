@@ -18,7 +18,7 @@ if (process.env.NODE_ENV === 'development') {
   Vue.prototype.$sokratesUrl = "http://localhost:5000/sokrates/v1"
   Vue.prototype.$herodotosUrl = "http://localhost:5000/herodotos/v1"
   Vue.prototype.$alexandrosUrl = "http://minikube-odysseia.test/alexandros/v1"
-  Vue.prototype.$dionysosUrl = "http://minikube-odysseia.test/dionysos/v1"
+  Vue.prototype.$dionysosUrl = "http://localhost:5001/dionysos/v1"
 }
 
 console.log(`sokrates proxy found at: ${Vue.prototype.$sokratesUrl}`)
