@@ -137,6 +137,13 @@ func Install() *cobra.Command {
 				glg.Fatal("error marshalling yaml")
 			}
 
+			newConfig := models.CurrentInstallConfig{
+				ElasticPassword: "",
+				HarborPassword:  "",
+				VaultRootToken:  "",
+				VaultUnsealKey:  "",
+			}
+
 			odysseia := OdysseiaInstaller{
 				Namespace:        namespace,
 				ConfigPath:       "",
@@ -144,7 +151,7 @@ func Install() *cobra.Command {
 				ThemistoklesRoot: themistoklesPath,
 				OdysseiaRoot:     odysseiaRootPath,
 				Charts:           Themistokles{},
-				Config:           models.CurrentInstallConfig{},
+				Config:           newConfig,
 				ValueConfig:      valueOverwrite,
 				Kube:             kubeManager,
 				Helm:             helmManager,
@@ -155,7 +162,11 @@ func Install() *cobra.Command {
 				WhiteList:        wl.AppsToInstall,
 			}
 
-			odysseia.installOdysseiaComplete()
+			err = odysseia.installOdysseiaComplete()
+			if err != nil {
+				glg.Error(err)
+				os.Exit(1)
+			}
 		},
 	}
 	cmd.PersistentFlags().StringVarP(&namespace, "namespace", "n", "", "kubernetes namespace defaults to odysseia")
@@ -196,35 +207,42 @@ type Themistokles struct {
 	Apis          []string
 }
 
-func (o *OdysseiaInstaller) installOdysseiaComplete() {
+func (o *OdysseiaInstaller) installOdysseiaComplete() error {
 	err := o.preSteps()
 	if err != nil {
-		glg.Error("error during setup phase")
-		glg.Fatal(err)
+		return err
 	}
 
 	err = o.fillHelmChartPaths()
 	if err != nil {
-		glg.Error("error during setup phase")
-		glg.Fatal(err)
+		return err
 	}
 
 	err = o.filterHelmChartsToBeInstalled()
 	if err != nil {
-		glg.Error("error during setup phase")
-		glg.Fatal(err)
+		return err
 	}
 
 	defer func() {
 		//save config to configpath
+		err := o.checkConfigForEmpty()
+		if err != nil {
+			glg.Error(err)
+		}
+
 		currentConfig, err := yaml.Marshal(o.Config)
 		if err != nil {
 			glg.Error(err)
 		}
+
+		glg.Info(string(currentConfig))
 		currentConfigPath := filepath.Join(o.ConfigPath, "config.yaml")
 		util.WriteFile(currentConfig, currentConfigPath)
 		// copy everything to currentdir
-		o.copyToCurrentDir()
+		err = o.copyToCurrentDir()
+		if err != nil {
+			glg.Error(err)
+		}
 	}()
 
 	//0. install nginx for docker-desktop
@@ -246,7 +264,7 @@ func (o *OdysseiaInstaller) installOdysseiaComplete() {
 	if installElastic {
 		err = o.createElastic()
 		if err != nil {
-			glg.Fatal(err)
+			return err
 		}
 	}
 
@@ -262,13 +280,13 @@ func (o *OdysseiaInstaller) installOdysseiaComplete() {
 		//2. install harbor
 		err = o.installHarborHelmChart()
 		if err != nil {
-			glg.Fatal(err)
+			return err
 		}
 
 		//2.a create harbor project etc.
 		err = o.setupHarbor()
 		if err != nil {
-			glg.Fatal(err)
+			return err
 		}
 
 		glg.Infof("created harbor project %s at %s", command.DefaultNamespace, command.DefaultHarborUrl)
@@ -276,7 +294,7 @@ func (o *OdysseiaInstaller) installOdysseiaComplete() {
 		//2.b. docker login
 		err = o.dockerLogin()
 		if err != nil {
-			glg.Fatal(err)
+			return err
 		}
 
 		//3. create&push images
@@ -296,13 +314,13 @@ func (o *OdysseiaInstaller) installOdysseiaComplete() {
 		//4. install vault
 		err = o.installVaultHelmChart()
 		if err != nil {
-			glg.Fatal(err)
+			return err
 		}
 
 		//4b. provision vault
 		err = o.setupVault()
 		if err != nil {
-			glg.Fatal(err)
+			return err
 		}
 	}
 
@@ -318,16 +336,17 @@ func (o *OdysseiaInstaller) installOdysseiaComplete() {
 		//6. install solon
 		err = o.installSolonHelmChart()
 		if err != nil {
-			glg.Fatal(err)
+			return err
 		}
 	}
 
 	//7. install app
 	err = o.installAppsHelmChart()
 	if err != nil {
-		glg.Fatal(err)
+		return err
 	}
 
+	return nil
 }
 
 func (o *OdysseiaInstaller) copyToCurrentDir() error {
@@ -535,7 +554,7 @@ func (o *OdysseiaInstaller) installSolonHelmChart() error {
 func (o *OdysseiaInstaller) installAppsHelmChart() error {
 	//wait for solon to install
 	ticker := time.NewTicker(5 * time.Second)
-	timeout := time.After(120 * time.Second)
+	timeout := time.After(180 * time.Second)
 	var ready bool
 	for {
 		select {
@@ -589,13 +608,15 @@ func (o *OdysseiaInstaller) installAppsHelmChart() error {
 		return fmt.Errorf("solon pod has not become healthy after 120 seconds")
 	}
 
+	pullSecret := command.DefaultHarborCertSecretName
+
 	for _, chart := range o.Charts.Apis {
-		for _, whitelist := range o.WhiteList {
-			if strings.Contains(chart, whitelist) {
+		for _, install := range o.ChartsToInstall {
+			if strings.Contains(chart, install) {
 				values := map[string]interface{}{
 					"images": map[string]interface{}{
 						"tag":        o.GitTag,
-						"pullSecret": o.ValueConfig.Harbor.Expose.TLS.Secret.SecretName,
+						"pullSecret": pullSecret,
 					},
 					"config": map[string]interface{}{
 						"inClusterHarbor": true,
@@ -851,4 +872,36 @@ func (o *OdysseiaInstaller) parseValueOverwrite() (map[string]interface{}, error
 
 	err = yaml.Unmarshal(harborValues, &unmarshalledFields)
 	return unmarshalledFields, err
+}
+
+func (o *OdysseiaInstaller) checkConfigForEmpty() error {
+	currentConfigPath := filepath.Join(o.ConfigPath, "config.yaml")
+	fromFile, err := os.ReadFile(currentConfigPath)
+	if err != nil {
+		return err
+	}
+
+	var currentConfig models.CurrentInstallConfig
+	err = yaml.Unmarshal(fromFile, &currentConfig)
+	if err != nil {
+		return err
+	}
+
+	if o.Config.HarborPassword == "" {
+		o.Config.HarborPassword = currentConfig.HarborPassword
+	}
+
+	if o.Config.ElasticPassword == "" {
+		o.Config.ElasticPassword = currentConfig.ElasticPassword
+	}
+
+	if o.Config.VaultRootToken == "" {
+		o.Config.VaultRootToken = currentConfig.VaultRootToken
+	}
+
+	if o.Config.VaultUnsealKey == "" {
+		o.Config.VaultUnsealKey = currentConfig.VaultUnsealKey
+	}
+
+	return nil
 }

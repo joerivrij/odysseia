@@ -120,8 +120,8 @@ func TestAuthorsEndPointShardFailure(t *testing.T) {
 	assert.Contains(t, searchResults.Message.ElasticError, expectedText)
 }
 
-func TestAuthorsEndPointReturnsBadJson(t *testing.T) {
-	fixtureFile := "withGram"
+func TestBooksEndPointHappyPath(t *testing.T) {
+	fixtureFile := "herodotosBooks"
 	mockCode := 200
 	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
@@ -132,22 +132,49 @@ func TestAuthorsEndPointReturnsBadJson(t *testing.T) {
 	}
 
 	router := InitRoutes(testConfig)
-	response := performGetRequest(router, "/herodotos/v1/authors")
+	response := performGetRequest(router, "/herodotos/v1/authors/testAuthor/books")
 
-	var searchResults models.ValidationError
+	var searchResults models.Books
+	err = json.NewDecoder(response.Body).Decode(&searchResults)
+
+	assert.Nil(t, err)
+	assert.Equal(t, http.StatusOK, response.Code)
+	assert.Equal(t, 1, len(searchResults.Books))
+
+	for _, expectedKey := range searchResults.Books {
+		assert.Equal(t, 1, int(expectedKey.Book))
+	}
+}
+
+func TestBookEndPointShardFailure(t *testing.T) {
+	fixtureFile := "shardFailure"
+	mockCode := 500
+	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
+	assert.Nil(t, err)
+
+	testConfig := configs.HerodotosConfig{
+		ElasticClient: *mockElasticClient,
+		Index:         "test",
+	}
+
+	router := InitRoutes(testConfig)
+	response := performGetRequest(router, "/herodotos/v1/authors/testAuthor/books")
+
+	var searchResults models.ElasticSearchError
 	err = json.NewDecoder(response.Body).Decode(&searchResults)
 	assert.Nil(t, err)
 
-	expectedText := "an error occurred while parsing"
+	expectedText := "elasticSearch returned an error"
 
-	assert.Equal(t, http.StatusBadRequest, response.Code)
-	assert.Contains(t, searchResults.Messages[0].Message, expectedText)
+	assert.Equal(t, http.StatusBadGateway, response.Code)
+	assert.Contains(t, searchResults.Message.ElasticError, expectedText)
 }
 
 func TestCreateQuestionHappyPath(t *testing.T) {
 	fixtureFile := "createQuestionHerodotos"
 	mockCode := 200
 	author := "thucydides"
+	book := 1
 	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
@@ -157,7 +184,7 @@ func TestCreateQuestionHappyPath(t *testing.T) {
 	}
 
 	router := InitRoutes(testConfig)
-	response := performGetRequest(router, fmt.Sprintf("/herodotos/v1/createQuestion?author=%s", author))
+	response := performGetRequest(router, fmt.Sprintf("/herodotos/v1/createQuestion?author=%s&book=%v", author, book))
 
 	var searchResults models.CreateSentenceResponse
 	err = json.NewDecoder(response.Body).Decode(&searchResults)
@@ -173,6 +200,7 @@ func TestCreateQuestionMissingAuthor(t *testing.T) {
 	fixtureFile := "createQuestionHerodotos"
 	mockCode := 200
 	author := ""
+	book := 1
 	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
@@ -182,7 +210,7 @@ func TestCreateQuestionMissingAuthor(t *testing.T) {
 	}
 
 	router := InitRoutes(testConfig)
-	response := performGetRequest(router, fmt.Sprintf("/herodotos/v1/createQuestion?author=%s", author))
+	response := performGetRequest(router, fmt.Sprintf("/herodotos/v1/createQuestion?author=%s&book=%v", author, book))
 
 	var searchResults models.ValidationError
 	err = json.NewDecoder(response.Body).Decode(&searchResults)
@@ -194,9 +222,62 @@ func TestCreateQuestionMissingAuthor(t *testing.T) {
 	assert.Contains(t, searchResults.Messages[0].Message, expectedText)
 }
 
+func TestCreateQuestionMissingBook(t *testing.T) {
+	fixtureFile := "createQuestionHerodotos"
+	mockCode := 200
+	author := "someauthor"
+	book := ""
+	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
+	assert.Nil(t, err)
+
+	testConfig := configs.HerodotosConfig{
+		ElasticClient: *mockElasticClient,
+		Index:         "test",
+	}
+
+	router := InitRoutes(testConfig)
+	response := performGetRequest(router, fmt.Sprintf("/herodotos/v1/createQuestion?author=%s&book=%s", author, book))
+
+	var searchResults models.ValidationError
+	err = json.NewDecoder(response.Body).Decode(&searchResults)
+	assert.Nil(t, err)
+
+	expectedText := "cannot be empty"
+
+	assert.Equal(t, http.StatusBadRequest, response.Code)
+	assert.Contains(t, searchResults.Messages[0].Message, expectedText)
+}
+
+func TestCreateNoResults(t *testing.T) {
+	fixtureFile := "searchWordNoResults"
+	mockCode := 200
+	author := "someauthor"
+	book := "1"
+	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
+	assert.Nil(t, err)
+
+	testConfig := configs.HerodotosConfig{
+		ElasticClient: *mockElasticClient,
+		Index:         "test",
+	}
+
+	router := InitRoutes(testConfig)
+	response := performGetRequest(router, fmt.Sprintf("/herodotos/v1/createQuestion?author=%s&book=%s", author, book))
+
+	var searchResults models.NotFoundError
+	err = json.NewDecoder(response.Body).Decode(&searchResults)
+	assert.Nil(t, err)
+
+	expectedText := "no hits for combination"
+
+	assert.Equal(t, http.StatusNotFound, response.Code)
+	assert.Contains(t, searchResults.Message.Reason, expectedText)
+}
+
 func TestCreateQuestionMissingAuthorInElastic(t *testing.T) {
 	fixtureFile := "createQuestionHerodotos"
 	mockCode := 404
+	book := 1
 	author := "notanauthor"
 	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
@@ -207,7 +288,7 @@ func TestCreateQuestionMissingAuthorInElastic(t *testing.T) {
 	}
 
 	router := InitRoutes(testConfig)
-	response := performGetRequest(router, fmt.Sprintf("/herodotos/v1/createQuestion?author=%s", author))
+	response := performGetRequest(router, fmt.Sprintf("/herodotos/v1/createQuestion?author=%s&book=%v", author, book))
 
 	var searchResults models.NotFoundError
 	err = json.NewDecoder(response.Body).Decode(&searchResults)
@@ -222,6 +303,7 @@ func TestCreateQuestionMissingAuthorInElastic(t *testing.T) {
 func TestCreateQuestionShardFailure(t *testing.T) {
 	fixtureFile := "shardFailure"
 	mockCode := 500
+	book := 1
 	author := "someAuthor"
 	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
@@ -232,7 +314,7 @@ func TestCreateQuestionShardFailure(t *testing.T) {
 	}
 
 	router := InitRoutes(testConfig)
-	response := performGetRequest(router, fmt.Sprintf("/herodotos/v1/createQuestion?author=%s", author))
+	response := performGetRequest(router, fmt.Sprintf("/herodotos/v1/createQuestion?author=%s&book=%v", author, book))
 
 	var searchResults models.ElasticSearchError
 	err = json.NewDecoder(response.Body).Decode(&searchResults)
@@ -248,6 +330,7 @@ func TestCreateQuestionUnParseableJson(t *testing.T) {
 	fixtureFile := "withAll"
 	mockCode := 200
 	author := "thucydides"
+	book := "1"
 	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
@@ -257,7 +340,7 @@ func TestCreateQuestionUnParseableJson(t *testing.T) {
 	}
 
 	router := InitRoutes(testConfig)
-	response := performGetRequest(router, fmt.Sprintf("/herodotos/v1/createQuestion?author=%s", author))
+	response := performGetRequest(router, fmt.Sprintf("/herodotos/v1/createQuestion?author=%s&book=%v", author, book))
 
 	var searchResults models.ValidationError
 	err = json.NewDecoder(response.Body).Decode(&searchResults)

@@ -7,7 +7,7 @@ import (
 
 type DionysosConfig struct {
 	ElasticClient    elasticsearch.Client
-	DictionaryIndex  string
 	Index            string
+	SecondaryIndex   string
 	DeclensionConfig models.DeclensionConfig
 }

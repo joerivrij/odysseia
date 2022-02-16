@@ -44,6 +44,30 @@ type Author struct {
 	Author string `json:"author"`
 }
 
+type Books struct {
+	Books []Book `json:"books"`
+}
+
+type Book struct {
+	Book int64 `json:"book"`
+}
+
+type Methods struct {
+	Method []Method `json:"methods"`
+}
+
+type Method struct {
+	Method string `json:"method"`
+}
+
+type Categories struct {
+	Category []Category `json:"categories"`
+}
+
+type Category struct {
+	Category string `json:"category"`
+}
+
 type CreateSentenceResponse struct {
 	Sentence   string `json:"sentence"`
 	SentenceId string `json:"sentenceId"`

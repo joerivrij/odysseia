@@ -72,6 +72,7 @@ func TestLastChapterEndPointHappyPath(t *testing.T) {
 	mockCode := 200
 	expectedChapter := int64(15)
 	category := "nomina"
+	method := "mousieon"
 	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
@@ -81,7 +82,7 @@ func TestLastChapterEndPointHappyPath(t *testing.T) {
 	}
 
 	router := InitRoutes(testConfig)
-	response := performGetRequest(router, fmt.Sprintf("/sokrates/v1/chapters/%s", category))
+	response := performGetRequest(router, fmt.Sprintf("/sokrates/v1/methods/%s/categories/%s/chapters", method, category))
 
 	var searchResults models.LastChapterResponse
 	err = json.NewDecoder(response.Body).Decode(&searchResults)
@@ -95,6 +96,7 @@ func TestLastChapterShardFailure(t *testing.T) {
 	fixtureFile := "infoServiceDown"
 	mockCode := 502
 	category := "nomina"
+	method := "method"
 	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
@@ -104,7 +106,7 @@ func TestLastChapterShardFailure(t *testing.T) {
 	}
 
 	router := InitRoutes(testConfig)
-	response := performGetRequest(router, fmt.Sprintf("/sokrates/v1/chapters/%s", category))
+	response := performGetRequest(router, fmt.Sprintf("/sokrates/v1/methods/%s/categories/%s/chapters", method, category))
 
 	var searchResults models.ElasticSearchError
 	err = json.NewDecoder(response.Body).Decode(&searchResults)
@@ -120,6 +122,7 @@ func TestLastChapterEmptyQuery(t *testing.T) {
 	fixtureFile := "lastChapterSokrates"
 	mockCode := 200
 	category := "f"
+	method := "s"
 	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
@@ -129,7 +132,7 @@ func TestLastChapterEmptyQuery(t *testing.T) {
 	}
 
 	router := InitRoutes(testConfig)
-	response := performGetRequest(router, fmt.Sprintf("/sokrates/v1/chapters/%s", category))
+	response := performGetRequest(router, fmt.Sprintf("/sokrates/v1/methods/%s/categories/%s/chapters", method, category))
 
 	var searchResults models.ValidationError
 	err = json.NewDecoder(response.Body).Decode(&searchResults)
@@ -232,6 +235,7 @@ func TestCreateQuestionEndPointHappyPath(t *testing.T) {
 
 	category := "verba"
 	chapter := "1"
+	method := "logos"
 
 	testConfig := configs.SokratesConfig{
 		ElasticClient: *mockElasticClient,
@@ -239,7 +243,7 @@ func TestCreateQuestionEndPointHappyPath(t *testing.T) {
 	}
 
 	router := InitRoutes(testConfig)
-	response := performGetRequest(router, fmt.Sprintf("/sokrates/v1/createQuestion?category=%s&chapter=%s", category, chapter))
+	response := performGetRequest(router, fmt.Sprintf("/sokrates/v1/createQuestion?method=%s&category=%s&chapter=%s", method, category, chapter))
 
 	var searchResults models.QuizResponse
 	err = json.NewDecoder(response.Body).Decode(&searchResults)
@@ -259,6 +263,7 @@ func TestCreateQuestionEndPointCanCreateShorterQuiz(t *testing.T) {
 	assert.Nil(t, err)
 
 	category := "verba"
+	method := "mousieon"
 	chapter := "1"
 
 	testConfig := configs.SokratesConfig{
@@ -267,7 +272,7 @@ func TestCreateQuestionEndPointCanCreateShorterQuiz(t *testing.T) {
 	}
 
 	router := InitRoutes(testConfig)
-	response := performGetRequest(router, fmt.Sprintf("/sokrates/v1/createQuestion?category=%s&chapter=%s", category, chapter))
+	response := performGetRequest(router, fmt.Sprintf("/sokrates/v1/createQuestion?method=%s&category=%s&chapter=%s", method, category, chapter))
 
 	var searchResults models.QuizResponse
 	err = json.NewDecoder(response.Body).Decode(&searchResults)

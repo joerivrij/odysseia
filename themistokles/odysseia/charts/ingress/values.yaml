@@ -15,3 +15,6 @@ envVariables:
     port: 8080
   xerxes:
     port: 8089
+
+config:
+  host: odysseia-greek.internal

@@ -15,8 +15,8 @@ Vue.prototype.$alexandrosUrl = store.state.AlexandrosUrl
 Vue.prototype.$dionysosUrl = store.state.DionysosUrl
 
 if (process.env.NODE_ENV === 'development') {
-  Vue.prototype.$sokratesUrl = "http://minikube-odysseia.test/sokrates/v1"
-  Vue.prototype.$herodotosUrl = "http://minikube-odysseia.test/herodotos/v1"
+  Vue.prototype.$sokratesUrl = "http://localhost:5000/sokrates/v1"
+  Vue.prototype.$herodotosUrl = "http://localhost:5000/herodotos/v1"
   Vue.prototype.$alexandrosUrl = "http://minikube-odysseia.test/alexandros/v1"
   Vue.prototype.$dionysosUrl = "http://minikube-odysseia.test/dionysos/v1"
 }

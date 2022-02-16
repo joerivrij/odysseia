@@ -12,6 +12,7 @@ The goal is for people to learn or rehearse ancient Greek. Some of it is in Dutc
   - [Sokrates - Σωκράτης](#sokrates---σωκράτης)
   - [Solon - Σόλων](#solon---σόλων)
 - [Common](#common)
+  - [Aristoteles - Ἀριστοτέλης](#aristoteles---Ἀριστοτέλης)
   - [Eratosthenes - Ἐρατοσθένης](#eratosthenes---ἐρατοσθένης)
   - [Plato - Πλάτων](#plato---πλάτων)
 - [Dataseeders](#dataseeders)
@@ -75,6 +76,14 @@ Sokrates (on the right) is a figure of mythical propertions. He could stare at t
 Solon is most famous for his role as the great Athenian lawgiver following the reforms made by Drakon. His laws laid the foundation of what would become the Athenian Democracy.
 
 ## Common
+
+### Aristoteles - Ἀριστοτέλης
+
+Τριών δει παιδεία: φύσεως, μαθήσεως, ασκήσεως. -Education needs these three: natural endowment, study, practice.
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/ae/Aristotle_Altemps_Inv8575.jpg" alt="Aristoteles" width="200"/>
+
+Config builder for all api's, seeders and initcontainers.
 
 ### Eratosthenes - Ἐρατοσθένης
 

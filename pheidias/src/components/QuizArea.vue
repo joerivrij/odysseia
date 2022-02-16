@@ -4,7 +4,7 @@
         id="navbar"
         :style="{background: $vuetify.theme.themes[theme].background}"
     >
-      <v-content>
+      <v-main>
         <div class="text-center">
           <h2>Chapter {{this.selectedChapter}}</h2>
           <v-menu top :close-on-content-click="closeOnContentClick">
@@ -23,21 +23,40 @@
               </v-list-item>
             </v-list>
           </v-menu>
-          <h4>Available Categories</h4>
-          <v-btn
-              v-for="(item, index) in categories"
-              :key="index"
-              @click="category = item"
-              v-on:click="getNextQuestion"
-              rounded
-              color="primary"
-              class="ma-2"
-          >
-            {{ item }}
-          </v-btn>
+          <h4>Available Methods</h4>
+          <v-row justify="space-around">
+            <v-menu
+                v-for="(method, index) in this.methods"
+                :key="method"
+            >
+              <template v-slot:activator="{ attrs, on }">
+                <v-btn
+                    v-bind="attrs"
+                    v-on="on"
+                    rounded
+                    @click="selectedMethod = methods[index]"
+                    v-on:click="getCategories(methods[index])"
+                    class="ma-2"
+                >
+                  {{ method }}
+                </v-btn>
+              </template>
+              <v-list>
+                <v-list-item
+                    v-for="item in categories"
+                    :key="item"
+                    @click="category = item"
+                    v-on:click="getChapters"
+                >
+                  <v-list-item-title v-text="item"></v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
+          </v-row>
           <br />
           <br />
           <br />
+          <h4> Method: {{selectedMethod}} Category: {{ category}} </h4>
           <h3>Translate:</h3>
           <h3>{{quizWord}}</h3>
           <br />
@@ -137,7 +156,7 @@
               auto-draw
           ></v-sparkline>
         </div>
-      </v-content>
+      </v-main>
     </v-app>
   </div>
 </template>
@@ -165,7 +184,8 @@ export default {
       answers: [],
       selectedAnswer : "",
       correct: false,
-      category: "nomina",
+      category: "",
+      selectedMethod: "",
       answered: 0,
       correctlyAnswered: 0,
       percentage: 100,
@@ -173,7 +193,8 @@ export default {
       chapters : '',
       closeOnContentClick: true,
       selectedChapter : 1,
-      categories: ["nomina", "verba", "misc", "logos"],
+      categories: [],
+      methods: [],
       value: 0,
       interval: 0,
       width: 2,
@@ -206,7 +227,7 @@ export default {
       }, 3000);
     },
     getQuestion: function () {
-      let url = `${this.$sokratesUrl}/createQuestion?category=${this.category}`
+      let url = `${this.$sokratesUrl}/createQuestion?method=${this.selectedMethod}&category=${this.category}&chapter=${this.selectedChapter}`
       if (this.selectedChapter !== "") {
         url = url + `&chapter=${this.selectedChapter}`
       }
@@ -220,6 +241,21 @@ export default {
             this.answers = shuffeledArray;
             this.quizWord = response.data[0];
             this.correctAnswer = response.data[1]
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+    },
+    getCategories: function (method) {
+      let url = `${this.$sokratesUrl}/methods/${method}/categories`
+      this.$apiClient.get(url)
+          .then((response) => {
+            this.categories = []
+            let i;
+            for (i in response.data.categories) {
+              const category = response.data.categories[i].category
+              this.categories.push(category)
+            }
           })
           .catch(e => {
             this.errors.push(e)
@@ -264,16 +300,35 @@ export default {
     setCategory(category) {
       this.category = category
     },
+    setMethod(method) {
+      this.method = method
+    },
     resetProgress : function () {
       this.correctlyAnswered = 0
       this.answered = 0
       this.percentage = 100
     },
     getChapters : function () {
-      let url = `${this.$sokratesUrl}/chapters/${this.category}`
+      let url = `${this.$sokratesUrl}/methods/${this.selectedMethod}/categories/${this.category}/chapters`
+      console.log(url)
       this.$apiClient.get(url)
           .then((response) => {
             this.chapters = response.data['lastChapter']
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+    },
+    getMethods : function () {
+      let url = `${this.$sokratesUrl}/methods`
+      this.$apiClient.get(url)
+          .then((response) => {
+            this.methods = []
+            let i;
+            for (i in response.data.methods) {
+              const method = response.data.methods[i].method
+              this.methods.push(method)
+            }
           })
           .catch(e => {
             this.errors.push(e)
@@ -285,12 +340,14 @@ export default {
     },
   },
   mounted() {
+    this.getMethods()
     this.getQuestion()
     this.correctlyAnswered = 0
     this.answered = 0
     this.percentage = 100
   },
   created() {
+    this.getMethods()
     this.getChapters()
   },
   beforeDestroy () {

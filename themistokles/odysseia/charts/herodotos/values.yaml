@@ -31,13 +31,13 @@ services:
   seeder:
     name: "herakleitos"
     role: "seeder"
-    access: "author;text"
+    access: "text"
   init:
     name: "periandros"
   odysseiaapi:
     name: "herodotos"
     role: "api"
-    access: "author;text"
+    access: "text"
     requests:
       memory: "64Mi"
       cpu: "100m"

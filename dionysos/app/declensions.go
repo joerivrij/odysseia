@@ -20,7 +20,7 @@ func (d *DionysosHandler) queryWordInElastic(word string) ([]models.Meros, error
 	strippedWord := d.removeAccents(word)
 
 	term := "greek"
-	response, err := elastic.QueryWithMatch(d.Config.ElasticClient, d.Config.DictionaryIndex, term, strippedWord)
+	response, err := elastic.QueryWithMatch(d.Config.ElasticClient, d.Config.SecondaryIndex, term, strippedWord)
 
 	if err != nil {
 		errText := err.Error()

@@ -22,7 +22,7 @@ func GetClusterKeys() (*models.CurrentInstallConfig, error) {
 	}
 
 	var currentKeys models.CurrentInstallConfig
-	err = yaml.Unmarshal(f, currentKeys)
+	err = yaml.Unmarshal(f, &currentKeys)
 	if err != nil {
 		return nil, err
 	}
