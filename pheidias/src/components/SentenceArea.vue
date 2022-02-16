@@ -1,10 +1,13 @@
 <template>
   <div id="herodotos">
     <v-app id="sentencearea">
-      <v-content>
+      <v-main>
         <div class="text-center">
           <v-card class="mx-auto" max-width="344">
             <v-card-text>
+              <p class="text-h4 text--primary">
+                {{ this.selectedAuthor }} Book: {{ this.selectedBook }}
+              </p>
               <v-menu top :close-on-content-click="closeOnContentClick">
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn color="primary" dark v-bind="attrs" v-on="on" rounded>
@@ -21,9 +24,6 @@
                   </v-list-item>
                 </v-list>
               </v-menu>
-              <p class="text-h4 text--primary">
-                {{ this.selectedAuthor }}
-              </p>
               <v-menu top :close-on-content-click="closeOnContentClick">
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn color="primary" dark v-bind="attrs" v-on="on" rounded>
@@ -40,9 +40,6 @@
                   </v-list-item>
               </v-list>
               </v-menu>
-              <p class="text-h4 text--primary">
-                {{ this.selectedBook }}
-              </p>
               <div class="text--primary">
                 <v-textarea
                     readonly
@@ -50,6 +47,14 @@
                     v-on:dblclick="queryWord($event)"
                 ></v-textarea>
               </div>
+              <h4>Possible Typos</h4>
+              <v-list
+                  v-for="(typo, index) in possibleTypos"
+                  :key="index">
+                <v-list-item>
+                  <v-list-item-title>{{typo.verified}} => {{ typo.provided}}</v-list-item-title>
+                </v-list-item>
+              </v-list>
               <v-container fluid>
                 <v-textarea
                     clearable
@@ -152,7 +157,7 @@
             </v-expand-transition>
           </v-card>
         </div>
-      </v-content>
+      </v-main>
     </v-app>
   </div>
 </template>
@@ -165,6 +170,7 @@ export default {
       authors: [],
       books: [],
       grammarResults: [],
+      possibleTypos: [],
       selectedAuthor: "",
       selectedBook: "",
       sentence: "",
@@ -181,7 +187,6 @@ export default {
     setAuthorTo(author) {
       this.selectedAuthor = author
       this.getBooks(this.selectedAuthor)
-      this.getNewSentence()
     },
     setBookTo(book) {
       this.selectedBook = book
@@ -192,7 +197,6 @@ export default {
           e.target.selectionStart,
           e.target.selectionEnd
       );
-      console.log(value);
       let url = `${this.$dionysosUrl}/checkGrammar?word=${value}`
       this.$apiClient.get(url)
           .then((response) => {
@@ -224,6 +228,9 @@ export default {
               const nameCapitalized = author.charAt(0).toUpperCase() + author.slice(1)
               this.authors.push(nameCapitalized)
             }
+
+            this.selectedAuthor = this.authors[0]
+            this.getBooks(this.selectedAuthor)
           })
           .catch(e => {
             this.errors.push(e)
@@ -231,6 +238,10 @@ export default {
     },
     getBooks: function (author) {
       this.books = []
+      if (author === "") {
+        author = this.selectedAuthor
+      }
+
       let url = `${this.$herodotosUrl}/authors/${author}/books`
       this.$apiClient.get(url)
           .then((response) => {
@@ -239,10 +250,10 @@ export default {
               const book = response.data.books[i].book
               this.books.push(book)
             }
-
-            this.selectedBook = response.data.books[0].book
+            this.setBookTo(this.books[0])
           })
           .catch(e => {
+            console.log(e)
             this.errors.push(e)
           })
     },
@@ -255,6 +266,7 @@ export default {
             this.currentSentenceId = response.data.sentenceId
           })
           .catch(e => {
+            console.log(e)
             this.errors.push(e)
           })
     },
@@ -271,23 +283,29 @@ export default {
       }).then((response) => {
         this.translationPercentage = response.data.levenshteinPercentage
         this.databaseAnswer = response.data.quizSentence
+        this.searchPossibleTypos(response.data.nonMatchingWords)
       })
     },
-
-    setDefaultAuthor: function () {
-      if (this.authors.length === 0) {setTimeout(() => {
-        this.selectedAuthor = this.authors[0]
-        this.getNewSentence()
-      }, 500)
+    searchPossibleTypos: function (words) {
+      this.possibleTypos = []
+      let i;
+      for (i in words) {
+        let j;
+        for (j in words[i].matches) {
+          const percentage = parseFloat(words[i].matches[j].percentage);
+          if (words[i].matches[j].levenshtein <= 2 && percentage > 50.00) {
+            let jsonMap = {
+              "provided": words[i].word,
+              "verified": words[i].matches[j].match
+            }
+            this.possibleTypos.push(jsonMap)
+          }
+        }
       }
-      this.selectedAuthor = this.authors[0]
-      this.getBooks(this.author[0])
-      this.getNewSentence()
     },
   },
   mounted() {
     this.getAuthors();
-    this.setDefaultAuthor();
   },
   created() {
   }

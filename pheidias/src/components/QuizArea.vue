@@ -6,7 +6,41 @@
     >
       <v-main>
         <div class="text-center">
-          <h2>Chapter {{this.selectedChapter}}</h2>
+          <h2>Method: {{this.selectedMethod}} - Category: {{ this.category}} - Chapter {{this.selectedChapter}}</h2>
+          <h4>Available Methods</h4>
+          <v-row justify="center" align="center">
+            <v-menu
+                v-for="(method, index) in this.methods"
+                :key="method"
+                transition="slide-y-transition"
+            >
+              <template v-slot:activator="{ attrs, on }">
+                <v-btn
+                    v-bind="attrs"
+                    v-on="on"
+                    rounded
+                    color="primary"
+                    class="ma-2"
+                    dark
+                    @click="selectedMethod = methods[index];"
+                    v-on:click="getCategories(methods[index])"
+                >
+                  {{ method }}
+                </v-btn>
+              </template>
+              <v-list>
+                <v-list-item
+                    v-for="item in categories"
+                    :key="item"
+                    @click="category = item;setChapter(1)"
+                    v-on:click="getChapters"
+                >
+                  <v-list-item-title v-text="item"></v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
+          </v-row>
+          <br>
           <v-menu top :close-on-content-click="closeOnContentClick">
             <template v-slot:activator="{ on, attrs }">
               <v-btn color="primary" dark v-bind="attrs" v-on="on" rounded>
@@ -23,40 +57,9 @@
               </v-list-item>
             </v-list>
           </v-menu>
-          <h4>Available Methods</h4>
-          <v-row justify="space-around">
-            <v-menu
-                v-for="(method, index) in this.methods"
-                :key="method"
-            >
-              <template v-slot:activator="{ attrs, on }">
-                <v-btn
-                    v-bind="attrs"
-                    v-on="on"
-                    rounded
-                    @click="selectedMethod = methods[index]"
-                    v-on:click="getCategories(methods[index])"
-                    class="ma-2"
-                >
-                  {{ method }}
-                </v-btn>
-              </template>
-              <v-list>
-                <v-list-item
-                    v-for="item in categories"
-                    :key="item"
-                    @click="category = item"
-                    v-on:click="getChapters"
-                >
-                  <v-list-item-title v-text="item"></v-list-item-title>
-                </v-list-item>
-              </v-list>
-            </v-menu>
-          </v-row>
           <br />
           <br />
           <br />
-          <h4> Method: {{selectedMethod}} Category: {{ category}} </h4>
           <h3>Translate:</h3>
           <h3>{{quizWord}}</h3>
           <br />
@@ -178,6 +181,17 @@ export default {
         'center',
         'end',
       ],
+      items: [
+        {
+          id: 1,
+          name: 'Methods :',
+          children: [
+            { id: 2, name: 'Calendar : app' },
+            { id: 3, name: 'Chrome : app' },
+            { id: 4, name: 'Webstorm : app' },
+          ],
+        },
+          ],
       showAnswer: false,
       correctAnswer: "",
       quizWord: [],
@@ -227,10 +241,8 @@ export default {
       }, 3000);
     },
     getQuestion: function () {
+      console.log('getting question')
       let url = `${this.$sokratesUrl}/createQuestion?method=${this.selectedMethod}&category=${this.category}&chapter=${this.selectedChapter}`
-      if (this.selectedChapter !== "") {
-        url = url + `&chapter=${this.selectedChapter}`
-      }
       this.$apiClient.get(url)
           .then((response) => {
             let shuffeledArray = response.data.slice(1, 5)
@@ -265,8 +277,6 @@ export default {
       clearInterval(this.interval)
       this.value = 0
       this.showAnswer = false;
-      this.setCategory(this.category)
-      this.getChapters()
       this.getQuestion()
     },
     postAnswer: function () {
@@ -289,7 +299,6 @@ export default {
 
             this.percentage = Math.round(this.correctlyAnswered / this.answered * 100)
             let inNumbers = Math.round(this.correctlyAnswered / this.answered * 10)
-            console.log(inNumbers)
             this.graphNumbers.push(inNumbers)
           })
           .catch(e => {
@@ -310,7 +319,6 @@ export default {
     },
     getChapters : function () {
       let url = `${this.$sokratesUrl}/methods/${this.selectedMethod}/categories/${this.category}/chapters`
-      console.log(url)
       this.$apiClient.get(url)
           .then((response) => {
             this.chapters = response.data['lastChapter']
@@ -341,14 +349,12 @@ export default {
   },
   mounted() {
     this.getMethods()
-    this.getQuestion()
     this.correctlyAnswered = 0
     this.answered = 0
     this.percentage = 100
   },
   created() {
     this.getMethods()
-    this.getChapters()
   },
   beforeDestroy () {
     clearInterval(this.interval)
