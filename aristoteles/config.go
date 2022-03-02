@@ -146,6 +146,9 @@ func (c *Config) fillFields(e *reflect.Value) {
 			case "SecondaryIndex":
 				indexName := c.getStringFromEnv(EnvSecondaryIndex, c.BaseConfig.Index)
 				e.FieldByName(fieldName).SetString(indexName)
+			case "Job":
+				indexName := c.getStringFromEnv(EnvJobName, defaultJobName)
+				e.FieldByName(fieldName).SetString(indexName)
 			case "PodName":
 				podName := c.getParsedPodNameFromEnv()
 				e.FieldByName(fieldName).SetString(podName)
@@ -165,6 +168,12 @@ func (c *Config) fillFields(e *reflect.Value) {
 				e.FieldByName(fieldName).SetString(defaultRoleAnnotation)
 			case "AccessAnnotation":
 				e.FieldByName(fieldName).SetString(defaultAccessAnnotation)
+			case "Channel":
+				channel := c.getStringFromEnv(EnvChannel, defaultChannelName)
+				e.FieldByName(fieldName).SetString(channel)
+			case "MqAddress":
+				channel := c.getStringFromEnv(EnvMqAddress, defaultMqAddress)
+				e.FieldByName(fieldName).SetString(channel)
 			}
 		}
 

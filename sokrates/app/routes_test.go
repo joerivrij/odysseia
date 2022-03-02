@@ -316,6 +316,7 @@ func TestCreateQuestionElasticDown(t *testing.T) {
 	assert.Nil(t, err)
 
 	category := "verba"
+	method := "mousieon"
 	chapter := "1"
 
 	testConfig := configs.SokratesConfig{
@@ -324,7 +325,7 @@ func TestCreateQuestionElasticDown(t *testing.T) {
 	}
 
 	router := InitRoutes(testConfig)
-	response := performGetRequest(router, fmt.Sprintf("/sokrates/v1/createQuestion?category=%s&chapter=%s", category, chapter))
+	response := performGetRequest(router, fmt.Sprintf("/sokrates/v1/createQuestion?method=%s&category=%s&chapter=%s", method, category, chapter))
 
 	var searchResults models.ElasticSearchError
 	err = json.NewDecoder(response.Body).Decode(&searchResults)

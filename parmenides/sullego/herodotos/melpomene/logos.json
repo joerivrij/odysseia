@@ -1,0 +1,396 @@
+{
+  "logos": [
+    {
+      "method": "",
+      "category": "",
+      "greek": "ἀδικία",
+      "translation": "injustice",
+      "chapter": 1
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "αἵρεσις",
+      "translation": "a taking especially",
+      "chapter": 1
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "ἀνήρ",
+      "translation": "a man",
+      "chapter": 3
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "ἀνθέω",
+      "translation": "to blossom, bloom",
+      "chapter": 5
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "ἀντιόομαι",
+      "translation": "to resist, oppose",
+      "chapter": 3
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "ἄρχω",
+      "translation": "(to be first) to rule, to begin",
+      "chapter": 6
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "Ἀσία",
+      "translation": "Asia",
+      "chapter": 5
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "αὐτός",
+      "translation": "unemph.",
+      "chapter": 2
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "αὐτοῦ",
+      "translation": "at the very place, just here, just there",
+      "chapter": 1
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "Βαβυλών",
+      "translation": "Babylon",
+      "chapter": 5
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "βούλομαι",
+      "translation": "to will, wish, be willing",
+      "chapter": 6
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "γάρ",
+      "translation": "for",
+      "chapter": 2
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "γίγνομαι",
+      "translation": "become, be born",
+      "chapter": 1
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "Δαρεῖος",
+      "translation": "Darius",
+      "chapter": 1
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "δέ",
+      "translation": "but",
+      "chapter": 3
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "εἰμί",
+      "translation": "to be",
+      "chapter": 1
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "εἰς",
+      "translation": "into, to c. acc.",
+      "chapter": 2
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "εἰσβάλλω",
+      "translation": "to throw into, put into",
+      "chapter": 5
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "ἐκεῖνος",
+      "translation": "that over there, that",
+      "chapter": 2
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "ἔλασις",
+      "translation": "a driving away, banishing",
+      "chapter": 5
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "Ἑλλησπόντιος",
+      "translation": "of the Hellespont",
+      "chapter": 4
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "ἐν",
+      "translation": "in, among. c. dat.",
+      "chapter": 3
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "ἐπί",
+      "translation": "on, upon with gen., dat., and acc.",
+      "chapter": 5
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "ἐπιθυμέω",
+      "translation": "to set one\u0027s heart upon",
+      "chapter": 4
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "Εὐρώπη",
+      "translation": "Europa, Europe",
+      "chapter": 1
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "καί",
+      "translation": "and, also",
+      "chapter": 4
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "καταλείπω",
+      "translation": "to leave behind",
+      "chapter": 1
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "καταστρέφω",
+      "translation": "to turn down, trample on",
+      "chapter": 1
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "μάχη",
+      "translation": "battle, fight, combat",
+      "chapter": 3
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "Μεγάβαζος",
+      "translation": "Megabazus",
+      "chapter": 4
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "μέγας",
+      "translation": "big, great",
+      "chapter": 4
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "μέν",
+      "translation": "on the one hand, on the other hand",
+      "chapter": 2
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "μετά",
+      "translation": "(w gen) with, among; (w acc) after",
+      "chapter": 2
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "Μηδικός",
+      "translation": "Median, of the Medes",
+      "chapter": 3
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "νικάω",
+      "translation": "to conquer, prevail, vanquish",
+      "chapter": 3
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "ὁ",
+      "translation": "the",
+      "chapter": 6
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "ὅς",
+      "translation": "who, that, which: relative pronoun",
+      "chapter": 1
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "ὅτι",
+      "translation": "adv. + superl., as...as possible; ὅτι μή except",
+      "chapter": 4
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "ὅτι",
+      "translation": "conj.: that, because (13.21)",
+      "chapter": 2
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "οὐ",
+      "translation": "not",
+      "chapter": 5
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "Παίων",
+      "translation": "Paeonian",
+      "chapter": 4
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "περιέπω",
+      "translation": "to treat with great care",
+      "chapter": 4
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "Περσεύς",
+      "translation": "Perseus",
+      "chapter": 5
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "Πέρσης",
+      "translation": "a Persian; Perses (pr.n.)",
+      "chapter": 2
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "πρότερος",
+      "translation": "before, earlier",
+      "chapter": 3
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "πρῶτος",
+      "translation": "first",
+      "chapter": 6
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "Σκύθης",
+      "translation": "a Scythian",
+      "chapter": 5
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "σύνειμι",
+      "translation": "come together",
+      "chapter": 4
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "τῇ",
+      "translation": "here, there",
+      "chapter": 3
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "τίνω",
+      "translation": "to pay a price",
+      "chapter": 5
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "τίω",
+      "translation": "to pay honour to",
+      "chapter": 2
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "τραχύς",
+      "translation": "rugged, rough",
+      "chapter": 6
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "ὑπάρχω",
+      "translation": "to begin; to exist",
+      "chapter": 2
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "ὑπήκοος",
+      "translation": "giving ear, listening to",
+      "chapter": 6
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "ὑπό",
+      "translation": "from under, by, c. gen. under, c. dat., towards c. acc.",
+      "chapter": 3
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "χρῆμα",
+      "translation": "thing, (pl.) goods, property, money",
+      "chapter": 4
+    }
+  ]
+}

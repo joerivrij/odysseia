@@ -22,7 +22,7 @@
         "_score" : 1.0,
         "_source" : {
           "greek" : "πονέω",
-          "dutch" : "1. werken, zwoegen 2. het zwaar hebben, pijn lijden",
+          "translation" : "1. werken, zwoegen 2. het zwaar hebben, pijn lijden",
           "chapter" : 1
         }
       },
@@ -33,7 +33,7 @@
         "_score" : 1.0,
         "_source" : {
           "greek" : "προβαίνω",
-          "dutch" : "naar voren komen",
+          "translation" : "naar voren komen",
           "chapter" : 1
         }
       },
@@ -44,7 +44,7 @@
         "_score" : 1.0,
         "_source" : {
           "greek" : "ἀναβαίνω",
-          "dutch" : "bestijgen",
+          "translation" : "bestijgen",
           "chapter" : 1
         }
       },
@@ -55,7 +55,7 @@
         "_score" : 1.0,
         "_source" : {
           "greek" : "λέγω",
-          "dutch" : "zeggen, spreken",
+          "translation" : "zeggen, spreken",
           "chapter" : 1
         }
       },
@@ -66,7 +66,7 @@
         "_score" : 1.0,
         "_source" : {
           "greek" : "φέπω",
-          "dutch" : "dragen, brengen",
+          "translation" : "dragen, brengen",
           "chapter" : 1
         }
       }

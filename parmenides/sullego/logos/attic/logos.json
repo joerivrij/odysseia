@@ -2,12 +2,12 @@
   "logos": [
     {
       "greek": "ἀγαθός",
-      "dutch": "goed",
+      "translation": "good",
       "chapter": 1
     },
     {
       "greek": "τὸ αγαθών",
-      "dutch": "het goede",
+      "translation": "the good",
       "chapter": 1
     }
   ]

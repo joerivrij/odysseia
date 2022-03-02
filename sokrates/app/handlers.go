@@ -130,7 +130,7 @@ func (s *SokratesHandler) CheckAnswer(w http.ResponseWriter, req *http.Request) 
 	}
 
 	for _, logos := range logoi.Logos {
-		if logos.Dutch == checkAnswerRequest.AnswerProvided {
+		if logos.Translation == checkAnswerRequest.AnswerProvided {
 			answer.Correct = true
 		}
 	}
@@ -197,6 +197,18 @@ func (s *SokratesHandler) CreateQuestion(w http.ResponseWriter, req *http.Reques
 		return
 	}
 
+	if len(elasticResponse.Hits.Hits) == 0 {
+		e := models.NotFoundError{
+			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
+			Message: models.NotFoundMessage{
+				Type:   "no results",
+				Reason: fmt.Sprintf("category: %s chapter: %s method: %s", category, chapter, method),
+			},
+		}
+		middleware.ResponseWithJson(w, e)
+		return
+	}
+
 	var logoi models.Logos
 	for _, hit := range elasticResponse.Hits.Hits {
 		source, _ := json.Marshal(hit.Source)
@@ -209,7 +221,7 @@ func (s *SokratesHandler) CreateQuestion(w http.ResponseWriter, req *http.Reques
 
 	question := logoi.Logos[randNumber]
 	quiz = append(quiz, question.Greek)
-	quiz = append(quiz, question.Dutch)
+	quiz = append(quiz, question.Translation)
 
 	numberOfNeededAnswers := 5
 
@@ -221,9 +233,9 @@ func (s *SokratesHandler) CreateQuestion(w http.ResponseWriter, req *http.Reques
 		randNumber = helpers.GenerateRandomNumber(len(logoi.Logos))
 		randEntry := logoi.Logos[randNumber]
 
-		exists := findQuizWord(quiz, randEntry.Dutch)
+		exists := findQuizWord(quiz, randEntry.Translation)
 		if !exists {
-			quiz = append(quiz, randEntry.Dutch)
+			quiz = append(quiz, randEntry.Translation)
 		}
 	}
 

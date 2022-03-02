@@ -252,6 +252,9 @@ func (o *OdysseiaInstaller) installOdysseiaComplete() error {
 		//  --namespace ingress-nginx --create-namespace
 	}
 
+	//0. install kubemq
+	// kubectl apply -f https://deploy.kubemq.io/community
+
 	//1. install elastic
 	installElastic := false
 	for _, install := range o.ChartsToInstall {
@@ -554,7 +557,7 @@ func (o *OdysseiaInstaller) installSolonHelmChart() error {
 func (o *OdysseiaInstaller) installAppsHelmChart() error {
 	//wait for solon to install
 	ticker := time.NewTicker(5 * time.Second)
-	timeout := time.After(180 * time.Second)
+	timeout := time.After(360 * time.Second)
 	var ready bool
 	for {
 		select {
@@ -875,7 +878,7 @@ func (o *OdysseiaInstaller) parseValueOverwrite() (map[string]interface{}, error
 }
 
 func (o *OdysseiaInstaller) checkConfigForEmpty() error {
-	currentConfigPath := filepath.Join(o.ConfigPath, "config.yaml")
+	currentConfigPath := filepath.Join(o.CurrentPath, "config.yaml")
 	fromFile, err := os.ReadFile(currentConfigPath)
 	if err != nil {
 		return err

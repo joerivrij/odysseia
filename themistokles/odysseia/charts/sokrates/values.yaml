@@ -62,6 +62,7 @@ envVariables:
   solonService: http://solon-service:5000
   vaultService: http://vault:8200
   elasticService: https://elastic-master:9200
+  mqService: kubemq
   odysseiaapi:
     port: 5000
   sidecar:

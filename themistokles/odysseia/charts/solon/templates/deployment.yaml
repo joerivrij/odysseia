@@ -25,7 +25,7 @@ spec:
         version: {{ .Values.images.tag }}
       annotations:
         elastic/indices: "dictionary;grammar;text;quiz"
-        elastic/roles: "api;seeder"
+        elastic/roles: "api;seeder;hybrid"
     spec:
       serviceAccountName: {{ template "solon.serviceAccountName" . }}
       {{- if .Values.config.inClusterHarbor | quote }}

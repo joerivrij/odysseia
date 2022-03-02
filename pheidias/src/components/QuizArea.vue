@@ -40,26 +40,39 @@
               </v-list>
             </v-menu>
           </v-row>
+          <br />
+          <br />
+          <br />
+            <v-container>
+              <v-row justify="center" align="center">
+                <v-col
+                    cols="12"
+                    md="4"
+                >
+                  <v-text-field
+                      v-model="inputChapter"
+                      min="1"
+                      :max=chapters
+                      :rules="numberRules"
+                      :label=labelText
+                      type="number"
+                      required
+                  ></v-text-field>
+                  <v-btn
+                      :disabled="!valid"
+                      color="primary"
+                      dark
+                      rounded
+                      @click="validate()"
+                  >
+                    Set Chapter
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </v-container>
           <br>
-          <v-menu top :close-on-content-click="closeOnContentClick">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn color="primary" dark v-bind="attrs" v-on="on" rounded>
-                Chapters
-              </v-btn>
-            </template>
-            <v-list>
-              <v-list-item
-                  v-for="(chapter, index) in chapters"
-                  :key="index"
-                  v-on:click="setChapter(chapter)"
-              >
-                <v-list-item-title>{{ chapter }}</v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-          <br />
-          <br />
-          <br />
+          <br>
+
           <h3>Translate:</h3>
           <h3>{{quizWord}}</h3>
           <br />
@@ -176,22 +189,13 @@ export default {
   },
   data() {
     return {
+      valid: true,
       alignments: [
         'start',
         'center',
         'end',
       ],
-      items: [
-        {
-          id: 1,
-          name: 'Methods :',
-          children: [
-            { id: 2, name: 'Calendar : app' },
-            { id: 3, name: 'Chrome : app' },
-            { id: 4, name: 'Webstorm : app' },
-          ],
-        },
-          ],
+      inputChapter: 1,
       showAnswer: false,
       correctAnswer: "",
       quizWord: [],
@@ -205,6 +209,12 @@ export default {
       percentage: 100,
       graphNumbers: [0],
       chapters : '',
+      labelText: `Chapters: (1 - 1)`,
+      numberRules: [
+        v => !!v || 'Chapter is required',
+        v => (v && v <= this.chapters) || 'Chapter cannot exceed chapters',
+        v => (v && v !== 0) || 'non zero'
+      ],
       closeOnContentClick: true,
       selectedChapter : 1,
       categories: [],
@@ -309,9 +319,6 @@ export default {
     setCategory(category) {
       this.category = category
     },
-    setMethod(method) {
-      this.method = method
-    },
     resetProgress : function () {
       this.correctlyAnswered = 0
       this.answered = 0
@@ -322,7 +329,9 @@ export default {
       this.$apiClient.get(url)
           .then((response) => {
             this.chapters = response.data['lastChapter']
+            this.labelText = `Chapters: (1 - ${response.data['lastChapter']})`
           })
+
           .catch(e => {
             this.errors.push(e)
           })
@@ -345,6 +354,13 @@ export default {
     setChapter(chapter) {
       this.selectedChapter = chapter
       this.getQuestion()
+    },
+    validate() {
+      const isNotZero = this.inputChapter < 1
+      const higher = this.inputChapter > this.chapters
+      if (!isNotZero && !higher) {
+        this.setChapter(this.inputChapter)
+      }
     },
   },
   mounted() {

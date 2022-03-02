@@ -20,6 +20,7 @@ The goal is for people to learn or rehearse ancient Greek. Some of it is in Dutc
   - [Demokritos - Δημόκριτος](#demokritos---δημόκριτος)
   - [Herakleitos - Ἡράκλειτος](#herakleitos---ἡράκλειτος)
   - [Parmenides - Παρμενίδης](#parmenides---παρμενίδης)
+  - [Thales - Θαλῆς](#thales---Θαλῆς)
 - [Docs](#docs)
   - [Ploutarchos - Πλούταρχος](#ploutarchos---πλούταρχος)
 - [Frontend](#frontend)
@@ -135,6 +136,14 @@ Herakleitos is one of the so-called pre-socratics. Philosophers that laid the fo
 
 Parmenides is one of the so-called pre-socratics. Philosophers that laid the foundation for the future generations. One of the key elements in his work is the fact that everything is one never changing thing. Therefor he is a good fit for the dataseeder. Making it like nothing every changed.
 
+### Thales - Θαλῆς
+
+Μέγιστον τόπος· ἄπαντα γὰρ χωρεῖ. - he greatest is space, for it holds all things
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/c/c6/Illustrerad_Verldshistoria_band_I_Ill_107.jpg" alt="Thales" width="200"/>
+
+Famous as one of the firsts scientists of Western Europe, Thales of Miletos has had a big infleunce on all presocratics.
+
 ## Docs
 
 ### Ploutarchos - Πλούταρχος
@@ -168,6 +177,14 @@ Drakon is one of the ancient lawgivers in Athens.
 <img src="https://upload.wikimedia.org/wikipedia/commons/4/48/Periander_Pio-Clementino_Inv276.jpg" alt="Periandros" width="200"/>
 
 Tyrant of Corinth.
+
+### Thrasyboulos - Θρασύβουλος
+
+πέμψας γὰρ παρὰ Θρασύβουλον κήρυκα ἐπυνθάνετο ὅντινα ἂν τρόπον ἀσφαλέστατον καταστησάμενος τῶν πρηγμάτων κάλλιστα τὴν πόλιν ἐπιτροπεύοι. - He had sent a herald to Thrasybulus and inquired in what way he would best and most safely govern his city. 
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/ae/IONIA%2C_Miletos._Late_6th-early_5th_century_BC._AR_Obol_%289mm%2C_1.07_g%29._Forepart_of_lion_left%2C_head_right_Stellate_and_floral_design_within_incuse_square.jpg" alt="Thrasyboulos" width="200"/>
+
+Tyrant of Miletos in the 7th century. He was an ally of Periandros
 
 ## Ops
 
