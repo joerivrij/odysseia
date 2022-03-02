@@ -13,11 +13,11 @@ func (r *Word) Marshal() ([]byte, error) {
 }
 
 type Word struct {
-	Method   string `json:"method"`
-	Category string `json:"category"`
-	Greek    string `json:"greek"`
-	Dutch    string `json:"dutch"`
-	Chapter  int64  `json:"chapter"`
+	Method      string `json:"method"`
+	Category    string `json:"category"`
+	Greek       string `json:"greek"`
+	Translation string `json:"translation"`
+	Chapter     int64  `json:"chapter"`
 }
 
 func UnmarshalLogos(data []byte) (Logos, error) {

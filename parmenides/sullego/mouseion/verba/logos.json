@@ -2,1014 +2,1014 @@
   "logos": [
     {
       "greek": "λέγω",
-      "dutch": "zeggen, spreken",
+      "translation": "zeggen, spreken",
       "chapter": 1
     },
     {
       "greek": "πονέω",
-      "dutch": "1. werken, zwoegen 2. het zwaar hebben, pijn lijden",
+      "translation": "1. werken, zwoegen 2. het zwaar hebben, pijn lijden",
       "chapter": 1
     },
     {
       "greek": "προβαίνω",
-      "dutch": "naar voren komen",
+      "translation": "naar voren komen",
       "chapter": 1
     },
     {
       "greek": "φέπω",
-      "dutch": "dragen, brengen",
+      "translation": "dragen, brengen",
       "chapter": 1
     },
     {
       "greek": "ἀναβαίνω",
-      "dutch": "bestijgen",
+      "translation": "bestijgen",
       "chapter": 1
     },
     {
       "greek": "ἀκούω + gen.",
-      "dutch": "horen, luisteren naar",
+      "translation": "horen, luisteren naar",
       "chapter": 2
     },
     {
       "greek": "βοηθέω + dat.",
-      "dutch": "helpen",
+      "translation": "helpen",
       "chapter": 2
     },
     {
       "greek": "διώκω",
-      "dutch": "achtervolgen",
+      "translation": "achtervolgen",
       "chapter": 2
     },
     {
       "greek": "ἐπιβουλεύω + dat.",
-      "dutch": "iets in de zin hebben tegen, belagen",
+      "translation": "iets in de zin hebben tegen, belagen",
       "chapter": 2
     },
     {
       "greek": "μέλει + dat.",
-      "dutch": "het gaat (iemand) ter harte; het interesseert (iemand)",
+      "translation": "het gaat (iemand) ter harte; het interesseert (iemand)",
       "chapter": 2
     },
     {
       "greek": "συμβουλεύω +dat.",
-      "dutch": "raad geven, aanraden",
+      "translation": "raad geven, aanraden",
       "chapter": 2
     },
     {
       "greek": "φεύγω",
-      "dutch": "vluchten, ontvluchten",
+      "translation": "vluchten, ontvluchten",
       "chapter": 2
     },
     {
       "greek": "φροντίζω + gen.",
-      "dutch": "zich bekommeren om",
+      "translation": "zich bekommeren om",
       "chapter": 2
     },
     {
       "greek": "χαίρω +dat.",
-      "dutch": "blij zijn met, plezier hebben in",
+      "translation": "blij zijn met, plezier hebben in",
       "chapter": 2
     },
     {
       "greek": "πιέζω",
-      "dutch": "drukken op",
+      "translation": "drukken op",
       "chapter": 2
     },
     {
       "greek": "γέμω + gen.",
-      "dutch": "vol zijn met",
+      "translation": "vol zijn met",
       "chapter": 2
     },
     {
       "greek": "χαλεπαίνω + dat.",
-      "dutch": "boos zijn op",
+      "translation": "boos zijn op",
       "chapter": 2
     },
     {
       "greek": "ἀπειλέω + dat.",
-      "dutch": "bedreigen",
+      "translation": "bedreigen",
       "chapter": 2
     },
     {
       "greek": "ἀρέσκω + dat.",
-      "dutch": "plezier geven, bevallen",
+      "translation": "plezier geven, bevallen",
       "chapter": 3
     },
     {
       "greek": "εἰσβαίνω",
-      "dutch": "ingaan, binnengaan",
+      "translation": "ingaan, binnengaan",
       "chapter": 3
     },
     {
       "greek": "βαίνω",
-      "dutch": "stappen, gaan",
+      "translation": "stappen, gaan",
       "chapter": 3
     },
     {
       "greek": "ἐισί(ν)",
-      "dutch": "(zij) zijn",
+      "translation": "(zij) zijn",
       "chapter": 3
     },
     {
       "greek": "ἐστί(ν) + dat.",
-      "dutch": "(hij/zij/het) is ",
+      "translation": "(hij/zij/het) is ",
       "chapter": 3
     },
     {
       "greek": "ζητέω",
-      "dutch": "zoeken",
+      "translation": "zoeken",
       "chapter": 3
     },
     {
       "greek": "λείπω",
-      "dutch": "verlaten, achterlaten, overlaten",
+      "translation": "verlaten, achterlaten, overlaten",
       "chapter": 3
     },
     {
       "greek": "μέλει + dat.",
-      "dutch": "het gaat (iemand) ter harte; het interesseert (iemand)",
+      "translation": "het gaat (iemand) ter harte; het interesseert (iemand)",
       "chapter": 3
     },
     {
       "greek": "μετέχω + gen.",
-      "dutch": "deel hebben aan, meedoen aan",
+      "translation": "deel hebben aan, meedoen aan",
       "chapter": 3
     },
     {
       "greek": "ποιέω",
-      "dutch": "maken, doen, veroorzaken",
+      "translation": "maken, doen, veroorzaken",
       "chapter": 3
     },
     {
       "greek": "φθονέω + dat.",
-      "dutch": "jaloers zijn op misgunnen, benijden",
+      "translation": "jaloers zijn op misgunnen, benijden",
       "chapter": 3
     },
     {
       "greek": "φιλέω",
-      "dutch": "houden van",
+      "translation": "houden van",
       "chapter": 3
     },
     {
       "greek": "αἴρω",
-      "dutch": "optillen, oppakken, oprichten",
+      "translation": "optillen, oppakken, oprichten",
       "chapter": 4
     },
     {
       "greek": "ἁμαρτάνω + gen.",
-      "dutch": "(het doel) missen, mislopen",
+      "translation": "(het doel) missen, mislopen",
       "chapter": 4
     },
     {
       "greek": "βάλλω",
-      "dutch": "werpen, treffen",
+      "translation": "werpen, treffen",
       "chapter": 4
     },
     {
       "greek": "διατρίβω",
-      "dutch": "de tijd doorbrengen, verblijven",
+      "translation": "de tijd doorbrengen, verblijven",
       "chapter": 4
     },
     {
       "greek": "ἐπιθυμέω +gen.",
-      "dutch": "verlangen naar",
+      "translation": "verlangen naar",
       "chapter": 4
     },
     {
       "greek": "καθίζω",
-      "dutch": "gaan zitten, zitten",
+      "translation": "gaan zitten, zitten",
       "chapter": 4
     },
     {
       "greek": "λαμβάνω",
-      "dutch": "nemen krijgen",
+      "translation": "nemen krijgen",
       "chapter": 4
     },
     {
       "greek": "νομίζω",
-      "dutch": "menen",
+      "translation": "menen",
       "chapter": 4
     },
     {
       "greek": "προσήκω + dat.",
-      "dutch": "toekomen aan, passend zijn voor",
+      "translation": "toekomen aan, passend zijn voor",
       "chapter": 4
     },
     {
       "greek": "ᾄδω",
-      "dutch": "(be)zingen",
+      "translation": "(be)zingen",
       "chapter": 5
     },
     {
       "greek": "βλέπω",
-      "dutch": "kijken, zien",
+      "translation": "kijken, zien",
       "chapter": 5
     },
     {
       "greek": "διδάσκω",
-      "dutch": "leren, onderwijzen",
+      "translation": "leren, onderwijzen",
       "chapter": 5
     },
     {
       "greek": "ἔχω",
-      "dutch": "hebben, houden",
+      "translation": "hebben, houden",
       "chapter": 5
     },
     {
       "greek": "θαυμάζω",
-      "dutch": "bewonderen",
+      "translation": "bewonderen",
       "chapter": 5
     },
     {
       "greek": "κατέχω",
-      "dutch": "in zijn macht houden, vasthouden, beheersen",
+      "translation": "in zijn macht houden, vasthouden, beheersen",
       "chapter": 5
     },
     {
       "greek": "κινέω",
-      "dutch": "bewegen",
+      "translation": "bewegen",
       "chapter": 5
     },
     {
       "greek": "προσέχω τὸν νοῦν + dat.",
-      "dutch": "zijn aandacht richten op, letten op",
+      "translation": "zijn aandacht richten op, letten op",
       "chapter": 5
     },
     {
       "greek": "φαίνω",
-      "dutch": "tonen, laten zien",
+      "translation": "tonen, laten zien",
       "chapter": 5
     },
     {
       "greek": "αἰτέω",
-      "dutch": "vragen, eisen",
+      "translation": "vragen, eisen",
       "chapter": 6
     },
     {
       "greek": "καλέω",
-      "dutch": "roepen",
+      "translation": "roepen",
       "chapter": 6
     },
     {
       "greek": "κωλύω",
-      "dutch": "verhinderen, beletten",
+      "translation": "verhinderen, beletten",
       "chapter": 6
     },
     {
       "greek": "λύω",
-      "dutch": "losmaken, beslechten (van een ruzie), schenden (een verdrag)",
+      "translation": "losmaken, beslechten (van een ruzie), schenden (een verdrag)",
       "chapter": 6
     },
     {
       "greek": "παρασκευάζω",
-      "dutch": "klaarmaken, voorzien van, organiseren",
+      "translation": "klaarmaken, voorzien van, organiseren",
       "chapter": 6
     },
     {
       "greek": "ὀρμέν",
-      "dutch": "voor anker liggen",
+      "translation": "voor anker liggen",
       "chapter": 6
     },
     {
       "greek": "ἁγανακτέω",
-      "dutch": "boos zijn",
+      "translation": "boos zijn",
       "chapter": 6
     },
     {
       "greek": "ἁναΒαίνω εἰς",
-      "dutch": "aan boord gaan van",
+      "translation": "aan boord gaan van",
       "chapter": 6
     },
     {
       "greek": "ἁνέλκω",
-      "dutch": "ophalen, lichten (zoals een anker)",
+      "translation": "ophalen, lichten (zoals een anker)",
       "chapter": 6
     },
     {
       "greek": "θοπυβέω",
-      "dutch": "lawaai maken",
+      "translation": "lawaai maken",
       "chapter": 6
     },
     {
       "greek": "ἀγνοέω",
-      "dutch": "onwetend zijn, niet weten",
+      "translation": "onwetend zijn, niet weten",
       "chapter": 7
     },
     {
       "greek": "ἀπορέω",
-      "dutch": "in onzekerheid verkeren, zich geen raad weten, niet weten",
+      "translation": "in onzekerheid verkeren, zich geen raad weten, niet weten",
       "chapter": 7
     },
     {
       "greek": "ἐκπλήττω",
-      "dutch": "uit het veld slaan, verbijsteren, laten schrikken",
+      "translation": "uit het veld slaan, verbijsteren, laten schrikken",
       "chapter": 7
     },
     {
       "greek": "παρακαλέω",
-      "dutch": "erbij roepen, uitnodigen, vermanen",
+      "translation": "erbij roepen, uitnodigen, vermanen",
       "chapter": 7
     },
     {
       "greek": "παρέχω",
-      "dutch": "verschaffen",
+      "translation": "verschaffen",
       "chapter": 7
     },
     {
       "greek": "παύω",
-      "dutch": "doen stoppen, een eind maken aan",
+      "translation": "doen stoppen, een eind maken aan",
       "chapter": 7
     },
     {
       "greek": "αἰτέω + dubbele acc.",
-      "dutch": "vragen (om iets te krijgen), van iemand eisen",
+      "translation": "vragen (om iets te krijgen), van iemand eisen",
       "chapter": 8
     },
     {
       "greek": "διδάσκω",
-      "dutch": "leren, onderwijzen",
+      "translation": "leren, onderwijzen",
       "chapter": 8
     },
     {
       "greek": "διδάσκω + dubbele acc.",
-      "dutch": "iemand iets leren/onderwijzen",
+      "translation": "iemand iets leren/onderwijzen",
       "chapter": 8
     },
     {
       "greek": "ἥκω",
-      "dutch": "gekomen zijn, komen",
+      "translation": "gekomen zijn, komen",
       "chapter": 8
     },
     {
       "greek": "κόπτω",
-      "dutch": "slaan",
+      "translation": "slaan",
       "chapter": 8
     },
     {
       "greek": "κρατέω + gen.",
-      "dutch": "macht hebben over, heerser zijn van, overwinnen",
+      "translation": "macht hebben over, heerser zijn van, overwinnen",
       "chapter": 8
     },
     {
       "greek": "κρύπτω",
-      "dutch": "verbergen",
+      "translation": "verbergen",
       "chapter": 8
     },
     {
       "greek": "μέλλω",
-      "dutch": "aarzelen",
+      "translation": "aarzelen",
       "chapter": 8
     },
     {
       "greek": "μένω",
-      "dutch": "wachten, blijven",
+      "translation": "wachten, blijven",
       "chapter": 8
     },
     {
       "greek": "μένω + acc.",
-      "dutch": "wachten op",
+      "translation": "wachten op",
       "chapter": 8
     },
     {
       "greek": "νομίζω",
-      "dutch": "menen",
+      "translation": "menen",
       "chapter": 8
     },
     {
       "greek": "νομίζω + dubbele acc.",
-      "dutch": "beschouwen als",
+      "translation": "beschouwen als",
       "chapter": 8
     },
     {
       "greek": "ὑποπτεύω",
-      "dutch": "vermoeden, verdenken, argwaan koesteren",
+      "translation": "vermoeden, verdenken, argwaan koesteren",
       "chapter": 8
     },
     {
       "greek": "ἀγγέλλω",
-      "dutch": "berichten, melden",
+      "translation": "berichten, melden",
       "chapter": 9
     },
     {
       "greek": "εἱμί",
-      "dutch": "zijn, er zijn",
+      "translation": "zijn, er zijn",
       "chapter": 9
     },
     {
       "greek": "πάρειμι (samenstelling van εἰμί)",
-      "dutch": "aanwezig zijn, bijstaan",
+      "translation": "aanwezig zijn, bijstaan",
       "chapter": 9
     },
     {
       "greek": "πέμπω",
-      "dutch": "zenden, sturen",
+      "translation": "zenden, sturen",
       "chapter": 9
     },
     {
       "greek": "πλέω",
-      "dutch": "varen",
+      "translation": "varen",
       "chapter": 9
     },
     {
       "greek": "σπεύδω",
-      "dutch": "zich haasten",
+      "translation": "zich haasten",
       "chapter": 9
     },
     {
       "greek": "φιλέω",
-      "dutch": "houden van",
+      "translation": "houden van",
       "chapter": 9
     },
     {
       "greek": "φιλέω + inf.",
-      "dutch": "gewoon zijn te/gewend zijn te",
+      "translation": "gewoon zijn te/gewend zijn te",
       "chapter": 9
     },
     {
       "greek": "δοκέω + dat. (en inf.)",
-      "dutch": "(toe)schijnen, de indruk maken (te)",
+      "translation": "(toe)schijnen, de indruk maken (te)",
       "chapter": 10
     },
     {
       "greek": "ἐντυγχάνω + dat",
-      "dutch": "tegenkomen, ontmoeten",
+      "translation": "tegenkomen, ontmoeten",
       "chapter": 10
     },
     {
       "greek": "καλύπτω",
-      "dutch": "bedekken",
+      "translation": "bedekken",
       "chapter": 10
     },
     {
       "greek": "ὁμολογέω + dat",
-      "dutch": "het eens zijn met, instemmen",
+      "translation": "het eens zijn met, instemmen",
       "chapter": 10
     },
     {
       "greek": "σκοπέω",
-      "dutch": "bekijken, letten op; beschouwen",
+      "translation": "bekijken, letten op; beschouwen",
       "chapter": 10
     },
     {
       "greek": "συλλέγω",
-      "dutch": "verzamelen",
+      "translation": "verzamelen",
       "chapter": 10
     },
     {
       "greek": "ὑπολαμβάνω",
-      "dutch": "antwoorden",
+      "translation": "antwoorden",
       "chapter": 10
     },
     {
       "greek": "φρονέω",
-      "dutch": "verstandig zijn, denken",
+      "translation": "verstandig zijn, denken",
       "chapter": 10
     },
     {
       "greek": "χωρέω",
-      "dutch": "plaats maken, wijken, gaan",
+      "translation": "plaats maken, wijken, gaan",
       "chapter": 10
     },
     {
       "greek": "ἀναγκάζω",
-      "dutch": "noodzaken, dwingen",
+      "translation": "noodzaken, dwingen",
       "chapter": 11
     },
     {
       "greek": "ἀπαγγέλλω",
-      "dutch": "rapporteren, vermelden",
+      "translation": "rapporteren, vermelden",
       "chapter": 11
     },
     {
       "greek": "γιγνώσκω",
-      "dutch": "inzien, begrijpen, leren kennen, kennen",
+      "translation": "inzien, begrijpen, leren kennen, kennen",
       "chapter": 11
     },
     {
       "greek": "ἐθέλω/θέλω",
-      "dutch": "willen, bereid zijn",
+      "translation": "willen, bereid zijn",
       "chapter": 11
     },
     {
       "greek": "κελεύω",
-      "dutch": "bevelen, verzoeken, aanraden",
+      "translation": "bevelen, verzoeken, aanraden",
       "chapter": 11
     },
     {
       "greek": "πείθω",
-      "dutch": "overreden, overtuigen",
+      "translation": "overreden, overtuigen",
       "chapter": 11
     },
     {
       "greek": "πίνω",
-      "dutch": "drinken",
+      "translation": "drinken",
       "chapter": 11
     },
     {
       "greek": "πράττω",
-      "dutch": "handelen, doen",
+      "translation": "handelen, doen",
       "chapter": 11
     },
     {
       "greek": "προβαίνω",
-      "dutch": "1. naar voren komen 2. voortgaan",
+      "translation": "1. naar voren komen 2. voortgaan",
       "chapter": 11
     },
     {
       "greek": "ἂγω",
-      "dutch": "leiden, brengen",
+      "translation": "leiden, brengen",
       "chapter": 12
     },
     {
       "greek": "ἄγε(τε)",
-      "dutch": "vooruit! (bij een verzoek of bevel)",
+      "translation": "vooruit! (bij een verzoek of bevel)",
       "chapter": 12
     },
     {
       "greek": "αἱρέω",
-      "dutch": "(in)nemen, gevangen nemen",
+      "translation": "(in)nemen, gevangen nemen",
       "chapter": 12
     },
     {
       "greek": "δηλόω",
-      "dutch": "duidelijk maken",
+      "translation": "duidelijk maken",
       "chapter": 12
     },
     {
       "greek": "ἐάω",
-      "dutch": "(toe)laten, toestaan",
+      "translation": "(toe)laten, toestaan",
       "chapter": 12
     },
     {
       "greek": "ἐπαινέω",
-      "dutch": "goedkeuren, prijzen, instemmen met",
+      "translation": "goedkeuren, prijzen, instemmen met",
       "chapter": 12
     },
     {
       "greek": "ἐρωτάω",
-      "dutch": "vragen",
+      "translation": "vragen",
       "chapter": 12
     },
     {
       "greek": "εὑρίσκω",
-      "dutch": "vinden, ontdekken, aantreffen",
+      "translation": "vinden, ontdekken, aantreffen",
       "chapter": 12
     },
     {
       "greek": "κοσμέω",
-      "dutch": "1. ordenen; 2. versieren, voorzien van",
+      "translation": "1. ordenen; 2. versieren, voorzien van",
       "chapter": 12
     },
     {
       "greek": "οἰκέω",
-      "dutch": "(be)wonen",
+      "translation": "(be)wonen",
       "chapter": 12
     },
     {
       "greek": "ὁράω",
-      "dutch": "zien",
+      "translation": "zien",
       "chapter": 12
     },
     {
       "greek": "πρέπει (+ dat. en inf.)",
-      "dutch": "het is passend (voor iemand om te ...)",
+      "translation": "het is passend (voor iemand om te ...)",
       "chapter": 12
     },
     {
       "greek": "συλλαμβάνω + dat.",
-      "dutch": "helpen",
+      "translation": "helpen",
       "chapter": 12
     },
     {
       "greek": "τελευτάω",
-      "dutch": "1. (be)ëindigen; 2. sterven",
+      "translation": "1. (be)ëindigen; 2. sterven",
       "chapter": 12
     },
     {
       "greek": "τιμάω",
-      "dutch": "eren",
+      "translation": "eren",
       "chapter": 12
     },
     {
       "greek": "ὑβρίζω",
-      "dutch": "1. agressief/overmoedig handelen; 2. mishandelen",
+      "translation": "1. agressief/overmoedig handelen; 2. mishandelen",
       "chapter": 12
     },
     {
       "greek": "ἀξιόω",
-      "dutch": "wensen, bilijk achten, verwachten",
+      "translation": "wensen, bilijk achten, verwachten",
       "chapter": 13
     },
     {
       "greek": "ἄρχω",
-      "dutch": "beginnen",
+      "translation": "beginnen",
       "chapter": 13
     },
     {
       "greek": "δεῖ + AcI/inf.",
-      "dutch": "het is nodig dat, het/men moet",
+      "translation": "het is nodig dat, het/men moet",
       "chapter": 13
     },
     {
       "greek": "δεῖ με λέγειν",
-      "dutch": "ik moet zeggen",
+      "translation": "ik moet zeggen",
       "chapter": 13
     },
     {
       "greek": "δράω",
-      "dutch": "doen, handelen",
+      "translation": "doen, handelen",
       "chapter": 13
     },
     {
       "greek": "καθεύδω",
-      "dutch": "slapen",
+      "translation": "slapen",
       "chapter": 13
     },
     {
       "greek": "μέλλω",
-      "dutch": "1. aarzelen 2. zullen, op het punt staan",
+      "translation": "1. aarzelen 2. zullen, op het punt staan",
       "chapter": 13
     },
     {
       "greek": "φράζω",
-      "dutch": "meedelen",
+      "translation": "meedelen",
       "chapter": 13
     },
     {
       "greek": "χρή",
-      "dutch": "het is nodig/wenselijk dat, het/men moet",
+      "translation": "het is nodig/wenselijk dat, het/men moet",
       "chapter": 13
     },
     {
       "greek": "χρή με λέγειν",
-      "dutch": "ik moet zeggen",
+      "translation": "ik moet zeggen",
       "chapter": 13
     },
     {
       "greek": "ἄπειμι (< εἰμί)",
-      "dutch": "afwezig zijn",
+      "translation": "afwezig zijn",
       "chapter": 14
     },
     {
       "greek": "ἄπειμι (< εἶμι)",
-      "dutch": "weggaan",
+      "translation": "weggaan",
       "chapter": 14
     },
     {
       "greek": "ἀφίημι",
-      "dutch": "(weg)sturen, vrijlaten",
+      "translation": "(weg)sturen, vrijlaten",
       "chapter": 14
     },
     {
       "greek": "βοάω",
-      "dutch": "roepen, schreeuwen",
+      "translation": "roepen, schreeuwen",
       "chapter": 14
     },
     {
       "greek": "δείκνυμι",
-      "dutch": "aanwijzen, (aan)tonen",
+      "translation": "aanwijzen, (aan)tonen",
       "chapter": 14
     },
     {
       "greek": "διαφέρω + gen.",
-      "dutch": "1. verschillen van; 2. uitmunten boven",
+      "translation": "1. verschillen van; 2. uitmunten boven",
       "chapter": 14
     },
     {
       "greek": "δίδωμι",
-      "dutch": "geven",
+      "translation": "geven",
       "chapter": 14
     },
     {
       "greek": "εἶμι",
-      "dutch": "1. gaan, komen; 2. zullen gaan, zullen komen",
+      "translation": "1. gaan, komen; 2. zullen gaan, zullen komen",
       "chapter": 14
     },
     {
       "greek": "ἔξεστι(ν)",
-      "dutch": "het is mogelijk, het is geoorloofd",
+      "translation": "het is mogelijk, het is geoorloofd",
       "chapter": 14
     },
     {
       "greek": "ἐράω + gen.",
-      "dutch": "verliefd zijn op, verlangen naar",
+      "translation": "verliefd zijn op, verlangen naar",
       "chapter": 14
     },
     {
       "greek": "ἵημι",
-      "dutch": "1. laten gaan; 2. zenden",
+      "translation": "1. laten gaan; 2. zenden",
       "chapter": 14
     },
     {
       "greek": "ἵστημι",
-      "dutch": "doen staan, oprichten, tot staan brengen",
+      "translation": "doen staan, oprichten, tot staan brengen",
       "chapter": 14
     },
     {
       "greek": "καθίστημι",
-      "dutch": "neerzetten, neerleggen",
+      "translation": "neerzetten, neerleggen",
       "chapter": 14
     },
     {
       "greek": "μανθάνω",
-      "dutch": "leren kennen, begrijpen, vernemen",
+      "translation": "leren kennen, begrijpen, vernemen",
       "chapter": 14
     },
     {
       "greek": "μέλει μοι + gen.",
-      "dutch": "mij gaat ... ter harte, ik heb interesse in",
+      "translation": "mij gaat ... ter harte, ik heb interesse in",
       "chapter": 14
     },
     {
       "greek": "οὐδὲν μέλει μοι τούτων τῶν λόγων",
-      "dutch": "ik ben helemaal niet geïnteresseerd in die woorden",
+      "translation": "ik ben helemaal niet geïnteresseerd in die woorden",
       "chapter": 14
     },
     {
       "greek": "νικάω",
-      "dutch": "(over)winnen, overwinnaar zijn",
+      "translation": "(over)winnen, overwinnaar zijn",
       "chapter": 14
     },
     {
       "greek": "πάρειμι (< εἶμι)",
-      "dutch": "voorbijgaan",
+      "translation": "voorbijgaan",
       "chapter": 14
     },
     {
       "greek": "παρίημι",
-      "dutch": "1. voorbij laten gaan; 2. toelaten, binnen laten, toestaan",
+      "translation": "1. voorbij laten gaan; 2. toelaten, binnen laten, toestaan",
       "chapter": 14
     },
 
     {
       "greek": "πίμπλημι",
-      "dutch": "vullen",
+      "translation": "vullen",
       "chapter": 14
     },
     {
       "greek": "τίθημι",
-      "dutch": "leggen, plaatsen",
+      "translation": "leggen, plaatsen",
       "chapter": 14
     },
     {
       "greek": "φημί",
-      "dutch": "zeggen, beweren, ja zeggen",
+      "translation": "zeggen, beweren, ja zeggen",
       "chapter": 14
     },
     {
       "greek": "χαῖρε/χαίρετε imperat. van χαίρω",
-      "dutch": "gegroet",
+      "translation": "gegroet",
       "chapter": 14
     },
 
     {
       "greek": "ἀποδείκνυμι",
-      "dutch": "1. laten zien, te kennen geven; 2. aantonen. benoemen",
+      "translation": "1. laten zien, te kennen geven; 2. aantonen. benoemen",
       "chapter": 15
     },
     {
       "greek": "ἐν νῷ ἔχω",
-      "dutch": "van plan zijn",
+      "translation": "van plan zijn",
       "chapter": 15
     },
     {
       "greek": "θαυμάζω",
-      "dutch": "1. bewonderen; 2. zich verwonderen over",
+      "translation": "1. bewonderen; 2. zich verwonderen over",
       "chapter": 15
     },
     {
       "greek": "παραδίδωμι",
-      "dutch": "overgeven, overleveren",
+      "translation": "overgeven, overleveren",
       "chapter": 15
     },
     {
       "greek": "συνίημι",
-      "dutch": "begrijpen",
+      "translation": "begrijpen",
       "chapter": 15
     },
     {
       "greek": "ἀποστερέω + gen.",
-      "dutch": "beroven van",
+      "translation": "beroven van",
       "chapter": 16
     },
     {
       "greek": "διαφθείρω",
-      "dutch": "ten gronde richten, bederven",
+      "translation": "ten gronde richten, bederven",
       "chapter": 16
     },
     {
       "greek": "ἐπιχειρέω + dat./inf.",
-      "dutch": "aanvatten, ter hand nemen, proberen",
+      "translation": "aanvatten, ter hand nemen, proberen",
       "chapter": 16
     },
     {
       "greek": "καταφονέω + gen.",
-      "dutch": "minachten",
+      "translation": "minachten",
       "chapter": 16
     },
     {
       "greek": "τέμνω",
-      "dutch": "snijden",
+      "translation": "snijden",
       "chapter": 16
     },
     {
       "greek": "ὠφελέω",
-      "dutch": "helpen, een dienst bewijzen",
+      "translation": "helpen, een dienst bewijzen",
       "chapter": 16
     },
     {
       "greek": "ἀποθνῄσκω",
-      "dutch": "sterven, gedood worden",
+      "translation": "sterven, gedood worden",
       "chapter": 17
     },
     {
       "greek": "ἄρχω + ptc",
-      "dutch": "de eerste zijn om te ..., beginnen met/te",
+      "translation": "de eerste zijn om te ..., beginnen met/te",
       "chapter": 17
     },
     {
       "greek": "ἡ γυνὴ ἦρχε λέγουσα",
-      "dutch": "de vrouw begon te zeggen",
+      "translation": "de vrouw begon te zeggen",
       "chapter": 17
     },
     {
       "greek": "γελάω",
-      "dutch": "lachen",
+      "translation": "lachen",
       "chapter": 17
     },
     {
       "greek": "διατελέω + ptc.",
-      "dutch": "doorgaan met ..., voortdurend ...",
+      "translation": "doorgaan met ..., voortdurend ...",
       "chapter": 17
     },
     {
       "greek": "καλέω",
-      "dutch": "1. roepen; 2. noemen",
+      "translation": "1. roepen; 2. noemen",
       "chapter": 17
     },
     {
       "greek": "καταλείπω",
-      "dutch": "verlaten, achterlaten",
+      "translation": "verlaten, achterlaten",
       "chapter": 17
     },
     {
       "greek": "λανθάνω + acc.",
-      "dutch": "verborgen zijn voor",
+      "translation": "verborgen zijn voor",
       "chapter": 17
     },
     {
       "greek": "λανθάνω + ptc.",
-      "dutch": "ongemerkt ...",
+      "translation": "ongemerkt ...",
       "chapter": 17
     },
     {
       "greek": "ἡμᾶς λανθάνεις γελῶν",
-      "dutch": "jij lacht zonder dat wij het merken",
+      "translation": "jij lacht zonder dat wij het merken",
       "chapter": 17
     },
     {
       "greek": "οὐ σε λανθάνομεν χαίροντες",
-      "dutch": "je merkt heel goed dat we plezier hebben",
+      "translation": "je merkt heel goed dat we plezier hebben",
       "chapter": 17
     },
     {
       "greek": "σύνειμι (εἰμί) + dat.",
-      "dutch": "samen zijn met, omgaan met",
+      "translation": "samen zijn met, omgaan met",
       "chapter": 17
     },
     {
       "greek": "τίκτω",
-      "dutch": "baren, ter wereld brengen, voortbrengen",
+      "translation": "baren, ter wereld brengen, voortbrengen",
       "chapter": 17
     },
     {
       "greek": "τυγχάνω + gen.",
-      "dutch": "treffen, krijgen",
+      "translation": "treffen, krijgen",
       "chapter": 17
     },
     {
       "greek": "τυγχάνω + ptc.",
-      "dutch": "het geval wil dat (ik), toevallig ..., net ..., juist ...",
+      "translation": "het geval wil dat (ik), toevallig ..., net ..., juist ...",
       "chapter": 17
     },
     {
       "greek": "χαίρω + dat.",
-      "dutch": "blij zijn met, plezier hebben in",
+      "translation": "blij zijn met, plezier hebben in",
       "chapter": 17
     },
     {
       "greek": "χαίρω + ptc.",
-      "dutch": "plezier hebben in, graag ...",
+      "translation": "plezier hebben in, graag ...",
       "chapter": 17
     },
     {
       "greek": "ἀμύνω + acc.",
-      "dutch": "afweren",
+      "translation": "afweren",
       "chapter": 18
     },
     {
       "greek": "ἀμύνω + dat.",
-      "dutch": "helpen",
+      "translation": "helpen",
       "chapter": 18
     },
     {
       "greek": "γράφω",
-      "dutch": "schrijven",
+      "translation": "schrijven",
       "chapter": 18
     },
     {
       "greek": "δοκεῖ μοι + AcI",
-      "dutch": "1. het schijnt me dat; 2. het schijnt met goed toe om...",
+      "translation": "1. het schijnt me dat; 2. het schijnt met goed toe om...",
       "chapter": 18
     },
     {
       "greek": "δοκεῖ μοι + AcI: ἔδοξε τῷ δήμῳ",
-      "dutch": "ik besluit:. het volk besloot",
+      "translation": "ik besluit:. het volk besloot",
       "chapter": 18
     },
     {
       "greek": "δουλεύω + dat.",
-      "dutch": "slaaf zijn van, dienen",
+      "translation": "slaaf zijn van, dienen",
       "chapter": 18
     },
     {
       "greek": "ἐγείρω",
-      "dutch": "wakker maken, (op)wekken",
+      "translation": "wakker maken, (op)wekken",
       "chapter": 18
     },
     {
       "greek": "ἐλαύνω",
-      "dutch": "rijden, varen",
+      "translation": "rijden, varen",
       "chapter": 18
     },
     {
       "greek": "καθίστημι",
-      "dutch": "1. neerzetten, neerleggen; 2. brengen (tot/in)",
+      "translation": "1. neerzetten, neerleggen; 2. brengen (tot/in)",
       "chapter": 18
     },
     {
       "greek": "κομίζω",
-      "dutch": "brengen, halen, meenemen",
+      "translation": "brengen, halen, meenemen",
       "chapter": 18
     },
     {
       "greek": "κρίνω",
-      "dutch": "(be)oordelen",
+      "translation": "(be)oordelen",
       "chapter": 18
     },
     {
       "greek": "μείγνυμι",
-      "dutch": "(ver)mengen",
+      "translation": "(ver)mengen",
       "chapter": 18
     },
     {
       "greek": "νέμω",
-      "dutch": "verdelen, toedelen",
+      "translation": "verdelen, toedelen",
       "chapter": 18
     },
     {
       "greek": "στρατεύω",
-      "dutch": "een veldtocht ondernemen, optrekken",
+      "translation": "een veldtocht ondernemen, optrekken",
       "chapter": 18
     },
     {
       "greek": "σῴζω",
-      "dutch": "redden, behouden",
+      "translation": "redden, behouden",
       "chapter": 18
     },
     {
       "greek": "τάττω",
-      "dutch": "opstellen, ordenen",
+      "translation": "opstellen, ordenen",
       "chapter": 18
     },
     {
       "greek": "τολμάω",
-      "dutch": "durven, wagen",
+      "translation": "durven, wagen",
       "chapter": 18
     },
     {
       "greek": "δοκέω + dat (en inf.)",
-      "dutch": "(toe)schijnen, de indruk maken (te)",
+      "translation": "(toe)schijnen, de indruk maken (te)",
       "chapter": 19
     },
     {
       "greek": "δοκέω + AcI",
-      "dutch": "menen",
+      "translation": "menen",
       "chapter": 19
     },
     {
       "greek": "ζηλόω",
-      "dutch": "nastreven",
+      "translation": "nastreven",
       "chapter": 19
     },
     {
       "greek": "ὁμιλέω + dat.",
-      "dutch": "omgaan met, verbonden zijn met",
+      "translation": "omgaan met, verbonden zijn met",
       "chapter": 19
     },
     {
       "greek": "τρέφω",
-      "dutch": "voeden, grootbrengen, onderhouden",
+      "translation": "voeden, grootbrengen, onderhouden",
       "chapter": 19
     }
   ]

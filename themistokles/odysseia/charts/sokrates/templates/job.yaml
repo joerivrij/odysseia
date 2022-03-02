@@ -104,6 +104,8 @@ spec:
                   fieldPath: metadata.name
             - name: ELASTIC_SEARCH_SERVICE
               value: {{ .Values.envVariables.elasticService }}
+            - name: MQ_SERVICE
+              value: {{ .Values.envVariables.mqService }}
             - name: ENV
               value: {{ .Values.config.environment }}
             - name: TLSENABLED

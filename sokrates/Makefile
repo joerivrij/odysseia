@@ -15,7 +15,7 @@ dist:
 
 build: test setup dist
 	go fmt ./...
-	cd ..; GO111MODULE=on GOOS=$(BUILD_SYSTEM) CGO_ENABLED=0 go build $(project_name)/main.go;mv main ./$(project_name)/dist/bin/$(project_name)
+	cd ..; GO111MODULE=on GOOS=linux CGO_ENABLED=0 go build $(project_name)/main.go;mv main ./$(project_name)/dist/bin/$(project_name)
 
 test:
 	go test ./... -cover

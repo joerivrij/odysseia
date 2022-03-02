@@ -1,0 +1,135 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ template "job.uname" . }}"
+  namespace: {{ template "namespace" . }}
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: "{{ .Chart.Name }}"
+    env: {{ .Values.config.environment }}
+    app: {{ .Values.services.job.name }}
+spec:
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.services.job.name }}
+        release: {{ .Release.Name }}
+        version: {{ .Values.images.tag }}
+      annotations:
+        odysseia-greek/role: {{ .Values.services.job.role }}
+        odysseia-greek/access: {{ .Values.services.job.access }}
+        odysseia-greek/job-name: {{ .Values.config.jobToWaitOn }}
+    spec:
+      serviceAccountName: {{ template "serviceAccountName" . }}
+      {{- if .Values.config.inClusterHarbor | quote }}
+      imagePullSecrets:
+        - name: {{ .Values.images.pullSecret}}
+      {{- end}}
+      initContainers:
+        - name: "{{ template "init.uname" . }}"
+          {{- if .Values.config.inClusterHarbor | quote }}
+          image: {{ .Values.images.harborRepo}}{{ .Values.images.init.repo }}:{{ .Values.images.tag }}
+          imagePullPolicy: {{ .Values.config.pullPolicy }}
+          {{ else }}
+          image: {{ .Values.images.init.repo }}:{{ .Values.images.tag }}
+          imagePullPolicy: {{ .Values.config.pullPolicy }}
+          {{- end}}
+          env:
+            - name: ENV
+              value: {{ .Values.config.environment }}
+            - name: SOLON_SERVICE
+              value: {{ .Values.envVariables.solonService }}
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: ELASTIC_ROLE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.annotations['odysseia-greek/role']
+            - name: ELASTIC_ACCESS
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.annotations['odysseia-greek/access']
+        - name: "{{ template "jobinit.uname" . }}"
+          {{- if .Values.config.inClusterHarbor | quote }}
+          image: {{ .Values.images.harborRepo}}{{ .Values.images.jobinit.repo }}:{{ .Values.images.tag }}
+          imagePullPolicy: {{ .Values.config.pullPolicy }}
+          {{ else }}
+          image: {{ .Values.images.jobinit.repo }}:{{ .Values.images.tag }}
+          imagePullPolicy: {{ .Values.config.pullPolicy }}
+          {{- end}}
+          env:
+            - name: ENV
+              value: {{ .Values.config.environment }}
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: JOB_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.annotations['odysseia-greek/job-name']
+      containers:
+        - name: "{{ template "sidecar.uname" . }}"
+          {{- if .Values.config.inClusterHarbor | quote }}
+          image: {{ .Values.images.harborRepo}}{{ .Values.images.sidecar.repo }}:{{ .Values.images.tag }}
+          imagePullPolicy: {{ .Values.config.pullPolicy }}
+          {{ else }}
+          image: {{ .Values.images.sidecar.repo }}:{{ .Values.images.tag }}
+          imagePullPolicy: {{ .Values.config.pullPolicy }}
+          {{- end}}
+          env:
+            - name: SOLON_SERVICE
+              value: {{ .Values.envVariables.solonService }}
+            - name: VAULT_SERVICE
+              value: {{ .Values.envVariables.vaultService }}
+            - name: RUN_ONCE
+              value: "true"
+            - name: ENV
+              value: {{ .Values.config.environment }}
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          ports:
+            - containerPort: {{ .Values.envVariables.sidecar.port }}
+          resources:
+            requests:
+              memory: {{ .Values.services.sidecar.requests.memory }}
+              cpu: {{ .Values.services.sidecar.requests.cpu }}
+            limits:
+              memory: {{.Values.services.sidecar.limits.memory}}
+              cpu: {{.Values.services.sidecar.limits.memory}}
+        - name: "{{ template "job.uname" . }}"
+          {{- if .Values.config.inClusterHarbor | quote }}
+          image: {{ .Values.images.harborRepo}}{{ .Values.images.job.repo }}:{{ .Values.images.tag }}
+          imagePullPolicy: {{ .Values.config.pullPolicy }}
+          {{ else }}
+          image: {{ .Values.images.job.repo }}:{{ .Values.images.tag }}
+          imagePullPolicy: {{ .Values.config.pullPolicy }}
+          {{- end}}
+          env:
+            - name: MQ_SERVICE
+              value: {{ .Values.envVariables.mqService }}
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: ENV
+              value: {{ .Values.config.environment }}
+            - name: TLSENABLED
+              value: {{ .Values.config.tls | quote }}
+            - name: ELASTIC_SEARCH_SERVICE
+              value: {{ .Values.envVariables.elasticService }}
+            - name: ELASTIC_ACCESS
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.annotations['odysseia-greek/access']
+      restartPolicy: Never
+  backoffLimit: 3

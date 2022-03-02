@@ -1,0 +1,417 @@
+{
+  "logos": [
+    {
+      "method": "",
+      "category": "",
+      "greek": "Αἰγύπτιος",
+      "translation": "Egyptian",
+      "chapter": 2
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "αἴτιος",
+      "translation": "to blame, blameworthy, culpable",
+      "chapter": 3
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "ἄλλῃ",
+      "translation": "in another place, elsewhere",
+      "chapter": 5
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "ἄλλος",
+      "translation": "other, another",
+      "chapter": 5
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "ἀπαγινέω",
+      "translation": "paying tribute",
+      "chapter": 3
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "ἀπό",
+      "translation": "from, away from. c. gen.",
+      "chapter": 1
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "Ἄργος",
+      "translation": "Argos",
+      "chapter": 4
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "Ἀσσύριος",
+      "translation": "Assyrian",
+      "chapter": 3
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "αὐτίκα",
+      "translation": "forthwith, straightway, at once",
+      "chapter": 3
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "αὐτός",
+      "translation": "unemph. 3rd pers.pronoun; -self; [the] same",
+      "chapter": 2
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "ἀφικνέομαι",
+      "translation": "to come to",
+      "chapter": 2
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "βασιλεία",
+      "translation": "a kingdom, dominion",
+      "chapter": 5
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "γάρ",
+      "translation": "for",
+      "chapter": 1
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "γίγνομαι",
+      "translation": "become, be born",
+      "chapter": 1
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "δέ",
+      "translation": "but",
+      "chapter": 1
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "δή",
+      "translation": "[interactional particle: S\u0026H on same page]",
+      "chapter": 3
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "διαφορά",
+      "translation": "difference, distinction",
+      "chapter": 6
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "εἰμί",
+      "translation": "to be",
+      "chapter": 3
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "εἰς",
+      "translation": "into, to c. acc.",
+      "chapter": 2
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "εἰσαφικνέομαι",
+      "translation": "to come into",
+      "chapter": 6
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "ἐπί",
+      "translation": "on, upon with gen., dat., and acc.",
+      "chapter": 4
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "ἐπιτίθημι",
+      "translation": "to lay, put on;",
+      "chapter": 2
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "ἐρυθρός",
+      "translation": "red",
+      "chapter": 5
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "θάλασσα",
+      "translation": "the sea",
+      "chapter": 1
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "θυγάτηρ",
+      "translation": "a daughter",
+      "chapter": 6
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "καί",
+      "translation": "and, also",
+      "chapter": 5
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "καλέω",
+      "translation": "to call, summon",
+      "chapter": 4
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "Καμβύσης",
+      "translation": "Cambyses",
+      "chapter": 3
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "Κασσανδάνη",
+      "translation": "Cassandane",
+      "chapter": 6
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "Κῦρος",
+      "translation": "Cyrus",
+      "chapter": 2
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "λόγιος",
+      "translation": "versed in tales",
+      "chapter": 6
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "μακρός",
+      "translation": "long",
+      "chapter": 5
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "μέγας",
+      "translation": "big, great",
+      "chapter": 1
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "μέν",
+      "translation": "on the one hand, on the other hand",
+      "chapter": 4
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "ναυτιλία",
+      "translation": "sailing, seamanship",
+      "chapter": 2
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "νῦν",
+      "translation": "now at this very time",
+      "chapter": 4
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "ὁ",
+      "translation": "the",
+      "chapter": 5
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "ὅδε",
+      "translation": "this",
+      "chapter": 2
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "οἰκέω",
+      "translation": "to inhabit, occupy",
+      "chapter": 5
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "ὅς",
+      "translation": "who, that, which: relative pronoun",
+      "chapter": 3
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "οὗτος",
+      "translation": "this; that",
+      "chapter": 2
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "παῖς",
+      "translation": "a child",
+      "chapter": 1
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "παραλαμβάνω",
+      "translation": "to receive from",
+      "chapter": 6
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "πᾶς",
+      "translation": "all, the whole",
+      "chapter": 5
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "πένθος",
+      "translation": "grief, sadness, sorrow",
+      "chapter": 6
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "Περσεύς",
+      "translation": "Perseus",
+      "chapter": 3
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "Πέρσης",
+      "translation": "a Persian; Perses",
+      "chapter": 1
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "ποιέω",
+      "translation": "to make, to do",
+      "chapter": 6
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "προαγορεύω",
+      "translation": "to tell beforehand",
+      "chapter": 4
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "προαποθνῄσκω",
+      "translation": "to die before",
+      "chapter": 3
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "προεῖπον",
+      "translation": "to tell",
+      "chapter": 1
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "τε",
+      "translation": "and",
+      "chapter": 1
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "τελευτάω",
+      "translation": "to complete, finish, accomplish; pple. finally, in the end",
+      "chapter": 6
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "Φαρνάσπης",
+      "translation": "Pharnaspes",
+      "chapter": 5
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "φημί",
+      "translation": "to say, to claim",
+      "chapter": 2
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "Φοῖνιξ",
+      "translation": "a Phoenician",
+      "chapter": 4
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "φορτίον",
+      "translation": "a load, burden",
+      "chapter": 4
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "χῶρος",
+      "translation": "a piece of ground, ground, place",
+      "chapter": 4
+    },
+    {
+      "method": "",
+      "category": "",
+      "greek": "χῶρος",
+      "translation": "north-west wind",
+      "chapter": 4
+    }
+  ]
+}

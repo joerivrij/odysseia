@@ -59,6 +59,7 @@ type Workload interface {
 	GetPodByName(namespace, name string) (*corev1.Pod, error)
 	GetDeploymentStatus(namespace string) (bool, error)
 	GetJob(namespace, name string) (*batchv1.Job, error)
+	ListJobs(namespace string) (*batchv1.JobList, error)
 	GetNewLock(lockName, podName, namespace string) *resourcelock.LeaseLock
 }
 

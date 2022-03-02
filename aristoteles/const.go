@@ -8,6 +8,9 @@ const (
 	defaultPodName           = "somepod-08595-383"
 	defaultSearchWord        = "greek"
 	defaultRoleName          = "solon"
+	defaultChannelName       = "dictionary-channel"
+	defaultMqAddress         = "localhost"
+	defaultJobName           = "demokritos"
 	EnvHealthCheckOverwrite  = "HEALTH_CHECK_OVERWRITE"
 	EnvPodName               = "POD_NAME"
 	EnvNamespace             = "NAMESPACE"
@@ -28,6 +31,9 @@ const (
 	EnvVaultRole             = "VAULT_ROLE"
 	EnvKubePath              = "KUBE_PATH"
 	EnvSidecarOverwrite      = "SIDECAR_OVERWRITE"
+	EnvChannel               = "CHANNEL"
+	EnvMqAddress             = "MQ_SERVICE"
+	EnvJobName               = "JOB_NAME"
 	AuthMethodKube           = "kubernetes"
 	AuthMethodToken          = "token"
 	baseDir                  = "base"
@@ -70,4 +76,7 @@ var validFields = []string{
 	"ElasticCert",
 	"AccessAnnotation",
 	"RoleAnnotation",
+	"MqAddress",
+	"Channel",
+	"Job",
 }

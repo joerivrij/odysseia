@@ -1,10 +1,12 @@
 package main
 
 import (
+	"context"
 	"embed"
 	"encoding/json"
 	"fmt"
 	"github.com/kpango/glg"
+	"github.com/kubemq-io/kubemq-go"
 	"github.com/odysseia/aristoteles"
 	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/parmenides/app"
@@ -47,16 +49,32 @@ func main() {
 		glg.Fatal("could not parse config")
 	}
 
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	queuesClient, err := kubemq.NewQueuesStreamClient(ctx,
+		kubemq.WithAddress(parmenidesConfig.MqAddress, 50000),
+		kubemq.WithClientId("parmenides"),
+		kubemq.WithTransportType(kubemq.TransportTypeGRPC))
+	if err != nil {
+		glg.Fatal(err)
+	}
+	defer func() {
+		err := queuesClient.Close()
+		if err != nil {
+			glg.Fatal(err)
+		}
+	}()
+
 	root := "sullego"
 	rootDir, err := sullego.ReadDir(root)
 	if err != nil {
 		glg.Fatal(err)
 	}
 
-	handler := app.ParmenidessHandler{Config: parmenidesConfig}
+	handler := app.ParmenidessHandler{Config: parmenidesConfig, Mq: queuesClient}
 
-	//handler.DeleteIndexAtStartUp()
-	//handler.CreateIndexAtStartup()
+	handler.DeleteIndexAtStartUp()
+	handler.CreateIndexAtStartup()
 
 	var wg sync.WaitGroup
 	documents := 0
@@ -90,7 +108,11 @@ func main() {
 					documents += len(logoi.Logos)
 
 					wg.Add(1)
-					go handler.Add(logoi, &wg, method, category)
+					queue := true
+					if method == "mouseion" {
+						queue = false
+					}
+					go handler.Add(logoi, &wg, method, category, queue)
 				}
 			}
 		}

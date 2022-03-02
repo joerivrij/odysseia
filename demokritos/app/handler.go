@@ -9,12 +9,9 @@ import (
 	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/models"
-	"golang.org/x/text/runes"
-	"golang.org/x/text/transform"
-	"golang.org/x/text/unicode/norm"
+	"github.com/odysseia/plato/transform"
 	"strings"
 	"sync"
-	"unicode"
 )
 
 type DemokritosHandler struct {
@@ -56,15 +53,6 @@ func (d *DemokritosHandler) AddDirectoryToElastic(biblos models.Biblos, wg *sync
 			}
 		}
 	}
-}
-
-func removeAccents(s string) string {
-	t := transform.Chain(norm.NFD, runes.Remove(runes.In(unicode.Mn)), norm.NFC)
-	output, _, e := transform.String(t, s)
-	if e != nil {
-		panic(e)
-	}
-	return output
 }
 
 func (d *DemokritosHandler) DeleteIndexAtStartUp() {
@@ -114,7 +102,7 @@ func (d *DemokritosHandler) CreateIndexAtStartup() {
 
 func (d *DemokritosHandler) transformWord(m models.Meros, wg *sync.WaitGroup) {
 	defer wg.Done()
-	strippedWord := removeAccents(m.Greek)
+	strippedWord := transform.RemoveAccents(m.Greek)
 	word := models.Meros{
 		Greek:      strippedWord,
 		English:    m.English,

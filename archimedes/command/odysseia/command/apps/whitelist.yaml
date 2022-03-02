@@ -7,5 +7,7 @@ appsToInstall:
   - alexandros
   - dionysos
   - sokrates
+  - herodotos
+  - thales
   - docs
   - tests

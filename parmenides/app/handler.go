@@ -4,8 +4,10 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"fmt"
 	"github.com/elastic/go-elasticsearch/v7/esapi"
 	"github.com/kpango/glg"
+	"github.com/kubemq-io/kubemq-go"
 	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/models"
@@ -15,6 +17,7 @@ import (
 
 type ParmenidessHandler struct {
 	Config *configs.ParmenidesConfig
+	Mq     *kubemq.QueuesClient
 }
 
 func (p *ParmenidessHandler) DeleteIndexAtStartUp() {
@@ -61,9 +64,12 @@ func (p *ParmenidessHandler) CreateIndexAtStartup() {
 	}
 }
 
-func (p *ParmenidessHandler) Add(logoi models.Logos, wg *sync.WaitGroup, method, category string) {
+func (p *ParmenidessHandler) Add(logoi models.Logos, wg *sync.WaitGroup, method, category string, queue bool) {
 	defer wg.Done()
 	for _, word := range logoi.Logos {
+		if queue {
+			p.Queue(word)
+		}
 		word.Category = category
 		word.Method = method
 		jsonifiedLogos, _ := word.Marshal()
@@ -96,4 +102,28 @@ func (p *ParmenidessHandler) Add(logoi models.Logos, wg *sync.WaitGroup, method,
 			}
 		}
 	}
+}
+
+func (p *ParmenidessHandler) Queue(word models.Word) {
+	meros := models.Meros{
+		Greek:      word.Greek,
+		English:    word.Translation,
+		LinkedWord: "",
+		Original:   word.Greek,
+	}
+
+	marshalled, _ := meros.Marshal()
+	message := kubemq.NewQueueMessage().
+		SetChannel(p.Config.Channel).SetBody(marshalled)
+
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	_, err := p.Mq.Send(ctx, message)
+	if err != nil {
+		glg.Error(err.Error())
+		return
+	}
+
+	glg.Infof(fmt.Sprintf("message sent to queue %s", p.Config.Channel))
 }

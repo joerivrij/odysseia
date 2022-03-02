@@ -21,7 +21,7 @@
         "_score" : 4.733906,
         "_source" : {
           "greek" : "ὁ θεός",
-          "dutch" : "god",
+          "translation" : "god",
           "chapter" : 1
         }
       },
@@ -32,7 +32,7 @@
         "_score" : 4.733906,
         "_source" : {
           "greek" : "θεός, ἡ",
-          "dutch" : "godin",
+          "translation" : "godin",
           "chapter" : 7
         }
       }

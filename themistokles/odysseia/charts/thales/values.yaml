@@ -1,0 +1,58 @@
+# Default values for Odysseia.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+config:
+  jobToWaitOn: demokritos
+  environment: minikube
+  inClusterHarbor: true
+  tls: true
+  pullPolicy: Never
+  replicas:
+    low: 1
+    medium: 2
+    high: 4
+  initialDelayLiveness: 20
+  initialDelayReadiness: 1
+  periodSeconds: 20
+
+services:
+  sidecar:
+    name: "ptolemaios"
+    requests:
+      memory: "64Mi"
+      cpu: "100m"
+    limits:
+      memory: "128Mi"
+      cpu: "250m"
+  init:
+    name: "periandros"
+  jobinit:
+    name: "thrasyboulos"
+  job:
+    name: "thales"
+    role: "hybrid"
+    access: "dictionary"
+
+images:
+  tag: 4952f80
+  harborRepo: core.harbor.domain:30003/odysseia/
+  pullSecret: harbor-images
+  sidecar:
+    repo: ptolemaios
+  init:
+    repo: periandros
+  jobinit:
+    repo: thrasyboulos
+  job:
+    repo: thales
+
+envVariables:
+  mqService: kubemq
+  solonService: http://solon-service:5000
+  vaultService: http://vault:8200
+  elasticService: https://elastic-master:9200
+  sidecar:
+    port: 5001
+
+namespaceOverride: odysseia

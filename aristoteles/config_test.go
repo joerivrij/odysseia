@@ -775,3 +775,60 @@ func TestElasticClient(t *testing.T) {
 	})
 
 }
+
+func TestThalesConfigCreation(t *testing.T) {
+	t.Run("StandardConfigCanBeParsed", func(t *testing.T) {
+		os.Setenv(EnvHealthCheckOverwrite, "yes")
+		cfg := configs.ThalesConfig{}
+
+		sut, err := NewConfig(cfg)
+		assert.Nil(t, err)
+		assert.NotNil(t, sut)
+
+		config, ok := sut.(*configs.ThalesConfig)
+		assert.True(t, ok)
+		assert.NotNil(t, config.ElasticClient)
+		assert.Equal(t, defaultChannelName, config.Channel)
+		assert.Equal(t, defaultMqAddress, config.MqAddress)
+
+		os.Unsetenv(EnvHealthCheckOverwrite)
+	})
+
+	t.Run("CanOverwriteChannelName", func(t *testing.T) {
+		expected := "testChannel"
+		os.Setenv(EnvHealthCheckOverwrite, "yes")
+		os.Setenv(EnvChannel, expected)
+		cfg := configs.ThalesConfig{}
+
+		sut, err := NewConfig(cfg)
+		assert.Nil(t, err)
+		assert.NotNil(t, sut)
+
+		config, ok := sut.(*configs.ThalesConfig)
+		assert.True(t, ok)
+		assert.NotNil(t, config.ElasticClient)
+		assert.Equal(t, expected, config.Channel)
+
+		os.Unsetenv(EnvHealthCheckOverwrite)
+		os.Unsetenv(EnvChannel)
+	})
+
+	t.Run("CanOverwriteChannelName", func(t *testing.T) {
+		expected := "testMqServiceAddress"
+		os.Setenv(EnvHealthCheckOverwrite, "yes")
+		os.Setenv(EnvMqAddress, expected)
+		cfg := configs.ThalesConfig{}
+
+		sut, err := NewConfig(cfg)
+		assert.Nil(t, err)
+		assert.NotNil(t, sut)
+
+		config, ok := sut.(*configs.ThalesConfig)
+		assert.True(t, ok)
+		assert.NotNil(t, config.ElasticClient)
+		assert.Equal(t, expected, config.MqAddress)
+
+		os.Unsetenv(EnvHealthCheckOverwrite)
+		os.Unsetenv(EnvMqAddress)
+	})
+}

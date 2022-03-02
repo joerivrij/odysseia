@@ -21,7 +21,7 @@
         "_score" : null,
         "_source" : {
           "greek" : "ἅπας/ἅπασα/ἅπαν, ἅπαντος",
-          "dutch" : "1. (ge)heel, al, ieder; 2. (plur.) alle(n), alle(s)",
+          "translation" : "1. (ge)heel, al, ieder; 2. (plur.) alle(n), alle(s)",
           "chapter" : 15
         },
         "sort" : [

@@ -12,6 +12,12 @@ type DrakonHandler struct {
 	Config *configs.DrakonConfig
 }
 
+const (
+	seederRole string = "seeder"
+	hybridRole string = "hybrid"
+	apiRole    string = "api"
+)
+
 func (d *DrakonHandler) CreateRoles() (bool, error) {
 	glg.Debug("creating elastic roles based on labels")
 
@@ -21,11 +27,15 @@ func (d *DrakonHandler) CreateRoles() (bool, error) {
 			glg.Debugf("creating a role for index %s with role %s", index, role)
 
 			var privileges []string
-			if role == "seeder" {
+			switch role {
+			case seederRole:
 				privileges = append(privileges, "delete_index")
 				privileges = append(privileges, "create_index")
 				privileges = append(privileges, "create")
-			} else {
+			case hybridRole:
+				privileges = append(privileges, "create")
+				privileges = append(privileges, "read")
+			case apiRole:
 				privileges = append(privileges, "read")
 			}
 
@@ -39,12 +49,10 @@ func (d *DrakonHandler) CreateRoles() (bool, error) {
 				},
 			}
 
-			application := []models.Application{}
-
 			putRole := models.CreateRoleRequest{
 				Cluster:      []string{"all"},
 				Indices:      indices,
-				Applications: application,
+				Applications: []models.Application{},
 				RunAs:        nil,
 				Metadata:     models.Metadata{Version: 1},
 			}

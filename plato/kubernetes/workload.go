@@ -73,6 +73,18 @@ func (w *WorkloadImpl) GetJob(namespace, name string) (*batchv1.Job, error) {
 	return job, nil
 }
 
+func (w *WorkloadImpl) ListJobs(namespace string) (*batchv1.JobList, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
+	defer cancel()
+
+	jobs, err := w.client.BatchV1().Jobs(namespace).List(ctx, metav1.ListOptions{})
+	if err != nil {
+		return nil, err
+	}
+
+	return jobs, nil
+}
+
 // List lists all pods within your cluster
 func (w *WorkloadImpl) List(namespace string) (*corev1.PodList, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Minute)

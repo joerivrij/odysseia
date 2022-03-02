@@ -154,7 +154,7 @@ func (d *DionysosHandler) StartFindingRules(word string) (*models.DeclensionTran
 				if doNotAdd {
 					continue
 				}
-				
+
 				result := models.Result{
 					Word:        word,
 					Rule:        "preposition",

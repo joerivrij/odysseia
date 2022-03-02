@@ -1,4 +1,4 @@
-Example config for apis:
+##Example config for apis:
 
 ### Herodotos:
 
@@ -7,3 +7,9 @@ Example config for apis:
 ### Dionysos:
 
 `ENV=LOCAL;TLS_ENABLED=yes;ELASTIC_SEARCH_PASSWORD=8focJyDd0djZItxhZa;ELASTIC_SEARCH_USER=dionysos;ELASTIC_ACCESS=grammar;ELASTIC_SECONDARY_ACCESS=dictionary`
+
+##Regex
+
+Remove digits:
+
+`\(*[0-9].*[0-9]\)`

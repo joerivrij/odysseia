@@ -2,733 +2,733 @@
   "logos": [
     {
       "greek": "ἀλλά",
-      "dutch": "maar",
+      "translation": "maar",
       "chapter": 1
     },
     {
       "greek": "γάρ",
-      "dutch": "want",
+      "translation": "want",
       "chapter": 1
     },
     {
       "greek": "δέ",
-      "dutch": "1. en 2. maar",
+      "translation": "1. en 2. maar",
       "chapter": 1
     },
     {
       "greek": "και",
-      "dutch": "1. en 2. ook, zelfs",
+      "translation": "1. en 2. ook, zelfs",
       "chapter": 1
     },
     {
       "greek": "και ... και",
-      "dutch": "zowel...als",
+      "translation": "zowel...als",
       "chapter": 1
     },
     {
       "greek": "οὐ",
-      "dutch": "niet",
+      "translation": "niet",
       "chapter": 1
     },
     {
       "greek": "τί",
-      "dutch": "wat, waarom",
+      "translation": "wat, waarom",
       "chapter": 1
     },
     {
       "greek": "ἀεί",
-      "dutch": "altijd, steeds",
+      "translation": "altijd, steeds",
       "chapter": 2
     },
     {
       "greek": "μάλιστα",
-      "dutch": "het meest, het liefst, vooral, bij uistek, zeker",
+      "translation": "het meest, het liefst, vooral, bij uistek, zeker",
       "chapter": 2
     },
     {
       "greek": "μέν ..., δέ ...",
-      "dutch": "..., maar ...",
+      "translation": "..., maar ...",
       "chapter": 2
     },
     {
       "greek": "οὐδέ",
-      "dutch": "1. en niet 2. ook niet, zelfs niet",
+      "translation": "1. en niet 2. ook niet, zelfs niet",
       "chapter": 2
     },
     {
       "greek": "οὐδέν",
-      "dutch": "volstrekt niet, geenszins",
+      "translation": "volstrekt niet, geenszins",
       "chapter": 2
     },
     {
       "greek": "οὐκέτι",
-      "dutch": "niet meer",
+      "translation": "niet meer",
       "chapter": 2
     },
     {
       "greek": "ιδού",
-      "dutch": "kijk eens!",
+      "translation": "kijk eens!",
       "chapter": 2
     },
     {
       "greek": "διὰ τί;",
-      "dutch": "waarom?",
+      "translation": "waarom?",
       "chapter": 3
     },
     {
       "greek": "ἐν",
-      "dutch": "in, op, te midden van",
+      "translation": "in, op, te midden van",
       "chapter": 3
     },
     {
       "greek": "ὅμως",
-      "dutch": "toch",
+      "translation": "toch",
       "chapter": 3
     },
     {
       "greek": "οὐ, οὐκ, οὐχ",
-      "dutch": "niet",
+      "translation": "niet",
       "chapter": 3
     },
     {
       "greek": "οὔποτε",
-      "dutch": "nooit",
+      "translation": "nooit",
       "chapter": 3
     },
     {
       "greek": "ἆρα vraagwoord",
-      "dutch": "neutraal niet vertalen",
+      "translation": "neutraal niet vertalen",
       "chapter": 4
     },
     {
       "greek": "ἆρ\u0027 οὐ;",
-      "dutch": "toch wel?, soms niet?, niet?",
+      "translation": "toch wel?, soms niet?, niet?",
       "chapter": 4
     },
     {
       "greek": "δή",
-      "dutch": "dus, dan, inderdaad, natuurlijk",
+      "translation": "dus, dan, inderdaad, natuurlijk",
       "chapter": 4
     },
     {
       "greek": "διό",
-      "dutch": "twee",
+      "translation": "twee",
       "chapter": 4
     },
     {
       "greek": "εἰς/ἐς",
-      "dutch": "... in, naar (binnen)",
+      "translation": "... in, naar (binnen)",
       "chapter": 4
     },
     {
       "greek": "ἐκ/ἐξ",
-      "dutch": "uit",
+      "translation": "uit",
       "chapter": 4
     },
     {
       "greek": "ἔπειτα",
-      "dutch": "daarna, dan",
+      "translation": "daarna, dan",
       "chapter": 4
     },
     {
       "greek": "ὅτι",
-      "dutch": "dat (na verba van zeggen en menen)",
+      "translation": "dat (na verba van zeggen en menen)",
       "chapter": 4
     },
     {
       "greek": "ού μόνον ... ἀλλὰ καί",
-      "dutch": "niet alleen ... maar ook",
+      "translation": "niet alleen ... maar ook",
       "chapter": 4
     },
     {
       "greek": "οὐπω",
-      "dutch": "nog niet",
+      "translation": "nog niet",
       "chapter": 4
     },
     {
       "greek": "οὕτω(ς)",
-      "dutch": "op die manier, zo",
+      "translation": "op die manier, zo",
       "chapter": 4
     },
     {
       "greek": "ποῦ;",
-      "dutch": "waar?",
+      "translation": "waar?",
       "chapter": 4
     },
     {
       "greek": "... τε",
-      "dutch": "en",
+      "translation": "en",
       "chapter": 4
     },
     {
       "greek": "τε καί/τε ... καί",
-      "dutch": "en (nauwe verbinding)",
+      "translation": "en (nauwe verbinding)",
       "chapter": 4
     },
     {
       "greek": "ὡς",
-      "dutch": "dat (eigenlijk: hoe)",
+      "translation": "dat (eigenlijk: hoe)",
       "chapter": 4
     },
     {
       "greek": "ὡσαύτως",
-      "dutch": "evenzo, op dezelfde wijze",
+      "translation": "evenzo, op dezelfde wijze",
       "chapter": 4
     },
     {
       "greek": "πολλάκις",
-      "dutch": "dikwijls",
+      "translation": "dikwijls",
       "chapter": 5
     },
     {
       "greek": "σφόδρα",
-      "dutch": "hevig, zeer, erg",
+      "translation": "hevig, zeer, erg",
       "chapter": 5
     },
     {
       "greek": "ἄνευ + gen.",
-      "dutch": "zonder",
+      "translation": "zonder",
       "chapter": 6
     },
     {
       "greek": "οὖν",
-      "dutch": "dus, dan, welnu",
+      "translation": "dus, dan, welnu",
       "chapter": 6
     },
     {
       "greek": "τέλος",
-      "dutch": "tenslotte",
+      "translation": "tenslotte",
       "chapter": 6
     },
     {
       "greek": "δία + acc.",
-      "dutch": "wegens, door toedoen van, dankzij",
+      "translation": "wegens, door toedoen van, dankzij",
       "chapter": 7
     },
     {
       "greek": "διὰ τοῦτο",
-      "dutch": "daarom",
+      "translation": "daarom",
       "chapter": 7
     },
     {
       "greek": "μάλα",
-      "dutch": "zeer",
+      "translation": "zeer",
       "chapter": 7
     },
     {
       "greek": "μή",
-      "dutch": "niet",
+      "translation": "niet",
       "chapter": 7
     },
     {
       "greek": " ὦ",
-      "dutch": "neutrale markering van de vocativus",
+      "translation": "neutrale markering van de vocativus",
       "chapter": 7
     },
     {
       "greek": "ἄνω",
-      "dutch": "omhoog, boven",
+      "translation": "omhoog, boven",
       "chapter": 8
     },
     {
       "greek": "ἆρα μή;",
-      "dutch": "toch niet?, toch zeker niet?, soms?",
+      "translation": "toch niet?, toch zeker niet?, soms?",
       "chapter": 8
     },
     {
       "greek": "αὖθις",
-      "dutch": "opnieuw, weer, verder",
+      "translation": "opnieuw, weer, verder",
       "chapter": 8
     },
     {
       "greek": "δέκα",
-      "dutch": "tien",
+      "translation": "tien",
       "chapter": 8
     },
     {
       "greek": "ἐνταῦθα",
-      "dutch": "1. daar, daarheen; 2. in die situatie, toen, nu",
+      "translation": "1. daar, daarheen; 2. in die situatie, toen, nu",
       "chapter": 8
     },
     {
       "greek": "ἤδη",
-      "dutch": "al, reeds, nu, eindelijk",
+      "translation": "al, reeds, nu, eindelijk",
       "chapter": 8
     },
     {
       "greek": "μετά + acc.",
-      "dutch": "na",
+      "translation": "na",
       "chapter": 8
     },
     {
       "greek": "οἴκαδε",
-      "dutch": "naar huis",
+      "translation": "naar huis",
       "chapter": 8
     },
     {
       "greek": "πρός + acc.",
-      "dutch": "naar, tot, tegen",
+      "translation": "naar, tot, tegen",
       "chapter": 8
     },
     {
       "greek": "πρῶτον/τὸ πρῶτον",
-      "dutch": "eerst, in de eerste plaats",
+      "translation": "eerst, in de eerste plaats",
       "chapter": 8
     },
     {
       "greek": "σχεδόν",
-      "dutch": "bijna",
+      "translation": "bijna",
       "chapter": 8
     },
     {
       "greek": "ὑπό + dat.",
-      "dutch": "onder, aan de voet van",
+      "translation": "onder, aan de voet van",
       "chapter": 8
     },
     {
       "greek": "γοῦν (γε οὖν)",
-      "dutch": "tenminste",
+      "translation": "tenminste",
       "chapter": 9
     },
     {
       "greek": "ἐκεῖ",
-      "dutch": "daar, daarginds",
+      "translation": "daar, daarginds",
       "chapter": 9
     },
     {
       "greek": "ἔτι",
-      "dutch": "nog",
+      "translation": "nog",
       "chapter": 9
     },
     {
       "greek": "εὖ",
-      "dutch": "goed",
+      "translation": "goed",
       "chapter": 9
     },
     {
       "greek": "ἤ",
-      "dutch": "of",
+      "translation": "of",
       "chapter": 9
     },
     {
       "greek": "μετά + gen.",
-      "dutch": "(samen) met",
+      "translation": "(samen) met",
       "chapter": 9
     },
     {
       "greek": "πρότερον",
-      "dutch": "eerder, vroeger",
+      "translation": "eerder, vroeger",
       "chapter": 9
     },
     {
       "greek": "σύν + dat.",
-      "dutch": "met, in gezelschap van, met behulp van",
+      "translation": "met, in gezelschap van, met behulp van",
       "chapter": 9
     },
     {
       "greek": "ἐπί + acc",
-      "dutch": "op … af, naar",
+      "translation": "op … af, naar",
       "chapter": 10
     },
     {
       "greek": "ἴσως",
-      "dutch": "misschien",
+      "translation": "misschien",
       "chapter": 10
     },
     {
       "greek": "πάνυ",
-      "dutch": "volkomen, heel, zeker",
+      "translation": "volkomen, heel, zeker",
       "chapter": 10
     },
     {
       "greek": "πλήν + gen",
-      "dutch": "behalve",
+      "translation": "behalve",
       "chapter": 10
     },
     {
       "greek": "ταχέως",
-      "dutch": "snel",
+      "translation": "snel",
       "chapter": 10
     },
     {
       "greek": "τότε",
-      "dutch": "toen, op dat moment, dan",
+      "translation": "toen, op dat moment, dan",
       "chapter": 10
     },
     {
       "greek": "ὡς",
-      "dutch": "dat (eigenlijk: hoe), in vergelijkingen zoals, als",
+      "translation": "dat (eigenlijk: hoe), in vergelijkingen zoals, als",
       "chapter": 10
     },
     {
       "greek": "ὥσπερ",
-      "dutch": "zoals",
+      "translation": "zoals",
       "chapter": 10
     },
     {
       "greek": "ἀλλά",
-      "dutch": "1. maar, toch 2. vooruit (bij een verzoek of bevel)",
+      "translation": "1. maar, toch 2. vooruit (bij een verzoek of bevel)",
       "chapter": 11
     },
     {
       "greek": "αὖ",
-      "dutch": "1. opnieuw, weer, verder, 2. op zijn beurt",
+      "translation": "1. opnieuw, weer, verder, 2. op zijn beurt",
       "chapter": 11
     },
     {
       "greek": "αὐτοῦ",
-      "dutch": "op de plaats zelf, ter plekke",
+      "translation": "op de plaats zelf, ter plekke",
       "chapter": 11
     },
     {
       "greek": "γε",
-      "dutch": "vertalen met een klemtoon, soms met tenminste, althans",
+      "translation": "vertalen met een klemtoon, soms met tenminste, althans",
       "chapter": 11
     },
     {
       "greek": "διά + gen.",
-      "dutch": "1. door (...heen), 2. door middel van",
+      "translation": "1. door (...heen), 2. door middel van",
       "chapter": 11
     },
     {
       "greek": "ἐκτός",
-      "dutch": "buiten",
+      "translation": "buiten",
       "chapter": 11
     },
     {
       "greek": "ἐπί + gen.",
-      "dutch": "tijdens",
+      "translation": "tijdens",
       "chapter": 11
     },
     {
       "greek": "καίτοι",
-      "dutch": "evenwel, toch",
+      "translation": "evenwel, toch",
       "chapter": 11
     },
     {
       "greek": "μογις",
-      "dutch": "met moeite, ternauwernood",
+      "translation": "met moeite, ternauwernood",
       "chapter": 11
     },
     {
       "greek": "μόνον",
-      "dutch": "slechts, alleen",
+      "translation": "slechts, alleen",
       "chapter": 11
     },
     {
       "greek": "πάλιν",
-      "dutch": "terug, weer",
+      "translation": "terug, weer",
       "chapter": 11
     },
     {
       "greek": "περί + gen.",
-      "dutch": "met betrekking tot, om, over",
+      "translation": "met betrekking tot, om, over",
       "chapter": 11
     },
     {
       "greek": "ποτε",
-      "dutch": "eens, ooit, soms",
+      "translation": "eens, ooit, soms",
       "chapter": 11
     },
     {
       "greek": "ὕστερον",
-      "dutch": "later, in de toekomst",
+      "translation": "later, in de toekomst",
       "chapter": 11
     },
     {
       "greek": "ἅμα",
-      "dutch": "tegelijk",
+      "translation": "tegelijk",
       "chapter": 12
     },
     {
       "greek": "ἐνθάδε",
-      "dutch": "hier, hierheen",
+      "translation": "hier, hierheen",
       "chapter": 12
     },
     {
       "greek": "ὅτι",
-      "dutch": "1. dat (na verba van zeggen en menen); 2. omdat",
+      "translation": "1. dat (na verba van zeggen en menen); 2. omdat",
       "chapter": 12
     },
     {
       "greek": "-περ",
-      "dutch": "zeer, juist, precies(benadrukt het voorafgaande woord)",
+      "translation": "zeer, juist, precies(benadrukt het voorafgaande woord)",
       "chapter": 12
     },
     {
       "greek": "πῶς;",
-      "dutch": "hoe?",
+      "translation": "hoe?",
       "chapter": 12
     },
     {
       "greek": "κατά + acc.",
-      "dutch": "1. verspreid over, ter hoogte van; 2. volgens, wat betreft",
+      "translation": "1. verspreid over, ter hoogte van; 2. volgens, wat betreft",
       "chapter": 13
     },
     {
       "greek": "μεταξύ + gen.",
-      "dutch": "tussen",
+      "translation": "tussen",
       "chapter": 13
     },
     {
       "greek": "ἀπό + gen.",
-      "dutch": "1. van ... vandaan, vanaf; 2. vanaf, sinds  ",
+      "translation": "1. van ... vandaan, vanaf; 2. vanaf, sinds  ",
       "chapter": 14
     },
     {
       "greek": "ἀφ΄ οὗ",
-      "dutch": "sinds",
+      "translation": "sinds",
       "chapter": 14
     },
     {
       "greek": "αὐτίκα",
-      "dutch": "meteen",
+      "translation": "meteen",
       "chapter": 14
     },
     {
       "greek": "δεῦρο",
-      "dutch": "hierheen",
+      "translation": "hierheen",
       "chapter": 14
     },
     {
       "greek": "ἐπί + gen.",
-      "dutch": "1. op; 2. tijdens",
+      "translation": "1. op; 2. tijdens",
       "chapter": 14
     },
     {
       "greek": "ἰδού",
-      "dutch": "let op!",
+      "translation": "let op!",
       "chapter": 14
     },
     {
       "greek": "μεγά bijwoord",
-      "dutch": "zeer, erg, luid ",
+      "translation": "zeer, erg, luid ",
       "chapter": 14
     },
     {
       "greek": "παρά + dat.",
-      "dutch": "aan de zijde van, bij",
+      "translation": "aan de zijde van, bij",
       "chapter": 14
     },
     {
       "greek": "πολύ bijwoord",
-      "dutch": "veel",
+      "translation": "veel",
       "chapter": 14
     },
     {
       "greek": "πότερον ... ἤ",
-      "dutch": "(of) ... of (vragend)",
+      "translation": "(of) ... of (vragend)",
       "chapter": 14
     },
     {
       "greek": "πρὸς ταῦτα",
-      "dutch": "wat dat betreft, mֶet het oog hierop, in reactie hierop",
+      "translation": "wat dat betreft, mֶet het oog hierop, in reactie hierop",
       "chapter": 14
     },
 
     {
       "greek": "δῆλον ὅτι",
-      "dutch": "natuurlijk",
+      "translation": "natuurlijk",
       "chapter": 15
     },
     {
       "greek": "ἐκποδών",
-      "dutch": "uit-de-voeten, uit de weg, weg",
+      "translation": "uit-de-voeten, uit de weg, weg",
       "chapter": 15
     },
     {
       "greek": "ἐπί + dat.",
-      "dutch": "aan, bij",
+      "translation": "aan, bij",
       "chapter": 15
     },
     {
       "greek": "καὶ δὴ καί",
-      "dutch": "en óók, en vooral, en in het bijzonder",
+      "translation": "en óók, en vooral, en in het bijzonder",
       "chapter": 15
     },
     {
       "greek": "μὲν οὖν",
-      "dutch": "welnu, nu (geeft een overgang naar een ander onderwerp)",
+      "translation": "welnu, nu (geeft een overgang naar een ander onderwerp)",
       "chapter": 15
     },
     {
       "greek": "πάλαι",
-      "dutch": "lang geleden, vroeger, allang",
+      "translation": "lang geleden, vroeger, allang",
       "chapter": 15
     },
     {
       "greek": "προ + gen.",
-      "dutch": "voor (van tijd en plaats), liever dan",
+      "translation": "voor (van tijd en plaats), liever dan",
       "chapter": 15
     },
     {
       "greek": "ἅμα bijwoord",
-      "dutch": "tegelijk",
+      "translation": "tegelijk",
       "chapter": 16
     },
     {
       "greek": "ἅμα + dat.",
-      "dutch": "tegelijk/samen met",
+      "translation": "tegelijk/samen met",
       "chapter": 16
     },
     {
       "greek": "ἅμα + ptc.",
-      "dutch": "terwijl",
+      "translation": "terwijl",
       "chapter": 16
     },
     {
       "greek": "ἅτε + ptc.",
-      "dutch": "omdat (bij een objectieve reden)",
+      "translation": "omdat (bij een objectieve reden)",
       "chapter": 16
     },
     {
       "greek": "δίς",
-      "dutch": "tweemaal",
+      "translation": "tweemaal",
       "chapter": 16
     },
     {
       "greek": "καίπερ + ptc.",
-      "dutch": "hoewel",
+      "translation": "hoewel",
       "chapter": 16
     },
     {
       "greek": "μή",
-      "dutch": "niet",
+      "translation": "niet",
       "chapter": 16
     },
     {
       "greek": "μή + ptc.",
-      "dutch": "als niet, indien niet",
+      "translation": "als niet, indien niet",
       "chapter": 16
     },
     {
       "greek": "ὀκτώ",
-      "dutch": "acht",
+      "translation": "acht",
       "chapter": 16
     },
     {
       "greek": "παρά + gen.",
-      "dutch": "van (de zijde van)",
+      "translation": "van (de zijde van)",
       "chapter": 16
     },
     {
       "greek": "ὡς in vergelijkingen",
-      "dutch": "zoals, als",
+      "translation": "zoals, als",
       "chapter": 16
     },
     {
       "greek": "ὡς (als ὅτι)",
-      "dutch": "dat (eigenlijk: hoe)",
+      "translation": "dat (eigenlijk: hoe)",
       "chapter": 16
     },
     {
       "greek": "ὡς + ptc.",
-      "dutch": "omdat, in de veronderstelling dat (bij een subjectieve reden",
+      "translation": "omdat, in de veronderstelling dat (bij een subjectieve reden",
       "chapter": 16
     },
     {
       "greek": "ὧσπερ",
-      "dutch": "(net) zoals",
+      "translation": "(net) zoals",
       "chapter": 16
     },
     {
       "greek": "ὧσπερ + ptc.",
-      "dutch": "alsof",
+      "translation": "alsof",
       "chapter": 16
     },
     {
       "greek": "εἴτε ... εἴτε",
-      "dutch": "of ... of, hetzij ... hetzij",
+      "translation": "of ... of, hetzij ... hetzij",
       "chapter": 17
     },
     {
       "greek": "μάλλον",
-      "dutch": "meer, liever",
+      "translation": "meer, liever",
       "chapter": 17
     },
     {
       "greek": "περί + acc.",
-      "dutch": "om, rondom",
+      "translation": "om, rondom",
       "chapter": 17
     },
     {
       "greek": "που",
-      "dutch": "1. ergens; 2. denk ik, misschien",
+      "translation": "1. ergens; 2. denk ik, misschien",
       "chapter": 17
     },
     {
       "greek": "προσθε(ν)",
-      "dutch": "aan de voorkant, van voren",
+      "translation": "aan de voorkant, van voren",
       "chapter": 17
     },
     {
       "greek": "ὑπό + gen.,",
-      "dutch": "door (toedoen van)",
+      "translation": "door (toedoen van)",
       "chapter": 17
     },
     {
       "greek": "χωρίς + gen.,",
-      "dutch": "apart van, zonder",
+      "translation": "apart van, zonder",
       "chapter": 17
     },
     {
       "greek": "ἅμα adverbium",
-      "dutch": "tegelijk",
+      "translation": "tegelijk",
       "chapter": 18
     },
     {
       "greek": "ἅμα + dat.",
-      "dutch": "tegelijk/samen met",
+      "translation": "tegelijk/samen met",
       "chapter": 18
     },
     {
       "greek": "ἅμα + ptc.",
-      "dutch": "terwijl",
+      "translation": "terwijl",
       "chapter": 18
     },
     {
       "greek": "εἰ",
-      "dutch": "indien, als (conditioneel)",
+      "translation": "indien, als (conditioneel)",
       "chapter": 18
     },
     {
       "greek": "ἐπεί/ἐπειδή",
-      "dutch": "toen, nadat (+ indic. verleden tijd)",
+      "translation": "toen, nadat (+ indic. verleden tijd)",
       "chapter": 18
     },
     {
       "greek": "ἤ",
-      "dutch": "1. of; 2. dan (in een vergelijking)",
+      "translation": "1. of; 2. dan (in een vergelijking)",
       "chapter": 18
     },
     {
       "greek": "τοίνυν",
-      "dutch": "welnu, dus",
+      "translation": "welnu, dus",
       "chapter": 18
     },
     {
       "greek": "εἰ",
-      "dutch": "1. indien, als (conditioneel); 2. of (vraagnzin)",
+      "translation": "1. indien, als (conditioneel); 2. of (vraagnzin)",
       "chapter": 19
     },
     {
       "greek": "ἐκ/ἐξ + gen.",
-      "dutch": "1. uit; 2. sinds",
+      "translation": "1. uit; 2. sinds",
       "chapter": 19
     },
     {
       "greek": "ἕνεκα (meestal) + gen.",
-      "dutch": "ter wille van, wegens, om",
+      "translation": "ter wille van, wegens, om",
       "chapter": 19
     },
     {
       "greek": "μέντοι",
-      "dutch": "maar, echter",
+      "translation": "maar, echter",
       "chapter": 19
     },
     {
       "greek": "πρός + gen.",
-      "dutch": "van/aan de kant van",
+      "translation": "van/aan de kant van",
       "chapter": 19
     }
   ]
