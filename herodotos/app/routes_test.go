@@ -28,12 +28,12 @@ func TestPingPongRoute(t *testing.T) {
 func TestHealthEndpointHealthy(t *testing.T) {
 	fixtureFile := "info"
 	mockCode := 200
-	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
+	mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
 	testConfig := configs.HerodotosConfig{
-		ElasticClient: *mockElasticClient,
-		Index:         "test",
+		Elastic: mockElasticClient,
+		Index:   "test",
 	}
 
 	router := InitRoutes(testConfig)
@@ -50,12 +50,12 @@ func TestHealthEndpointHealthy(t *testing.T) {
 func TestHealthEndpointElasticDown(t *testing.T) {
 	fixtureFile := "infoServiceDown"
 	mockCode := 502
-	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
+	mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
 	testConfig := configs.HerodotosConfig{
-		ElasticClient: *mockElasticClient,
-		Index:         "test",
+		Elastic: mockElasticClient,
+		Index:   "test",
 	}
 
 	router := InitRoutes(testConfig)
@@ -71,12 +71,12 @@ func TestHealthEndpointElasticDown(t *testing.T) {
 func TestAuthorsEndPointHappyPath(t *testing.T) {
 	fixtureFile := "authors"
 	mockCode := 200
-	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
+	mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
 	testConfig := configs.HerodotosConfig{
-		ElasticClient: *mockElasticClient,
-		Index:         "test",
+		Elastic: mockElasticClient,
+		Index:   "test",
 	}
 
 	router := InitRoutes(testConfig)
@@ -99,12 +99,12 @@ func TestAuthorsEndPointHappyPath(t *testing.T) {
 func TestAuthorsEndPointShardFailure(t *testing.T) {
 	fixtureFile := "shardFailure"
 	mockCode := 500
-	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
+	mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
 	testConfig := configs.HerodotosConfig{
-		ElasticClient: *mockElasticClient,
-		Index:         "test",
+		Elastic: mockElasticClient,
+		Index:   "test",
 	}
 
 	router := InitRoutes(testConfig)
@@ -123,12 +123,12 @@ func TestAuthorsEndPointShardFailure(t *testing.T) {
 func TestBooksEndPointHappyPath(t *testing.T) {
 	fixtureFile := "herodotosBooks"
 	mockCode := 200
-	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
+	mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
 	testConfig := configs.HerodotosConfig{
-		ElasticClient: *mockElasticClient,
-		Index:         "test",
+		Elastic: mockElasticClient,
+		Index:   "test",
 	}
 
 	router := InitRoutes(testConfig)
@@ -149,12 +149,12 @@ func TestBooksEndPointHappyPath(t *testing.T) {
 func TestBookEndPointShardFailure(t *testing.T) {
 	fixtureFile := "shardFailure"
 	mockCode := 500
-	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
+	mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
 	testConfig := configs.HerodotosConfig{
-		ElasticClient: *mockElasticClient,
-		Index:         "test",
+		Elastic: mockElasticClient,
+		Index:   "test",
 	}
 
 	router := InitRoutes(testConfig)
@@ -175,12 +175,12 @@ func TestCreateQuestionHappyPath(t *testing.T) {
 	mockCode := 200
 	author := "thucydides"
 	book := 1
-	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
+	mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
 	testConfig := configs.HerodotosConfig{
-		ElasticClient: *mockElasticClient,
-		Index:         "test",
+		Elastic: mockElasticClient,
+		Index:   "test",
 	}
 
 	router := InitRoutes(testConfig)
@@ -201,12 +201,12 @@ func TestCreateQuestionMissingAuthor(t *testing.T) {
 	mockCode := 200
 	author := ""
 	book := 1
-	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
+	mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
 	testConfig := configs.HerodotosConfig{
-		ElasticClient: *mockElasticClient,
-		Index:         "test",
+		Elastic: mockElasticClient,
+		Index:   "test",
 	}
 
 	router := InitRoutes(testConfig)
@@ -227,12 +227,12 @@ func TestCreateQuestionMissingBook(t *testing.T) {
 	mockCode := 200
 	author := "someauthor"
 	book := ""
-	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
+	mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
 	testConfig := configs.HerodotosConfig{
-		ElasticClient: *mockElasticClient,
-		Index:         "test",
+		Elastic: mockElasticClient,
+		Index:   "test",
 	}
 
 	router := InitRoutes(testConfig)
@@ -253,12 +253,12 @@ func TestCreateNoResults(t *testing.T) {
 	mockCode := 200
 	author := "someauthor"
 	book := "1"
-	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
+	mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
 	testConfig := configs.HerodotosConfig{
-		ElasticClient: *mockElasticClient,
-		Index:         "test",
+		Elastic: mockElasticClient,
+		Index:   "test",
 	}
 
 	router := InitRoutes(testConfig)
@@ -279,12 +279,12 @@ func TestCreateQuestionMissingAuthorInElastic(t *testing.T) {
 	mockCode := 404
 	book := 1
 	author := "notanauthor"
-	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
+	mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
 	testConfig := configs.HerodotosConfig{
-		ElasticClient: *mockElasticClient,
-		Index:         "test",
+		Elastic: mockElasticClient,
+		Index:   "test",
 	}
 
 	router := InitRoutes(testConfig)
@@ -305,12 +305,12 @@ func TestCreateQuestionShardFailure(t *testing.T) {
 	mockCode := 500
 	book := 1
 	author := "someAuthor"
-	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
+	mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
 	testConfig := configs.HerodotosConfig{
-		ElasticClient: *mockElasticClient,
-		Index:         "test",
+		Elastic: mockElasticClient,
+		Index:   "test",
 	}
 
 	router := InitRoutes(testConfig)
@@ -331,12 +331,12 @@ func TestCreateQuestionUnParseableJson(t *testing.T) {
 	mockCode := 200
 	author := "thucydides"
 	book := "1"
-	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
+	mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
 	testConfig := configs.HerodotosConfig{
-		ElasticClient: *mockElasticClient,
-		Index:         "test",
+		Elastic: mockElasticClient,
+		Index:   "test",
 	}
 
 	router := InitRoutes(testConfig)
@@ -357,7 +357,7 @@ func TestCreateQuestionUnParseableJson(t *testing.T) {
 func TestCheckAnswerEndPointHappyPath(t *testing.T) {
 	fixtureFile := "checkSentenceHerodotos"
 	mockCode := 200
-	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
+	mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
 	body := map[string]string{"answerSentence": "The Foenicians. ;came to Argos,,.;:'' afd set out some cargo",
@@ -368,8 +368,8 @@ func TestCheckAnswerEndPointHappyPath(t *testing.T) {
 	bodyInBytes := bytes.NewReader(jsonBody)
 
 	testConfig := configs.HerodotosConfig{
-		ElasticClient: *mockElasticClient,
-		Index:         "test",
+		Elastic: mockElasticClient,
+		Index:   "test",
 	}
 
 	router := InitRoutes(testConfig)
@@ -389,7 +389,7 @@ func TestCheckAnswerEndPointHappyPath(t *testing.T) {
 func TestCheckAnswerEndPointBadJsonRequest(t *testing.T) {
 	fixtureFile := "checkSentenceHerodotos"
 	mockCode := 200
-	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
+	mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
 	body := []byte{78}
@@ -397,8 +397,8 @@ func TestCheckAnswerEndPointBadJsonRequest(t *testing.T) {
 	bodyInBytes := bytes.NewReader(body)
 
 	testConfig := configs.HerodotosConfig{
-		ElasticClient: *mockElasticClient,
-		Index:         "test",
+		Elastic: mockElasticClient,
+		Index:   "test",
 	}
 
 	router := InitRoutes(testConfig)
@@ -416,7 +416,7 @@ func TestCheckAnswerEndPointBadJsonRequest(t *testing.T) {
 func TestCheckSentenceShardFailure(t *testing.T) {
 	fixtureFile := "shardFailure"
 	mockCode := 500
-	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
+	mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
 	body := map[string]string{"answerSentence": "The Foenicians. ;came to Argos,,.;:'' afd set out some cargo",
@@ -427,8 +427,8 @@ func TestCheckSentenceShardFailure(t *testing.T) {
 	bodyInBytes := bytes.NewReader(jsonBody)
 
 	testConfig := configs.HerodotosConfig{
-		ElasticClient: *mockElasticClient,
-		Index:         "test",
+		Elastic: mockElasticClient,
+		Index:   "test",
 	}
 
 	router := InitRoutes(testConfig)
@@ -447,7 +447,7 @@ func TestCheckSentenceShardFailure(t *testing.T) {
 func TestCheckSentenceUnparseableJson(t *testing.T) {
 	fixtureFile := "withAll"
 	mockCode := 200
-	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
+	mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
 	body := map[string]string{"answerSentence": "The Foenicians. ;came to Argos,,.;:'' afd set out some cargo",
@@ -458,8 +458,8 @@ func TestCheckSentenceUnparseableJson(t *testing.T) {
 	bodyInBytes := bytes.NewReader(jsonBody)
 
 	testConfig := configs.HerodotosConfig{
-		ElasticClient: *mockElasticClient,
-		Index:         "test",
+		Elastic: mockElasticClient,
+		Index:   "test",
 	}
 
 	router := InitRoutes(testConfig)

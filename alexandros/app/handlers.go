@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"github.com/kpango/glg"
 	"github.com/odysseia/aristoteles/configs"
-	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/helpers"
 	"github.com/odysseia/plato/middleware"
 	"github.com/odysseia/plato/models"
@@ -23,7 +22,7 @@ func (a *AlexandrosHandler) pingPong(w http.ResponseWriter, req *http.Request) {
 
 // returns the health of the api
 func (a *AlexandrosHandler) health(w http.ResponseWriter, req *http.Request) {
-	health := helpers.GetHealthOfApp(a.Config.ElasticClient)
+	health := helpers.GetHealthOfApp(a.Config.Elastic)
 	if !health.Healthy {
 		middleware.ResponseWithCustomCode(w, 502, health)
 		return
@@ -54,7 +53,8 @@ func (a *AlexandrosHandler) searchWord(w http.ResponseWriter, req *http.Request)
 
 	glg.Debugf("looking for %s", queryWord)
 
-	response, err := elastic.QueryMultiMatchWithGrams(a.Config.ElasticClient, a.Config.Index, queryWord)
+	query := a.Config.Elastic.Builder().MultiMatchWithGram(queryWord)
+	response, err := a.Config.Elastic.Query().Match(a.Config.Index, query)
 
 	if err != nil {
 		e := models.ElasticSearchError{

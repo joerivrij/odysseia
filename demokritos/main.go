@@ -58,8 +58,14 @@ func main() {
 
 	handler := app.DemokritosHandler{Config: demokritosConfig}
 
-	handler.DeleteIndexAtStartUp()
-	handler.CreateIndexAtStartup()
+	err = handler.DeleteIndexAtStartUp()
+	if err != nil {
+		glg.Fatal(err)
+	}
+	err = handler.CreateIndexAtStartup()
+	if err != nil {
+		glg.Fatal(err)
+	}
 
 	var wg sync.WaitGroup
 

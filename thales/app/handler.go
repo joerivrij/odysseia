@@ -1,13 +1,10 @@
 package app
 
 import (
-	"context"
 	"encoding/json"
-	"github.com/elastic/go-elasticsearch/v7/esapi"
 	"github.com/kpango/glg"
 	"github.com/kubemq-io/kubemq-go"
 	"github.com/odysseia/aristoteles/configs"
-	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/models"
 	"github.com/odysseia/plato/transform"
 	"strings"
@@ -16,55 +13,77 @@ import (
 )
 
 type ThalesHandler struct {
-	Config *configs.ThalesConfig
-	Mq     *kubemq.QueuesClient
+	Config             *configs.ThalesConfig
+	QueueEmptyDuration time.Duration
 }
 
-func (t *ThalesHandler) HandleQueue() {
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
+const ClientId string = "thales"
+const MessageToPull int32 = 10
 
+func (t *ThalesHandler) HandleQueue() {
 	emptyQueue := make(chan bool, 1)
-	go t.queueEmpty(emptyQueue)
-	done, _ := t.Mq.Subscribe(ctx, &kubemq.ReceiveQueueMessagesRequest{
-		ClientID:            "thales",
-		Channel:             t.Config.Channel,
-		MaxNumberOfMessages: 10,
-		WaitTimeSeconds:     2,
-	}, func(response *kubemq.ReceiveQueueMessagesResponse, err error) {
-		if err != nil {
-			glg.Error(err)
-		}
-		for _, msg := range response.Messages {
-			time.Sleep(50 * time.Millisecond)
-			var word models.Meros
-			err := json.Unmarshal(msg.Body, &word)
+	go t.queueEmpty(emptyQueue, t.QueueEmptyDuration)
+
+	go func() {
+		for {
+			response, err := t.Config.Queue.PullMessages(MessageToPull, ClientId)
 			if err != nil {
 				glg.Error(err)
 			}
-			found := t.queryWord(word)
-			if !found {
-				t.addWord(word)
-			}
-			glg.Infof("MessageID: %s, Body: %s", msg.MessageID, string(msg.Body))
 
+			err = t.handleMessages(response)
+			if err != nil {
+				glg.Error(err)
+			}
 		}
-	})
+	}()
 
 	select {
 
 	case <-emptyQueue:
-		done <- struct{}{}
-	}
-	done <- struct{}{}
+		err := t.EmptyQueue()
+		glg.Error(err)
+		return
 
-	return
+	}
 }
 
-func (t *ThalesHandler) queueEmpty(queueChannel chan bool) {
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
-	queueStatus, _ := t.Mq.QueuesInfo(ctx, t.Config.Channel)
+func (t *ThalesHandler) EmptyQueue() error {
+	response, err := t.Config.Queue.PullRemainingMessages(ClientId)
+	if err != nil {
+		return err
+	}
+
+	err = t.handleMessages(response)
+
+	return err
+}
+
+func (t *ThalesHandler) handleMessages(response *kubemq.ReceiveQueueMessagesResponse) error {
+	for _, msg := range response.Messages {
+		time.Sleep(50 * time.Millisecond)
+		var word models.Meros
+		err := json.Unmarshal(msg.Body, &word)
+		if err != nil {
+			return err
+		}
+		found, err := t.queryWord(word)
+		if err != nil {
+			continue
+		}
+		if !found {
+			t.addWord(word)
+		} else {
+			glg.Infof("word: %s already in dictionary", string(msg.Body))
+		}
+		glg.Infof("MessageID: %s, Body: %s", msg.MessageID, string(msg.Body))
+	}
+
+	return nil
+}
+
+func (t *ThalesHandler) queueEmpty(queueChannel chan bool, duration time.Duration) {
+	queueStatus, _ := t.Config.Queue.Info()
 
 	for {
 		for _, queue := range queueStatus.Queues {
@@ -76,69 +95,73 @@ func (t *ThalesHandler) queueEmpty(queueChannel chan bool) {
 			}
 		}
 		//check every 10 seconds for an empty queue
-		time.Sleep(10000 * time.Millisecond)
-		queueStatus, _ = t.Mq.QueuesInfo(ctx, t.Config.Channel)
+		time.Sleep(duration)
+		queueStatus, _ = t.Config.Queue.Info()
 	}
 }
 
-func (t *ThalesHandler) queryWord(word models.Meros) bool {
+func (t *ThalesHandler) queryWord(word models.Meros) (bool, error) {
 	found := false
 
 	strippedWord := transform.RemoveAccents(word.Greek)
 
 	term := "greek"
-	response, err := elastic.QueryWithMatch(t.Config.ElasticClient, t.Config.Index, term, strippedWord)
+	query := t.Config.Elastic.Builder().MatchQuery(term, strippedWord)
+	response, err := t.Config.Elastic.Query().Match(t.Config.Index, query)
 
 	if err != nil {
 		glg.Error(err)
+		return found, err
 	}
 
 	if len(response.Hits.Hits) >= 1 {
 		found = true
 	}
 
+	var parsedEnglishWord string
+	pronouns := []string{"a", "an", "the"}
+	splitEnglish := strings.Split(word.English, " ")
+	numberOfWords := len(splitEnglish)
+	if numberOfWords > 1 {
+		for _, pronoun := range pronouns {
+			if splitEnglish[0] == pronoun {
+				toJoin := splitEnglish[1:numberOfWords]
+				parsedEnglishWord = strings.Join(toJoin, " ")
+				break
+			} else {
+				parsedEnglishWord = word.English
+			}
+		}
+	} else {
+		parsedEnglishWord = word.English
+	}
+
 	for _, hit := range response.Hits.Hits {
 		jsonHit, _ := json.Marshal(hit.Source)
 		meros, _ := models.UnmarshalMeros(jsonHit)
-		if meros.English != word.English {
+		if meros.English == parsedEnglishWord || meros.English == word.English {
+			return true, nil
+		} else {
 			found = false
 		}
 	}
 
-	return found
+	return found, nil
 }
 
 func (t *ThalesHandler) addWord(word models.Meros) {
 	var innerWaitGroup sync.WaitGroup
 	jsonifiedLogos, _ := word.Marshal()
-	esRequest := esapi.IndexRequest{
-		Body:       strings.NewReader(string(jsonifiedLogos)),
-		Refresh:    "true",
-		Index:      t.Config.Index,
-		DocumentID: "",
-	}
+	_, err := t.Config.Elastic.Index().CreateDocument(t.Config.Index, jsonifiedLogos)
 
-	// Perform the request with the client.
-	res, err := esRequest.Do(context.Background(), &t.Config.ElasticClient)
 	if err != nil {
-		glg.Fatalf("Error getting response: %s", err)
-	}
-	defer res.Body.Close()
-
-	if res.IsError() {
-		glg.Debugf("[%s]", res.Status())
+		glg.Error(err)
+		return
 	} else {
-		// Deserialize the response into a map.
-		var r map[string]interface{}
-		if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
-			glg.Errorf("Error parsing the response body: %s", err)
-		} else {
-			// Print the response status and indexed document version.
-			innerWaitGroup.Add(1)
-			go t.transformWord(word, &innerWaitGroup)
-			glg.Debugf("created root word: %s", word.Greek)
-			t.Config.Created++
-		}
+		innerWaitGroup.Add(1)
+		go t.transformWord(word, &innerWaitGroup)
+		glg.Debugf("created root word: %s", word.Greek)
+		t.Config.Created++
 	}
 }
 
@@ -153,33 +176,14 @@ func (t *ThalesHandler) transformWord(word models.Meros, wg *sync.WaitGroup) {
 	}
 
 	jsonifiedLogos, _ := meros.Marshal()
-	esRequest := esapi.IndexRequest{
-		Body:       strings.NewReader(string(jsonifiedLogos)),
-		Refresh:    "true",
-		Index:      t.Config.Index,
-		DocumentID: "",
-	}
+	_, err := t.Config.Elastic.Index().CreateDocument(t.Config.Index, jsonifiedLogos)
 
-	// Perform the request with the client.
-	res, err := esRequest.Do(context.Background(), &t.Config.ElasticClient)
 	if err != nil {
-		glg.Fatalf("Error getting response: %s", err)
+		glg.Error(err)
+		return
 	}
-	defer res.Body.Close()
 
-	if res.IsError() {
-		glg.Debugf("[%s]", res.Status())
-	} else {
-		// Deserialize the response into a map.
-		var r map[string]interface{}
-		if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
-			glg.Errorf("Error parsing the response body: %s", err)
-		} else {
-			// Print the response status and indexed document version.
-			glg.Debugf("created parsed word: %s", strippedWord)
-			t.Config.Created++
-		}
-	}
+	t.Config.Created++
 
 	return
 }

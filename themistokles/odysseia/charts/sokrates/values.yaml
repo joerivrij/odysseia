@@ -63,6 +63,7 @@ envVariables:
   vaultService: http://vault:8200
   elasticService: https://elastic-master:9200
   mqService: kubemq
+  mqPort: 50000
   odysseiaapi:
     port: 5000
   sidecar:

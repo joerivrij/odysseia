@@ -10,6 +10,17 @@
       "chapter":  2,
       "section": 1,
       "perseusTextLink": "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0007.tlg047.perseus-grc2:2.1?right=perseus-eng2&q=&qk=form"
+    },
+    {
+      "author": "Ploutarchos",
+      "greek" : "καὶ Πρῶτος μὲν ὁ κυβερνήτης κατὰ τάχος ἐκέλευσεν ἀποβαίνειν, ὡς, ἂν ἀποσπασθῶσι τῆς γῆς καὶ τὴν ἄκραν ἑκόντες ἀφῶσι, πολλὰς ἡμέρας καὶ νύκτας ἐν τῷ πελάγει τριβησομένους, ὥρᾳ θέρους νότον περιμένοντας.",
+      "translations" : [
+        "Here Protus their pilot urged them to disembark with all speed, since, if they should be forced away from the shore, and should relinquish the headland which they had gained, they would be tossed about on the high sea for many days and nights, awaiting a south wind in the summer season."
+      ],
+      "book": 1,
+      "chapter":  25,
+      "section": 4,
+      "perseusTextLink": "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0007.tlg060.perseus-grc2:25.4/"
     }
   ]
 }

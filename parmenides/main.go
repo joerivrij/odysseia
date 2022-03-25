@@ -1,16 +1,15 @@
 package main
 
 import (
-	"context"
 	"embed"
 	"encoding/json"
 	"fmt"
 	"github.com/kpango/glg"
-	"github.com/kubemq-io/kubemq-go"
 	"github.com/odysseia/aristoteles"
 	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/parmenides/app"
 	"github.com/odysseia/plato/models"
+	"github.com/odysseia/plato/queue"
 	"os"
 	"path"
 	"strconv"
@@ -49,21 +48,12 @@ func main() {
 		glg.Fatal("could not parse config")
 	}
 
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
-	queuesClient, err := kubemq.NewQueuesStreamClient(ctx,
-		kubemq.WithAddress(parmenidesConfig.MqAddress, 50000),
-		kubemq.WithClientId("parmenides"),
-		kubemq.WithTransportType(kubemq.TransportTypeGRPC))
-	if err != nil {
-		glg.Fatal(err)
-	}
-	defer func() {
-		err := queuesClient.Close()
+	defer func(Queue queue.Client) {
+		err := Queue.Close()
 		if err != nil {
-			glg.Fatal(err)
+			glg.Error(err)
 		}
-	}()
+	}(parmenidesConfig.Queue)
 
 	root := "sullego"
 	rootDir, err := sullego.ReadDir(root)
@@ -71,10 +61,16 @@ func main() {
 		glg.Fatal(err)
 	}
 
-	handler := app.ParmenidessHandler{Config: parmenidesConfig, Mq: queuesClient}
+	handler := app.ParmenidesHandler{Config: parmenidesConfig}
 
-	handler.DeleteIndexAtStartUp()
-	handler.CreateIndexAtStartup()
+	err = handler.DeleteIndexAtStartUp()
+	if err != nil {
+		glg.Fatal(err)
+	}
+	err = handler.CreateIndexAtStartup()
+	if err != nil {
+		glg.Fatal(err)
+	}
 
 	var wg sync.WaitGroup
 	documents := 0
@@ -112,7 +108,12 @@ func main() {
 					if method == "mouseion" {
 						queue = false
 					}
-					go handler.Add(logoi, &wg, method, category, queue)
+					go func() {
+						err := handler.Add(logoi, &wg, method, category, queue)
+						if err != nil {
+							glg.Fatal(err)
+						}
+					}()
 				}
 			}
 		}

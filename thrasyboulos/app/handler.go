@@ -7,16 +7,18 @@ import (
 )
 
 type ThrasyboulosHandler struct {
-	Config *configs.ThrasyboulosConfig
+	Config       *configs.ThrasyboulosConfig
+	Duration     time.Duration
+	TimeFinished int64
 }
 
 func (t *ThrasyboulosHandler) WaitForJobsToFinish(c chan bool) {
 	start := time.Now()
-	ticker := time.NewTicker(time.Millisecond * 5000)
+	ticker := time.NewTicker(t.Duration)
 	defer ticker.Stop()
 
 	for ts := range ticker.C {
-		if ts.Sub(start).Seconds() >= 3600 {
+		if ts.Sub(start).Milliseconds() >= t.TimeFinished {
 			c <- false
 		}
 

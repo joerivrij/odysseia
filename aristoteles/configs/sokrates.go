@@ -1,9 +1,11 @@
 package configs
 
-import "github.com/elastic/go-elasticsearch/v7"
+import (
+	"github.com/odysseia/plato/elastic"
+)
 
 type SokratesConfig struct {
-	ElasticClient elasticsearch.Client
-	SearchWord    string
-	Index         string
+	Elastic    elastic.Client
+	SearchWord string
+	Index      string
 }

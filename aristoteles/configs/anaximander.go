@@ -1,9 +1,11 @@
 package configs
 
-import "github.com/elastic/go-elasticsearch/v7"
+import (
+	"github.com/odysseia/plato/elastic"
+)
 
 type AnaximanderConfig struct {
-	Index         string
-	Created       int
-	ElasticClient elasticsearch.Client
+	Index   string
+	Created int
+	Elastic elastic.Client
 }

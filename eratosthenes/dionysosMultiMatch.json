@@ -1,0 +1,40 @@
+{
+  "took": 1,
+  "timed_out": false,
+  "_shards": {
+    "total": 1,
+    "successful": 1,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": {
+      "value": 2,
+      "relation": "eq"
+    },
+    "max_score": 8.718605,
+    "hits": [
+      {
+        "_index": "dictionary",
+        "_type": "_doc",
+        "_id": "7q_ZZH8BG26TE_1WbteR",
+        "_score": 8.718605,
+        "_source": {
+          "greek": "μάχη",
+          "english": "battle, fight, combat",
+          "original": "μάχη"
+        }
+      },
+      {
+        "_index": "dictionary",
+        "_type": "_doc",
+        "_id": "_InVZH8Bal9fSdstaXPg",
+        "_score": 5.1527147,
+        "_source": {
+          "greek": "μάχη –ης, ἡ",
+          "english": "battle"
+        }
+      }
+    ]
+  }
+}

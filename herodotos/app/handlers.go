@@ -6,7 +6,6 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/kpango/glg"
 	"github.com/odysseia/aristoteles/configs"
-	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/helpers"
 	"github.com/odysseia/plato/middleware"
 	"github.com/odysseia/plato/models"
@@ -18,6 +17,14 @@ type HerodotosHandler struct {
 	Config *configs.HerodotosConfig
 }
 
+const (
+	Author  string = "author"
+	Authors string = "authors"
+	Book    string = "book"
+	Books   string = "books"
+	Id      string = "_id"
+)
+
 // PingPong pongs the ping
 func (h *HerodotosHandler) pingPong(w http.ResponseWriter, req *http.Request) {
 	pingPong := models.ResultModel{Result: "pong"}
@@ -26,7 +33,7 @@ func (h *HerodotosHandler) pingPong(w http.ResponseWriter, req *http.Request) {
 
 // returns the health of the api
 func (h *HerodotosHandler) health(w http.ResponseWriter, req *http.Request) {
-	health := helpers.GetHealthOfApp(h.Config.ElasticClient)
+	health := helpers.GetHealthOfApp(h.Config.Elastic)
 	if !health.Healthy {
 		middleware.ResponseWithCustomCode(w, 502, health)
 		return
@@ -37,8 +44,8 @@ func (h *HerodotosHandler) health(w http.ResponseWriter, req *http.Request) {
 
 // creates a new sentence for questions
 func (h *HerodotosHandler) createQuestion(w http.ResponseWriter, req *http.Request) {
-	author := req.URL.Query().Get("author")
-	book := req.URL.Query().Get("book")
+	author := req.URL.Query().Get(Author)
+	book := req.URL.Query().Get(Book)
 
 	if author == "" || book == "" {
 		e := models.ValidationError{
@@ -54,26 +61,18 @@ func (h *HerodotosHandler) createQuestion(w http.ResponseWriter, req *http.Reque
 		return
 	}
 
-	query := map[string]interface{}{
-		"query": map[string]interface{}{
-			"bool": map[string]interface{}{
-				"must": []map[string]interface{}{
-					{
-						"match": map[string]interface{}{
-							"author": author,
-						},
-					},
-					{
-						"match": map[string]interface{}{
-							"book": book,
-						},
-					},
-				},
-			},
+	mustQuery := []map[string]string{
+		{
+			Author: author,
+		},
+		{
+			Book: book,
 		},
 	}
 
-	response, err := elastic.QueryWithMatchSupplied(h.Config.ElasticClient, h.Config.Index, query)
+	query := h.Config.Elastic.Builder().MultipleMatch(mustQuery)
+
+	response, err := h.Config.Elastic.Query().Match(h.Config.Index, query)
 
 	if err != nil {
 		errText := err.Error()
@@ -162,7 +161,8 @@ func (h *HerodotosHandler) checkSentence(w http.ResponseWriter, req *http.Reques
 		return
 	}
 
-	elasticResult, err := elastic.QueryOnId(h.Config.ElasticClient, h.Config.Index, checkSentenceRequest.SentenceId)
+	query := h.Config.Elastic.Builder().MatchQuery(Id, checkSentenceRequest.SentenceId)
+	elasticResult, err := h.Config.Elastic.Query().Match(h.Config.Index, query)
 	if err != nil {
 		e := models.ElasticSearchError{
 			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
@@ -229,8 +229,10 @@ func (h *HerodotosHandler) checkSentence(w http.ResponseWriter, req *http.Reques
 }
 
 func (h *HerodotosHandler) queryAuthors(w http.ResponseWriter, req *http.Request) {
-	field := "author.keyword"
-	elasticResult, err := elastic.QueryUniqueField(h.Config.ElasticClient, field, h.Config.Index)
+	field := fmt.Sprintf("%s.keyword", Author)
+	query := h.Config.Elastic.Builder().Aggregate(Authors, field)
+
+	elasticResult, err := h.Config.Elastic.Query().MatchAggregate(h.Config.Index, query)
 
 	if err != nil {
 		e := models.ElasticSearchError{
@@ -254,9 +256,10 @@ func (h *HerodotosHandler) queryAuthors(w http.ResponseWriter, req *http.Request
 
 func (h *HerodotosHandler) queryBooks(w http.ResponseWriter, req *http.Request) {
 	pathParams := mux.Vars(req)
-	author := pathParams["author"]
-	field := "book"
-	elasticResult, err := elastic.QueryUniqueFieldWithFilter(h.Config.ElasticClient, author, field, h.Config.Index)
+	author := pathParams[Author]
+
+	query := h.Config.Elastic.Builder().FilteredAggregate(Author, author, Books, Book)
+	elasticResult, err := h.Config.Elastic.Query().MatchAggregate(h.Config.Index, query)
 
 	if err != nil {
 		e := models.ElasticSearchError{

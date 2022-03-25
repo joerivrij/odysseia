@@ -117,6 +117,8 @@ spec:
           env:
             - name: MQ_SERVICE
               value: {{ .Values.envVariables.mqService }}
+            - name: MQ_PORT
+              value: {{ .Values.envVariables.mqPort | quote }}
             - name: POD_NAME
               valueFrom:
                 fieldRef:

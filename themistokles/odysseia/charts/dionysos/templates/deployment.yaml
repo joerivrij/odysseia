@@ -81,6 +81,8 @@ spec:
             value: {{ .Values.envVariables.vaultService }}
           - name: SOLON_SERVICE
             value: {{ .Values.envVariables.solonService }}
+          - name: ENV
+            value: {{ .Values.config.environment }}
           - name: POD_NAME
             valueFrom:
               fieldRef:

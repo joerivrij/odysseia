@@ -1,18 +1,18 @@
-package models
+package elastic
 
 import "encoding/json"
 
-func UnmarshalElasticResponse(data []byte) (ElasticResponse, error) {
-	var r ElasticResponse
+func UnmarshalResponse(data []byte) (Response, error) {
+	var r Response
 	err := json.Unmarshal(data, &r)
 	return r, err
 }
 
-func (r *ElasticResponse) Marshal() ([]byte, error) {
+func (r *Response) Marshal() ([]byte, error) {
 	return json.Marshal(r)
 }
 
-type ElasticResponse struct {
+type Response struct {
 	ScrollId string `json:"_scroll_id,omitempty"`
 	Took     int64  `json:"took"`
 	TimedOut bool   `json:"timed_out"`
@@ -46,17 +46,17 @@ type Shards struct {
 	Failed     int64 `json:"failed"`
 }
 
-func UnmarshalElasticAggregations(data []byte) (ElasticAggregations, error) {
-	var r ElasticAggregations
+func UnmarshalAggregations(data []byte) (Aggregations, error) {
+	var r Aggregations
 	err := json.Unmarshal(data, &r)
 	return r, err
 }
 
-func (r *ElasticAggregations) Marshal() ([]byte, error) {
+func (r *Aggregations) Marshal() ([]byte, error) {
 	return json.Marshal(r)
 }
 
-type ElasticAggregations struct {
+type Aggregations struct {
 	Took         int64              `json:"took"`
 	TimedOut     bool               `json:"timed_out"`
 	Shards       Shards             `json:"_shards"`
@@ -93,7 +93,7 @@ func (r *CreateRoleRequest) Marshal() ([]byte, error) {
 
 type CreateRoleRequest struct {
 	Cluster      []string      `json:"cluster"`
-	Indices      []Index       `json:"indices"`
+	Indices      []Indices     `json:"indices"`
 	Applications []Application `json:"applications"`
 	RunAs        []string      `json:"run_as,omitempty"`
 	Metadata     Metadata      `json:"metadata,omitempty"`
@@ -105,7 +105,7 @@ type Application struct {
 	Resources   []string `json:"resources"`
 }
 
-type Index struct {
+type Indices struct {
 	Names         []string       `json:"names"`
 	Privileges    []string       `json:"privileges"`
 	FieldSecurity *FieldSecurity `json:"field_security,omitempty"`
@@ -138,9 +138,46 @@ type CreateUserRequest struct {
 	Metadata *Metadata `json:"metadata"`
 }
 
-type ElasticConfig struct {
+type Config struct {
 	Service     string `json:"elasticService"`
 	Username    string `json:"elasticUsername"`
 	Password    string `json:"elasticPassword"`
 	ElasticCERT string `json:"elasticCert"`
+}
+
+func UnmarshalCreateResult(data []byte) (CreateResult, error) {
+	var r CreateResult
+	err := json.Unmarshal(data, &r)
+	return r, err
+}
+
+func (r *CreateResult) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+type CreateResult struct {
+	Index       string `json:"_index"`
+	Type        string `json:"_type"`
+	ID          string `json:"_id"`
+	Version     int64  `json:"_version"`
+	Result      string `json:"result"`
+	Shards      Shards `json:"_shards"`
+	SeqNo       int64  `json:"_seq_no"`
+	PrimaryTerm int64  `json:"_primary_term"`
+}
+
+func UnmarshalIndexCreateResult(data []byte) (IndexCreateResult, error) {
+	var r IndexCreateResult
+	err := json.Unmarshal(data, &r)
+	return r, err
+}
+
+func (r *IndexCreateResult) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+type IndexCreateResult struct {
+	Acknowledged       bool   `json:"acknowledged"`
+	ShardsAcknowledged bool   `json:"shards_acknowledged"`
+	Index              string `json:"index"`
 }

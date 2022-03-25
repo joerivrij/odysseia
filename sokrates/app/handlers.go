@@ -6,7 +6,6 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/kpango/glg"
 	"github.com/odysseia/aristoteles/configs"
-	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/helpers"
 	"github.com/odysseia/plato/middleware"
 	"github.com/odysseia/plato/models"
@@ -18,6 +17,14 @@ type SokratesHandler struct {
 	Config *configs.SokratesConfig
 }
 
+const (
+	Method     string = "method"
+	Authors    string = "authors"
+	Category   string = "category"
+	Categories string = "categories"
+	Chapter    string = "chapter"
+)
+
 // PingPong pongs the ping
 func (s *SokratesHandler) PingPong(w http.ResponseWriter, req *http.Request) {
 	pingPong := models.ResultModel{Result: "pong"}
@@ -26,7 +33,7 @@ func (s *SokratesHandler) PingPong(w http.ResponseWriter, req *http.Request) {
 
 // returns the health of the api
 func (s *SokratesHandler) health(w http.ResponseWriter, req *http.Request) {
-	health := helpers.GetHealthOfApp(s.Config.ElasticClient)
+	health := helpers.GetHealthOfApp(s.Config.Elastic)
 	if !health.Healthy {
 		middleware.ResponseWithCustomCode(w, 502, health)
 		return
@@ -37,15 +44,15 @@ func (s *SokratesHandler) health(w http.ResponseWriter, req *http.Request) {
 
 func (s *SokratesHandler) FindHighestChapter(w http.ResponseWriter, req *http.Request) {
 	pathParams := mux.Vars(req)
-	category := pathParams["category"]
-	method := pathParams["method"]
+	category := pathParams[Category]
+	method := pathParams[Method]
 
 	if len(category) < 2 {
 		e := models.ValidationError{
 			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
 			Messages: []models.ValidationMessages{
 				{
-					Field:   "category",
+					Field:   Category,
 					Message: "must be longer than 1",
 				},
 			},
@@ -54,26 +61,19 @@ func (s *SokratesHandler) FindHighestChapter(w http.ResponseWriter, req *http.Re
 		return
 	}
 
-	query := map[string]interface{}{
-		"query": map[string]interface{}{
-			"bool": map[string]interface{}{
-				"must": []map[string]interface{}{
-					{
-						"match": map[string]interface{}{
-							"method": method,
-						},
-					},
-					{
-						"match": map[string]interface{}{
-							"category": category,
-						},
-					},
-				},
-			},
+	mustQuery := []map[string]string{
+		{
+			Method: method,
+		},
+		{
+			Category: category,
 		},
 	}
 
-	elasticResult, err := elastic.QueryWithDescendingSort(s.Config.ElasticClient, s.Config.Index, "chapter", 1, query)
+	query := s.Config.Elastic.Builder().MultipleMatch(mustQuery)
+	mode := "desc"
+
+	elasticResult, err := s.Config.Elastic.Query().MatchWithSort(s.Config.Index, mode, Chapter, 1, query)
 	if err != nil {
 		e := models.ElasticSearchError{
 			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
@@ -110,7 +110,8 @@ func (s *SokratesHandler) CheckAnswer(w http.ResponseWriter, req *http.Request) 
 		return
 	}
 
-	elasticResult, err := elastic.QueryWithMatch(s.Config.ElasticClient, s.Config.Index, s.Config.SearchWord, checkAnswerRequest.QuizWord)
+	query := s.Config.Elastic.Builder().MatchQuery(s.Config.SearchWord, checkAnswerRequest.QuizWord)
+	elasticResult, err := s.Config.Elastic.Query().Match(s.Config.Index, query)
 	if err != nil {
 		e := models.ElasticSearchError{
 			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
@@ -161,48 +162,38 @@ func (s *SokratesHandler) CreateQuestion(w http.ResponseWriter, req *http.Reques
 
 	var quiz models.QuizResponse
 
-	query := map[string]interface{}{
-		"query": map[string]interface{}{
-			"bool": map[string]interface{}{
-				"must": []map[string]interface{}{
-					{
-						"match": map[string]interface{}{
-							"method": method,
-						},
-					},
-					{
-						"match": map[string]interface{}{
-							"category": category,
-						},
-					},
-					{
-						"match": map[string]interface{}{
-							"chapter": chapter,
-						},
-					},
-				},
-			},
+	mustQuery := []map[string]string{
+		{
+			Method: method,
+		},
+		{
+			Category: category,
+		},
+		{
+			Chapter: chapter,
 		},
 	}
 
-	elasticResponse, err := elastic.QueryWithScroll(s.Config.ElasticClient, s.Config.Index, query)
+	query := s.Config.Elastic.Builder().MultipleMatch(mustQuery)
+
+	elasticResponse, err := s.Config.Elastic.Query().MatchWithScroll(s.Config.Index, query)
+
 	if err != nil {
+		if strings.Contains(err.Error(), "404") {
+			e := models.NotFoundError{
+				ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
+				Message: models.NotFoundMessage{
+					Type:   "no results",
+					Reason: fmt.Sprintf("category: %s chapter: %s method: %s", category, chapter, method),
+				},
+			}
+			middleware.ResponseWithJson(w, e)
+			return
+		}
 		e := models.ElasticSearchError{
 			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
 			Message: models.ElasticErrorMessage{
 				ElasticError: err.Error(),
-			},
-		}
-		middleware.ResponseWithJson(w, e)
-		return
-	}
-
-	if len(elasticResponse.Hits.Hits) == 0 {
-		e := models.NotFoundError{
-			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
-			Message: models.NotFoundMessage{
-				Type:   "no results",
-				Reason: fmt.Sprintf("category: %s chapter: %s method: %s", category, chapter, method),
 			},
 		}
 		middleware.ResponseWithJson(w, e)
@@ -244,7 +235,8 @@ func (s *SokratesHandler) CreateQuestion(w http.ResponseWriter, req *http.Reques
 
 func (s *SokratesHandler) queryMethods(w http.ResponseWriter, req *http.Request) {
 	field := "method.keyword"
-	elasticResult, err := elastic.QueryUniqueField(s.Config.ElasticClient, field, s.Config.Index)
+	query := s.Config.Elastic.Builder().Aggregate(Authors, field)
+	elasticResult, err := s.Config.Elastic.Query().MatchAggregate(s.Config.Index, query)
 
 	if err != nil {
 		e := models.ElasticSearchError{
@@ -268,29 +260,12 @@ func (s *SokratesHandler) queryMethods(w http.ResponseWriter, req *http.Request)
 
 func (s *SokratesHandler) queryCategories(w http.ResponseWriter, req *http.Request) {
 	pathParams := mux.Vars(req)
-	method := pathParams["method"]
-	field := "category.keyword"
+	method := pathParams[Method]
+	field := fmt.Sprintf("%s.keyword", Category)
 
-	query := map[string]interface{}{
-		"query": map[string]interface{}{
-			"match_phrase": map[string]interface{}{
-				"method": method,
-			},
-		},
-		"size": 0,
-		"aggs": map[string]interface{}{
-			"categories": map[string]interface{}{
-				"terms": map[string]interface{}{
-					"field": field,
-					"size":  500,
-				},
-			},
-		},
-	}
+	query := s.Config.Elastic.Builder().FilteredAggregate(Method, method, Categories, field)
+	elasticResult, err := s.Config.Elastic.Query().MatchAggregate(s.Config.Index, query)
 
-	elasticResult, err := elastic.QueryUniqueWithSupplied(s.Config.ElasticClient, s.Config.Index, query)
-
-	glg.Info(elasticResult)
 	if err != nil {
 		e := models.ElasticSearchError{
 			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},

@@ -6,7 +6,7 @@ import (
 )
 
 func (v *Vault) CreateNewSecret(name string, payload []byte) (bool, error) {
-	vaultPath := fmt.Sprintf("configs/data/%s", name)
+	vaultPath := fmt.Sprintf("%s/%s", v.SecretPath, name)
 
 	_, err := v.Connection.Logical().WriteBytes(vaultPath, payload)
 	if err != nil {
@@ -17,7 +17,7 @@ func (v *Vault) CreateNewSecret(name string, payload []byte) (bool, error) {
 }
 
 func (v *Vault) GetSecret(name string) (*api.Secret, error) {
-	vaultPath := fmt.Sprintf("configs/data/%s", name)
+	vaultPath := fmt.Sprintf("%s/%s", v.SecretPath, name)
 
 	secret, err := v.Connection.Logical().Read(vaultPath)
 	if err != nil {

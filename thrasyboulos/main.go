@@ -7,6 +7,7 @@ import (
 	"github.com/odysseia/thrasyboulos/app"
 	"os"
 	"strings"
+	"time"
 )
 
 func init() {
@@ -39,8 +40,12 @@ func main() {
 		glg.Fatal("could not parse config")
 	}
 
+	duration := time.Millisecond * 5000
+	minute := time.Minute * 60
+	timeFinished := minute.Milliseconds()
+
 	done := make(chan bool)
-	handler := app.ThrasyboulosHandler{Config: config}
+	handler := app.ThrasyboulosHandler{Config: config, Duration: duration, TimeFinished: timeFinished}
 
 	go func() {
 		handler.WaitForJobsToFinish(done)

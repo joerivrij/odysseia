@@ -5,6 +5,14 @@ import (
 	"github.com/kpango/glg"
 )
 
+func (v *Vault) SetOnetimeToken(token string) {
+	v.Connection.SetToken(token)
+}
+
+func (v *Vault) GetCurrentToken() string {
+	return v.Connection.Token()
+}
+
 func (v *Vault) CreateOneTimeToken(policy []string) (string, error) {
 	renew := false
 
@@ -18,8 +26,10 @@ func (v *Vault) CreateOneTimeToken(policy []string) (string, error) {
 
 	glg.Debug("request created")
 
-	resp, _ := v.Connection.Auth().Token().Create(&tokenRequest)
-	token := resp.Auth.ClientToken
+	resp, err := v.Connection.Auth().Token().Create(&tokenRequest)
+	if err != nil {
+		return "", err
+	}
 
-	return token, nil
+	return resp.Auth.ClientToken, nil
 }

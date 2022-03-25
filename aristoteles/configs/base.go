@@ -1,5 +1,7 @@
 package configs
 
+import "github.com/odysseia/plato/service"
+
 type BaseConfig struct {
 	Index                string `yaml:"INDEX"`
 	SolonService         string `yaml:"SOLON_SERVICE"`
@@ -11,4 +13,5 @@ type BaseConfig struct {
 	TestOverwrite        bool   `yaml:"TEST_OVERWRITE"`
 	SidecarOverwrite     bool
 	HealthCheck          bool
+	HttpClient           service.HttpClient
 }

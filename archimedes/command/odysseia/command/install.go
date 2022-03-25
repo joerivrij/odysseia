@@ -44,6 +44,7 @@ func Install() *cobra.Command {
 		themistoklesPath string
 		odysseiaRootPath string
 		profile          string
+		unseal           bool
 	)
 	cmd := &cobra.Command{
 		Use:   "install",
@@ -162,7 +163,7 @@ func Install() *cobra.Command {
 				WhiteList:        wl.AppsToInstall,
 			}
 
-			err = odysseia.installOdysseiaComplete()
+			err = odysseia.installOdysseiaComplete(unseal)
 			if err != nil {
 				glg.Error(err)
 				os.Exit(1)
@@ -173,6 +174,7 @@ func Install() *cobra.Command {
 	cmd.PersistentFlags().StringVarP(&kubePath, "kubepath", "k", "", "kubeconfig filepath defaults to ~/.kube/config")
 	cmd.PersistentFlags().StringVarP(&themistoklesPath, "themistokles", "t", "", "the path to your helm chart")
 	cmd.PersistentFlags().StringVarP(&odysseiaRootPath, "odysseia", "o", "", "the path to your odysseia root")
+	cmd.PersistentFlags().BoolVarP(&unseal, "unseal", "u", false, "whether to unseal vault")
 	cmd.PersistentFlags().StringVarP(&profile, "profile", "p", "docker-desktop", "what profile to use for the install")
 
 	return cmd
@@ -207,7 +209,7 @@ type Themistokles struct {
 	Apis          []string
 }
 
-func (o *OdysseiaInstaller) installOdysseiaComplete() error {
+func (o *OdysseiaInstaller) installOdysseiaComplete(unseal bool) error {
 	err := o.preSteps()
 	if err != nil {
 		return err
@@ -225,7 +227,7 @@ func (o *OdysseiaInstaller) installOdysseiaComplete() error {
 
 	defer func() {
 		//save config to configpath
-		err := o.checkConfigForEmpty()
+		err = o.checkConfigForEmpty()
 		if err != nil {
 			glg.Error(err)
 		}
@@ -325,6 +327,10 @@ func (o *OdysseiaInstaller) installOdysseiaComplete() error {
 		if err != nil {
 			return err
 		}
+	}
+
+	if unseal {
+		vaultCommand.UnsealVault("", o.Namespace, o.Kube)
 	}
 
 	installSolon := false

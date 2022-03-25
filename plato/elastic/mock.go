@@ -102,3 +102,20 @@ func CreateMockClient(fixtureFile string, statusCode int) (*elasticsearch.Client
 
 	return client, nil
 }
+
+func CreateEmptyClient() (*elasticsearch.Client, error) {
+	mockTrans := MockTransport{
+		Response: &http.Response{
+			StatusCode: 503,
+			Body:       nil,
+		},
+	}
+	mockTrans.RoundTripFn = func(req *http.Request) (*http.Response, error) { return mockTrans.Response, nil }
+
+	client, err := elasticsearch.NewDefaultClient()
+	if err != nil {
+		return nil, err
+	}
+
+	return client, nil
+}

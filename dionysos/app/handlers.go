@@ -21,7 +21,7 @@ func (d *DionysosHandler) pingPong(w http.ResponseWriter, req *http.Request) {
 
 // returns the health of the api
 func (d *DionysosHandler) health(w http.ResponseWriter, req *http.Request) {
-	health := helpers.GetHealthOfApp(d.Config.ElasticClient)
+	health := helpers.GetHealthOfApp(d.Config.Elastic)
 	if !health.Healthy {
 		middleware.ResponseWithCustomCode(w, 502, health)
 		return

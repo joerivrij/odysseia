@@ -1,0 +1,38 @@
+{
+  "took" : 5,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 1,
+    "successful" : 1,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 7,
+      "relation" : "eq"
+    },
+    "max_score" : null,
+    "hits" : [ ]
+  },
+  "aggregations" : {
+    "authors" : {
+      "doc_count_error_upper_bound" : 0,
+      "sum_other_doc_count" : 0,
+      "buckets" : [
+        {
+          "key" : "Herodotos",
+          "doc_count" : 3
+        },
+        {
+          "key" : "Thucydides",
+          "doc_count" : 2
+        },
+        {
+          "key" : "Ploutarchos",
+          "doc_count" : 1
+        }
+      ]
+    }
+  }
+}

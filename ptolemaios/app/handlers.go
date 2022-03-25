@@ -7,20 +7,28 @@ import (
 	"github.com/odysseia/plato/helpers"
 	"github.com/odysseia/plato/middleware"
 	"github.com/odysseia/plato/models"
-	"github.com/odysseia/plato/vault"
 	"net/http"
-	"os"
+	"strconv"
 	"time"
 )
 
 type PtolemaiosHandler struct {
-	Config *configs.PtolemaiosConfig
+	Config   *configs.PtolemaiosConfig
+	Duration time.Duration
 }
 
 // PingPong pongs the ping
 func (p *PtolemaiosHandler) PingPong(w http.ResponseWriter, req *http.Request) {
 	pingPong := models.ResultModel{Result: "pong"}
 	middleware.ResponseWithJson(w, pingPong)
+}
+
+func (p *PtolemaiosHandler) Health(w http.ResponseWriter, r *http.Request) {
+	vaultHealth, _ := p.Config.Vault.Health()
+	glg.Debugf("%s : %s", "vault healthy", strconv.FormatBool(vaultHealth))
+
+	healthy := helpers.GetHealthWithVault(vaultHealth)
+	middleware.ResponseWithJson(w, healthy)
 }
 
 func (p *PtolemaiosHandler) GetSecretFromVault(w http.ResponseWriter, req *http.Request) {
@@ -39,22 +47,8 @@ func (p *PtolemaiosHandler) GetSecretFromVault(w http.ResponseWriter, req *http.
 		return
 	}
 
-	client, err := vault.CreateVaultClient(p.Config.VaultService, oneTimeToken)
-	if err != nil {
-		e := models.ValidationError{
-			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
-			Messages: []models.ValidationMessages{
-				{
-					Field:   "createVault",
-					Message: err.Error(),
-				},
-			},
-		}
-		middleware.ResponseWithJson(w, e)
-		return
-	}
-
-	secret, err := client.GetSecret(p.Config.PodName)
+	p.Config.Vault.SetOnetimeToken(oneTimeToken)
+	secret, err := p.Config.Vault.GetSecret(p.Config.PodName)
 	if err != nil {
 		e := models.ValidationError{
 			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
@@ -78,43 +72,30 @@ func (p *PtolemaiosHandler) GetSecretFromVault(w http.ResponseWriter, req *http.
 	}
 
 	middleware.ResponseWithJson(w, elasticModel)
-	if p.Config.RunOnce {
-		go p.CheckForJobExit()
-	}
 
 	return
 }
 
 func (p *PtolemaiosHandler) getOneTimeToken() (string, error) {
-	u := p.Config.SolonService
-	u.Path = "/solon/v1/token"
-	response, err := helpers.GetRequest(u)
+	response, err := p.Config.HttpClients.Solon().OneTimeToken()
 	if err != nil {
 		return "", err
 	}
 
-	defer response.Body.Close()
-
-	var tokenModel models.TokenResponse
-	err = json.NewDecoder(response.Body).Decode(&tokenModel)
-	if err != nil {
-		return "", err
-	}
-
-	glg.Debugf("found token: %s", tokenModel.Token)
-
-	return tokenModel.Token, nil
+	glg.Debugf("found token: %s", response.Token)
+	return response.Token, nil
 }
 
-func (p *PtolemaiosHandler) CheckForJobExit() {
+func (p *PtolemaiosHandler) CheckForJobExit(exitChannel chan bool) {
 	var counter int
 	for {
 		counter++
-		glg.Debug("run number: %d", counter)
-		time.Sleep(10 * time.Second)
+		glg.Debugf("run number: %d", counter)
+		time.Sleep(p.Duration)
 		pod, err := p.Config.Kube.Workload().GetPodByName(p.Config.Namespace, p.Config.FullPodName)
 		if err != nil {
 			glg.Errorf("error getting kube response %s", err)
+			continue
 		}
 
 		for _, container := range pod.Status.ContainerStatuses {
@@ -125,8 +106,7 @@ func (p *PtolemaiosHandler) CheckForJobExit() {
 					continue
 				}
 				if container.State.Terminated.ExitCode == 0 {
-					glg.Debug("exiting because of condition")
-					os.Exit(0)
+					exitChannel <- true
 				}
 			}
 		}

@@ -44,7 +44,7 @@ func main() {
 		glg.Fatal("could not parse config")
 	}
 
-	declensionConfig := app.QueryRuleSet(&dionysosConfig.ElasticClient, dionysosConfig.Index)
+	declensionConfig, _ := app.QueryRuleSet(dionysosConfig.Elastic, dionysosConfig.Index)
 	dionysosConfig.DeclensionConfig = *declensionConfig
 
 	srv := app.InitRoutes(*dionysosConfig)

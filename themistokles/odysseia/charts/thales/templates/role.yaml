@@ -14,6 +14,9 @@ rules:
       - leases
     verbs:
       - '*'
-  - apiGroups: [""] # "" indicates the core API group
+  - apiGroups: ["batch"] # "" indicates the core API group
     resources: ["jobs"]
+    verbs: ["get"]
+  - apiGroups: [""]
+    resources: ["pods"]
     verbs: ["get"]

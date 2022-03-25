@@ -13,7 +13,7 @@ type NodesImpl struct {
 	client v1.CoreV1Interface
 }
 
-func NewNodesClient(kube *kubernetes.Clientset) (*NodesImpl, error) {
+func NewNodesClient(kube kubernetes.Interface) (*NodesImpl, error) {
 	coreClient := kube.CoreV1()
 
 	return &NodesImpl{client: coreClient}, nil

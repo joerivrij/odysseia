@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/kpango/glg"
-	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/middleware"
 	"github.com/odysseia/plato/models"
 	"golang.org/x/text/runes"
@@ -20,7 +19,8 @@ func (d *DionysosHandler) queryWordInElastic(word string) ([]models.Meros, error
 	strippedWord := d.removeAccents(word)
 
 	term := "greek"
-	response, err := elastic.QueryWithMatch(d.Config.ElasticClient, d.Config.SecondaryIndex, term, strippedWord)
+	query := d.Config.Elastic.Builder().MatchQuery(term, strippedWord)
+	response, err := d.Config.Elastic.Query().Match(d.Config.SecondaryIndex, query)
 
 	if err != nil {
 		errText := err.Error()
@@ -92,7 +92,6 @@ func (d *DionysosHandler) StartFindingRules(word string) (*models.DeclensionTran
 					dictionaryHits, err := d.queryWordInElastic(term)
 					if err != nil {
 						glg.Debug("word not found in database")
-						//this should be handled in a new service
 					}
 					for _, hit := range dictionaryHits {
 						translation, article := d.parseDictResults(hit)
@@ -168,17 +167,22 @@ func (d *DionysosHandler) StartFindingRules(word string) (*models.DeclensionTran
 	}
 
 	if len(results.Results) > 1 {
-		lastRule := ""
+		lastResult := models.Result{
+			Word:        "",
+			Rule:        "",
+			RootWord:    "",
+			Translation: "",
+		}
 		for i, result := range results.Results {
 			if result.Rule != "preposition" {
-				if lastRule == result.Rule {
+				if lastResult.Rule == result.Rule && result.Translation == lastResult.Translation {
 					results.RemoveIndex(i)
 				}
 			}
 			if result.Translation == "" {
 				results.RemoveIndex(i)
 			}
-			lastRule = result.Rule
+			lastResult = result
 		}
 	}
 	return &results, nil

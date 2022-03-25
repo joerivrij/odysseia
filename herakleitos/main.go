@@ -55,8 +55,14 @@ func main() {
 
 	handler := app.HerakleitosHandler{Config: herakleitosConfig}
 
-	handler.DeleteIndexAtStartUp()
-	handler.CreateIndexAtStartup()
+	err = handler.DeleteIndexAtStartUp()
+	if err != nil {
+		glg.Fatal(err)
+	}
+	err = handler.CreateIndexAtStartup()
+	if err != nil {
+		glg.Fatal(err)
+	}
 
 	var wg sync.WaitGroup
 	documents := 0
@@ -81,7 +87,12 @@ func main() {
 				documents += len(rhemai.Rhemai)
 
 				wg.Add(1)
-				go handler.Add(rhemai, &wg)
+				go func() {
+					err := handler.Add(rhemai, &wg)
+					if err != nil {
+						glg.Error(err)
+					}
+				}()
 			}
 		}
 	}

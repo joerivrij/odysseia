@@ -6,6 +6,7 @@ import (
 	batchv1 "k8s.io/api/batch/v1"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/kubernetes/fake"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/tools/leaderelection/resourcelock"
@@ -58,6 +59,7 @@ type Workload interface {
 	GetPodsBySelector(namespace, selector string) (*corev1.PodList, error)
 	GetPodByName(namespace, name string) (*corev1.Pod, error)
 	GetDeploymentStatus(namespace string) (bool, error)
+	CreateJob(namespace string, spec *batchv1.Job) (*batchv1.Job, error)
 	GetJob(namespace, name string) (*batchv1.Job, error)
 	ListJobs(namespace string) (*batchv1.JobList, error)
 	GetNewLock(lockName, podName, namespace string) *resourcelock.LeaseLock
@@ -158,6 +160,57 @@ func NewConfigBasedKube(config []byte, ns string) (*Kube, error) {
 	return &Kube{
 		set:           clientSet,
 		config:        config,
+		access:        access,
+		cluster:       cluster,
+		configuration: configuration,
+		workload:      workload,
+		util:          util,
+		nodes:         nodes,
+		namespace:     namespaceClient,
+	}, nil
+}
+
+func FakeKubeClient(ns string) (KubeClient, error) {
+	clientSet := fake.NewSimpleClientset()
+
+	access, err := NewAccessClient(clientSet, ns)
+	if err != nil {
+		return nil, err
+	}
+
+	cluster, err := NewClusterClient(nil)
+	if err != nil {
+		return nil, err
+	}
+
+	configuration, err := NewConfigurationClient(clientSet)
+	if err != nil {
+		return nil, err
+	}
+
+	namespaceClient, err := NewNamespaceClient(clientSet)
+	if err != nil {
+		return nil, err
+	}
+
+	workload, err := NewWorkloadClient(clientSet)
+	if err != nil {
+		return nil, err
+	}
+
+	util, err := NewUtilClient(clientSet, ns)
+	if err != nil {
+		return nil, err
+	}
+
+	nodes, err := NewNodesClient(clientSet)
+	if err != nil {
+		return nil, err
+	}
+
+	return &Kube{
+		set:           nil,
+		config:        nil,
 		access:        access,
 		cluster:       cluster,
 		configuration: configuration,

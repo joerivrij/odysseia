@@ -13,7 +13,7 @@ type ConfigurationImpl struct {
 	client v1.CoreV1Interface
 }
 
-func NewConfigurationClient(kube *kubernetes.Clientset) (*ConfigurationImpl, error) {
+func NewConfigurationClient(kube kubernetes.Interface) (*ConfigurationImpl, error) {
 	coreClient := kube.CoreV1()
 
 	return &ConfigurationImpl{client: coreClient}, nil

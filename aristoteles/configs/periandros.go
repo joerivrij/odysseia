@@ -3,12 +3,12 @@ package configs
 import (
 	"github.com/odysseia/plato/kubernetes"
 	"github.com/odysseia/plato/models"
-	"net/url"
+	"github.com/odysseia/plato/service"
 )
 
 type PeriandrosConfig struct {
 	Namespace            string
-	SolonService         *url.URL
+	HttpClients          service.OdysseiaClient
 	SolonCreationRequest models.SolonCreationRequest
 	Kube                 kubernetes.KubeClient
 }

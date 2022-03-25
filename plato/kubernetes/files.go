@@ -24,7 +24,7 @@ type UtilImpl struct {
 	ns   string
 }
 
-func NewUtilClient(kube *kubernetes.Clientset, namespace string) (*UtilImpl, error) {
+func NewUtilClient(kube kubernetes.Interface, namespace string) (*UtilImpl, error) {
 	set := kube.CoreV1().RESTClient()
 
 	return &UtilImpl{rest: set, ns: namespace}, nil

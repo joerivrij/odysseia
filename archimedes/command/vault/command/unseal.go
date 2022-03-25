@@ -57,7 +57,7 @@ func Unseal() *cobra.Command {
 
 			glg.Info("is it secret? Is it safe? Well no longer!")
 			glg.Debug("unsealing kube vault")
-			unsealVault(key, namespace, archimedesConfig.Kube)
+			UnsealVault(key, namespace, archimedesConfig.Kube)
 		},
 	}
 
@@ -68,7 +68,7 @@ func Unseal() *cobra.Command {
 	return cmd
 }
 
-func unsealVault(key, namespace string, kube kubernetes.KubeClient) {
+func UnsealVault(key, namespace string, kube kubernetes.KubeClient) {
 	if key == "" {
 		glg.Info("key was not given, trying to get key from cluster-keys.json")
 		clusterKeys, err := vault.GetClusterKeys()

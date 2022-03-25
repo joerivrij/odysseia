@@ -48,10 +48,11 @@ images:
     repo: thales
 
 envVariables:
-  mqService: kubemq
   solonService: http://solon-service:5000
   vaultService: http://vault:8200
   elasticService: https://elastic-master:9200
+  mqService: kubemq
+  mqPort: 50000
   sidecar:
     port: 5001
 
