@@ -2,8 +2,6 @@ package app
 
 import (
 	"encoding/json"
-	"fmt"
-	"github.com/elastic/go-elasticsearch/v7"
 	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/models"
 	"io/ioutil"
@@ -13,7 +11,7 @@ import (
 	"strings"
 )
 
-func QueryRuleSet(es *elasticsearch.Client, index string) *models.DeclensionConfig {
+func QueryRuleSet(es elastic.Client, index string) (*models.DeclensionConfig, error) {
 	var local bool
 
 	localString := os.Getenv("ENV")
@@ -26,25 +24,26 @@ func QueryRuleSet(es *elasticsearch.Client, index string) *models.DeclensionConf
 	if local {
 		declension, err := getJsonFilesFromAnaximander()
 		if err != nil {
-			panic(fmt.Sprintf("Cannot start Dionysos encountered error when creating config: %s", err))
+			return nil, err
 		}
 
-		return declension
+		return declension, nil
 	} else {
-		response, err := elastic.QueryWithMatchAll(*es, index)
+		query := es.Builder().MatchAll()
+		response, err := es.Query().Match(index, query)
 
 		if err != nil {
-			panic(fmt.Sprintf("Cannot start Dionysos encountered error when creating config: %s", err))
+			return nil, err
 		}
 		var declensionConfig models.DeclensionConfig
 		for _, jsonHit := range response.Hits.Hits {
 			byteJson, err := json.Marshal(jsonHit.Source)
 			if err != nil {
-				panic(fmt.Sprintf("Cannot start Dionysos encountered error when creating config: %s", err))
+				return nil, err
 			}
 			declension, err := models.UnmarshalDeclension(byteJson)
 			if err != nil {
-				panic(fmt.Sprintf("Cannot start Dionysos encountered error when creating config: %s", err))
+				return nil, err
 			}
 			switch declension.Name {
 			case "firstDeclension":
@@ -55,7 +54,7 @@ func QueryRuleSet(es *elasticsearch.Client, index string) *models.DeclensionConf
 				continue
 			}
 		}
-		return &declensionConfig
+		return &declensionConfig, nil
 	}
 }
 
@@ -77,13 +76,13 @@ func getJsonFilesFromAnaximander() (*models.DeclensionConfig, error) {
 	anaximanderDir := filepath.Join(l, "anaximander", "arkho", "nouns", "*.json")
 	declensionFiles, err := filepath.Glob(anaximanderDir)
 	if err != nil {
-		panic(fmt.Sprintf("Cannot glob fixture files: %s", err))
+		return nil, err
 	}
 
 	for _, fpath := range declensionFiles {
 		f, err := ioutil.ReadFile(fpath)
 		if err != nil {
-			panic(fmt.Sprintf("Cannot read fixture file: %s", err))
+			return nil, err
 		}
 
 		declension, err := models.UnmarshalDeclension(f)

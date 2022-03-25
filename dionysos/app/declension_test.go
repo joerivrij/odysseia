@@ -1,31 +1,38 @@
-//go:build integration
-// +build integration
+//go:build !integration
+// +build !integration
 
 package app
 
 import (
+	"github.com/kpango/glg"
+	"github.com/odysseia/aristoteles"
+	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/plato/elastic"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
 func TestFirstDeclensionFemNouns(t *testing.T) {
+	if testing.Short() {
+		t.Skip("skipping testing in short mode")
+	}
 	t.Parallel()
 
-	elasticClient, err := elastic.CreateElasticClientFromEnvVariables()
-	assert.Nil(t, err)
-
-	declensionConfig := QueryRuleSet(nil, "dionysos")
-	assert.Nil(t, err)
-
-	testConfig := DionysosConfig{
-		ElasticClient:    *elasticClient,
-		DictionaryIndex:  dictionaryIndexDefault,
-		Index:            elasticIndexDefault,
-		DeclensionConfig: *declensionConfig,
+	baseConfig := configs.DionysosConfig{}
+	unparsedConfig, err := aristoteles.NewConfig(baseConfig)
+	if err != nil {
+		glg.Error(err)
+		glg.Fatal("death has found me")
+	}
+	dionysosConfig, ok := unparsedConfig.(*configs.DionysosConfig)
+	if !ok {
+		glg.Fatal("could not parse config")
 	}
 
-	handler := DionysosHandler{Config: &testConfig}
+	declensionConfig, _ := QueryRuleSet(dionysosConfig.Elastic, dionysosConfig.Index)
+	dionysosConfig.DeclensionConfig = *declensionConfig
+
+	handler := DionysosHandler{Config: dionysosConfig}
 
 	t.Run("NominativusFemSing", func(t *testing.T) {
 		words := []string{"μάχη", "δόξα"}
@@ -140,17 +147,22 @@ func TestFirstDeclensionFemNouns(t *testing.T) {
 }
 
 func TestFirstDeclensionMascNouns(t *testing.T) {
+	if testing.Short() {
+		t.Skip("skipping testing in short mode")
+	}
 	t.Parallel()
 
-	elasticClient, err := elastic.CreateElasticClientFromEnvVariables()
+	fixtureFile := "declensionsDionysos"
+	mockCode := 200
+	mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
+
+	declensionConfig, err := QueryRuleSet(mockElasticClient, "dionysos")
+	assert.NotNil(t, declensionConfig)
 	assert.Nil(t, err)
 
-	declensionConfig := QueryRuleSet(nil, "dionysos")
-	assert.Nil(t, err)
-
-	testConfig := DionysosConfig{
-		ElasticClient:    *elasticClient,
-		DictionaryIndex:  dictionaryIndexDefault,
+	testConfig := configs.DionysosConfig{
+		Elastic:          mockElasticClient,
+		SecondaryIndex:   dictionaryIndexDefault,
 		Index:            elasticIndexDefault,
 		DeclensionConfig: *declensionConfig,
 	}
@@ -249,17 +261,22 @@ func TestFirstDeclensionMascNouns(t *testing.T) {
 }
 
 func TestSecondDeclensionMascNouns(t *testing.T) {
+	if testing.Short() {
+		t.Skip("skipping testing in short mode")
+	}
 	t.Parallel()
 
-	elasticClient, err := elastic.CreateElasticClientFromEnvVariables()
+	fixtureFile := "declensionsDionysos"
+	mockCode := 200
+	mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
+
+	declensionConfig, err := QueryRuleSet(mockElasticClient, "dionysos")
+	assert.NotNil(t, declensionConfig)
 	assert.Nil(t, err)
 
-	declensionConfig := QueryRuleSet(nil, "dionysos")
-	assert.Nil(t, err)
-
-	testConfig := DionysosConfig{
-		ElasticClient:    *elasticClient,
-		DictionaryIndex:  dictionaryIndexDefault,
+	testConfig := configs.DionysosConfig{
+		Elastic:          mockElasticClient,
+		SecondaryIndex:   dictionaryIndexDefault,
 		Index:            elasticIndexDefault,
 		DeclensionConfig: *declensionConfig,
 	}
@@ -388,17 +405,22 @@ func TestSecondDeclensionMascNouns(t *testing.T) {
 }
 
 func TestSecondDeclensionNeuterNouns(t *testing.T) {
+	if testing.Short() {
+		t.Skip("skipping testing in short mode")
+	}
 	t.Parallel()
 
-	elasticClient, err := elastic.CreateElasticClientFromEnvVariables()
+	fixtureFile := "declensionsDionysos"
+	mockCode := 200
+	mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
+
+	declensionConfig, err := QueryRuleSet(mockElasticClient, "dionysos")
+	assert.NotNil(t, declensionConfig)
 	assert.Nil(t, err)
 
-	declensionConfig := QueryRuleSet(nil, "dionysos")
-	assert.Nil(t, err)
-
-	testConfig := DionysosConfig{
-		ElasticClient:    *elasticClient,
-		DictionaryIndex:  dictionaryIndexDefault,
+	testConfig := configs.DionysosConfig{
+		Elastic:          mockElasticClient,
+		SecondaryIndex:   dictionaryIndexDefault,
 		Index:            elasticIndexDefault,
 		DeclensionConfig: *declensionConfig,
 	}

@@ -5,22 +5,35 @@ import (
 	"fmt"
 	"github.com/hashicorp/vault/api"
 	auth "github.com/hashicorp/vault/api/auth/kubernetes"
+	"github.com/hashicorp/vault/http"
+	"github.com/hashicorp/vault/vault"
+	"testing"
 	"time"
 )
 
 type Client interface {
-	CheckHealthyStatus(ticks time.Duration) bool
+	CheckHealthyStatus(ticks, tick time.Duration) bool
 	Health() (bool, error)
 	CreateOneTimeToken(policy []string) (string, error)
 	CreateNewSecret(name string, payload []byte) (bool, error)
 	GetSecret(name string) (*api.Secret, error)
+	SetOnetimeToken(token string)
+	GetCurrentToken() string
 }
 
 type Vault struct {
+	SecretPath string
 	Connection *api.Client
 }
 
-func CreateVaultClient(address, token string) (Client, error) {
+const (
+	defaultPath       string = "configs/data"
+	fixtureSecretName string = "isitsecretisitsafe"
+	fixtureKey        string = "keytothesidedoor"
+	fixtureValue      string = "oferebor"
+)
+
+func NewVaultClient(address, token string) (Client, error) {
 	config := api.Config{
 		Address: address,
 	}
@@ -32,7 +45,50 @@ func CreateVaultClient(address, token string) (Client, error) {
 
 	client.SetToken(token)
 
-	return &Vault{Connection: client}, nil
+	return &Vault{Connection: client, SecretPath: defaultPath}, nil
+}
+
+func NewMockVaultClient(t *testing.T) (Client, error) {
+	t.Helper()
+
+	core, keyShares, rootToken := vault.TestCoreUnsealed(t)
+	_ = keyShares
+
+	ln, addr := http.TestServer(t, core)
+
+	defer ln.Close()
+	conf := api.DefaultConfig()
+	conf.Address = addr
+
+	client, err := api.NewClient(conf)
+	if err != nil {
+		return nil, err
+	}
+	client.SetToken(rootToken)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	mount := api.MountInput{
+		Type:                  "kv",
+		Description:           "",
+		Config:                api.MountConfigInput{},
+		Local:                 false,
+		SealWrap:              false,
+		ExternalEntropyAccess: false,
+		Options:               nil,
+		PluginName:            "",
+	}
+
+	err = client.Sys().Mount(defaultPath, &mount)
+
+	fixtureSecret := fmt.Sprintf("%s/%s", defaultPath, fixtureSecretName)
+	_, err = client.Logical().Write(fixtureSecret, map[string]interface{}{
+		fixtureKey: fixtureValue,
+	})
+
+	return &Vault{Connection: client, SecretPath: defaultPath}, nil
 }
 
 func CreateVaultClientKubernetes(address, vaultRole, jwt string) (Client, error) {
@@ -61,5 +117,5 @@ func CreateVaultClientKubernetes(address, vaultRole, jwt string) (Client, error)
 
 	client.SetToken(resp.Auth.ClientToken)
 
-	return &Vault{Connection: client}, nil
+	return &Vault{Connection: client, SecretPath: defaultPath}, nil
 }

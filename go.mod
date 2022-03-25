@@ -5,7 +5,8 @@ go 1.16
 require (
 	github.com/elastic/go-elasticsearch/v7 v7.12.0
 	github.com/gorilla/mux v1.8.0
-	github.com/hashicorp/vault/api v1.3.0
+	github.com/hashicorp/vault v1.9.4 // indirect
+	github.com/hashicorp/vault/api v1.3.1
 	github.com/hashicorp/vault/api/auth/kubernetes v0.1.0
 	github.com/kpango/glg v1.5.8
 	github.com/kubemq-io/kubemq-go v1.7.2

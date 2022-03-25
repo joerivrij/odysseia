@@ -1,0 +1,33 @@
+{
+  "took" : 1,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 1,
+    "successful" : 1,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 236,
+      "relation" : "eq"
+    },
+    "max_score" : null,
+    "hits" : [
+      {
+        "_index" : "nomina",
+        "_type" : "_doc",
+        "_id" : "4Y6TlnsB9QC3skjkOi-D",
+        "_score" : null,
+        "_source" : {
+          "greek" : "ἅπας/ἅπασα/ἅπαν, ἅπαντος",
+          "translation" : "1. (ge)heel, al, ieder; 2. (plur.) alle(n), alle(s)",
+          "chapter" : 15
+        },
+        "sort" : [
+          15
+        ]
+      }
+    ]
+  }
+}

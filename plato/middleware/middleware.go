@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/kpango/glg"
+	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/models"
 	"gopkg.in/oauth2.v3/utils/uuid"
 	"net/http"
@@ -96,7 +97,7 @@ func ResponseWithJson(w http.ResponseWriter, payload interface{}) {
 		code = 200
 	case models.TokenResponse:
 		code = 200
-	case models.ElasticConfig:
+	case elastic.Config:
 		code = 200
 	case models.ElasticConfigVault:
 		code = 200

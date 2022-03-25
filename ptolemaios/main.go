@@ -48,6 +48,7 @@ func main() {
 
 	glg.Infof("%s : %s", "running on port", port)
 	err = http.ListenAndServe(port, srv)
+
 	if err != nil {
 		panic(err)
 	}

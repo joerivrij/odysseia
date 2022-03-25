@@ -1,33 +1,25 @@
 package app
 
 import (
-	"encoding/json"
+	"fmt"
 	"github.com/kpango/glg"
 	"github.com/odysseia/aristoteles/configs"
-	"github.com/odysseia/plato/helpers"
-	"github.com/odysseia/plato/models"
 	"time"
 )
 
 type PeriandrosHandler struct {
-	Config *configs.PeriandrosConfig
+	Config   *configs.PeriandrosConfig
+	Duration time.Duration
+	Timeout  time.Duration
 }
 
 func (p *PeriandrosHandler) CreateUser() (bool, error) {
-	path := "solon/v1/register"
-	p.Config.SolonService.Path = path
-
-	body, _ := p.Config.SolonCreationRequest.Marshal()
-
-	response, err := helpers.PostRequest(p.Config.SolonService, body)
-	if err != nil {
-		return false, err
+	healthy := p.CheckSolonHealth()
+	if !healthy {
+		return false, fmt.Errorf("solon not available cannot create user")
 	}
 
-	defer response.Body.Close()
-
-	var solonResponse models.SolonResponse
-	err = json.NewDecoder(response.Body).Decode(&solonResponse)
+	solonResponse, err := p.Config.HttpClients.Solon().Register(p.Config.SolonCreationRequest)
 	if err != nil {
 		return false, err
 	}
@@ -35,35 +27,23 @@ func (p *PeriandrosHandler) CreateUser() (bool, error) {
 	return solonResponse.Created, nil
 }
 
-func (p *PeriandrosHandler) CheckSolonHealth(ticks time.Duration) bool {
-	path := "solon/v1/health"
-	p.Config.SolonService.Path = path
-
+func (p *PeriandrosHandler) CheckSolonHealth() bool {
 	healthy := false
 
-	ticker := time.NewTicker(1 * time.Second)
-	timeout := time.After(ticks * time.Second)
+	ticker := time.NewTicker(p.Duration)
+	timeout := time.After(p.Timeout)
 
 	for {
 		select {
 		case t := <-ticker.C:
 			glg.Infof("tick: %s", t)
-			response, err := helpers.GetRequest(p.Config.SolonService)
+			response, err := p.Config.HttpClients.Solon().Health()
 			if err != nil {
 				glg.Errorf("Error getting response: %s", err)
 				continue
 			}
 
-			defer response.Body.Close()
-
-			var healthResponse models.Health
-			err = json.NewDecoder(response.Body).Decode(&healthResponse)
-			if err != nil {
-				glg.Errorf("Error getting response: %s", err)
-				continue
-			}
-
-			healthy = healthResponse.Healthy
+			healthy = response.Healthy
 			if !healthy {
 				continue
 			}

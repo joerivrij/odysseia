@@ -2,7 +2,6 @@ package helpers
 
 import (
 	"fmt"
-	"github.com/elastic/go-elasticsearch/v7"
 	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/models"
 	"io/ioutil"
@@ -12,11 +11,11 @@ import (
 	"time"
 )
 
-func GetHealthOfApp(elasticClient elasticsearch.Client) models.Health {
+func GetHealthOfApp(elasticClient elastic.Client) models.Health {
 	currentTime := time.Now()
 	memUsage := GetMemoryUsage()
 	cpuUsage := GetCPUSample()
-	elasticHealth := elastic.CheckHealth(&elasticClient)
+	elasticHealth := elasticClient.Health().Info()
 	overallHealth := false
 
 	cpuPercentage := strconv.FormatUint(cpuUsage, 10)

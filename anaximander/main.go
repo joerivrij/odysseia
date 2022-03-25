@@ -1,20 +1,19 @@
 package main
 
 import (
-	"context"
 	"embed"
 	"encoding/json"
 	"fmt"
-	"github.com/elastic/go-elasticsearch/v7/esapi"
 	"github.com/kpango/glg"
+	"github.com/odysseia/anaximander/app"
 	"github.com/odysseia/aristoteles"
 	"github.com/odysseia/aristoteles/configs"
-	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/models"
 	"os"
 	"path"
 	"strconv"
 	"strings"
+	"sync"
 )
 
 func init() {
@@ -55,7 +54,18 @@ func main() {
 		glg.Fatal(err)
 	}
 
-	elastic.DeleteIndex(&anaximanderConfig.ElasticClient, anaximanderConfig.Index)
+	handler := app.AnaximanderHandler{Config: anaximanderConfig}
+	err = handler.DeleteIndexAtStartUp()
+	if err != nil {
+		glg.Fatal(err)
+	}
+
+	err = handler.CreateIndexAtStartup()
+	if err != nil {
+		glg.Fatal(err)
+	}
+
+	var wg sync.WaitGroup
 
 	for _, dir := range rootDir {
 		glg.Debug("working on the following directory: " + dir.Name())
@@ -68,39 +78,23 @@ func main() {
 			for _, f := range files {
 				glg.Debug(fmt.Sprintf("found %s in %s", f.Name(), filePath))
 				plan, _ := arkho.ReadFile(path.Join(filePath, f.Name()))
-				var declensions models.Declension
-				err := json.Unmarshal(plan, &declensions)
-				upload, _ := declensions.Marshal()
-				esRequest := esapi.IndexRequest{
-					Body:       strings.NewReader(string(upload)),
-					Refresh:    "true",
-					Index:      anaximanderConfig.Index,
-					DocumentID: "",
-				}
-
-				// Perform the request with the client.
-				res, err := esRequest.Do(context.Background(), &anaximanderConfig.ElasticClient)
+				var declension models.Declension
+				err := json.Unmarshal(plan, &declension)
 				if err != nil {
-					glg.Fatalf("Error getting response: %s", err)
+					glg.Fatal(err)
 				}
-				defer res.Body.Close()
 
-				if res.IsError() {
-					glg.Debugf("[%s]", res.Status())
-				} else {
-					// Deserialize the response into a map.
-					var r map[string]interface{}
-					if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
-						glg.Errorf("Error parsing the response body: %s", err)
-					} else {
-						// Print the response status and indexed document version.
-						anaximanderConfig.Created++
+				wg.Add(1)
+				go func() {
+					err := handler.AddToElastic(declension, &wg)
+					if err != nil {
+						glg.Error(err)
 					}
-				}
+				}()
 			}
 		}
 	}
-	glg.Infof("created: %s", strconv.Itoa(anaximanderConfig.Created))
+	wg.Wait()
+	glg.Infof("created: %s", strconv.Itoa(handler.Config.Created))
 	os.Exit(0)
-
 }

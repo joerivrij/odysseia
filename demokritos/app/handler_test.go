@@ -1,45 +1,198 @@
 package app
 
 import (
+	"github.com/odysseia/aristoteles/configs"
+	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/models"
+	"github.com/stretchr/testify/assert"
+	"sync"
 	"testing"
 )
-import "github.com/stretchr/testify/assert"
 
-func TestRemovingAccents(t *testing.T) {
-	sourceString := "ἀγαθός"
-	expected := "αγαθος"
-
-	accentsRemoved := removeAccents(sourceString)
-
-	assert.Equal(t, expected, accentsRemoved)
-}
-
-func TestRemovingAccentsFromCombinedWord(t *testing.T) {
-	sourceString := "ἄλγος –ους, τό"
-	expected := "αλγος –ους, το"
-
-	accentsRemoved := removeAccents(sourceString)
-
-	assert.Equal(t, expected, accentsRemoved)
-}
-
-func TestTransformAGreekWord(t *testing.T) {
-	expected := "αναλαμβανω"
-	m := models.Meros{
-		Greek:      "ἀναλαμβάνω",
-		English:    "pick up",
-		LinkedWord: "ἀνά",
+func TestHandlerCreateDocuments(t *testing.T) {
+	index := "test"
+	body := models.Biblos{Biblos: []models.Meros{
+		{
+			Greek:   "ἀγγέλλω",
+			English: "to bear a message",
+		},
+	},
 	}
 
-	strippedWord := removeAccents(m.Greek)
-	word := models.Meros{
-		Greek:      strippedWord,
-		English:    m.English,
-		LinkedWord: m.LinkedWord,
-		Original:   m.Greek,
+	t.Run("Created", func(t *testing.T) {
+		file := "createDocument"
+		status := 200
+		var wg sync.WaitGroup
+		wg.Add(1)
+		mockElasticClient, err := elastic.NewMockClient(file, status)
+		assert.Nil(t, err)
+
+		testConfig := configs.DemokritosConfig{
+			Elastic: mockElasticClient,
+			Index:   index,
+			Created: 0,
+		}
+
+		testHandler := DemokritosHandler{Config: &testConfig}
+		testHandler.AddDirectoryToElastic(body, &wg)
+		assert.Equal(t, 1, testConfig.Created)
+	})
+
+	t.Run("NotCreated", func(t *testing.T) {
+		file := "createIndex"
+		status := 502
+		var wg sync.WaitGroup
+		wg.Add(1)
+		mockElasticClient, err := elastic.NewMockClient(file, status)
+		assert.Nil(t, err)
+
+		testConfig := configs.DemokritosConfig{
+			Elastic: mockElasticClient,
+			Index:   index,
+			Created: 0,
+		}
+
+		testHandler := DemokritosHandler{Config: &testConfig}
+		testHandler.AddDirectoryToElastic(body, &wg)
+		assert.Equal(t, 0, testConfig.Created)
+	})
+}
+
+func TestTransformWord(t *testing.T) {
+	index := "test"
+	body := models.Meros{
+		Greek:   "ἀγγέλλω",
+		English: "to bear a message",
 	}
 
-	assert.Equal(t, expected, word.Greek)
-	assert.Equal(t, m.Greek, word.Original)
+	t.Run("Created", func(t *testing.T) {
+		file := "createDocument"
+		status := 200
+		var wg sync.WaitGroup
+		wg.Add(1)
+		mockElasticClient, err := elastic.NewMockClient(file, status)
+		assert.Nil(t, err)
+
+		testConfig := configs.DemokritosConfig{
+			Elastic: mockElasticClient,
+			Index:   index,
+			Created: 0,
+		}
+
+		testHandler := DemokritosHandler{Config: &testConfig}
+		testHandler.transformWord(body, &wg)
+		assert.Equal(t, 1, testConfig.Created)
+	})
+
+	t.Run("NotCreated", func(t *testing.T) {
+		file := "createIndex"
+		status := 502
+		var wg sync.WaitGroup
+		wg.Add(1)
+		mockElasticClient, err := elastic.NewMockClient(file, status)
+		assert.Nil(t, err)
+
+		testConfig := configs.DemokritosConfig{
+			Elastic: mockElasticClient,
+			Index:   index,
+			Created: 0,
+		}
+
+		testHandler := DemokritosHandler{Config: &testConfig}
+		testHandler.transformWord(body, &wg)
+		assert.Equal(t, 0, testConfig.Created)
+	})
+}
+
+func TestHandlerDeleteIndex(t *testing.T) {
+	index := "test"
+
+	t.Run("Deleted", func(t *testing.T) {
+		file := "deleteIndex"
+		status := 201
+		mockElasticClient, err := elastic.NewMockClient(file, status)
+		assert.Nil(t, err)
+
+		testConfig := configs.DemokritosConfig{
+			Elastic: mockElasticClient,
+			Index:   index,
+			Created: 0,
+		}
+
+		testHandler := DemokritosHandler{Config: &testConfig}
+		err = testHandler.DeleteIndexAtStartUp()
+		assert.Nil(t, err)
+	})
+
+	t.Run("IndexDoesNotExist", func(t *testing.T) {
+		file := "deleteIndex404"
+		status := 404
+		mockElasticClient, err := elastic.NewMockClient(file, status)
+		assert.Nil(t, err)
+
+		testConfig := configs.DemokritosConfig{
+			Elastic: mockElasticClient,
+			Index:   index,
+			Created: 0,
+		}
+
+		testHandler := DemokritosHandler{Config: &testConfig}
+		err = testHandler.DeleteIndexAtStartUp()
+		assert.Nil(t, err)
+	})
+
+	t.Run("NotCreated", func(t *testing.T) {
+		file := "error"
+		status := 502
+		mockElasticClient, err := elastic.NewMockClient(file, status)
+		assert.Nil(t, err)
+
+		testConfig := configs.DemokritosConfig{
+			Elastic: mockElasticClient,
+			Index:   index,
+			Created: 0,
+		}
+
+		testHandler := DemokritosHandler{Config: &testConfig}
+		err = testHandler.DeleteIndexAtStartUp()
+		assert.NotNil(t, err)
+	})
+}
+
+func TestHandlerCreateIndex(t *testing.T) {
+	index := "test"
+
+	t.Run("Created", func(t *testing.T) {
+		file := "createIndex"
+		status := 201
+		mockElasticClient, err := elastic.NewMockClient(file, status)
+		assert.Nil(t, err)
+
+		testConfig := configs.DemokritosConfig{
+			Elastic: mockElasticClient,
+			Index:   index,
+			Created: 0,
+		}
+
+		testHandler := DemokritosHandler{Config: &testConfig}
+		err = testHandler.CreateIndexAtStartup()
+		assert.Nil(t, err)
+	})
+
+	t.Run("NotCreated", func(t *testing.T) {
+		file := "error"
+		status := 502
+		mockElasticClient, err := elastic.NewMockClient(file, status)
+		assert.Nil(t, err)
+
+		testConfig := configs.DemokritosConfig{
+			Elastic: mockElasticClient,
+			Index:   index,
+			Created: 0,
+		}
+
+		testHandler := DemokritosHandler{Config: &testConfig}
+		err = testHandler.CreateIndexAtStartup()
+		assert.NotNil(t, err)
+	})
 }

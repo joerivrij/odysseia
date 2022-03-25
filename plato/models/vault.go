@@ -38,6 +38,10 @@ type CreateSecretRequest struct {
 	Data ElasticConfigVault `json:"data"`
 }
 
+func (r *ElasticConfigVault) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
 type ElasticConfigVault struct {
 	Username    string `json:"elasticUsername"`
 	Password    string `json:"elasticPassword"`

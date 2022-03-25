@@ -3,11 +3,13 @@ package aristoteles
 import (
 	"embed"
 	"fmt"
-	"github.com/elastic/go-elasticsearch/v7"
 	"github.com/kpango/glg"
 	"github.com/odysseia/aristoteles/configs"
+	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/kubernetes"
 	"github.com/odysseia/plato/models"
+	"github.com/odysseia/plato/queue"
+	"github.com/odysseia/plato/service"
 	"github.com/odysseia/plato/vault"
 	"gopkg.in/yaml.v3"
 	"net/url"
@@ -60,6 +62,9 @@ func NewConfig(v interface{}) (interface{}, error) {
 			baseConfig.TLSEnabled = false
 		}
 	}
+
+	client := service.NewHttpClient()
+	baseConfig.HttpClient = client
 
 	newConfig := Config{BaseConfig: baseConfig}
 	newConfig.env = env
@@ -161,6 +166,9 @@ func (c *Config) fillFields(e *reflect.Value) {
 			case "VaultService":
 				vs := c.getStringFromEnv(EnvVaultService, c.BaseConfig.VaultService)
 				e.FieldByName(fieldName).SetString(vs)
+			case "Channel":
+				vs := c.getStringFromEnv(EnvChannel, defaultChannelName)
+				e.FieldByName(fieldName).SetString(vs)
 			case "SearchWord":
 				vs := c.getStringFromEnv(EnvSearchWord, defaultSearchWord)
 				e.FieldByName(fieldName).SetString(vs)
@@ -168,12 +176,6 @@ func (c *Config) fillFields(e *reflect.Value) {
 				e.FieldByName(fieldName).SetString(defaultRoleAnnotation)
 			case "AccessAnnotation":
 				e.FieldByName(fieldName).SetString(defaultAccessAnnotation)
-			case "Channel":
-				channel := c.getStringFromEnv(EnvChannel, defaultChannelName)
-				e.FieldByName(fieldName).SetString(channel)
-			case "MqAddress":
-				channel := c.getStringFromEnv(EnvMqAddress, defaultMqAddress)
-				e.FieldByName(fieldName).SetString(channel)
 			}
 		}
 
@@ -205,13 +207,13 @@ func (c *Config) fillFields(e *reflect.Value) {
 		}
 
 		switch fieldType {
-		case reflect.TypeOf(elasticsearch.Client{}):
-			es, err := c.getElasticClient()
+		case reflect.TypeOf((*elastic.Client)(nil)).Elem():
+			k, err := c.getElasticClient()
 			if err != nil {
-				glg.Fatal("error getting es config")
+				glg.Fatal("error getting kubeconfig")
 			}
-			esv := reflect.ValueOf(es)
-			e.FieldByName(fieldName).Set(esv)
+			kv := reflect.ValueOf(k)
+			e.FieldByName(fieldName).Set(kv)
 
 		case reflect.TypeOf((*kubernetes.KubeClient)(nil)).Elem():
 			k, err := c.getKubeClient()
@@ -222,12 +224,28 @@ func (c *Config) fillFields(e *reflect.Value) {
 			e.FieldByName(fieldName).Set(kv)
 
 		case reflect.TypeOf((*vault.Client)(nil)).Elem():
-			vault, err := c.getVaultClient()
+			reflectedVault, err := c.getVaultClient()
 			if err != nil {
 				glg.Fatal("error getting vaultClient")
 			}
-			vv := reflect.ValueOf(vault)
+			vv := reflect.ValueOf(reflectedVault)
 			e.FieldByName(fieldName).Set(vv)
+
+		case reflect.TypeOf((*queue.Client)(nil)).Elem():
+			mq, err := c.getMqQueueClient()
+			if err != nil {
+				glg.Fatal("error getting kubemq client")
+			}
+			mv := reflect.ValueOf(mq)
+			e.FieldByName(fieldName).Set(mv)
+
+		case reflect.TypeOf((*service.OdysseiaClient)(nil)).Elem():
+			mq, err := c.getOdysseiaClient()
+			if err != nil {
+				glg.Fatal("error getting odysseia client")
+			}
+			mv := reflect.ValueOf(mq)
+			e.FieldByName(fieldName).Set(mv)
 
 		case reflect.TypeOf((*url.URL)(nil)):
 			var defaultValue string

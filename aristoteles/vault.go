@@ -6,17 +6,19 @@ import (
 	"github.com/kpango/glg"
 	"github.com/odysseia/plato/helpers"
 	"github.com/odysseia/plato/models"
+	"github.com/odysseia/plato/service"
 	"github.com/odysseia/plato/vault"
 	"io/ioutil"
 	"net/url"
 	"os"
 	"path/filepath"
+	"time"
 )
 
 func (c *Config) getConfigFromVault() (*models.ElasticConfigVault, error) {
 	sidecarService := os.Getenv(EnvPtolemaiosService)
 	if sidecarService == "" {
-		glg.Info("defaulting to %s for sidecar")
+		glg.Infof("defaulting to %s for sidecar", defaultSidecarService)
 		sidecarService = defaultSidecarService
 	}
 
@@ -25,22 +27,21 @@ func (c *Config) getConfigFromVault() (*models.ElasticConfigVault, error) {
 		return nil, err
 	}
 
-	u.Path = defaultSidecarPath
-
-	response, err := helpers.GetRequest(u)
+	ptolemaiosClient, err := service.NewPtolemaiosConfig(u.Scheme, u.Host, c.BaseConfig.HttpClient)
 	if err != nil {
 		return nil, err
 	}
 
-	defer response.Body.Close()
+	glg.Debug("client created, getting secret")
 
-	var secret models.ElasticConfigVault
-	err = json.NewDecoder(response.Body).Decode(&secret)
+	secret, err := ptolemaiosClient.GetSecret()
 	if err != nil {
 		return nil, err
 	}
 
-	return &secret, nil
+	glg.Debug("secret returned")
+
+	return secret, nil
 }
 
 func (c *Config) getVaultClient() (vault.Client, error) {
@@ -49,7 +50,6 @@ func (c *Config) getVaultClient() (vault.Client, error) {
 	vaultRootToken := c.getStringFromEnv(EnvRootToken, "")
 	vaultAuthMethod := c.getStringFromEnv(EnvAuthMethod, AuthMethodToken)
 	vaultService := c.getStringFromEnv(EnvVaultService, c.BaseConfig.VaultService)
-
 	vaultRole := c.getStringFromEnv(EnvVaultRole, defaultRoleName)
 
 	glg.Debugf("vaultAuthMethod set to %s", vaultAuthMethod)
@@ -69,16 +69,25 @@ func (c *Config) getVaultClient() (vault.Client, error) {
 			return nil, err
 		}
 
+		if c.BaseConfig.HealthCheckOverwrite {
+			ticks := 120 * time.Second
+			tick := 1 * time.Second
+			healthy := vaultClient.CheckHealthyStatus(ticks, tick)
+			if !healthy {
+				return nil, fmt.Errorf("error getting healthy status from vault")
+			}
+		}
+
 		vaultClient = client
 	} else {
-		if vaultRootToken == "" {
-			glg.Debug("root token empty getting from file for local testing")
-			vaultRootToken, err := c.getTokenFromFile(defaultNamespace)
+		if c.env == "LOCAL" || c.env == "TEST" {
+			glg.Debug("local testing, getting token from file")
+			localToken, err := c.getTokenFromFile(defaultNamespace)
 			if err != nil {
 				glg.Error(err)
 				return nil, err
 			}
-			client, err := vault.CreateVaultClient(vaultService, vaultRootToken)
+			client, err := vault.NewVaultClient(vaultService, localToken)
 			if err != nil {
 				glg.Error(err)
 				return nil, err
@@ -86,20 +95,13 @@ func (c *Config) getVaultClient() (vault.Client, error) {
 
 			vaultClient = client
 		} else {
-			client, err := vault.CreateVaultClient(vaultService, vaultRootToken)
+			client, err := vault.NewVaultClient(vaultService, vaultRootToken)
 			if err != nil {
 				glg.Error(err)
 				return nil, err
 			}
 
 			vaultClient = client
-		}
-	}
-
-	if c.BaseConfig.HealthCheckOverwrite {
-		healthy := vaultClient.CheckHealthyStatus(120)
-		if !healthy {
-			return nil, fmt.Errorf("error getting healthy status from vault")
 		}
 	}
 

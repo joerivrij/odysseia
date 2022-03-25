@@ -16,10 +16,10 @@ build: test setup dist
 	cd ..; GO111MODULE=on GOOS=linux CGO_ENABLED=0 go build $(project_name)/main.go;mv main ./$(project_name)/dist/bin/$(project_name)
 
 test:
-	go test ./... -cover
+	go test ./... -v -short  -cover
 
 test-with-coverage:
-	go test ./... -coverprofile=coverage.out
+	go test ./... -v -short -coverprofile=coverage.out
 	go tool cover -html=coverage.out
 
 copy-dockerfile:

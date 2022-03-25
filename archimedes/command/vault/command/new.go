@@ -67,7 +67,7 @@ func NewVaultFlow(namespace string, kube kubernetes.KubeClient) (*models.Cluster
 	}
 	glg.Info("1. vault init completed")
 	glg.Info("2. vault unseal started")
-	unsealVault(clusterKeys.UnsealKeysHex[0], namespace, kube)
+	UnsealVault(clusterKeys.UnsealKeysHex[0], namespace, kube)
 	glg.Info("2. vault unseal completed")
 	glg.Info("2b. creating secret engine")
 	enableSecrets(namespace, "configs", clusterKeys.RootToken, kube)

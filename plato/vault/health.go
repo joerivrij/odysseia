@@ -15,11 +15,11 @@ func (v *Vault) Health() (bool, error) {
 	return true, nil
 }
 
-func (v *Vault) CheckHealthyStatus(ticks time.Duration) bool {
+func (v *Vault) CheckHealthyStatus(ticks, tick time.Duration) bool {
 	healthy := false
 
-	ticker := time.NewTicker(1 * time.Second)
-	timeout := time.After(ticks * time.Second)
+	ticker := time.NewTicker(tick)
+	timeout := time.After(ticks)
 
 	for {
 		select {

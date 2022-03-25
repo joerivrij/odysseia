@@ -13,7 +13,7 @@ type AccessImpl struct {
 	serviceSet v1.ServiceAccountInterface
 }
 
-func NewAccessClient(kube *kubernetes.Clientset, namespace string) (*AccessImpl, error) {
+func NewAccessClient(kube kubernetes.Interface, namespace string) (*AccessImpl, error) {
 	set := kube.CoreV1().ServiceAccounts(namespace)
 
 	return &AccessImpl{serviceSet: set}, nil

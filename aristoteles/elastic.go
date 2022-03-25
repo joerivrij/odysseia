@@ -1,7 +1,6 @@
 package aristoteles
 
 import (
-	"github.com/elastic/go-elasticsearch/v7"
 	"github.com/kpango/glg"
 	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/helpers"
@@ -12,30 +11,19 @@ import (
 	"time"
 )
 
-func (c *Config) getElasticClient() (elasticsearch.Client, error) {
-	var es *elasticsearch.Client
+func (c *Config) getElasticClient() (elastic.Client, error) {
+	var es elastic.Client
 	if c.env == "LOCAL" || c.env == "TEST" || c.BaseConfig.SidecarOverwrite {
-		if c.BaseConfig.TLSEnabled {
-			glg.Debug("creating local es client with tls enabled")
+		glg.Debug("creating local es client with tls enabled")
 
-			esConf := c.getElasticConfig(c.BaseConfig.TLSEnabled)
+		esConf := c.getElasticConfig(c.BaseConfig.TLSEnabled)
 
-			client, err := elastic.CreateElasticClientWithTlS(esConf)
-			if err != nil {
-				glg.Fatalf("Error creating ElasticClient shutting down: %s", err)
-			}
-
-			es = client
-		} else {
-			esConf := c.getElasticConfig(c.BaseConfig.TLSEnabled)
-			glg.Debug("creating local es client from env variables")
-			client, err := elastic.CreateElasticClientFromEnvVariables(esConf)
-			if err != nil {
-				glg.Fatalf("Error creating ElasticClient shutting down: %s", err)
-			}
-
-			es = client
+		client, err := elastic.NewClient(esConf)
+		if err != nil {
+			glg.Fatalf("Error creating ElasticClient shutting down: %s", err)
 		}
+
+		es = client
 	} else {
 		if c.BaseConfig.TLSEnabled {
 			glg.Debug("getting es config from vault")
@@ -47,7 +35,7 @@ func (c *Config) getElasticClient() (elasticsearch.Client, error) {
 			esConf := c.mapVaultToConf(vaultConf, c.BaseConfig.TLSEnabled)
 
 			glg.Debug("creating es client with TLS enabled")
-			client, err := elastic.CreateElasticClientWithTlS(esConf)
+			client, err := elastic.NewClient(esConf)
 			if err != nil {
 				glg.Fatalf("Error creating ElasticClient shutting down: %s", err)
 			}
@@ -56,7 +44,7 @@ func (c *Config) getElasticClient() (elasticsearch.Client, error) {
 		} else {
 			esConf := c.getElasticConfig(c.BaseConfig.TLSEnabled)
 			glg.Debug("creating local es client from env variables")
-			client, err := elastic.CreateElasticClientFromEnvVariables(esConf)
+			client, err := elastic.NewClient(esConf)
 			if err != nil {
 				glg.Fatalf("Error creating ElasticClient shutting down: %s", err)
 			}
@@ -67,20 +55,21 @@ func (c *Config) getElasticClient() (elasticsearch.Client, error) {
 
 	if c.BaseConfig.HealthCheck {
 		standardTicks := 120 * time.Second
+		tick := 1 * time.Second
 
-		healthy := elastic.CheckHealthyStatusElasticSearch(es, standardTicks)
+		healthy := es.Health().Check(standardTicks, tick)
 		if !healthy {
 			glg.Fatalf("elasticClient unhealthy after %s ticks", standardTicks)
 		}
 	}
 
-	return *es, nil
+	return es, nil
 }
 
-func (c *Config) mapVaultToConf(vaultModel *models.ElasticConfigVault, tls bool) models.ElasticConfig {
+func (c *Config) mapVaultToConf(vaultModel *models.ElasticConfigVault, tls bool) elastic.Config {
 	elasticService := c.getElasticServiceFromEnv(tls)
 
-	conf := models.ElasticConfig{
+	conf := elastic.Config{
 		Service:     elasticService,
 		Username:    vaultModel.Username,
 		Password:    vaultModel.Password,
@@ -90,7 +79,7 @@ func (c *Config) mapVaultToConf(vaultModel *models.ElasticConfigVault, tls bool)
 	return conf
 }
 
-func (c *Config) getElasticConfig(tls bool) models.ElasticConfig {
+func (c *Config) getElasticConfig(tls bool) elastic.Config {
 	elasticService := c.getElasticServiceFromEnv(tls)
 	elasticUser := os.Getenv(EnvElasticUser)
 	if elasticUser == "" {
@@ -108,7 +97,7 @@ func (c *Config) getElasticConfig(tls bool) models.ElasticConfig {
 		elasticCert = string(c.getCert())
 	}
 
-	esConf := models.ElasticConfig{
+	esConf := elastic.Config{
 		Service:     elasticService,
 		Username:    elasticUser,
 		Password:    elasticPassword,

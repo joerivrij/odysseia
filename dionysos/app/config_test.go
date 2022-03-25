@@ -1,6 +1,3 @@
-//go:build !integration
-// +build !integration
-
 package app
 
 import (
@@ -11,19 +8,56 @@ import (
 )
 
 func TestCreateElasticConfig(t *testing.T) {
-	os.Setenv("ENV", "testing")
+	t.Run("UsingLocal", func(t *testing.T) {
+		os.Setenv("ENV", "development")
 
-	expected := "attic"
-	fixtureFile := "declensionsDionysos"
-	mockCode := 200
-	mockElasticClient, err := elastic.CreateMockClient(fixtureFile, mockCode)
-	assert.Nil(t, err)
+		expected := "attic"
+		fixtureFile := "declensionsDionysos"
+		mockCode := 200
+		mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
+		assert.Nil(t, err)
 
-	declensionConfig := QueryRuleSet(mockElasticClient, "dionysos")
-	assert.NotNil(t, declensionConfig)
+		declensionConfig, err := QueryRuleSet(mockElasticClient, "dionysos")
+		assert.NotNil(t, declensionConfig)
+		assert.Nil(t, err)
 
-	os.Setenv("ENV", "")
+		os.Setenv("ENV", "")
 
-	assert.Equal(t, declensionConfig.FirstDeclension.Dialect, expected)
-	assert.Equal(t, declensionConfig.SecondDeclension.Dialect, expected)
+		assert.Equal(t, declensionConfig.FirstDeclension.Dialect, expected)
+		assert.Equal(t, declensionConfig.SecondDeclension.Dialect, expected)
+	})
+
+	t.Run("UsingElastic", func(t *testing.T) {
+		os.Setenv("ENV", "somethingelse")
+
+		expected := "attic"
+		fixtureFile := "declensionsDionysos"
+		mockCode := 200
+		mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
+		assert.Nil(t, err)
+
+		declensionConfig, err := QueryRuleSet(mockElasticClient, "dionysos")
+		assert.NotNil(t, declensionConfig)
+		assert.Nil(t, err)
+
+		os.Setenv("ENV", "")
+
+		assert.Equal(t, declensionConfig.FirstDeclension.Dialect, expected)
+		assert.Equal(t, declensionConfig.SecondDeclension.Dialect, expected)
+	})
+
+	t.Run("UsingElasticWithError", func(t *testing.T) {
+		os.Setenv("ENV", "somethingelse")
+
+		fixtureFile := "malformed"
+		mockCode := 200
+		mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
+		assert.Nil(t, err)
+
+		declensionConfig, err := QueryRuleSet(mockElasticClient, "dionysos")
+		assert.Nil(t, declensionConfig)
+		assert.NotNil(t, err)
+
+		os.Setenv("ENV", "")
+	})
 }

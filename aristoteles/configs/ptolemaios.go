@@ -2,15 +2,16 @@ package configs
 
 import (
 	"github.com/odysseia/plato/kubernetes"
-	"net/url"
+	"github.com/odysseia/plato/service"
+	"github.com/odysseia/plato/vault"
 )
 
 type PtolemaiosConfig struct {
-	VaultService string
-	SolonService *url.URL
-	Kube         kubernetes.KubeClient
-	PodName      string
-	Namespace    string
-	RunOnce      bool
-	FullPodName  string
+	HttpClients service.OdysseiaClient
+	Vault       vault.Client
+	Kube        kubernetes.KubeClient
+	PodName     string
+	Namespace   string
+	RunOnce     bool
+	FullPodName string
 }

@@ -1,0 +1,38 @@
+{
+  "took" : 4,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 1,
+    "successful" : 1,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 5248,
+      "relation" : "eq"
+    },
+    "max_score" : null,
+    "hits" : [ ]
+  },
+  "aggregations" : {
+    "authors" : {
+      "doc_count_error_upper_bound" : 0,
+      "sum_other_doc_count" : 0,
+      "buckets" : [
+        {
+          "key" : "aristophanes",
+          "doc_count" : 2362
+        },
+        {
+          "key" : "herodotos",
+          "doc_count" : 387
+        },
+        {
+          "key" : "logos",
+          "doc_count" : 2
+        }
+      ]
+    }
+  }
+}

@@ -2,7 +2,6 @@ package aristoteles
 
 const (
 	defaultSidecarService    = "http://127.0.0.1:5001"
-	defaultSidecarPath       = "/ptolemaios/v1/secret"
 	defaultKubeConfig        = "/.kube/config"
 	defaultNamespace         = "odysseia"
 	defaultPodName           = "somepod-08595-383"
@@ -10,7 +9,9 @@ const (
 	defaultRoleName          = "solon"
 	defaultChannelName       = "dictionary-channel"
 	defaultMqAddress         = "localhost"
+	defaultMqPort            = "50000"
 	defaultJobName           = "demokritos"
+	defaultSolonService      = "http://localhost:5000"
 	EnvHealthCheckOverwrite  = "HEALTH_CHECK_OVERWRITE"
 	EnvPodName               = "POD_NAME"
 	EnvNamespace             = "NAMESPACE"
@@ -33,6 +34,7 @@ const (
 	EnvSidecarOverwrite      = "SIDECAR_OVERWRITE"
 	EnvChannel               = "CHANNEL"
 	EnvMqAddress             = "MQ_SERVICE"
+	EnvMqPort                = "MQ_PORT"
 	EnvJobName               = "JOB_NAME"
 	AuthMethodKube           = "kubernetes"
 	AuthMethodToken          = "token"
@@ -59,12 +61,12 @@ var validFields = []string{
 	"SolonService",
 	"Index",
 	"SecondaryIndex",
-	"ElasticClient",
 	"Created",
 	"SearchWord",
 	"FullPodName",
 	"VaultService",
 	"Kube",
+	"Elastic",
 	"PodName",
 	"RunOnce",
 	"Namespace",
@@ -76,7 +78,8 @@ var validFields = []string{
 	"ElasticCert",
 	"AccessAnnotation",
 	"RoleAnnotation",
-	"MqAddress",
 	"Channel",
 	"Job",
+	"Queue",
+	"HttpClients",
 }

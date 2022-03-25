@@ -5,7 +5,6 @@ import (
 	"github.com/kpango/glg"
 	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/plato/elastic"
-	"github.com/odysseia/plato/models"
 )
 
 type DrakonHandler struct {
@@ -41,7 +40,7 @@ func (d *DrakonHandler) CreateRoles() (bool, error) {
 
 			names := []string{index}
 
-			indices := []models.Index{
+			indices := []elastic.Indices{
 				{
 					Names:      names,
 					Privileges: privileges,
@@ -49,18 +48,18 @@ func (d *DrakonHandler) CreateRoles() (bool, error) {
 				},
 			}
 
-			putRole := models.CreateRoleRequest{
+			putRole := elastic.CreateRoleRequest{
 				Cluster:      []string{"all"},
 				Indices:      indices,
-				Applications: []models.Application{},
+				Applications: []elastic.Application{},
 				RunAs:        nil,
-				Metadata:     models.Metadata{Version: 1},
+				Metadata:     elastic.Metadata{Version: 1},
 			}
 
 			roleName := fmt.Sprintf("%s_%s", index, role)
 
 			glg.Info(roleName)
-			roleCreated, err := elastic.CreateRole(&d.Config.ElasticClient, roleName, putRole)
+			roleCreated, err := d.Config.Elastic.Access().CreateRole(roleName, putRole)
 			if err != nil {
 				glg.Error(err)
 				return false, err

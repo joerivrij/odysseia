@@ -29,7 +29,7 @@ func (s *SolonHandler) Health(w http.ResponseWriter, r *http.Request) {
 	vaultHealth, _ := s.Config.Vault.Health()
 	glg.Debugf("%s : %s", "vault healthy", strconv.FormatBool(vaultHealth))
 
-	healthy := helpers.GetHealthWithVault(true)
+	healthy := helpers.GetHealthWithVault(vaultHealth)
 	middleware.ResponseWithJson(w, healthy)
 }
 
@@ -146,18 +146,29 @@ func (s *SolonHandler) RegisterService(w http.ResponseWriter, req *http.Request)
 		roleNames = append(roleNames, roleName)
 	}
 
-	putUser := models.CreateUserRequest{
+	putUser := elastic.CreateUserRequest{
 		Password: password,
 		Roles:    roleNames,
 		FullName: creationRequest.Username,
 		Email:    fmt.Sprintf("%s@odysseia-greek.com", creationRequest.Username),
-		Metadata: &models.Metadata{Version: 1},
+		Metadata: &elastic.Metadata{Version: 1},
 	}
 
 	var response models.SolonResponse
-	userCreated, err := elastic.CreateUser(&s.Config.ElasticClient, creationRequest.Username, putUser)
+	userCreated, err := s.Config.Elastic.Access().CreateUser(creationRequest.Username, putUser)
 	if err != nil {
 		glg.Error(err)
+		e := models.ValidationError{
+			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
+			Messages: []models.ValidationMessages{
+				{
+					Field:   "createUser",
+					Message: err.Error(),
+				},
+			},
+		}
+		middleware.ResponseWithJson(w, e)
+		return
 	}
 
 	createRequest := models.CreateSecretRequest{

@@ -16,10 +16,10 @@ import (
 )
 
 type WorkloadImpl struct {
-	client *kubernetes.Clientset
+	client kubernetes.Interface
 }
 
-func NewWorkloadClient(kube *kubernetes.Clientset) (*WorkloadImpl, error) {
+func NewWorkloadClient(kube kubernetes.Interface) (*WorkloadImpl, error) {
 	return &WorkloadImpl{client: kube}, nil
 }
 
@@ -59,6 +59,18 @@ func (w *WorkloadImpl) GetStatefulSets(namespace string) (*appsv1.StatefulSetLis
 	}
 
 	return sets, nil
+}
+
+func (w *WorkloadImpl) CreateJob(namespace string, spec *batchv1.Job) (*batchv1.Job, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
+	defer cancel()
+
+	job, err := w.client.BatchV1().Jobs(namespace).Create(ctx, spec, metav1.CreateOptions{})
+	if err != nil {
+		return nil, err
+	}
+
+	return job, nil
 }
 
 func (w *WorkloadImpl) GetJob(namespace, name string) (*batchv1.Job, error) {

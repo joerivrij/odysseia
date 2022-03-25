@@ -85,7 +85,9 @@ func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
-	handler := app.PeriandrosHandler{Config: periandrosConfig}
+	duration := 1 * time.Second
+	timeOut := 5 * time.Minute
+	handler := app.PeriandrosHandler{Config: periandrosConfig, Duration: duration, Timeout: timeOut}
 
 	lock := handler.Config.Kube.Workload().GetNewLock(leaseLockName, handler.Config.SolonCreationRequest.PodName, handler.Config.Namespace)
 
