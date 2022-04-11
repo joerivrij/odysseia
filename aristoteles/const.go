@@ -11,7 +11,7 @@ const (
 	defaultMqAddress         = "localhost"
 	defaultMqPort            = "50000"
 	defaultJobName           = "demokritos"
-	defaultSolonService      = "http://localhost:5000"
+	defaultSolonService      = "http://odysseia-greek.internal"
 	EnvHealthCheckOverwrite  = "HEALTH_CHECK_OVERWRITE"
 	EnvPodName               = "POD_NAME"
 	EnvNamespace             = "NAMESPACE"

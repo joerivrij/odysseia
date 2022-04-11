@@ -104,12 +104,12 @@ func main() {
 					documents += len(logoi.Logos)
 
 					wg.Add(1)
-					queue := true
+					queueItem := true
 					if method == "mouseion" {
-						queue = false
+						queueItem = false
 					}
 					go func() {
-						err := handler.Add(logoi, &wg, method, category, queue)
+						err := handler.Add(logoi, &wg, method, category, queueItem)
 						if err != nil {
 							glg.Fatal(err)
 						}

@@ -38,7 +38,7 @@ func (q *QueryImpl) Match(index string, request map[string]interface{}) (*Respon
 	return q.parseResponse(res)
 }
 
-func (q *QueryImpl) MatchWithSort(index, mode, sort string, size int, request map[string]interface{}) (*Response, error) {
+func (q *QueryImpl) MatchWithSort(index, direction, sortField string, size int, request map[string]interface{}) (*Response, error) {
 	query, err := toBuffer(request)
 	if err != nil {
 		return nil, err
@@ -50,7 +50,7 @@ func (q *QueryImpl) MatchWithSort(index, mode, sort string, size int, request ma
 		q.es.Search.WithBody(&query),
 		q.es.Search.WithSize(size),
 		q.es.Search.WithTrackTotalHits(true),
-		q.es.Search.WithSort(fmt.Sprintf("%s:%s", mode, sort), "mode:max"),
+		q.es.Search.WithSort(fmt.Sprintf("%s:%s", sortField, direction), "mode:max"),
 		q.es.Search.WithPretty(),
 	)
 

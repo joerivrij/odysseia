@@ -4,9 +4,10 @@
 
 config:
   environment: minikube
-  pullPolicy: Always
+  pullPolicy: Never
+  harborPullPolicy: Always
   inClusterHarbor: true
-  loadTests: true
+  loadTests: false
   systemTests: true
   replicas:
     low: 1
@@ -17,14 +18,12 @@ config:
   periodSeconds: 20
 
 services:
-  labels:
-    testing: true
-    name: "tests"
+  tests:
     labels: {
       domain: testing
     }
   system:
-    name: "hippokratos"
+    name: "hippokrates"
     requests:
       memory: "64Mi"
       cpu: "100m"
@@ -45,7 +44,7 @@ images:
   harborRepo: core.harbor.domain:30003/odysseia/
   pullSecret: harbor-images
   system:
-    repo: hipporkratos
+    repo: hippokrates
   load:
     repo: xerxes
 

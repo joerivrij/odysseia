@@ -1,31 +1,28 @@
 package hippokrates
 
 import (
-	"flag"
 	"fmt"
 	"github.com/cucumber/godog"
 	"github.com/cucumber/godog/colors"
-	"github.com/ianschenck/envflag"
-	"net/http"
+	"github.com/kpango/glg"
+	"github.com/odysseia/hippokrates/client"
+	"github.com/odysseia/hippokrates/client/models"
 	"os"
 	"testing"
 )
 
 const (
-	sokratesApi = "sokrates"
-	herodotosApi = "herodotos"
+	sokratesApi   = "sokrates"
+	herodotosApi  = "herodotos"
 	alexandrosApi = "alexandros"
-	dionysosApi = "dionysos"
-	StatusCode = "statusCode"
-	CreateQuestionStatusCode = "createQuestionStatusCode"
-	CreateSentenceStatusCode = "createSentenceStatusCode"
-	QueryWordStatusCode = "queryWordStatusCode"
+	dionysosApi   = "dionysos"
+	ResponseBody  = "responseBody"
+	ErrorBody     = "errorBody"
+	ContextAuthor = "contextAuthor"
+	AnswerBody    = "answerBody"
 )
 
-var ALEXANDROS_URL string
-var HERODOTOS_URL string
-var SOKRATES_URL string
-var DIONYSOS_URL string
+var baseConfig *client.ClientConfig
 
 var opts = godog.Options{
 	Output: colors.Colored(os.Stdout),
@@ -36,66 +33,57 @@ func init() {
 	godog.BindCommandLineFlags("godog.", &opts)
 }
 
-func (l *odysseiaFixture)theIsRunning(service string) error {
-	var response *http.Response
+func (l *odysseiaFixture) theIsRunning(service string) error {
+	var response *models.Health
 	var err error
-	expectedCode := 200
 
 	switch service {
+	case alexandrosApi:
+		response, err = l.clients.Alexandros().Health()
+		if err != nil {
+			return err
+		}
 	case sokratesApi:
-		response, err = l.sokrates.Health()
+		response, err = l.clients.Sokrates().Health()
 		if err != nil {
 			return err
 		}
 	case herodotosApi:
-		response, err = l.herodotos.Health()
-		if err != nil {
-			return err
-		}
-	case alexandrosApi:
-		response, err = l.alexandros.Health()
+		response, err = l.clients.Herodotos().Health()
 		if err != nil {
 			return err
 		}
 	case dionysosApi:
-		response, err = l.dionysos.Health()
+		response, err = l.clients.Dionysos().Health()
 		if err != nil {
 			return err
 		}
 	default:
 	}
 
-	if response.StatusCode != expectedCode {
-		return fmt.Errorf("code was %d where %d was expected", response.StatusCode, expectedCode)
+	if !response.Healthy {
+		return fmt.Errorf("service was %v were a healthy status was expected", response.Healthy)
 	}
 
 	return nil
 }
-
-func (l *odysseiaFixture)theResponseCodeShouldBe(code int) error {
-	statusCode := l.ctx.Value(StatusCode).(int)
-	if statusCode != code {
-		return fmt.Errorf("code was %d where %d was expected", statusCode, code)
-	}
-
-	return nil
-}
-
 
 func InitializeTestSuite(ctx *godog.TestSuiteContext) {
 	ctx.BeforeSuite(func() {
-		alexandrosUrl := envflag.String("ALEXANDROS_URL", "http://minikube-odysseia.test", "alexandros base url")
-		herodotosUrl := envflag.String("HERODOTOS_URL", "http://minikube-odysseia.test", "herodotos base url")
-		sokratesUrl := envflag.String("SOKRATES_URL", "http://minikube-odysseia.test", "sokrates base url")
-		dionysosUrl := envflag.String("DIONYSOS_URL", "http://minikube-odysseia.test", "dionysos base url")
 
-		envflag.Parse()
-		flag.Parse()
+		//https://patorjk.com/software/taag/#p=display&f=Crawford2&t=HIPPOKRATES
+		glg.Info("\n __ __  ____  ____  ____   ___   __  _  ____    ____  ______    ___  _____\n|  |  ||    ||    \\|    \\ /   \\ |  |/ ]|    \\  /    ||      |  /  _]/ ___/\n|  |  | |  | |  o  )  o  )     ||  ' / |  D  )|  o  ||      | /  [_(   \\_ \n|  _  | |  | |   _/|   _/|  O  ||    \\ |    / |     ||_|  |_||    _]\\__  |\n|  |  | |  | |  |  |  |  |     ||     ||    \\ |  _  |  |  |  |   [_ /  \\ |\n|  |  | |  | |  |  |  |  |     ||  .  ||  .  \\|  |  |  |  |  |     |\\    |\n|__|__||____||__|  |__|   \\___/ |__|\\_||__|\\_||__|__|  |__|  |_____| \\___|\n                                                                          \n")
+		glg.Info("\"ὄμνυμι Ἀπόλλωνα ἰητρὸν καὶ Ἀσκληπιὸν καὶ Ὑγείαν καὶ Πανάκειαν καὶ θεοὺς πάντας τε καὶ πάσας, ἵστορας ποιεύμενος, ἐπιτελέα ποιήσειν κατὰ δύναμιν καὶ κρίσιν ἐμὴν ὅρκον τόνδε καὶ συγγραφὴν τήνδε:\"")
+		glg.Info("\"I swear by Apollo Healer, by Asclepius, by Hygieia, by Panacea, and by all the gods and goddesses, making them my witnesses, that I will carry out, according to my ability and judgment, this oath and this indenture.\"")
+		glg.Info("starting test suite setup.....")
+		glg.Debug("getting env variables and creating config")
 
-		ALEXANDROS_URL = *alexandrosUrl
-		HERODOTOS_URL = *herodotosUrl
-		SOKRATES_URL = *sokratesUrl
-		DIONYSOS_URL = *dionysosUrl
+		config, err := GetEnv()
+		if err != nil {
+			glg.Fatal("could not parse config")
+		}
+
+		baseConfig = config
 	})
 }
 
@@ -103,26 +91,56 @@ func InitializeScenario(ctx *godog.ScenarioContext) {
 	ctx.BeforeScenario(func(*godog.Scenario) {
 	})
 
-	odysseia, err := New(ALEXANDROS_URL, HERODOTOS_URL, SOKRATES_URL, DIONYSOS_URL, sokratesApi, herodotosApi, alexandrosApi, dionysosApi)
+	odysseia, err := New(baseConfig)
 	if err != nil {
 		os.Exit(1)
 	}
 
 	//general
 	ctx.Step(`^the "([^"]*)" is running$`, odysseia.theIsRunning)
-	ctx.Step(`^the responseCode should be "([^"]*)"$`, odysseia.theResponseCodeShouldBe)
 
 	//alexandros
 	ctx.Step(`^the word "([^"]*)" is queried$`, odysseia.theWordIsQueried)
+	ctx.Step(`^the word "([^"]*)" is stripped of accents$`, odysseia.theWordIsStrippedOfAccents)
+	ctx.Step(`^the partial "([^"]*)" is queried$`, odysseia.thePartialIsQueried)
+	ctx.Step(`^the word "([^"]*)" is queried with an error$`, odysseia.theWordIsQueriedWithAnError)
+	ctx.Step(`^the word "([^"]*)" should be included in the response$`, odysseia.theWordShouldBeIncludedInTheResponse)
+	ctx.Step(`^the number of results should not exceed "([^"]*)"$`, odysseia.theNumberOfResultsShouldNotExceed)
+	ctx.Step(`^an error containing "([^"]*)" is returned$`, odysseia.anErrorContainingIsReturned)
 
 	//herodotos
-	ctx.Step(`^a new sentence is requested for author "([^"]*)"$`, odysseia.aNewSentenceIsRequestedForAuthor)
+	ctx.Step(`^a query is made for all authors$`, odysseia.aQueryIsMadeForAllAuthors)
+	ctx.Step(`^the author "([^"]*)" should be included$`, odysseia.theAuthorShouldBeIncluded)
+	ctx.Step(`^a query is made for all books by author "([^"]*)"$`, odysseia.aQueryIsMadeForAllBooksByAuthor)
+	ctx.Step(`^a translation is returned$`, odysseia.aTranslationIsReturned)
+	ctx.Step(`^an author and book combination is queried$`, odysseia.anAuthorAndBookCombinationIsQueried)
+	ctx.Step(`^the number of authors should exceed "([^"]*)"$`, odysseia.theNumberOfAuthorsShouldExceed)
+	ctx.Step(`^the book "([^"]*)" should be included$`, odysseia.theBookShouldBeIncluded)
+	ctx.Step(`^the sentenceId should be longer than "([^"]*)"$`, odysseia.theSentenceIdShouldBeLongerThan)
+	ctx.Step(`^the sentence should include non-ASCII \(Greek\) characters$`, odysseia.theSentenceShouldIncludeNonASCIIGreekCharacters)
+	ctx.Step(`^a correctness percentage$`, odysseia.aCorrectnessPercentage)
+	ctx.Step(`^a sentence with a translation$`, odysseia.aSentenceWithATranslation)
 
 	//sokrates
-	ctx.Step(`^a new question is requested with category "([^"]*)" and chapter "([^"]*)"$`, odysseia.aNewQuestionIsRequestedWithCategoryAndChapter)
+	ctx.Step(`^a query is made for all methods$`, odysseia.aQueryIsMadeForAllMethods)
+	ctx.Step(`^the method "([^"]*)" should be included$`, odysseia.theMethodShouldBeIncluded)
+	ctx.Step(`^a random method is queried for categories$`, odysseia.aRandomMethodIsQueriedForCategories)
+	ctx.Step(`^the number of methods should exceed "([^"]*)"$`, odysseia.theNumberOfMethodsShouldExceed)
+	ctx.Step(`^a category should be returned$`, odysseia.aCategoryShouldBeReturned)
+	ctx.Step(`^a random category is queried for the last chapter$`, odysseia.aRandomCategoryIsQueriedForTheLastChapter)
+	ctx.Step(`^that chapter should be a number above (\d+)$`, odysseia.thatChapterShouldBeANumberAbove)
+	ctx.Step(`^a new quiz question is requested$`, odysseia.aNewQuizQuestionIsRequested)
+	ctx.Step(`^that question is answered with a "([^"]*)" answer$`, odysseia.thatQuestionIsAnsweredWithAAnswer)
+	ctx.Step(`^the result should be "([^"]*)"$`, odysseia.theResultShouldBe)
 
 	//dionysos
 	ctx.Step(`^the grammar is checked for word "([^"]*)"$`, odysseia.theGrammarIsCheckedForWord)
+	ctx.Step(`^the grammar for word "([^"]*)" is queried with an error$`, odysseia.theGrammarForWordIsQueriedWithAnError)
+	ctx.Step(`^the declension "([^"]*)" should be included in the response$`, odysseia.theDeclensionShouldBeIncludedInTheResponse)
+	ctx.Step(`^the number of results should be equal to or exceed "([^"]*)"$`, odysseia.theNumberOfResultsShouldBeEqualToOrExceed)
+	ctx.Step(`^the number of translations should be equal to er exceed "([^"]*)"$`, odysseia.theNumberOfTranslationsShouldBeEqualToErExceed)
+	ctx.Step(`^the number of declensions should be equal to or exceed "([^"]*)"$`, odysseia.theNumberOfDeclensionsShouldBeEqualToOrExceed)
+
 }
 
 func TestMain(m *testing.M) {
@@ -136,14 +154,14 @@ func TestMain(m *testing.M) {
 
 	opts := godog.Options{
 		Format: format,
-		Paths:     []string{"features"},
+		Paths:  []string{"features"},
 	}
 
 	status := godog.TestSuite{
-		Name: "godogs",
+		Name:                 "godogs",
 		TestSuiteInitializer: InitializeTestSuite,
 		ScenarioInitializer:  InitializeScenario,
-		Options: &opts,
+		Options:              &opts,
 	}.Run()
 
 	os.Exit(status)

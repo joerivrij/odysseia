@@ -37,6 +37,5 @@ spec:
           image: {{ .Values.images.docs.repo }}:{{ .Values.images.tag }}
           imagePullPolicy: {{ .Values.config.pullPolicy }}
           {{- end}}
-          imagePullPolicy: {{ .Values.config.pullPolicy }}
           ports:
             - containerPort: {{ .Values.config.port }}

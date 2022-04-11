@@ -62,10 +62,10 @@ Create the name of the service account to use
 {{- end }}
 
 {{- define "docs.uname" -}}
-{{- if empty .Values.services.docs.name -}}
+{{- if empty .Values.services.openapi.name -}}
 {{ .Values.images.docs }}
 {{- else -}}
-{{ .Values.services.docs.name }}
+{{ .Values.services.openapi.name }}
 {{- end -}}
 {{- end -}}
 

@@ -355,6 +355,38 @@ func (o *OdysseiaInstaller) installOdysseiaComplete(unseal bool) error {
 		return err
 	}
 
+	installTests := false
+	for _, install := range o.ChartsToInstall {
+		if install == "tests" {
+			installTests = true
+			break
+		}
+	}
+
+	//8. install tests
+	if installTests {
+		err = o.installTestsHelmChart()
+		if err != nil {
+			return err
+		}
+	}
+
+	installDocs := false
+	for _, install := range o.ChartsToInstall {
+		if install == "docs" {
+			installDocs = true
+			break
+		}
+	}
+
+	//9. install docs
+	if installDocs {
+		err = o.installDocsHelmChart()
+		if err != nil {
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -643,6 +675,52 @@ func (o *OdysseiaInstaller) installAppsHelmChart() error {
 			}
 		}
 	}
+
+	return nil
+}
+
+func (o *OdysseiaInstaller) installTestsHelmChart() error {
+	pullSecret := command.DefaultHarborCertSecretName
+
+	values := map[string]interface{}{
+		"images": map[string]interface{}{
+			"tag":        o.GitTag,
+			"pullSecret": pullSecret,
+		},
+		"config": map[string]interface{}{
+			"inClusterHarbor": true,
+			"pullPolicy":      "Always",
+		},
+	}
+
+	rls, err := o.Helm.InstallWithValues(o.Charts.Tests, values)
+	if err != nil {
+		return err
+	}
+	glg.Info(rls.Name)
+
+	return nil
+}
+
+func (o *OdysseiaInstaller) installDocsHelmChart() error {
+	pullSecret := command.DefaultHarborCertSecretName
+
+	values := map[string]interface{}{
+		"images": map[string]interface{}{
+			"tag":        o.GitTag,
+			"pullSecret": pullSecret,
+		},
+		"config": map[string]interface{}{
+			"inClusterHarbor": true,
+			"pullPolicy":      "Always",
+		},
+	}
+
+	rls, err := o.Helm.InstallWithValues(o.Charts.Docs, values)
+	if err != nil {
+		return err
+	}
+	glg.Info(rls.Name)
 
 	return nil
 }
