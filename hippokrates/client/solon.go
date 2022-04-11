@@ -1,9 +1,9 @@
-package service
+package client
 
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/odysseia/plato/models"
+	"github.com/odysseia/hippokrates/client/models"
 	"net/http"
 	"net/url"
 	"path"

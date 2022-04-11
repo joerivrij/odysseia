@@ -60,9 +60,9 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 
 {{- define "system.uname" -}}
 {{- if empty .Values.services.system.name -}}
-{{ .Values.images.system }}
+{{ .Values.services.system.name }}
 {{- else -}}
-{{ .Chart.Name }}
+{{ .Values.services.system.name }}
 {{- end -}}
 {{- end -}}
 

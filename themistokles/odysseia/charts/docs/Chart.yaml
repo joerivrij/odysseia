@@ -1,5 +1,5 @@
 apiVersion: v2
-name: ploutarchos
+name: docs
 description: Docs relating to odysseia
 version: 0.1.0
 appVersion: "0.1.0"

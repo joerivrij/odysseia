@@ -1,5 +1,5 @@
-{{- if .Values.config.systemTests -}}
-apiVersion: batch/v1beta1
+{{- if .Values.config.systemTests }}
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: "{{ template "system.uname" . }}"
@@ -10,11 +10,11 @@ metadata:
     chart: "{{ .Chart.Name }}"
     env: {{ .Values.config.environment }}
     app: "{{ template "system.uname" . }}"
-    {{- range $key, $value := .Values.services.labels }}
+    {{- range $key, $value := .Values.services.tests.labels }}
     {{ $key }}: {{ $value | quote }}
     {{- end }}
 spec:
-  schedule: "*/2 * * * *"
+  schedule: "*/1 * * * *"
   jobTemplate:
     metadata:
       labels:
@@ -39,18 +39,20 @@ spec:
               imagePullPolicy: {{ .Values.config.pullPolicy }}
             {{- end}}
               env:
-                - name: SOKRATES_URL
-                  value: http://sokrates-service:5000
-                - name: ALEXANDROS_URL
-                  value: http://alexandros-service:5000
-                - name: HERODOTOS_URL
-                  value: http://herodotos-service:5000
-                - name: DIONYSOS_URL
-                  value: http://dionysos-service:5000
+                - name: SOKRATES_SERVICE
+                  value: http://sokrates:5000
+                - name: ALEXANDROS_SERVICE
+                  value: http://alexandros:5000
+                - name: HERODOTOS_SERVICE
+                  value: http://herodotos:5000
+                - name: DIONYSOS_SERVICE
+                  value: http://dionysos:5000
+                - name: SOLON_SERVICE
+                  value: http://solon:5000
               command:
               - /bin/sh
               - -c
-              - godog
+              - godog run
           restartPolicy: OnFailure
   successfulJobsHistoryLimit: 5
   failedJobsHistoryLimit: 2

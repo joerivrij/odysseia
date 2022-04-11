@@ -53,6 +53,9 @@ func (p *ParmenidesHandler) Add(logoi models.Logos, wg *sync.WaitGroup, method, 
 			}
 		}
 
+		if method == "mouseion" {
+			glg.Debug(method)
+		}
 		word.Category = category
 		word.Method = method
 		jsonifiedLogos, _ := word.Marshal()

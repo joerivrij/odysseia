@@ -1,5 +1,6 @@
-{{- if .Values.config.loadTests -}}
+{{- if .Values.config.loadTests }}
 apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: "{{ template "load.uname" . }}"
   namespace: {{ template "namespace" . }}
@@ -9,7 +10,7 @@ metadata:
     chart: "{{ .Chart.Name }}"
     env: {{ .Values.config.environment }}
     app: "{{ template "load.uname" . }}"
-    {{- range $key, $value := .Values.services.labels }}
+    {{- range $key, $value := .Values.services.tests.labels }}
     {{ $key }}: {{ $value | quote }}
     {{- end }}
 spec:
@@ -28,6 +29,7 @@ spec:
       imagePullSecrets:
         - name: {{ .Values.images.pullSecret}}
       {{- end}}
+      containers:
       - name: {{ template "load.uname" . }}-alexandros
         {{- if .Values.config.inClusterHarbor | quote }}
         image: {{ .Values.images.harborRepo}}{{ .Values.images.load.repo }}:{{ .Values.images.tag }}
@@ -51,73 +53,73 @@ spec:
             value: {{ .Values.envVariables.load.spawnRate | quote }}
         ports:
           - containerPort: {{ .Values.envVariables.load.alexandrosPort }}
-        - name: {{ template "load.uname" . }}-herodotos
+      - name: {{ template "load.uname" . }}-herodotos
         {{- if .Values.config.inClusterHarbor | quote }}
-          image: {{ .Values.images.harborRepo}}{{ .Values.images.load.repo }}:{{ .Values.images.tag }}
-          imagePullPolicy: {{ .Values.config.pullPolicy }}
+        image: {{ .Values.images.harborRepo}}{{ .Values.images.load.repo }}:{{ .Values.images.tag }}
+        imagePullPolicy: {{ .Values.config.pullPolicy }}
         {{ else }}
-          image: {{ .Values.images.load.repo }}:{{ .Values.images.tag }}
-          imagePullPolicy: {{ .Values.config.pullPolicy }}
+        image: {{ .Values.images.load.repo }}:{{ .Values.images.tag }}
+        imagePullPolicy: {{ .Values.config.pullPolicy }}
         {{- end}}
-          command: ["/bin/sh"]
-          args: ["-c", "locust -r $(SPAWN_RATE)"]
-          env:
-            - name: LOCUST_HOST
-              value: {{ .Values.envVariables.load.herodotosHost }}
-            - name: LOCUST_WEB_PORT
-              value: {{ .Values.envVariables.load.herodotosPort | quote }}
-            - name: LOCUST_LOCUSTFILE
-              value: locustfiles/herodotos-locustfile.py`
-            - name: LOCUST_USERS
-              value: {{ .Values.envVariables.load.locustUsers | quote }}
-            - name: SPAWN_RATE
-              value: {{ .Values.envVariables.load.spawnRate | quote }}
-          ports:
-            - containerPort: {{ .Values.envVariables.load.herodotosPort }}
-          - name: {{ template "load.uname" . }}-sokrates
+        command: ["/bin/sh"]
+        args: ["-c", "locust -r $(SPAWN_RATE)"]
+        env:
+          - name: LOCUST_HOST
+            value: {{ .Values.envVariables.load.herodotosHost }}
+          - name: LOCUST_WEB_PORT
+            value: {{ .Values.envVariables.load.herodotosPort | quote }}
+          - name: LOCUST_LOCUSTFILE
+            value: locustfiles/herodotos-locustfile.py`
+          - name: LOCUST_USERS
+            value: {{ .Values.envVariables.load.locustUsers | quote }}
+          - name: SPAWN_RATE
+            value: {{ .Values.envVariables.load.spawnRate | quote }}
+        ports:
+          - containerPort: {{ .Values.envVariables.load.herodotosPort }}
+      - name: {{ template "load.uname" . }}-sokrates
         {{- if .Values.config.inClusterHarbor | quote }}
-            image: {{ .Values.images.harborRepo}}{{ .Values.images.load.repo }}:{{ .Values.images.tag }}
-            imagePullPolicy: {{ .Values.config.pullPolicy }}
+        image: {{ .Values.images.harborRepo}}{{ .Values.images.load.repo }}:{{ .Values.images.tag }}
+        imagePullPolicy: {{ .Values.config.pullPolicy }}
         {{ else }}
-            image: {{ .Values.images.load.repo }}:{{ .Values.images.tag }}
-            imagePullPolicy: {{ .Values.config.pullPolicy }}
+        image: {{ .Values.images.load.repo }}:{{ .Values.images.tag }}
+        imagePullPolicy: {{ .Values.config.pullPolicy }}
         {{- end}}
-            command: ["/bin/sh"]
-            args: ["-c", "locust -r $(SPAWN_RATE)"]
-            env:
-              - name: LOCUST_HOST
-                value: {{ .Values.envVariables.load.sokratesHost }}
-              - name: LOCUST_WEB_PORT
-                value: {{ .Values.envVariables.load.sokratesPort | quote }}
-              - name: LOCUST_LOCUSTFILE
-                value: locustfiles/sokrates-locustfile.py
-              - name: LOCUST_USERS
-                value: {{ .Values.envVariables.load.locustUsers | quote }}
-              - name: SPAWN_RATE
-                value: {{ .Values.envVariables.load.spawnRate | quote }}
-            ports:
-              - containerPort: {{ .Values.envVariables.load.sokratesPort }}
-            - name: {{ template "load.uname" . }}-dionysos
+        command: ["/bin/sh"]
+        args: ["-c", "locust -r $(SPAWN_RATE)"]
+        env:
+          - name: LOCUST_HOST
+            value: {{ .Values.envVariables.load.sokratesHost }}
+          - name: LOCUST_WEB_PORT
+            value: {{ .Values.envVariables.load.sokratesPort | quote }}
+          - name: LOCUST_LOCUSTFILE
+            value: locustfiles/sokrates-locustfile.py
+          - name: LOCUST_USERS
+            value: {{ .Values.envVariables.load.locustUsers | quote }}
+          - name: SPAWN_RATE
+            value: {{ .Values.envVariables.load.spawnRate | quote }}
+        ports:
+          - containerPort: {{ .Values.envVariables.load.sokratesPort }}
+      - name: {{ template "load.uname" . }}-dionysos
         {{- if .Values.config.inClusterHarbor | quote }}
-              image: {{ .Values.images.harborRepo}}{{ .Values.images.load.repo }}:{{ .Values.images.tag }}
-              imagePullPolicy: {{ .Values.config.pullPolicy }}
+        image: {{ .Values.images.harborRepo}}{{ .Values.images.load.repo }}:{{ .Values.images.tag }}
+        imagePullPolicy: {{ .Values.config.pullPolicy }}
         {{ else }}
-              image: {{ .Values.images.load.repo }}:{{ .Values.images.tag }}
-              imagePullPolicy: {{ .Values.config.pullPolicy }}
+        image: {{ .Values.images.load.repo }}:{{ .Values.images.tag }}
+        imagePullPolicy: {{ .Values.config.pullPolicy }}
         {{- end}}
-              command: ["/bin/sh"]
-              args: ["-c", "locust -r $(SPAWN_RATE)"]
-              env:
-              - name: LOCUST_HOST
-                value: {{ .Values.envVariables.load.dionysosHost }}
-              - name: LOCUST_WEB_PORT
-                value: {{ .Values.envVariables.load.dionysosPort | quote }}
-              - name: LOCUST_LOCUSTFILE
-                value: locustfiles/dionysos-locustfile.py
-              - name: LOCUST_USERS
-                value: {{ .Values.envVariables.load.locustUsers | quote }}
-              - name: SPAWN_RATE
-                value: {{ .Values.envVariables.load.spawnRate | quote }}
-              ports:
-                - containerPort: {{ .Values.envVariables.load.dionysosPort }}
+        command: ["/bin/sh"]
+        args: ["-c", "locust -r $(SPAWN_RATE)"]
+        env:
+        - name: LOCUST_HOST
+          value: {{ .Values.envVariables.load.dionysosHost }}
+        - name: LOCUST_WEB_PORT
+          value: {{ .Values.envVariables.load.dionysosPort | quote }}
+        - name: LOCUST_LOCUSTFILE
+          value: locustfiles/dionysos-locustfile.py
+        - name: LOCUST_USERS
+          value: {{ .Values.envVariables.load.locustUsers | quote }}
+        - name: SPAWN_RATE
+          value: {{ .Values.envVariables.load.spawnRate | quote }}
+        ports:
+          - containerPort: {{ .Values.envVariables.load.dionysosPort }}
 {{- end }}

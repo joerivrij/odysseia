@@ -41,7 +41,7 @@ func TestGetVaultConfig(t *testing.T) {
 				HttpClient: testClient,
 			},
 		}
-		
+
 		sut, err := cfg.getConfigFromVault()
 		assert.Nil(t, err)
 		assert.Equal(t, password, sut.Password)

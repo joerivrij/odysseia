@@ -41,7 +41,10 @@ func NewClient(config ClientConfig) (OdysseiaClient, error) {
 		return nil, err
 	}
 
-	return &Odysseia{solon: solonImpl, ptolemaios: ptolemaiosImpl}, nil
+	return &Odysseia{
+		solon:      solonImpl,
+		ptolemaios: ptolemaiosImpl,
+	}, nil
 }
 
 func NewFakeClient(config ClientConfig, codes []int, responses []string) (OdysseiaClient, error) {
@@ -57,7 +60,10 @@ func NewFakeClient(config ClientConfig, codes []int, responses []string) (Odysse
 		return nil, err
 	}
 
-	return &Odysseia{solon: solonImpl, ptolemaios: ptolemaiosImpl}, nil
+	return &Odysseia{
+		solon:      solonImpl,
+		ptolemaios: ptolemaiosImpl,
+	}, nil
 }
 
 func (o *Odysseia) Solon() Solon {

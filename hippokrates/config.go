@@ -2,64 +2,99 @@ package hippokrates
 
 import (
 	"context"
+	"github.com/kpango/glg"
+	"github.com/odysseia/hippokrates/client"
+	"net/url"
+	"os"
 )
 
-const version = "v1"
+const (
+	defaultAlexandrosService = "http://odysseia-greek.internal"
+	defaultDionysosService   = "http://odysseia-greek.internal"
+	defaultHerodotosService  = "http://odysseia-greek.internal"
+	defaultSokratesService   = "http://odysseia-greek.internal"
+	defaultSolonService      = "http://odysseia-greek.internal"
+	EnvDionysosService       = "DIONYSOS_SERVICE"
+	EnvAlexandrosService     = "ALEXANDROS_SERVICE"
+	EnvHerodotosService      = "HERODOTOS_SERVICE"
+	EnvSokratesService       = "SOKRATES_SERVICE"
+	EnvSolonService          = "SOLON_SERVICE"
+)
 
 type odysseiaFixture struct {
-	ctx		 context.Context
-	sokrates Sokrates
-	herodotos Herodotos
-	alexandros Alexandros
-	dionysos Dionysos
+	ctx     context.Context
+	clients client.OdysseiaClient
 }
 
-func New(alexandrosUrl, herodotosUrl, sokratesUrl, dionysosUrl, sokratesName, herodotosName, alexandrosName, dionysosName string) (*odysseiaFixture, error) {
-	sokratesApi := Sokrates{
-		BaseApi: BaseApi{
-			BaseUrl:   sokratesUrl,
-			ApiName:   sokratesName,
-			Version: 	version,
-		},
-		Endpoints: SokratesEndpoints{},
-	}
-	sokratesApi.Endpoints = sokratesApi.GenerateEndpoints()
+func New(config *client.ClientConfig) (*odysseiaFixture, error) {
+	cfg, err := client.NewClient(*config)
 
-	herodotosApi := Herodotos{
-		BaseApi: BaseApi{
-			BaseUrl:   herodotosUrl,
-			ApiName:   herodotosName,
-			Version: 	version,
-		},
-		Endpoints: HerodotosEndpoints{},
+	if err != nil {
+		return nil, err
 	}
-	herodotosApi.Endpoints = herodotosApi.GenerateEndpoints()
-
-	alexandrosApi := Alexandros{
-		BaseApi: BaseApi{
-			BaseUrl:   alexandrosUrl,
-			ApiName:   alexandrosName,
-			Version: 	version,
-		},
-		Endpoints: AlexandrosEndpoints{},
-	}
-	alexandrosApi.Endpoints = alexandrosApi.GenerateEndpoints()
-
-	dionysosApi := Dionysos {
-		BaseApi: BaseApi{
-			BaseUrl:   dionysosUrl,
-			ApiName:   dionysosName,
-			Version: 	version,
-		},
-		Endpoints: DionysosEndpoints{},
-	}
-	dionysosApi.Endpoints = dionysosApi.GenerateEndpoints()
 
 	return &odysseiaFixture{
-		sokrates:                    sokratesApi,
-		herodotos: herodotosApi,
-		alexandros: alexandrosApi,
-		dionysos: dionysosApi,
-		ctx:                         context.Background(),
+		clients: cfg,
+		ctx:     context.Background(),
 	}, nil
+}
+
+func GetEnv() (*client.ClientConfig, error) {
+	alexandrosUrl := getStringFromEnv(EnvAlexandrosService, defaultAlexandrosService)
+
+	parsedAlexandros, err := url.Parse(alexandrosUrl)
+	if err != nil {
+		return nil, err
+	}
+
+	dionysosUrl := getStringFromEnv(EnvDionysosService, defaultDionysosService)
+
+	parsedDionysos, err := url.Parse(dionysosUrl)
+	if err != nil {
+		return nil, err
+	}
+
+	herodotosUrl := getStringFromEnv(EnvHerodotosService, defaultHerodotosService)
+
+	parsedHerodotos, err := url.Parse(herodotosUrl)
+	if err != nil {
+		return nil, err
+	}
+
+	sokratesUrl := getStringFromEnv(EnvSokratesService, defaultSokratesService)
+
+	parsedSokrates, err := url.Parse(sokratesUrl)
+	if err != nil {
+		return nil, err
+	}
+
+	solonUrl := getStringFromEnv(EnvSolonService, defaultSolonService)
+
+	parsedSolon, err := url.Parse(solonUrl)
+	if err != nil {
+		return nil, err
+	}
+
+	config := client.ClientConfig{
+		Scheme:        parsedAlexandros.Scheme,
+		AlexandrosUrl: parsedAlexandros.Host,
+		DionysosUrl:   parsedDionysos.Host,
+		HerodotosUrl:  parsedHerodotos.Host,
+		SokratesUrl:   parsedSokrates.Host,
+		SolonUrl:      parsedSolon.Host,
+	}
+
+	return &config, nil
+
+}
+
+func getStringFromEnv(env, defaultValue string) string {
+	var value string
+	value = os.Getenv(env)
+	if value == "" {
+		glg.Debugf("%s empty set as env variable - defaulting to %s", env, defaultValue)
+		value = defaultValue
+	}
+
+	return value
 }
