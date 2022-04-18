@@ -1,0 +1,249 @@
+openapi: 3.0.0
+info:
+  description: |
+    This is a sample Solon server which is part of odysseia.
+
+    # Introduction
+    This API is documented in **OpenAPI format** and is using [ReDoc](https://github.com/Redocly/redoc)
+
+    # Solon in Greek
+
+    αὐτοὶ γὰρ οὐκ οἷοί τε ἦσαν αὐτὸ ποιῆσαι Ἀθηναῖοι: ὁρκίοισι γὰρ μεγάλοισι κατείχοντο δέκα ἔτεα χρήσεσθαι νόμοισι τοὺς ἄν σφι Σόλων θῆται.
+    
+    # Solon in English
+
+    since the Athenians themselves could not do that, for they were bound by solemn oaths to abide for ten years by whatever laws Solon should make.
+
+    # Note on text
+
+    Translation is mine
+    
+  termsOfService: https://github.com/joerivrij/odysseia
+  contact:
+    email: joerivrijaldenhoven@odysseia.io
+  license:
+    name: MIT License
+    url: https://opensource.org/licenses/MIT
+host: localhost:5000
+basePath: /solon/v1
+tags:
+  - name: health
+    description: Endpoints relating to health and checks
+  - name: token
+    description: Endpoints relating to getting and creating tokens
+schemes:
+  - http
+paths:
+  /ping:
+    get:
+      tags:
+        - health
+      x-code-samples:
+        - lang: 'Golang'
+          source: |
+            resp, err := http.Get("http://localhost:5000/solon/v1/ping")
+            if err != nil {
+              // handle error
+            }
+            defer resp.Body.Close()
+            body, err := io.ReadAll(resp.Body)
+            response, err := models.UnmarshalPing(body)
+      summary: PingPong
+      description: Returns a pong when pinged
+      operationId: getPing
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ping'
+        '405':
+          description: method not allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MethodNotAllowedError'
+  /health:
+    get:
+      tags:
+        - health
+      x-code-samples:
+        - lang: 'Golang'
+          source: |
+            resp, err := http.Get("http://localhost:5000/solon/v1/health")
+            if err != nil {
+              // handle error
+            }
+            defer resp.Body.Close()
+            body, err := io.ReadAll(resp.Body)
+            response, err := models.UnmarshalHealth(body)
+      summary: Health
+      description: See the liveliness of the api
+      operationId: getHealth
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+        '405':
+          description: method not allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MethodNotAllowedError'
+  /token:
+    get:
+      tags:
+        - token
+      x-code-samples:
+        - lang: 'Golang'
+          source: |
+            resp, err := http.Get("http://localhost:5000/solon/v1/token")
+            if err != nil {
+              // handle error
+            }
+            defer resp.Body.Close()
+            body, err := io.ReadAll(resp.Body)
+            response, err := models.UnmarshallToken(body)
+      summary: Create a one time token
+      description: Max chapters per category
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateTokenResponse'
+        '400':
+          description: invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '405':
+          description: method not allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MethodNotAllowedError'
+components:
+  schemas:
+    Ping:
+      type: object
+      properties:
+        result:
+          type: string
+          example: pong
+    Health:
+      type: object
+      properties:
+        healthy:
+          type: boolean
+          example: true
+        time:
+          type: string
+          example: 2021-07-02 16:54:40.560826217 +0200 CEST m=+7.555467587
+        databaseHealth:
+          type: object
+          properties:
+            healthy:
+              type: boolean
+              example: true
+            clusterName:
+              type: string
+              example: elasticsearch
+            serverName:
+              type: string
+              example: elasticsearch-master-0
+            serverVersion:
+              type: string
+              example: 7.12.0
+        memory:
+          type: object
+          properties:
+            free:
+              type: number
+              example: 0
+            alloc:
+              type: number
+              example: 22
+            totalAlloc:
+              type: number
+              example: 22
+            sys:
+              type: number
+              example: 71
+            unit:
+              type: string
+              example: mb
+        cpuPercentage:
+          type: string
+          example: 10%
+    CreateTokenResponse:
+      type: object
+      properties:
+        lastChapter:
+          type: string
+          example: s.tsLsUgLsqQqya4Fhkn9sgeXz
+    ValidationError:
+      type: object
+      properties:
+        uniqueCode:
+          type: string
+        errorModel:
+          type: object
+          properties:
+            validationField:
+              type: string
+            validationMessage:
+              type: string
+    NotFoundError:
+      type: object
+      properties:
+        uniqueCode:
+          type: string
+        errorModel:
+          type: object
+          properties:
+            reason:
+              type: string
+            type:
+              type: string
+    MethodNotAllowedError:
+      type: object
+      properties:
+        uniqueCode:
+          type: string
+        errorModel:
+          type: object
+          properties:
+            allowedMethods:
+              type: string
+            methodError:
+              type: string
+  requestBodies:
+    CheckAnswer:
+      content:
+        application/json:
+          schema:
+            allOf:
+              - description: AnswerCorrectness
+                title: Answer
+              - $ref: '#/components/schemas/CheckAnswerRequest'
+      description: Query to see correctness of answer
+      required: true

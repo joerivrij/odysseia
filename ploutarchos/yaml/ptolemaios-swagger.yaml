@@ -1,0 +1,354 @@
+openapi: 3.0.0
+info:
+  description: |
+    This is a sample Ptolemaios server which is part of odysseia.
+
+    # Introduction
+    This API is documented in **OpenAPI format** and is using [ReDoc](https://github.com/Redocly/redoc)
+
+    # Ptolemaios in Greek
+
+    ἓν οἶδα ὅτι οὐδὲν οἶδα
+    
+    # Ptolemaios in English
+
+    I know one thing, that I know nothing
+
+    # Note on text
+
+    Translation is mine
+    
+  termsOfService: https://github.com/joerivrij/odysseia
+  contact:
+    email: joerivrijaldenhoven@odysseia.io
+  license:
+    name: MIT License
+    url: https://opensource.org/licenses/MIT
+host: localhost:5000
+basePath: /ptolemaios/v1
+tags:
+  - name: health
+    description: Endpoints relating to health and checks
+  - name: multi
+    description: Endpoints relating to getting multi-choice questions and answers
+schemes:
+  - http
+paths:
+  /ping:
+    get:
+      tags:
+        - health
+      x-code-samples:
+        - lang: 'Golang'
+          source: |
+            resp, err := http.Get("http://localhost:5001/ptolemaios/v1/ping")
+            if err != nil {
+              // handle error
+            }
+            defer resp.Body.Close()
+            body, err := io.ReadAll(resp.Body)
+            response, err := models.UnmarshalPing(body)
+      summary: PingPong
+      description: Returns a pong when pinged
+      operationId: getPing
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ping'
+        '405':
+          description: method not allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MethodNotAllowedError'
+  /chapters/{category}:
+    get:
+      tags:
+        - multi
+      x-code-samples:
+        - lang: 'Golang'
+          source: |
+            resp, err := http.Get("http://localhost:5000/ptolemaios/v1/chapters/nomina")
+            if err != nil {
+              // handle error
+            }
+            defer resp.Body.Close()
+            body, err := io.ReadAll(resp.Body)
+            response, err := models.UnmarshallChapters(body)
+      parameters:
+        - name: category
+          in: path
+          description: category to find the number of chapters in
+          required: true
+          type: string
+      summary: Query last chapter of catergory
+      description: Max chapters per category
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LastChapterResponse'
+        '400':
+          description: invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '404':
+          description: not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '405':
+          description: method not allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MethodNotAllowedError'
+  /createQuestion:
+    get:
+      tags:
+        - multi
+      x-code-samples:
+        - lang: 'Golang'
+          source: |
+            resp, err := http.Get("http://localhost:5000/sokrates/v1/createQuestion?category=verba&chapter=11")
+            if err != nil {
+              // handle error
+            }
+            defer resp.Body.Close()
+            body, err := io.ReadAll(resp.Body)
+            response, err := models.UnmarshallChapters(body)
+      parameters:
+        - name: category
+          in: query
+          description: category to find the number of chapters in
+          required: true
+          type: string
+        - name: chapter
+          in: query
+          description: chapter to create a question for
+          required: true
+          type: integer
+          format: int64
+      summary: Create a new multiplechoice question
+      description: Based on a category and a chapter this endpoint creates a question
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateQuestionResponse'
+        '400':
+          description: invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '405':
+          description: method not allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MethodNotAllowedError'
+  /answer:
+    post:
+      tags:
+        - multi
+      x-code-samples:
+        - lang: 'Golang'
+          source: |
+            values := map[string]string{ "answerProvided": "godin", "quizWord": "θεός", "category": "nomina" }
+            jsonValue, _ := json.Marshal(values)
+            resp, err := http.Post("http://localhost:5000/sokrates/v1/answer", bytes.NewBuffer(jsonValue))
+            if err != nil {
+              // handle error
+            }
+            defer resp.Body.Close()
+            body, err := io.ReadAll(resp.Body)
+            response, err := models.UnmarshallAnswerResponse(body)
+      requestBody:
+        $ref: '#/components/requestBodies/CheckAnswer'
+      parameters:
+        - in: body
+          name: body
+          description: Pet object that needs to be added to the store
+          required: true
+          schema:
+            $ref: #/definitions/CheckAnswerRequest
+      summary: Check the given answer
+      description: Based on a category and a chapter this endpoint creates a question
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckAnswerResponse'
+        '400':
+          description: invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '405':
+          description: method not allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MethodNotAllowedError'
+components:
+  schemas:
+    Ping:
+      type: object
+      properties:
+        result:
+          type: string
+          example: pong
+    Health:
+      type: object
+      properties:
+        healthy:
+          type: boolean
+          example: true
+        time:
+          type: string
+          example: 2021-07-02 16:54:40.560826217 +0200 CEST m=+7.555467587
+        databaseHealth:
+          type: object
+          properties:
+            healthy:
+              type: boolean
+              example: true
+            clusterName:
+              type: string
+              example: elasticsearch
+            serverName:
+              type: string
+              example: elasticsearch-master-0
+            serverVersion:
+              type: string
+              example: 7.12.0
+        memory:
+          type: object
+          properties:
+            free:
+              type: number
+              example: 0
+            alloc:
+              type: number
+              example: 22
+            totalAlloc:
+              type: number
+              example: 22
+            sys:
+              type: number
+              example: 71
+            unit:
+              type: string
+              example: mb
+        cpuPercentage:
+          type: string
+          example: 10%
+    LastChapterResponse:
+      type: object
+      properties:
+        lastChapter:
+          type: integer
+          format: int64
+          example: 5
+    CreateQuestionResponse:
+      type: object
+      properties:
+        lastChapter:
+          type: integer
+          format: int64
+          example: 5
+    CheckAnswerRequest:
+      type: object
+      properties:
+        quizWord:
+          type: string
+          example: τὸ αγαθών
+        answerProvided:
+          type: string
+          example: het goede
+        category:
+          type: string
+          example: logos
+    CheckAnswerResponse:
+      type: object
+      properties:
+        correct:
+          type: boolean
+          example: true
+    ValidationError:
+      type: object
+      properties:
+        uniqueCode:
+          type: string
+        errorModel:
+          type: object
+          properties:
+            validationField:
+              type: string
+            validationMessage:
+              type: string
+    NotFoundError:
+      type: object
+      properties:
+        uniqueCode:
+          type: string
+        errorModel:
+          type: object
+          properties:
+            reason:
+              type: string
+            type:
+              type: string
+    MethodNotAllowedError:
+      type: object
+      properties:
+        uniqueCode:
+          type: string
+        errorModel:
+          type: object
+          properties:
+            allowedMethods:
+              type: string
+            methodError:
+              type: string
+  requestBodies:
+    CheckAnswer:
+      content:
+        application/json:
+          schema:
+            allOf:
+              - description: AnswerCorrectness
+                title: Answer
+              - $ref: '#/components/schemas/CheckAnswerRequest'
+      description: Query to see correctness of answer
+      required: true
