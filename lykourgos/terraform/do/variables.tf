@@ -3,7 +3,7 @@
 ##########################################
 
 variable "odysseia_version" {
-  default = "1.22.7-do.0"
+  default = "1.22.8-do.0"
   type    = string
   description = "cluster version for the odysseia"
 }

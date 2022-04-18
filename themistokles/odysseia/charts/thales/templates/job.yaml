@@ -22,14 +22,14 @@ spec:
         odysseia-greek/job-name: {{ .Values.config.jobToWaitOn }}
     spec:
       serviceAccountName: {{ template "serviceAccountName" . }}
-      {{- if .Values.config.inClusterHarbor | quote }}
+      {{- if .Values.config.privateImagesInRepo | quote }}
       imagePullSecrets:
         - name: {{ .Values.images.pullSecret}}
       {{- end}}
       initContainers:
         - name: "{{ template "init.uname" . }}"
-          {{- if .Values.config.inClusterHarbor | quote }}
-          image: {{ .Values.images.harborRepo}}{{ .Values.images.init.repo }}:{{ .Values.images.tag }}
+          {{- if .Values.config.externalRepo | quote }}
+          image: {{ .Values.images.imageRepo}}{{ .Values.images.init.repo }}:{{ .Values.images.tag }}
           imagePullPolicy: {{ .Values.config.pullPolicy }}
           {{ else }}
           image: {{ .Values.images.init.repo }}:{{ .Values.images.tag }}
@@ -57,8 +57,8 @@ spec:
                 fieldRef:
                   fieldPath: metadata.annotations['odysseia-greek/access']
         - name: "{{ template "jobinit.uname" . }}"
-          {{- if .Values.config.inClusterHarbor | quote }}
-          image: {{ .Values.images.harborRepo}}{{ .Values.images.jobinit.repo }}:{{ .Values.images.tag }}
+          {{- if .Values.config.externalRepo | quote }}
+          image: {{ .Values.images.imageRepo}}{{ .Values.images.jobinit.repo }}:{{ .Values.images.tag }}
           imagePullPolicy: {{ .Values.config.pullPolicy }}
           {{ else }}
           image: {{ .Values.images.jobinit.repo }}:{{ .Values.images.tag }}
@@ -77,8 +77,8 @@ spec:
                   fieldPath: metadata.annotations['odysseia-greek/job-name']
       containers:
         - name: "{{ template "sidecar.uname" . }}"
-          {{- if .Values.config.inClusterHarbor | quote }}
-          image: {{ .Values.images.harborRepo}}{{ .Values.images.sidecar.repo }}:{{ .Values.images.tag }}
+          {{- if .Values.config.externalRepo | quote }}
+          image: {{ .Values.images.imageRepo}}{{ .Values.images.sidecar.repo }}:{{ .Values.images.tag }}
           imagePullPolicy: {{ .Values.config.pullPolicy }}
           {{ else }}
           image: {{ .Values.images.sidecar.repo }}:{{ .Values.images.tag }}
@@ -107,8 +107,8 @@ spec:
               memory: {{.Values.services.sidecar.limits.memory}}
               cpu: {{.Values.services.sidecar.limits.memory}}
         - name: "{{ template "job.uname" . }}"
-          {{- if .Values.config.inClusterHarbor | quote }}
-          image: {{ .Values.images.harborRepo}}{{ .Values.images.job.repo }}:{{ .Values.images.tag }}
+          {{- if .Values.config.externalRepo | quote }}
+          image: {{ .Values.images.imageRepo}}{{ .Values.images.job.repo }}:{{ .Values.images.tag }}
           imagePullPolicy: {{ .Values.config.pullPolicy }}
           {{ else }}
           image: {{ .Values.images.job.repo }}:{{ .Values.images.tag }}

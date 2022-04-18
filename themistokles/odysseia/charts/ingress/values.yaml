@@ -17,4 +17,4 @@ envVariables:
     port: 8089
 
 config:
-  host: odysseia-greek.internal
+  host: odysseia-greek.com

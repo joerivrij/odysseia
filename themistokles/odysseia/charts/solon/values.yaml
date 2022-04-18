@@ -3,7 +3,8 @@
 # Declare variables to be passed into your templates.
 
 config:
-  inClusterHarbor: true
+  externalRepo: true
+  privateImagesInRepo: false
   environment: minikube
   tls: true
   sidecarOverwrite: true
@@ -34,12 +35,12 @@ services:
     name: "drakon"
 
 images:
-  harborRepo: core.harbor.domain:30003/odysseia/
+  imageRepo: core.harbor.domain:30003/odysseia/
   pullSecret: harbor-images
   tag: 4952f80
-  solon:
+  odysseiaapi:
     repo: solon
-  drakon:
+  init:
     repo: drakon
 
 envVariables:

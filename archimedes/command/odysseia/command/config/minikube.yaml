@@ -5,3 +5,12 @@ harbor:
       enabled: true
       certSource: secret
   externalURL: https://core.harbor.domain:30003
+
+
+elastic:
+  volumeClaimTemplate:
+    accessModes: [ "ReadWriteOnce" ]
+    storageClassName: "standard"
+    resources:
+      requests:
+        storage: 100M

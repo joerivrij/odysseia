@@ -7,7 +7,6 @@ import (
 type ArchimedesConfig struct {
 	Kube kubernetes.KubeClient
 }
-
 type ValueOverwrite struct {
 	Harbor struct {
 		HarborAdminPassword string `yaml:"harborAdminPassword"`
@@ -36,4 +35,15 @@ type ValueOverwrite struct {
 			} `yaml:"ports"`
 		} `yaml:"nodePort"`
 	} `yaml:"harbor"`
+	Elastic struct {
+		VolumeClaimTemplate struct {
+			AccessModes      []string `yaml:"accessModes"`
+			StorageClassName string   `yaml:"storageClassName"`
+			Resources        struct {
+				Requests struct {
+					Storage string `yaml:"storage"`
+				} `yaml:"requests"`
+			} `yaml:"resources"`
+		} `yaml:"volumeClaimTemplate"`
+	} `yaml:"elastic"`
 }

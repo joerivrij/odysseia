@@ -6,7 +6,8 @@ config:
   environment: minikube
   pullPolicy: Never
   harborPullPolicy: Always
-  inClusterHarbor: true
+  externalRepo: true
+  privateImagesInRepo: false
   loadTests: false
   systemTests: true
   replicas:
@@ -41,7 +42,7 @@ services:
 
 images:
   tag: 4952f80
-  harborRepo: core.harbor.domain:30003/odysseia/
+  imageRepo: core.harbor.domain:30003/odysseia/
   pullSecret: harbor-images
   system:
     repo: hippokrates
