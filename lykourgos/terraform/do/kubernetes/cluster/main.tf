@@ -15,11 +15,5 @@ resource "digitalocean_kubernetes_cluster" "odysseia" {
     name       = var.node_name
     size       = var.node_type
     node_count = var.node_size
-
-    taint {
-      key    = "workloadKind"
-      value  = "database"
-      effect = "NoSchedule"
-    }
   }
 }

@@ -128,7 +128,7 @@ func CreateElasticP12(kube kubernetes.KubeClient, ns, filePath string) (string, 
 	}()
 
 	glg.Info("waiting for process to finish in pod...")
-	sleepBeforeCopy := 10 * time.Second
+	sleepBeforeCopy := 25 * time.Second
 	time.Sleep(sleepBeforeCopy)
 	glg.Info("process done")
 

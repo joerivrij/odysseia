@@ -3,9 +3,10 @@
 # Declare variables to be passed into your templates.
 
 config:
-  inClusterHarbor: true
+  externalRepo: true
+  privateImagesInRepo: false
   environment: minikube
-  pullPolicy: Never
+  pullPolicy: Always
   port: 8080
   replicas:
     low: 1
@@ -22,10 +23,10 @@ services:
 
 
 images:
-  harborRepo: core.harbor.domain:30003/odysseia/
+  imageRepo: core.harbor.domain:30003/odysseia/
   pullSecret: harbor-images
-  tag: 566cb3e
-  docs:
+  tag: 1af8792
+  odysseiaapi:
     repo: ploutarchos
 
 

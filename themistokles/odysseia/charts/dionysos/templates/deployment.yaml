@@ -29,14 +29,14 @@ spec:
         odysseia-greek/secondary-access: {{ .Values.services.odysseiaapi.secondaryAccess }}
     spec:
       serviceAccountName: {{ template "serviceAccountName" . }}
-      {{- if .Values.config.inClusterHarbor | quote }}
+      {{- if .Values.config.privateImagesInRepo | quote }}
       imagePullSecrets:
         - name: {{ .Values.images.pullSecret}}
       {{- end}}
       initContainers:
         - name: "{{ template "init.uname" . }}"
-          {{- if .Values.config.inClusterHarbor | quote }}
-          image: {{ .Values.images.harborRepo}}{{ .Values.images.init.repo }}:{{ .Values.images.tag }}
+          {{- if .Values.config.externalRepo | quote }}
+          image: {{ .Values.images.imageRepo}}{{ .Values.images.init.repo }}:{{ .Values.images.tag }}
           imagePullPolicy: {{ .Values.config.pullPolicy }}
           {{ else }}
           image: {{ .Values.images.init.repo }}:{{ .Values.images.tag }}
@@ -69,8 +69,8 @@ spec:
                 fieldPath: metadata.annotations['odysseia-greek/secondary-access']
       containers:
         - name: "{{ template "sidecar.uname" . }}"
-          {{- if .Values.config.inClusterHarbor | quote }}
-          image: {{ .Values.images.harborRepo}}{{ .Values.images.sidecar.repo }}:{{ .Values.images.tag }}
+          {{- if .Values.config.externalRepo | quote }}
+          image: {{ .Values.images.imageRepo}}{{ .Values.images.sidecar.repo }}:{{ .Values.images.tag }}
           imagePullPolicy: {{ .Values.config.pullPolicy }}
           {{ else }}
           image: {{ .Values.images.sidecar.repo }}:{{ .Values.images.tag }}
@@ -98,8 +98,8 @@ spec:
               memory: {{.Values.services.sidecar.limits.memory}}
               cpu: {{.Values.services.sidecar.limits.memory}}
         - name: "{{ template "odysseiaapi.uname" . }}"
-          {{- if .Values.config.inClusterHarbor | quote }}
-          image: {{ .Values.images.harborRepo}}{{ .Values.images.odysseiaapi.repo }}:{{ .Values.images.tag }}
+          {{- if .Values.config.externalRepo | quote }}
+          image: {{ .Values.images.imageRepo}}{{ .Values.images.odysseiaapi.repo }}:{{ .Values.images.tag }}
           imagePullPolicy: {{ .Values.config.pullPolicy }}
           {{ else }}
           image: {{ .Values.images.odysseiaapi.repo }}:{{ .Values.images.tag }}

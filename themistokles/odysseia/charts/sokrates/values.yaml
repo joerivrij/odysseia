@@ -4,7 +4,8 @@
 
 config:
   environment: minikube
-  inClusterHarbor: true
+  externalRepo: true
+  privateImagesInRepo: false
   tls: true
   pullPolicy: Never
   replicas:
@@ -47,7 +48,7 @@ services:
 
 images:
   tag: 4952f80
-  harborRepo: core.harbor.domain:30003/odysseia/
+  imageRepo: core.harbor.domain:30003/odysseia/
   pullSecret: harbor-images
   sidecar:
     repo: ptolemaios
@@ -62,7 +63,7 @@ envVariables:
   solonService: http://solon-service:5000
   vaultService: http://vault:8200
   elasticService: https://elastic-master:9200
-  mqService: kubemq
+  mqService: queue
   mqPort: 50000
   odysseiaapi:
     port: 5000

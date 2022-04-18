@@ -28,14 +28,14 @@ spec:
         elastic/roles: "api;seeder;hybrid"
     spec:
       serviceAccountName: {{ template "solon.serviceAccountName" . }}
-      {{- if .Values.config.inClusterHarbor | quote }}
+      {{- if .Values.config.externalRepo | quote }}
       imagePullSecrets:
         - name: {{ .Values.images.pullSecret }}
       {{- end}}
       initContainers:
         - name: "{{ template "drakon.uname" . }}"
-          {{- if .Values.config.inClusterHarbor | quote }}
-          image: {{ .Values.images.harborRepo}}{{ .Values.images.drakon.repo }}:{{ .Values.images.tag }}
+          {{- if .Values.config.externalRepo | quote }}
+          image: {{ .Values.images.imageRepo}}{{ .Values.images.init.repo }}:{{ .Values.images.tag }}
           imagePullPolicy: {{ .Values.config.harborPullPolicy }}
           {{ else }}
           image: {{ .Values.images.drakon.repo }}:{{ .Values.images.tag }}
@@ -77,11 +77,11 @@ spec:
           {{- end }}
       containers:
         - name: "{{ template "solon.uname" . }}"
-          {{- if .Values.config.inClusterHarbor | quote }}
-          image: {{ .Values.images.harborRepo}}{{ .Values.images.solon.repo }}:{{ .Values.images.tag }}
+          {{- if .Values.config.externalRepo | quote }}
+          image: {{ .Values.images.imageRepo}}{{ .Values.images.odysseiaapi.repo }}:{{ .Values.images.tag }}
           imagePullPolicy: {{ .Values.config.harborPullPolicy }}
           {{ else }}
-          image: {{ .Values.images.solon.repo }}:{{ .Values.images.tag }}
+          image: {{ .Values.images.odysseiaapi.repo }}:{{ .Values.images.tag }}
           imagePullPolicy: {{ .Values.config.pullPolicy }}
           {{- end}}
           env:

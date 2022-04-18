@@ -1,7 +1,6 @@
 appsToInstall:
   - elasticsearch
   - vault
-  - harbor
   - solon
   - pheidias
   - alexandros
@@ -10,4 +9,3 @@ appsToInstall:
   - herodotos
   - thales
   - docs
-  - tests

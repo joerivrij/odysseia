@@ -4,7 +4,8 @@
 
 config:
   environment: minikube
-  inClusterHarbor: true
+  externalRepo: true
+  privateImagesInRepo: false
   tls: true
   pullPolicy: Never
   replicas:
@@ -48,7 +49,7 @@ services:
 
 images:
   tag: 4952f80
-  harborRepo: core.harbor.domain:30003/odysseia/
+  imageRepo: core.harbor.domain:30003/odysseia/
   pullSecret: harbor-images
   sidecar:
     repo: ptolemaios

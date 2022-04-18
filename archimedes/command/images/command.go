@@ -14,6 +14,7 @@ func Manager() *cobra.Command {
 
 	cmd.AddCommand(
 		command.CreateImages(),
+		command.CreateImageSet(),
 	)
 
 	return cmd

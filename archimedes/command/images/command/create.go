@@ -1,21 +1,21 @@
 package command
 
 import (
-	"fmt"
 	"github.com/kpango/glg"
 	"github.com/odysseia/archimedes/util"
 	"github.com/spf13/cobra"
 	"io/ioutil"
 	"os"
 	"path/filepath"
-	"regexp"
 	"runtime"
 	"strings"
 )
 
 func CreateImages() *cobra.Command {
 	var (
-		filePath string
+		filePath        string
+		tag             string
+		destinationRepo string
 	)
 	cmd := &cobra.Command{
 		Use:   "create",
@@ -44,86 +44,40 @@ func CreateImages() *cobra.Command {
 				filePath = l
 			}
 
-			glg.Infof("filepath set to: %s", filePath)
-			command := "create-harbor"
+			if tag == "" {
+				glg.Warn("no tag set for image, using the git short hash")
+				gitTag, err := util.ExecCommandWithReturn(`git rev-parse --short HEAD`, filePath)
+				if err != nil {
+					glg.Fatal(err)
+				}
 
-			LoopAndCreateImages(filePath, command)
+				tag = gitTag
+			}
+
+			if destinationRepo == "" {
+				glg.Warnf("destination repo empty, default to %s", defaultRepo)
+				destinationRepo = defaultRepo
+			}
+
+			glg.Infof("filepath set to: %s", filePath)
+
+			LoopAndCreateImages(filePath, tag, destinationRepo)
 		},
 	}
 	cmd.PersistentFlags().StringVarP(&filePath, "filepath", "f", "", "where to find the source code")
+	cmd.PersistentFlags().StringVarP(&tag, "tag", "t", "", "image tag")
+	cmd.PersistentFlags().StringVarP(&destinationRepo, "dest", "d", "", "destination repo address")
 
 	return cmd
 }
 
-func LoopAndCreateImages(odysseiaPath, command string) {
-	ploutarchosPath := fmt.Sprintf("%s/%s/yaml", odysseiaPath, "ploutarchos")
-	directories, err := ioutil.ReadDir(odysseiaPath)
+func LoopAndCreateImages(filePath, tag, destRepo string) {
+	directories, err := ioutil.ReadDir(filePath)
 	if err != nil {
 		glg.Fatal(err)
 	}
 
 	for _, dir := range directories {
-		fi, err := os.Stat(dir.Name())
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-
-		// first action is to copy over the swagger files since they are needed for the image stage
-		switch mode := fi.Mode(); {
-		case mode.IsDir():
-			charOne := dir.Name()[0]
-			if string(charOne) == "." {
-				continue
-			}
-
-			absolutePath, _ := filepath.Abs(dir.Name())
-			lookForYamlFile(absolutePath, ploutarchosPath)
-			lookForMakeFile(absolutePath, command)
-		case mode.IsRegular():
-		}
-	}
-}
-
-func lookForYamlFile(absolutePath, ploutarchosPath string) {
-	files, err := ioutil.ReadDir(absolutePath)
-	if err != nil {
-		glg.Fatal(err)
-	}
-
-	for _, f := range files {
-		re := regexp.MustCompile(`-swagger.yaml`)
-		if re.Match([]byte(f.Name())) {
-			swaggerSource := fmt.Sprintf("%s/%s", absolutePath, f.Name())
-			swaggerDestination := fmt.Sprintf("%s/%s", ploutarchosPath, f.Name())
-			glg.Info("****** 📗 Getting OpenApi Doc 📗 ******")
-			glg.Debug("found swagger file %s copying to %s", swaggerSource, swaggerDestination)
-			err = util.CopyFileContents(swaggerSource, swaggerDestination)
-			if err != nil {
-				glg.Error(err)
-			}
-			glg.Info("****** 📋 Copied OpenApi Doc 📋 ******")
-		}
-	}
-}
-func lookForMakeFile(absolutePath, command string) {
-	files, err := ioutil.ReadDir(absolutePath)
-	if err != nil {
-		glg.Fatal(err)
-	}
-
-	for _, f := range files {
-		if f.Name() == "Makefile" {
-			glg.Debugf("Makefile found in %s", absolutePath)
-			glg.Info("****** 🚢 Building Container Image 🚢 ******")
-			makeCommand := fmt.Sprintf("make %s", command)
-
-			err := util.ExecCommand(makeCommand, absolutePath)
-			if err != nil {
-				glg.Error(err)
-			}
-
-			glg.Info("****** 🔱 Image Done 🔱 ******")
-		}
+		BuildImageSet(filePath, dir.Name(), tag, destRepo, true)
 	}
 }

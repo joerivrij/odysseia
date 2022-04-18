@@ -1,0 +1,12 @@
+config:
+  environment: minikube
+  pullPolicy: Always
+
+
+images:
+  tag: latest
+  queue:
+    repo: kubemq/kubemq-community
+
+services:
+  name: kubemq

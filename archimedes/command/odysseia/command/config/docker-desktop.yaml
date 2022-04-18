@@ -17,3 +17,11 @@ harbor:
       https:
         port: 443
         nodePort: 30003
+
+elastic:
+  volumeClaimTemplate:
+    accessModes: [ "ReadWriteOnce" ]
+    storageClassName: "hostpath"
+    resources:
+      requests:
+        storage: 100M

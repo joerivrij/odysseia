@@ -25,14 +25,14 @@ spec:
         release: {{ .Release.Name }}
         version: {{ .Values.images.tag }}
     spec:
-      {{- if .Values.config.inClusterHarbor | quote }}
+      {{- if .Values.config.privateImagesInRepo | quote }}
       imagePullSecrets:
         - name: {{ .Values.images.pullSecret}}
       {{- end}}
       containers:
       - name: {{ template "load.uname" . }}-alexandros
-        {{- if .Values.config.inClusterHarbor | quote }}
-        image: {{ .Values.images.harborRepo}}{{ .Values.images.load.repo }}:{{ .Values.images.tag }}
+        {{- if .Values.config.externalRepo | quote }}
+        image: {{ .Values.images.imageRepo}}{{ .Values.images.load.repo }}:{{ .Values.images.tag }}
         imagePullPolicy: {{ .Values.config.pullPolicy }}
         {{ else }}
         image: {{ .Values.images.load.repo }}:{{ .Values.images.tag }}
@@ -54,8 +54,8 @@ spec:
         ports:
           - containerPort: {{ .Values.envVariables.load.alexandrosPort }}
       - name: {{ template "load.uname" . }}-herodotos
-        {{- if .Values.config.inClusterHarbor | quote }}
-        image: {{ .Values.images.harborRepo}}{{ .Values.images.load.repo }}:{{ .Values.images.tag }}
+        {{- if .Values.config.externalRepo | quote }}
+        image: {{ .Values.images.imageRepo}}{{ .Values.images.load.repo }}:{{ .Values.images.tag }}
         imagePullPolicy: {{ .Values.config.pullPolicy }}
         {{ else }}
         image: {{ .Values.images.load.repo }}:{{ .Values.images.tag }}
@@ -77,8 +77,8 @@ spec:
         ports:
           - containerPort: {{ .Values.envVariables.load.herodotosPort }}
       - name: {{ template "load.uname" . }}-sokrates
-        {{- if .Values.config.inClusterHarbor | quote }}
-        image: {{ .Values.images.harborRepo}}{{ .Values.images.load.repo }}:{{ .Values.images.tag }}
+        {{- if .Values.config.externalRepo | quote }}
+        image: {{ .Values.images.imageRepo}}{{ .Values.images.load.repo }}:{{ .Values.images.tag }}
         imagePullPolicy: {{ .Values.config.pullPolicy }}
         {{ else }}
         image: {{ .Values.images.load.repo }}:{{ .Values.images.tag }}
@@ -100,8 +100,8 @@ spec:
         ports:
           - containerPort: {{ .Values.envVariables.load.sokratesPort }}
       - name: {{ template "load.uname" . }}-dionysos
-        {{- if .Values.config.inClusterHarbor | quote }}
-        image: {{ .Values.images.harborRepo}}{{ .Values.images.load.repo }}:{{ .Values.images.tag }}
+        {{- if .Values.config.externalRepo | quote }}
+        image: {{ .Values.images.imageRepo}}{{ .Values.images.load.repo }}:{{ .Values.images.tag }}
         imagePullPolicy: {{ .Values.config.pullPolicy }}
         {{ else }}
         image: {{ .Values.images.load.repo }}:{{ .Values.images.tag }}

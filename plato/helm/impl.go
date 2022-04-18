@@ -17,6 +17,7 @@ type HelmClient interface {
 	Install(chartPath string) (*release.Release, error)
 	InstallNamed(releaseName, chartPath string) (*release.Release, error)
 	InstallWithValues(chartPath string, values map[string]interface{}) (*release.Release, error)
+	InstallNamespaced(chartPath, namespace string, createNamespace bool) (*release.Release, error)
 	List() ([]*release.Release, error)
 }
 

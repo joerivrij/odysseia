@@ -24,17 +24,17 @@ spec:
         release: {{ .Release.Name }}
         version: {{ .Values.images.tag }}
     spec:
-      {{- if .Values.config.inClusterHarbor | quote }}
+      {{- if .Values.config.privateImagesInRepo | quote }}
       imagePullSecrets:
         - name: {{ .Values.images.pullSecret}}
       {{- end}}
       containers:
         - name: ploutarchos
-          {{- if .Values.config.inClusterHarbor | quote }}
-          image: {{ .Values.images.harborRepo}}{{ .Values.images.docs.repo }}:{{ .Values.images.tag }}
+          {{- if .Values.config.externalRepo | quote }}
+          image: {{ .Values.images.imageRepo}}{{ .Values.images.odysseiaapi.repo }}:{{ .Values.images.tag }}
           imagePullPolicy: {{ .Values.config.pullPolicy }}
           {{ else }}
-          image: {{ .Values.images.docs.repo }}:{{ .Values.images.tag }}
+          image: {{ .Values.images.odysseiaapi.repo }}:{{ .Values.images.tag }}
           imagePullPolicy: {{ .Values.config.pullPolicy }}
           {{- end}}
           ports:
