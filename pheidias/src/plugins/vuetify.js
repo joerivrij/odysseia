@@ -11,11 +11,11 @@ const vuetify = new Vuetify({
     theme: {
         themes: {
             light: {
-                primary: '#3384FF',
-                secondary: '#33EAFF',
+                primary: '#1c61d1',
+                secondary: '#1cd18c',
                 triadic: '#1CBCD1',
                 accent: '#8c9eff',
-                error: '#b71c1c',
+                error: '#d1311c',
                 background: '#e0f7fa',
             },
         },

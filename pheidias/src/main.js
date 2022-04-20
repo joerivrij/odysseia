@@ -15,10 +15,10 @@ Vue.prototype.$alexandrosUrl = store.state.AlexandrosUrl
 Vue.prototype.$dionysosUrl = store.state.DionysosUrl
 
 if (process.env.NODE_ENV === 'development') {
-  Vue.prototype.$sokratesUrl = "http://localhost:5000/sokrates/v1"
-  Vue.prototype.$herodotosUrl = "http://localhost:5000/herodotos/v1"
-  Vue.prototype.$alexandrosUrl = "http://minikube-odysseia.test/alexandros/v1"
-  Vue.prototype.$dionysosUrl = "http://localhost:5001/dionysos/v1"
+  Vue.prototype.$sokratesUrl = "https://odysseia-greek.com/sokrates/v1"
+  Vue.prototype.$herodotosUrl = "https://odysseia-greek.com/herodotos/v1"
+  Vue.prototype.$alexandrosUrl = "https://odysseia-greek.com/alexandros/v1"
+  Vue.prototype.$dionysosUrl = "https://odysseia-greek.com/dionysos/v1"
 }
 
 console.log(`sokrates proxy found at: ${Vue.prototype.$sokratesUrl}`)

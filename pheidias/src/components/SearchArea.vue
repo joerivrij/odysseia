@@ -1,6 +1,9 @@
 <template>
   <div id="search">
-    <v-app id="searcharea">
+    <v-app
+        id="searcharea"
+        :style="{background: $vuetify.theme.themes[theme].background}"
+    >
       <v-card color="primary" dark>
         <v-card-text>
           Explore hundreds of words available on the database for more
@@ -10,22 +13,20 @@
               href="https://github.com/joerivrij/odysseia/tree/master/demokritos/lexiko"
               target="_blank"
           >the GitHub repository</a
-          >.
+          >
         </v-card-text>
         <v-card-text>
           <v-autocomplete
-              v-model="model"
-              :items="items"
               :loading="loading"
               :search-input.sync="search"
-              color="white"
               hide-no-data
-              hide-selected
+              color="white"
               item-text="Description"
               item-value="API"
               label="What Greek word are you looking for?"
               placeholder="Start typing to Search"
               prepend-icon="mdi-database-search"
+              auto-select-first
               return-object
           ></v-autocomplete>
         </v-card-text>
@@ -54,6 +55,11 @@
 <script>
 export default {
   name: "SearchArea",
+  computed: {
+    theme(){
+      return (this.$vuetify.theme.dark) ? 'dark' : 'light'
+    }
+  },
   data() {
     return {
       headers: [
@@ -66,7 +72,6 @@ export default {
         { text: 'English', value: 'english' },
       ],
       searchResults: [],
-      items: [],
       errors: [],
       loading: false,
       search: null,
@@ -80,10 +85,6 @@ export default {
       let url = `${this.$alexandrosUrl}/search?word=${value}`
       this.$apiClient.get(url)
           .then((response) => {
-            for (let i = 0; i < response.data.length; i++) {
-              this.items.push(response.data[i]['greek']);
-            }
-
             this.searchResults = response.data
             setTimeout(() => {
               this.loading = false
