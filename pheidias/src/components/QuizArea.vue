@@ -6,6 +6,123 @@
     >
       <v-main>
         <div class="text-center">
+          <div style="margin-bottom:2em;">
+            <v-btn
+                class="ma-2"
+                color="primary"
+                dark
+                v-on:click="displayInfo=!displayInfo;stepper=1"
+            >
+              Howto
+              <v-icon
+                  dark
+                  right
+              >
+                info
+              </v-icon>
+            </v-btn>
+            <v-stepper v-model="stepper" v-if="displayInfo">
+              <v-stepper-header>
+                <v-stepper-step
+                    :complete="stepper > 1"
+                    step="1"
+                >
+                  Select Method and Category
+                </v-stepper-step>
+
+                <v-divider></v-divider>
+
+                <v-stepper-step
+                    :complete="stepper > 2"
+                    step="2"
+                >
+                  Select Chapter
+                </v-stepper-step>
+
+                <v-divider></v-divider>
+
+                <v-stepper-step step="3">
+                  Answer Questions
+                </v-stepper-step>
+              </v-stepper-header>
+
+              <v-stepper-items>
+                <v-stepper-content step="1">
+                  <v-card
+                      class="mb-12"
+                      color="white"
+                      height="14em"
+                  >Press one of the buttons below "Available Methods". And a popup will appear with each category for that method.
+                  <br>
+                    Some of these are based on books (such as Aristophanes -> frogs) and others on more general terms.
+                    <br>
+                    MOUSEION is Dutch only.
+                  </v-card>
+
+                  <v-btn
+                      color="primary"
+                      @click="stepper = 2"
+                  >
+                    Next Step
+                  </v-btn>
+
+                  <v-btn
+                      text
+                      v-on:click="displayInfo=!displayInfo">
+                    Close
+                  </v-btn>
+                </v-stepper-content>
+
+                <v-stepper-content step="2">
+                  <v-card
+                      class="mb-12"
+                      color="white"
+                      height="14em"
+                  >Chapters can be chosen by typing and pressing SET CHAPTER.
+                    <br>
+                    Between brackets (for example: Chapters (1 -93)) are the available chapters
+                  <br>
+                  You can only set a chapter after you have chosen a method and catergory</v-card>
+
+
+                  <v-btn
+                      color="primary"
+                      @click="stepper = 3"
+                  >
+                    Next Step
+                  </v-btn>
+
+                  <v-btn
+                      text
+                      v-on:click="displayInfo=!displayInfo">
+                    Close
+                  </v-btn>
+                </v-stepper-content>
+
+                <v-stepper-content step="3">
+                  <v-card
+                      class="mb-12"
+                      color="white"
+                      height="14em"
+                  >After having set a Method with a Category and a chapter (default is 1) you can start testing your knowledge.
+                    <br>
+                    For example:
+                    <br>
+                    Translate:
+                    ἀλλά
+                    <br>
+                    Choose one of the options below and click the right answer. You will be shown whether you are right or not!
+                    A graph is displayed just for fun.
+                  </v-card>
+                  <v-btn
+                      text
+                      v-on:click="displayInfo=!displayInfo">
+                    Close
+                  </v-btn>
+                </v-stepper-content>
+              </v-stepper-items>
+            </v-stepper>
+          </div>
           <h2>Method: {{this.selectedMethod}} - Category: {{ this.category}} - Chapter {{this.selectedChapter}}</h2>
           <h4>Available Methods</h4>
           <v-row justify="center" align="center">
@@ -43,7 +160,7 @@
           <br />
           <br />
           <br />
-            <v-container>
+            <v-container v-if="category.length">
               <v-row justify="center" align="center">
                 <v-col
                     cols="12"
@@ -73,6 +190,7 @@
           <br>
           <br>
 
+          <div v-if="quizWord.length">
           <h3>Translate:</h3>
           <h3>{{quizWord}}</h3>
           <br />
@@ -115,7 +233,7 @@
                 prominent
                 type="error"
                 icon="close"
-                color="#ff5252"
+                color="#e9501d"
                 transition="slide-y-transition"
             >
               <v-row align="center">
@@ -142,7 +260,7 @@
                 :key="index"
                 @click="selectedAnswer = item"
                 v-on:click="postAnswer();showLoader();"
-                class="ma-2"
+                class="ma-4"
                 color="triadic"
             >
               {{ item }}
@@ -160,7 +278,7 @@
 
           <v-sparkline
               :value="this.graphNumbers"
-              :gradient="['#1feaea', '#ffd200', '#f72047']"
+              :gradient="['#1affcb', '#e9b61d', '#e9501d']"
               :smooth="radius || false"
               :padding="padding"
               :line-width="width"
@@ -171,6 +289,7 @@
               :auto-line-width="autoLineWidth"
               auto-draw
           ></v-sparkline>
+        </div>
         </div>
       </v-main>
     </v-app>
@@ -229,6 +348,8 @@ export default {
       fill: false,
       type: 'trend',
       autoLineWidth: false,
+      stepper: 1,
+      displayInfo: false,
     }
   },
   methods: {

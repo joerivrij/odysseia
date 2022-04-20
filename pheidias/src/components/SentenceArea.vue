@@ -1,8 +1,112 @@
 <template>
   <div id="herodotos">
-    <v-app id="sentencearea">
+    <v-app
+        id="sentencearea"
+        :style="{background: $vuetify.theme.themes[theme].background}"
+    >
       <v-main>
         <div class="text-center">
+          <div style="margin-bottom:2em;">
+            <v-btn
+                class="ma-2"
+                color="primary"
+                dark
+                v-on:click="displayInfo=!displayInfo;stepper=1"
+            >
+              Howto
+              <v-icon
+                  dark
+                  right
+              >
+                info
+              </v-icon>
+            </v-btn>
+            <v-stepper v-model="stepper" v-if="displayInfo">
+              <v-stepper-header>
+                <v-stepper-step
+                    :complete="stepper > 1"
+                    step="1"
+                >
+                  Select Author
+                </v-stepper-step>
+
+                <v-divider></v-divider>
+
+                <v-stepper-step
+                    :complete="stepper > 2"
+                    step="2"
+                >
+                  Select Book
+                </v-stepper-step>
+
+                <v-divider></v-divider>
+
+                <v-stepper-step step="3">
+                  Type Translation
+                </v-stepper-step>
+              </v-stepper-header>
+
+              <v-stepper-items>
+                <v-stepper-content step="1">
+                  <v-card
+                      class="mb-12"
+                      color="white"
+                      height="5em"
+                  >Press the Authors button and choose one of the available Authors (a pop up will appear)</v-card>
+
+                  <v-btn
+                      color="primary"
+                      @click="stepper = 2"
+                  >
+                    Next Step
+                  </v-btn>
+
+                  <v-btn
+                      text
+                      v-on:click="displayInfo=!displayInfo">
+                    Close
+                  </v-btn>
+                </v-stepper-content>
+
+                <v-stepper-content step="2">
+                  <v-card
+                      class="mb-12"
+                      color="white"
+                      height="5em"
+                  >Press the Books button and choose one of the available Books (a pop up will appear)</v-card>
+
+                  <v-btn
+                      color="primary"
+                      @click="stepper = 3"
+                  >
+                    Next Step
+                  </v-btn>
+
+                  <v-btn
+                      text
+                      v-on:click="displayInfo=!displayInfo">
+                    Close
+                  </v-btn>
+                </v-stepper-content>
+
+                <v-stepper-content step="3">
+                  <v-card
+                      class="mb-12"
+                      color="white"
+                      height="12em"
+                  >Type your translation and when done hit the CHECK button. You can toggle Translation assistance where
+                    Odysseia will attempt to help you decline and translate the word (limited at this time).<br>
+                    Any typos will be displayed after you have given your translation along side a "official" translation
+                    </v-card>
+                  <v-btn
+                      text
+                      v-on:click="displayInfo=!displayInfo">
+                    Close
+                  </v-btn>
+                </v-stepper-content>
+              </v-stepper-items>
+            </v-stepper>
+            </div>
           <v-card class="mx-auto" max-width="344">
             <v-card-text>
               <p class="text-h4 text--primary">
@@ -44,7 +148,6 @@
                 <v-textarea
                     readonly
                     v-model="sentence"
-                    v-on:dblclick="queryWord($event)"
                 ></v-textarea>
               </div>
               <h4>Possible Typos</h4>
@@ -83,24 +186,48 @@
                 Next
               </v-btn>
             </v-card-actions>
-
-            <v-expand-transition>
-              <v-card
-                  v-if="reveal"
-                  class="transition-fast-in-fast-out v-card--reveal"
-                  style="height: 100%"
+            <v-card
+                v-if="reveal"
+                class="transition-fast-in-fast-out v-card--reveal"
+                style="height: 100%"
+            >
+              <v-card-text class="pb-0">
+                <p class="text-h4 text--primary">Translation</p>
+                <p>Correctness: {{this.translationPercentage}}%</p>
+                {{ this.databaseAnswer }}
+              </v-card-text>
+              <v-card-actions class="pt-0">
+                <v-btn text color="teal accent-4" @click="reveal = false">
+                  Close
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+            <div style="margin-bottom:1em; margin-left:1em;">
+            <v-switch
+                v-model="mobileView"
+                label="Translation Assistance"
+                color="primary"
+                value="primary"
+                hide-details
+            ></v-switch>
+            </div>
+            <v-card-text v-if="mobileView">
+              <v-chip-group
+                  active-class="deep-purple accent-4 white--text"
+                  column
               >
-                <v-card-text class="pb-0">
-                  <p class="text-h4 text--primary">Translation</p>
-                  <p>Correctness: {{this.translationPercentage}}%</p>
-                  {{ this.databaseAnswer }}
-                </v-card-text>
-                <v-card-actions class="pt-0">
-                  <v-btn text color="teal accent-4" @click="reveal = false">
-                    Close
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
+                <v-chip
+                    v-for="(word, index) in seperatedWords"
+                    :key="index"
+                    v-on:click="queryWord(word)"
+                    class="ma-1"
+                    color="triadic"
+                >
+                  {{ word }}
+                </v-chip>
+              </v-chip-group>
+            </v-card-text>
+            <v-expand-transition>
               <v-card
                   elevation="24"
                   max-width="444"
@@ -165,12 +292,19 @@
 <script>
 export default {
   name: "SentenceArea",
+  computed: {
+    theme(){
+      return (this.$vuetify.theme.dark) ? 'dark' : 'light'
+    }
+  },
   data() {
     return {
+      errors: [],
       authors: [],
       books: [],
       grammarResults: [],
       possibleTypos: [],
+      seperatedWords: [],
       selectedAuthor: "",
       selectedBook: "",
       sentence: "",
@@ -181,6 +315,9 @@ export default {
       closeOnContentClick: true,
       reveal: false,
       cycle: false,
+      mobileView: false,
+      displayInfo: false,
+      stepper: 1,
     }
   },
   methods: {
@@ -192,29 +329,52 @@ export default {
       this.selectedBook = book
       this.getNewSentence()
     },
-    queryWord: function (e) {
-      let value = e.target.value.substring(
-          e.target.selectionStart,
-          e.target.selectionEnd
-      );
-      let url = `${this.$dionysosUrl}/checkGrammar?word=${value}`
+    queryWord: function (word) {
+      let url = `${this.$dionysosUrl}/checkGrammar?word=${word}`
       this.$apiClient.get(url)
           .then((response) => {
+            let extraTranslation = []
             for (let i = 0; i < response.data.results.length; i++) {
               if (response.data.results[i].translation === "") {
                 response.data.results[i].translation = "No translation found"
               }
+
+              if (response.data.results[i].translation.length > 25) {
+                let words = response.data.results[i].translation.split(";")
+                if (words.length > 1) {
+                  for (let j = 0; j < words.length; j++) {
+                    let rule = response.data.results[i].rule
+                    let rootWord = response.data.results[i].rootWord
+                    extraTranslation.push(
+                        {
+                          "word": word,
+                          "rule": rule,
+                          "rootWord": rootWord,
+                          "translation": words[j]
+                        }
+                    )
+                  }
+
+                  response.data.results.splice(i, 1)
+                }
+              }
             }
 
             this.grammarResults = response.data.results
+            if (extraTranslation !== []) {
+              for (let i= 0; i < extraTranslation.length; i++) {
+                this.grammarResults.push(extraTranslation[i])
+              }
+            }
           })
           .catch(e => {
             this.grammarResults =  [{
-              "word"  :  value,
+              "word"  :  word,
               "translation"   :  "No translation found",
-              "rootWord"      :  value,
+              "rootWord"      :  word,
               "rule" : "No rule found"
             }]
+
             this.errors.push(e)
           })
     },
@@ -263,6 +423,8 @@ export default {
       this.$apiClient.get(url)
           .then((response) => {
             this.sentence = response.data.sentence
+            let cleanedText = response.data.sentence.replaceAll(",", "").replaceAll(".", "")
+            this.seperatedWords = cleanedText.split(" ")
             this.currentSentenceId = response.data.sentenceId
           })
           .catch(e => {
