@@ -8,4 +8,4 @@ build:
 build-mac:
 	go fmt ./...
 	GO111MODULE=on GOOS=darwin CGO_ENABLED=0 go build cmd/archimedes.go;
-	mv main /usr/local/bin/$(project_name)
+	mv archimedes /usr/local/bin/$(project_name)

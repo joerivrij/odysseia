@@ -21,7 +21,7 @@ variable "region" {
 }
 
 variable "node_size" {
-  default = 3
+  default = 4
   type    = string
   description = "size of the node group"
 }
