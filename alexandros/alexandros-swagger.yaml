@@ -121,7 +121,7 @@ paths:
       parameters:
         - name: word
           in: query
-          description: author to use
+          description: word to query
           required: true
           type: string
       summary: Query a word
@@ -143,12 +143,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-      '404':
-        description: not found
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/NotFoundError'
+        '404':
+          description: not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
         '405':
           description: method not allowed
           content:

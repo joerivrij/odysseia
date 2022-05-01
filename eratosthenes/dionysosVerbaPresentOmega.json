@@ -1,0 +1,40 @@
+{
+  "took": 7,
+  "timed_out": false,
+  "_shards": {
+    "total": 1,
+    "successful": 1,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": {
+      "value": 2,
+      "relation": "eq"
+    },
+    "max_score": 8.955357,
+    "hits": [
+      {
+        "_index": "dictionary",
+        "_type": "_doc",
+        "_id": "P-ZxRoABxhapSio5dEHU",
+        "_score": 8.955357,
+        "_source": {
+          "greek": "φέρω",
+          "english": "carry"
+        }
+      },
+      {
+        "_index": "dictionary",
+        "_type": "_doc",
+        "_id": "p9KERoABMoal3hxM-M-o",
+        "_score": 8.955357,
+        "_source": {
+          "greek": "φέρω",
+          "english": "to bear",
+          "original": "φέρω"
+        }
+      }
+    ]
+  }
+}

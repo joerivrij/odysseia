@@ -1,0 +1,40 @@
+{
+  "took": 6,
+  "timed_out": false,
+  "_shards": {
+    "total": 1,
+    "successful": 1,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": {
+      "value": 2,
+      "relation": "eq"
+    },
+    "max_score": 8.955357,
+    "hits": [
+      {
+        "_index": "dictionary",
+        "_type": "_doc",
+        "_id": "9pdxRoABxmcSeMRYtKpt",
+        "_score": 8.955357,
+        "_source": {
+          "greek": "μάχομαι",
+          "english": "fight"
+        }
+      },
+      {
+        "_index": "dictionary",
+        "_type": "_doc",
+        "_id": "odKARoABMoal3hxMuMo8",
+        "_score": 8.955357,
+        "_source": {
+          "greek": "μάχομαι",
+          "english": "to fight",
+          "original": "μάχομαι"
+        }
+      }
+    ]
+  }
+}

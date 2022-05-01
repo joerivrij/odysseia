@@ -23,8 +23,8 @@ func TestCreateElasticConfig(t *testing.T) {
 
 		os.Setenv("ENV", "")
 
-		assert.Equal(t, declensionConfig.FirstDeclension.Dialect, expected)
-		assert.Equal(t, declensionConfig.SecondDeclension.Dialect, expected)
+		assert.Equal(t, declensionConfig.Declensions[0].Dialect, expected)
+		assert.Equal(t, declensionConfig.Declensions[1].Dialect, expected)
 	})
 
 	t.Run("UsingElastic", func(t *testing.T) {
@@ -42,8 +42,8 @@ func TestCreateElasticConfig(t *testing.T) {
 
 		os.Setenv("ENV", "")
 
-		assert.Equal(t, declensionConfig.FirstDeclension.Dialect, expected)
-		assert.Equal(t, declensionConfig.SecondDeclension.Dialect, expected)
+		assert.Equal(t, declensionConfig.Declensions[0].Dialect, expected)
+		assert.Equal(t, declensionConfig.Declensions[1].Dialect, expected)
 	})
 
 	t.Run("UsingElasticWithError", func(t *testing.T) {

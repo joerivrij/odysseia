@@ -10,12 +10,10 @@
             <v-btn
                 class="ma-2"
                 color="primary"
-                dark
                 v-on:click="displayInfo=!displayInfo;stepper=1"
             >
               Howto
               <v-icon
-                  dark
                   right
               >
                 info

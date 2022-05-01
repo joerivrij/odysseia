@@ -13,6 +13,17 @@
     },
     {
       "author": "Thucydides",
+      "greek": "καταστάσης δὲ ἐκκλησίας ἐς ἀντιλογίαν ἦλθον, καὶ οἱ μὲν Κερκυραῖοι ἔλεξαν τοιάδε.",
+      "translations" : [
+        "An assembly was convoked, and the rival advocates appeared: the Corcyraeans spoke as follows:—"
+      ],
+      "book": 1,
+      "chapter":  31,
+      "section": 4,
+      "perseusTextLink": "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0003.tlg001.perseus-grc2:1.31.4?right=perseus-eng6"
+    },
+    {
+      "author": "Thucydides",
       "greek": "πανταχῇ μὲν οὖν πολὺς θόρυβος καὶ ταραχώδης ἦν ἡ ναυμαχία, ἐν ᾗ αἱ Ἀττικαὶ νῆες παραγιγνόμεναι τοῖς Κερκυραίοις, εἴ πῃ πιέζοιντο, φόβον μὲν παρεῖχον τοῖς ἐναντίοις, μάχης δὲ οὐκ ἦρχον δεδιότες οἱ στρατηγοὶ τὴν πρόρρησιν τῶν Ἀθηναίων.",
       "translations" : [
         "Everywhere the battle was a scene of tumult and confusion.At any point where they saw the Corcyraeans distressed, the Athenians appeared and kept the enemy in check;but the generals, who were afraid of disobeying their instructions, would not begin the attack themselves."
@@ -21,6 +32,17 @@
       "chapter":  49,
       "section": 4,
       "perseusTextLink": "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0003.tlg001.perseus-grc2:1.49.4?right=perseus-eng5&q=&qk=form"
+    },
+    {
+      "author": "Thucydides",
+      "greek": "δρῷμεν δ’ ἂν ἄδικον οὐδὲν οὔτε πρὸς θεῶν τῶν ὁρκίων οὔτε πρὸς ἀνθρώπων τῶν αἰσθανομένων: λύουσι γὰρ σπονδὰς οὐχ οἱ δι’ ἐρημίαν ἄλλοις προσιόντες, ἀλλ’ οἱ μὴ βοηθοῦντες οἷς ἂν ξυνομόσωσιν.",
+      "translations" : [
+        "Such a step would not be condemned either by the gods who received our oaths, or by the men who witnessed them. The breach of a treaty cannot be laid to the people whom desertion compels to seek new relations, but to the power that fails to assist its confederate."
+      ],
+      "book": 1,
+      "chapter":  71,
+      "section": 5,
+      "perseusTextLink": "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0003.tlg001.perseus-grc2:1.71.5?right=perseus-eng6"
     }
   ]
 }

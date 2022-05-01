@@ -45,14 +45,8 @@ func QueryRuleSet(es elastic.Client, index string) (*models.DeclensionConfig, er
 			if err != nil {
 				return nil, err
 			}
-			switch declension.Name {
-			case "firstDeclension":
-				declensionConfig.FirstDeclension = declension
-			case "secondDeclension":
-				declensionConfig.SecondDeclension = declension
-			default:
-				continue
-			}
+
+			declensionConfig.Declensions = append(declensionConfig.Declensions, declension)
 		}
 		return &declensionConfig, nil
 	}
@@ -73,30 +67,31 @@ func getJsonFilesFromAnaximander() (*models.DeclensionConfig, error) {
 	for _, path := range odysseiaPath {
 		l = filepath.Join(l, path)
 	}
-	anaximanderDir := filepath.Join(l, "anaximander", "arkho", "nouns", "*.json")
-	declensionFiles, err := filepath.Glob(anaximanderDir)
+
+	anaximanderDirPath := filepath.Join(l, "anaximander", "arkho")
+	anaximanderDir, err := ioutil.ReadDir(anaximanderDirPath)
 	if err != nil {
 		return nil, err
 	}
-
-	for _, fpath := range declensionFiles {
-		f, err := ioutil.ReadFile(fpath)
+	for _, subDir := range anaximanderDir {
+		anaximanderNounsDir := filepath.Join(anaximanderDirPath, subDir.Name(), "*.json")
+		declensionFiles, err := filepath.Glob(anaximanderNounsDir)
 		if err != nil {
 			return nil, err
 		}
 
-		declension, err := models.UnmarshalDeclension(f)
-		if err != nil {
-			return nil, err
-		}
+		for _, fpath := range declensionFiles {
+			f, err := ioutil.ReadFile(fpath)
+			if err != nil {
+				return nil, err
+			}
 
-		switch declension.Name {
-		case "firstDeclension":
-			declensionConfig.FirstDeclension = declension
-		case "secondDeclension":
-			declensionConfig.SecondDeclension = declension
-		default:
-			continue
+			declension, err := models.UnmarshalDeclension(f)
+			if err != nil {
+				return nil, err
+			}
+
+			declensionConfig.Declensions = append(declensionConfig.Declensions, declension)
 		}
 	}
 

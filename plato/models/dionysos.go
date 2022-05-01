@@ -3,8 +3,7 @@ package models
 import "encoding/json"
 
 type DeclensionConfig struct {
-	FirstDeclension  Declension
-	SecondDeclension Declension
+	Declensions []Declension
 }
 
 func UnmarshalDeclension(data []byte) (Declension, error) {
@@ -19,7 +18,7 @@ func (r *Declension) Marshal() ([]byte, error) {
 
 type Declension struct {
 	Name        string              `json:"name"`
-	Type        string              `json:"type"`
+	Type        string              `json:"type,omitempty"`
 	Dialect     string              `json:"dialect"`
 	Declensions []DeclensionElement `json:"declensions"`
 }
@@ -45,8 +44,6 @@ type FoundRules struct {
 }
 
 type Rule struct {
-	Form        string   `json:"form,omitempty"`
-	Declension  string   `json:"declension,omitempty"`
 	Rule        string   `json:"rule,omitempty"`
 	SearchTerms []string `json:"searchTerm,omitempty"`
 }
