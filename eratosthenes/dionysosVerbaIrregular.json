@@ -1,0 +1,50 @@
+{
+  "took": 1,
+  "timed_out": false,
+  "_shards": {
+    "total": 1,
+    "successful": 1,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": {
+      "value": 3,
+      "relation": "eq"
+    },
+    "max_score": 8.595465,
+    "hits": [
+      {
+        "_index": "dictionary",
+        "_type": "_doc",
+        "_id": "6eZxRoABxhapSio5_kFN",
+        "_score": 8.595465,
+        "_source": {
+          "greek": "εἰμί",
+          "english": "be"
+        }
+      },
+      {
+        "_index": "dictionary",
+        "_type": "_doc",
+        "_id": "F9J3RoABMoal3hxMnsYZ",
+        "_score": 8.595465,
+        "_source": {
+          "greek": "εἰμί",
+          "english": "to be",
+          "original": "εἰμί"
+        }
+      },
+      {
+        "_index": "dictionary",
+        "_type": "_doc",
+        "_id": "HZdxRoABxmcSeMRY5Kty",
+        "_score": 3.4773512,
+        "_source": {
+          "greek": "οἷος –α –ον τ' εἰμί",
+          "english": "be able"
+        }
+      }
+    ]
+  }
+}

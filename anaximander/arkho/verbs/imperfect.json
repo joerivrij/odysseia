@@ -1,0 +1,56 @@
+{
+  "name": "imperfect",
+  "type": "past",
+  "dialect": "attic",
+  "declensions": [
+    {
+      "declension": "-ον",
+      "ruleName": "1st sing - impf - ind - act",
+      "searchTerm": [
+        "ω"
+      ]
+    },
+    {
+      "declension": "-ες",
+      "ruleName": "2nd sing - impf - ind - act",
+      "searchTerm": [
+        "ω"
+      ]
+    },
+    {
+      "declension": "-ε",
+      "ruleName": "3th sing - impf - ind - act",
+      "searchTerm": [
+        "ω"
+      ]
+    },
+    {
+      "declension": "-εν",
+      "ruleName": "3th sing - impf - ind - act",
+      "searchTerm": [
+        "ω"
+      ]
+    },
+    {
+      "declension": "-ομεν",
+      "ruleName": "1st plural - impf - ind - act",
+      "searchTerm": [
+        "ω"
+      ]
+    },
+    {
+      "declension": "-ετε",
+      "ruleName": "2nd plural - impf - ind - act",
+      "searchTerm": [
+        "ω"
+      ]
+    },
+    {
+      "declension": "-ον",
+      "ruleName": "3th plural - impf - ind - act",
+      "searchTerm": [
+        "ω"
+      ]
+    }
+  ]
+}

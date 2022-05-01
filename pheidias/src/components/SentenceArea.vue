@@ -423,7 +423,10 @@ export default {
       this.$apiClient.get(url)
           .then((response) => {
             this.sentence = response.data.sentence
-            let cleanedText = response.data.sentence.replaceAll(",", "").replaceAll(".", "")
+            let cleanedText = response.data.sentence
+                .replaceAll(",", "")
+                .replaceAll(".", "")
+                .replaceAll("—", " ")
             this.seperatedWords = cleanedText.split(" ")
             this.currentSentenceId = response.data.sentenceId
           })

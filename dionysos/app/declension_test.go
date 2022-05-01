@@ -1,537 +1,496 @@
-//go:build !integration
-// +build !integration
-
 package app
 
 import (
-	"github.com/kpango/glg"
-	"github.com/odysseia/aristoteles"
 	"github.com/odysseia/aristoteles/configs"
-	"github.com/odysseia/plato/elastic"
+	"github.com/odysseia/plato/models"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
-func TestFirstDeclensionFemNouns(t *testing.T) {
-	if testing.Short() {
-		t.Skip("skipping testing in short mode")
-	}
-	t.Parallel()
+func TestCheckGrammarEndPointIrregularVerb(t *testing.T) {
+	numberOfRules := 1
 
-	baseConfig := configs.DionysosConfig{}
-	unparsedConfig, err := aristoteles.NewConfig(baseConfig)
-	if err != nil {
-		glg.Error(err)
-		glg.Fatal("death has found me")
-	}
-	dionysosConfig, ok := unparsedConfig.(*configs.DionysosConfig)
-	if !ok {
-		glg.Fatal("could not parse config")
-	}
+	t.Run("HappyPathIrregularVerb", func(t *testing.T) {
+		searchWord := "ᾖσαν"
+		expected := "3th plural - impf - ind - act"
+		expectedSearchResult := "εἰμί"
 
-	declensionConfig, _ := QueryRuleSet(dionysosConfig.Elastic, dionysosConfig.Index)
-	dionysosConfig.DeclensionConfig = *declensionConfig
+		declensionConfig, err := QueryRuleSet(nil, "dionysos")
+		assert.Nil(t, err)
 
-	handler := DionysosHandler{Config: dionysosConfig}
+		handler := DionysosHandler{}
 
-	t.Run("NominativusFemSing", func(t *testing.T) {
-		words := []string{"μάχη", "δόξα"}
-		for _, word := range words {
-			declensions, err := handler.StartFindingRules(word)
-			assert.Nil(t, err)
-			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results {
-					assert.Contains(t, declension.Rule, "fem")
+		var foundRules models.FoundRules
+
+		for _, declension := range declensionConfig.Declensions {
+			switch declension.Name {
+			case "irregular":
+				rules := handler.loopOverIrregularVerbs(searchWord, declension.Declensions)
+				for _, rule := range rules.Rules {
+					foundRules.Rules = append(foundRules.Rules, rule)
 				}
-			} else {
-				assert.Contains(t, declensions.Results[0].Rule, "noun - sing - fem - nom")
+
+			default:
+				continue
 			}
 		}
+
+		assert.Nil(t, err)
+		assert.True(t, len(foundRules.Rules) == numberOfRules)
+		expectedRuleFound := false
+		for _, rule := range foundRules.Rules {
+			if rule.Rule == expected {
+				expectedRuleFound = true
+			}
+			assert.Equal(t, expectedSearchResult, rule.SearchTerms[0])
+		}
+		assert.True(t, expectedRuleFound)
 	})
 
-	t.Run("GenitivusFemSing", func(t *testing.T) {
-		words := []string{"μάχης", "τιμῆς", "οἰκίας", "δόξης"}
-		for _, word := range words {
-			declensions, err := handler.StartFindingRules(word)
-			assert.Nil(t, err)
-			declensionLength := len(declensions.Results)
-			assert.True(t, declensionLength > 0)
-			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results {
-					assert.Contains(t, declension.Rule, "fem")
-					assert.NotEqual(t, "", declension.Translation)
-				}
-			} else {
-				assert.Contains(t, declensions.Results[0].Rule, "noun - sing - fem - gen")
+	t.Run("FullPathIrregularVerb", func(t *testing.T) {
+		searchWord := "ᾖσαν"
+		expected := "3th plural - impf - ind - act"
+		expectedSearchResult := "εἰμί"
+
+		declensionConfig, err := QueryRuleSet(nil, "dionysos")
+		assert.Nil(t, err)
+
+		handler := DionysosHandler{
+			Config: &configs.DionysosConfig{DeclensionConfig: *declensionConfig},
+		}
+
+		foundRules, err := handler.searchForDeclensions(searchWord)
+		assert.Nil(t, err)
+
+		assert.Nil(t, err)
+		assert.True(t, len(foundRules.Rules) == 4)
+		expectedRuleFound := false
+		for _, rule := range foundRules.Rules {
+			if rule.Rule == expected {
+				expectedRuleFound = true
+				assert.Equal(t, expectedSearchResult, rule.SearchTerms[0])
 			}
 		}
-	})
-
-	t.Run("DativusFemSing", func(t *testing.T) {
-		words := []string{"μάχῃ", "οἰκίᾳ", "δόξῃ"}
-		for _, word := range words {
-			declensions, err := handler.StartFindingRules(word)
-			assert.Nil(t, err)
-			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results {
-					assert.Contains(t, declension.Rule, "dat")
-				}
-			} else {
-				assert.Contains(t, declensions.Results[0].Rule, "noun - sing - fem - dat")
-			}
-		}
-	})
-
-	t.Run("AccusativusFemSing", func(t *testing.T) {
-		words := []string{"τιμήν", "μάχην", "οἰκίαν", "δόξαν"}
-		for _, word := range words {
-			declensions, err := handler.StartFindingRules(word)
-			assert.Nil(t, err)
-			assert.Contains(t, declensions.Results[0].Rule, "noun - sing - fem - acc")
-		}
-	})
-
-	t.Run("NominativusFemPlural", func(t *testing.T) {
-		words := []string{"τιμαι", "μάχαι", "οἰκίαι", "δόξαι"}
-		for _, word := range words {
-			declensions, err := handler.StartFindingRules(word)
-			assert.Nil(t, err)
-			assert.Contains(t, declensions.Results[0].Rule, "noun - plural - fem - nom")
-		}
-	})
-
-	t.Run("GenitivusFemPlural", func(t *testing.T) {
-		words := []string{"τιμῶν", "μάχῶν", "χωρῶν", "δόξῶν"}
-		for _, word := range words {
-			declensions, err := handler.StartFindingRules(word)
-			assert.Nil(t, err)
-			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results {
-					assert.Contains(t, declension.Rule, "gen")
-				}
-			} else {
-				assert.Contains(t, declensions.Results[0].Rule, "noun - plural - fem - gen")
-			}
-		}
-	})
-
-	t.Run("DativusFemPlural", func(t *testing.T) {
-		words := []string{"μάχαις", "οἰκίαις", "δόξαις"}
-		for _, word := range words {
-			declensions, err := handler.StartFindingRules(word)
-			assert.Nil(t, err)
-			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results {
-					assert.Contains(t, declension.Rule, "dat")
-				}
-			} else {
-				assert.Contains(t, declensions.Results[0].Rule, "noun - plural - fem - dat")
-			}
-		}
-	})
-
-	t.Run("AccusativusFemPlural", func(t *testing.T) {
-		words := []string{"τιμᾱς", "μάχας", "οἰκίας", "χώρᾱς"}
-		for _, word := range words {
-			declensions, err := handler.StartFindingRules(word)
-			assert.Nil(t, err)
-			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results {
-					assert.Contains(t, declension.Rule, "fem")
-				}
-			} else {
-				assert.Contains(t, declensions.Results[0].Rule, "noun - plural - fem - acc")
-			}
-		}
+		assert.True(t, expectedRuleFound)
 	})
 }
 
-func TestFirstDeclensionMascNouns(t *testing.T) {
-	if testing.Short() {
-		t.Skip("skipping testing in short mode")
-	}
-	t.Parallel()
+func TestDeclensionImperfectumResult(t *testing.T) {
+	numberOfRules := 2
+	contraction := true
 
-	fixtureFile := "declensionsDionysos"
-	mockCode := 200
-	mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
+	t.Run("HappyPathImperfectum", func(t *testing.T) {
+		searchWord := "ἔφερον"
+		expected := "1st sing - impf - ind - act"
+		expectedSearchResult := "φερω"
 
-	declensionConfig, err := QueryRuleSet(mockElasticClient, "dionysos")
-	assert.NotNil(t, declensionConfig)
-	assert.Nil(t, err)
+		declensionConfig, err := QueryRuleSet(nil, "dionysos")
+		assert.Nil(t, err)
 
-	testConfig := configs.DionysosConfig{
-		Elastic:          mockElasticClient,
-		SecondaryIndex:   dictionaryIndexDefault,
-		Index:            elasticIndexDefault,
-		DeclensionConfig: *declensionConfig,
-	}
+		handler := DionysosHandler{}
 
-	handler := DionysosHandler{Config: &testConfig}
+		var foundRules models.FoundRules
 
-	t.Run("NominativusMascSing", func(t *testing.T) {
-		words := []string{"νεανίας", "πολίτης"}
-		for _, word := range words {
-			declensions, err := handler.StartFindingRules(word)
-			assert.Nil(t, err)
-			assert.Contains(t, declensions.Results[0].Rule, "noun - sing - masc - nom")
-		}
-	})
-
-	t.Run("GenitivusMascSing", func(t *testing.T) {
-		words := []string{"νεανίου", "πολίτου", "κριτοῦ"}
-		for _, word := range words {
-			declensions, err := handler.StartFindingRules(word)
-			assert.Nil(t, err)
-			assert.Contains(t, declensions.Results[0].Rule, "noun - sing - masc - gen")
-		}
-	})
-
-	t.Run("DativusMascSing", func(t *testing.T) {
-		words := []string{"νεανίᾳ", "πολίτῃ", "κριτῇ"}
-		for _, word := range words {
-			declensions, err := handler.StartFindingRules(word)
-			assert.Nil(t, err)
-			assert.Contains(t, declensions.Results[0].Rule, "noun - sing - masc - dat")
-		}
-	})
-
-	t.Run("AccusativusMascSing", func(t *testing.T) {
-		words := []string{"νεανίαν", "πολίτην"}
-		for _, word := range words {
-			declensions, err := handler.StartFindingRules(word)
-			assert.Nil(t, err)
-			assert.Contains(t, declensions.Results[0].Rule, "noun - sing - masc - acc")
-		}
-	})
-
-	t.Run("NominativusMascPlural", func(t *testing.T) {
-		words := []string{"νεανίαι", "πολίται", "κριταί"}
-		for _, word := range words {
-			declensions, err := handler.StartFindingRules(word)
-			assert.Nil(t, err)
-			assert.Contains(t, declensions.Results[0].Rule, "noun - plural - masc - nom")
-		}
-	})
-
-	t.Run("GenitivusMascPlural", func(t *testing.T) {
-		words := []string{"νεανίῶν", "πολίτῶν", "κριτῶν"}
-		for _, word := range words {
-			declensions, err := handler.StartFindingRules(word)
-			assert.Nil(t, err)
-			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results {
-					assert.Contains(t, declension.Rule, "gen")
+		for _, declension := range declensionConfig.Declensions {
+			switch declension.Name {
+			case "imperfect":
+				for _, element := range declension.Declensions {
+					rules := handler.loopOverDeclensions(searchWord, element, contraction)
+					for _, rule := range rules.Rules {
+						foundRules.Rules = append(foundRules.Rules, rule)
+					}
 				}
-			} else {
-				assert.Contains(t, declensions.Results[0].Rule, "noun - plural - masc - gen")
+
+			default:
+				continue
 			}
 		}
-	})
 
-	t.Run("DativusMascPlural", func(t *testing.T) {
-		words := []string{"νεανίαις", "πολίταις", "κριταῖς"}
-		for _, word := range words {
-			declensions, err := handler.StartFindingRules(word)
-			assert.Nil(t, err)
-			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results {
-					assert.Contains(t, declension.Rule, "dat")
-				}
-			} else {
-				assert.Contains(t, declensions.Results[0].Rule, "noun - plural - masc - dat")
+		assert.Equal(t, numberOfRules, len(foundRules.Rules))
+		expectedRuleFound := false
+		for _, rule := range foundRules.Rules {
+			if rule.Rule == expected {
+				expectedRuleFound = true
 			}
+			assert.Equal(t, expectedSearchResult, rule.SearchTerms[0])
 		}
-	})
+		assert.True(t, expectedRuleFound)
 
-	t.Run("AccusativusMascPlural", func(t *testing.T) {
-		words := []string{"νεανίας", "πολίτας", "κριτᾱ́ς"}
-		for _, word := range words {
-			declensions, err := handler.StartFindingRules(word)
-			assert.Nil(t, err)
-			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results {
-					assert.Contains(t, declension.Rule, "masc")
-				}
-			} else {
-				assert.Contains(t, declensions.Results[0].Rule, "noun - plural - masc - acc")
-			}
-		}
 	})
 }
 
-func TestSecondDeclensionMascNouns(t *testing.T) {
-	if testing.Short() {
-		t.Skip("skipping testing in short mode")
-	}
-	t.Parallel()
+func TestDeclensionAoristResult(t *testing.T) {
+	numberOfRules := 1
+	multipleSearchResults := 4
+	contraction := true
+	name := "firstAorist"
 
-	fixtureFile := "declensionsDionysos"
-	mockCode := 200
-	mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
+	t.Run("HappyPathFirstAoristPsi", func(t *testing.T) {
+		searchWord := "ἔγρᾰψᾰ"
+		expected := "1st sing - aorist - ind - act"
+		expectedSearchResult := "γρᾰφω"
 
-	declensionConfig, err := QueryRuleSet(mockElasticClient, "dionysos")
-	assert.NotNil(t, declensionConfig)
-	assert.Nil(t, err)
+		declensionConfig, err := QueryRuleSet(nil, "dionysos")
+		assert.Nil(t, err)
 
-	testConfig := configs.DionysosConfig{
-		Elastic:          mockElasticClient,
-		SecondaryIndex:   dictionaryIndexDefault,
-		Index:            elasticIndexDefault,
-		DeclensionConfig: *declensionConfig,
-	}
+		handler := DionysosHandler{}
+		var foundRules models.FoundRules
 
-	handler := DionysosHandler{Config: &testConfig}
-
-	t.Run("NominativusMascSing", func(t *testing.T) {
-		words := []string{"δοῦλος", "πόλεμος", "θεός"}
-		for _, word := range words {
-			declensions, err := handler.StartFindingRules(word)
-			assert.Nil(t, err)
-			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results {
-					assert.Contains(t, declension.Rule, "masc")
+		for _, declension := range declensionConfig.Declensions {
+			switch declension.Name {
+			case name:
+				for _, element := range declension.Declensions {
+					rules := handler.loopOverDeclensions(searchWord, element, contraction)
+					for _, rule := range rules.Rules {
+						foundRules.Rules = append(foundRules.Rules, rule)
+					}
 				}
-			} else {
-				assert.Contains(t, declensions.Results[0].Rule, "noun - sing - masc - nom")
+
+			default:
+				continue
 			}
 		}
+
+		assert.Equal(t, numberOfRules, len(foundRules.Rules))
+		assert.Equal(t, expected, foundRules.Rules[0].Rule)
+		assert.Equal(t, expectedSearchResult, foundRules.Rules[0].SearchTerms[0])
 	})
 
-	t.Run("GenitivusMascSing", func(t *testing.T) {
-		words := []string{"δοῦλου", "πόλεμου", "θεoῦ"}
-		for _, word := range words {
-			declensions, err := handler.StartFindingRules(word)
-			assert.Nil(t, err)
-			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results {
-					assert.Contains(t, declension.Rule, "masc")
+	t.Run("HappyPathFirstAoristSigma", func(t *testing.T) {
+		searchWord := "ἐλύσαμεν"
+		expected := "1st plural - aorist - ind - act"
+		expectedSearchResult := "λύω"
+
+		declensionConfig, err := QueryRuleSet(nil, "dionysos")
+		assert.Nil(t, err)
+
+		handler := DionysosHandler{}
+		var foundRules models.FoundRules
+
+		for _, declension := range declensionConfig.Declensions {
+			switch declension.Name {
+			case name:
+				for _, element := range declension.Declensions {
+					rules := handler.loopOverDeclensions(searchWord, element, contraction)
+					for _, rule := range rules.Rules {
+						foundRules.Rules = append(foundRules.Rules, rule)
+					}
 				}
-			} else {
-				assert.Contains(t, declensions.Results[0].Rule, "noun - sing - masc - gen")
+
+			default:
+				continue
 			}
 		}
+
+		assert.Equal(t, numberOfRules, len(foundRules.Rules))
+		assert.Equal(t, expected, foundRules.Rules[0].Rule)
+		assert.Equal(t, expectedSearchResult, foundRules.Rules[0].SearchTerms[0])
 	})
 
-	t.Run("DativusMascSing", func(t *testing.T) {
-		words := []string{"δοῦλῳ", "πόλεμῳ", "θεῷ"}
-		for _, word := range words {
-			declensions, err := handler.StartFindingRules(word)
-			assert.Nil(t, err)
-			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results {
-					assert.Contains(t, declension.Rule, "masc")
+	t.Run("HappyPathFirstAoristKappa", func(t *testing.T) {
+		searchWord := "ἔπλέξεν"
+		expected := "3th sing - aorist - ind - act"
+		expectedSearchResult := "πλέκω"
+
+		declensionConfig, err := QueryRuleSet(nil, "dionysos")
+		assert.Nil(t, err)
+
+		handler := DionysosHandler{}
+		var foundRules models.FoundRules
+
+		for _, declension := range declensionConfig.Declensions {
+			switch declension.Name {
+			case name:
+				for _, element := range declension.Declensions {
+					rules := handler.loopOverDeclensions(searchWord, element, contraction)
+					for _, rule := range rules.Rules {
+						foundRules.Rules = append(foundRules.Rules, rule)
+					}
 				}
-			} else {
-				assert.Contains(t, declensions.Results[0].Rule, "noun - sing - masc - dat")
+
+			default:
+				continue
 			}
 		}
+
+		assert.Equal(t, numberOfRules, len(foundRules.Rules))
+		assert.Equal(t, expected, foundRules.Rules[0].Rule)
+		assert.Equal(t, multipleSearchResults, len(foundRules.Rules[0].SearchTerms))
+		found := false
+		for _, searchTerm := range foundRules.Rules[0].SearchTerms {
+			if searchTerm == expectedSearchResult {
+				found = true
+			}
+		}
+
+		assert.True(t, found)
 	})
 
-	t.Run("AccusativusMascSing", func(t *testing.T) {
-		words := []string{"πόλεμον", "θεόν"}
-		for _, word := range words {
-			declensions, err := handler.StartFindingRules(word)
-			assert.Nil(t, err)
-			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results {
-					assert.Contains(t, declension.Rule, "masc")
+	t.Run("HappyPathFirstAoristSigmaKappa", func(t *testing.T) {
+		searchWord := "ἐδῐδᾰ́ξᾰτε"
+		expected := "2nd plural - aorist - ind - act"
+		expectedSearchResult := "δῐδᾰ́σκω"
+
+		declensionConfig, err := QueryRuleSet(nil, "dionysos")
+		assert.Nil(t, err)
+
+		handler := DionysosHandler{}
+		var foundRules models.FoundRules
+
+		for _, declension := range declensionConfig.Declensions {
+			switch declension.Name {
+			case name:
+				for _, element := range declension.Declensions {
+					rules := handler.loopOverDeclensions(searchWord, element, contraction)
+					for _, rule := range rules.Rules {
+						foundRules.Rules = append(foundRules.Rules, rule)
+					}
 				}
-			} else {
-				assert.Contains(t, declensions.Results[0].Rule, "noun - sing - masc - acc")
+
+			default:
+				continue
 			}
 		}
+		assert.Equal(t, numberOfRules, len(foundRules.Rules))
+		assert.Equal(t, expected, foundRules.Rules[0].Rule)
+		assert.Equal(t, multipleSearchResults, len(foundRules.Rules[0].SearchTerms))
+		found := false
+		for _, searchTerm := range foundRules.Rules[0].SearchTerms {
+			if searchTerm == expectedSearchResult {
+				found = true
+			}
+		}
+
+		assert.True(t, found)
 	})
 
-	t.Run("NominativusMascPlural", func(t *testing.T) {
-		words := []string{"δοῦλοι", "πόλεμοι", "θεοί"}
-		for _, word := range words {
-			declensions, err := handler.StartFindingRules(word)
-			assert.Nil(t, err)
-			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results {
-					assert.Contains(t, declension.Rule, "masc")
+	t.Run("HappyPathFirstAoristGamma", func(t *testing.T) {
+		searchWord := "ἔλεξᾰν"
+		expected := "3th plural - aorist - ind - act"
+		expectedSearchResult := "λεγω"
+
+		declensionConfig, err := QueryRuleSet(nil, "dionysos")
+		assert.Nil(t, err)
+
+		handler := DionysosHandler{}
+		var foundRules models.FoundRules
+
+		for _, declension := range declensionConfig.Declensions {
+			switch declension.Name {
+			case name:
+				for _, element := range declension.Declensions {
+					rules := handler.loopOverDeclensions(searchWord, element, contraction)
+					for _, rule := range rules.Rules {
+						foundRules.Rules = append(foundRules.Rules, rule)
+					}
 				}
-			} else {
-				assert.Contains(t, declensions.Results[0].Rule, "noun - plural - masc - nom")
+
+			default:
+				continue
 			}
 		}
+
+		assert.Equal(t, numberOfRules, len(foundRules.Rules))
+		assert.Equal(t, expected, foundRules.Rules[0].Rule)
+		assert.Equal(t, multipleSearchResults, len(foundRules.Rules[0].SearchTerms))
+		found := false
+		for _, searchTerm := range foundRules.Rules[0].SearchTerms {
+			if searchTerm == expectedSearchResult {
+				found = true
+			}
+		}
+
+		assert.True(t, found)
 	})
 
-	t.Run("GenitivusMascPlural", func(t *testing.T) {
-		words := []string{"νεανίῶν", "πολίτῶν", "κριτῶν"}
-		for _, word := range words {
-			declensions, err := handler.StartFindingRules(word)
-			assert.Nil(t, err)
-			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results {
-					assert.Contains(t, declension.Rule, "gen")
-				}
-			} else {
-				assert.Contains(t, declensions.Results[0].Rule, "noun - plural - masc - gen")
-			}
-		}
-	})
+	t.Run("HappyPathFirstAoristChiWithEta", func(t *testing.T) {
+		searchWord := "ἦρξᾰς"
+		expected := "2nd sing - aorist - ind - act"
+		expectedSearchResult := "αρχω"
 
-	t.Run("DativusMascPlural", func(t *testing.T) {
-		words := []string{"πόλεμοις", "θεοῖς"}
-		for _, word := range words {
-			declensions, err := handler.StartFindingRules(word)
-			assert.Nil(t, err)
-			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results {
-					assert.Contains(t, declension.Rule, "masc")
-				}
-			} else {
-				assert.Contains(t, declensions.Results[0].Rule, "noun - plural - masc - dat")
-			}
-		}
-	})
+		declensionConfig, err := QueryRuleSet(nil, "dionysos")
+		assert.Nil(t, err)
 
-	t.Run("AccusativusMascPlural", func(t *testing.T) {
-		words := []string{"πόλεμους", "θεούς"}
-		for _, word := range words {
-			declensions, err := handler.StartFindingRules(word)
-			assert.Nil(t, err)
-			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results {
-					assert.Contains(t, declension.Rule, "masc")
+		handler := DionysosHandler{}
+		var foundRules models.FoundRules
+
+		for _, declension := range declensionConfig.Declensions {
+			switch declension.Name {
+			case name:
+				for _, element := range declension.Declensions {
+					rules := handler.loopOverDeclensions(searchWord, element, contraction)
+					for _, rule := range rules.Rules {
+						foundRules.Rules = append(foundRules.Rules, rule)
+					}
 				}
-			} else {
-				assert.Contains(t, declensions.Results[0].Rule, "noun - plural - masc - acc")
+
+			default:
+				continue
 			}
 		}
+
+		assert.Equal(t, numberOfRules, len(foundRules.Rules))
+		assert.Equal(t, expected, foundRules.Rules[0].Rule)
+		assert.Equal(t, 2*multipleSearchResults, len(foundRules.Rules[0].SearchTerms))
+		found := false
+		for _, searchTerm := range foundRules.Rules[0].SearchTerms {
+			if searchTerm == expectedSearchResult {
+				found = true
+			}
+		}
+
+		assert.True(t, found)
 	})
 }
 
-func TestSecondDeclensionNeuterNouns(t *testing.T) {
-	if testing.Short() {
-		t.Skip("skipping testing in short mode")
-	}
-	t.Parallel()
+func TestDeclensionParticiplesResult(t *testing.T) {
+	numberOfRules := 1
+	contraction := false
 
-	fixtureFile := "declensionsDionysos"
-	mockCode := 200
-	mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
+	t.Run("HappyPathParticpleMascSingNom", func(t *testing.T) {
+		searchWord := "λυων"
+		expected := "pres act part - sing - masc - nom"
+		expectedSearchResult := "λυω"
 
-	declensionConfig, err := QueryRuleSet(mockElasticClient, "dionysos")
-	assert.NotNil(t, declensionConfig)
-	assert.Nil(t, err)
+		declensionConfig, err := QueryRuleSet(nil, "dionysos")
+		assert.Nil(t, err)
 
-	testConfig := configs.DionysosConfig{
-		Elastic:          mockElasticClient,
-		SecondaryIndex:   dictionaryIndexDefault,
-		Index:            elasticIndexDefault,
-		DeclensionConfig: *declensionConfig,
-	}
+		handler := DionysosHandler{}
 
-	handler := DionysosHandler{Config: &testConfig}
+		var foundRules models.FoundRules
 
-	t.Run("NominativusNeuterSing", func(t *testing.T) {
-		words := []string{"μῆλον", "δῶρον"}
-		for _, word := range words {
-			declensions, err := handler.StartFindingRules(word)
-			assert.Nil(t, err)
-			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results {
-					assert.Contains(t, declension.Rule, "neut")
+		for _, declension := range declensionConfig.Declensions {
+			switch declension.Type {
+			case "participia":
+				for _, element := range declension.Declensions {
+					rules := handler.loopOverDeclensions(searchWord, element, contraction)
+					for _, rule := range rules.Rules {
+						foundRules.Rules = append(foundRules.Rules, rule)
+					}
 				}
-			} else {
-				assert.Contains(t, declensions.Results[0].Rule, "noun - sing - neut - nom")
+
+			default:
+				continue
 			}
 		}
+
+		assert.Equal(t, numberOfRules, len(foundRules.Rules))
+		expectedRuleFound := false
+		for _, rule := range foundRules.Rules {
+			if rule.Rule == expected {
+				expectedRuleFound = true
+			}
+			assert.Equal(t, expectedSearchResult, rule.SearchTerms[0])
+		}
+		assert.True(t, expectedRuleFound)
 	})
 
-	t.Run("GenitivusNeuterSing", func(t *testing.T) {
-		words := []string{"μῆλου", "δῶρου"}
-		for _, word := range words {
-			declensions, err := handler.StartFindingRules(word)
-			assert.Nil(t, err)
-			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results {
-					assert.Contains(t, declension.Rule, "gen")
+	t.Run("HappyPathParticpleFemDatPlural", func(t *testing.T) {
+		searchWord := "λυοὐσαις"
+		expected := "pres act part - plural - fem - dat"
+		expectedSearchResult := "λυω"
+
+		declensionConfig, err := QueryRuleSet(nil, "dionysos")
+		assert.Nil(t, err)
+
+		handler := DionysosHandler{}
+
+		var foundRules models.FoundRules
+
+		for _, declension := range declensionConfig.Declensions {
+			switch declension.Type {
+			case "participia":
+				for _, element := range declension.Declensions {
+					rules := handler.loopOverDeclensions(searchWord, element, contraction)
+					for _, rule := range rules.Rules {
+						foundRules.Rules = append(foundRules.Rules, rule)
+					}
 				}
-			} else {
-				assert.Contains(t, declensions.Results[0].Rule, "noun - sing - neut - gen")
+
+			default:
+				continue
 			}
 		}
-	})
 
-	t.Run("DativusNeuterSing", func(t *testing.T) {
-		words := []string{"μῆλῳ", "δῶρῳ"}
-		for _, word := range words {
-			declensions, err := handler.StartFindingRules(word)
-			assert.Nil(t, err)
-			assert.Contains(t, declensions.Results[0].Rule, "noun - sing - neut - dat")
+		assert.Equal(t, numberOfRules, len(foundRules.Rules))
+		expectedRuleFound := false
+		for _, rule := range foundRules.Rules {
+			if rule.Rule == expected {
+				expectedRuleFound = true
+			}
+			assert.Equal(t, expectedSearchResult, rule.SearchTerms[0])
 		}
+		assert.True(t, expectedRuleFound)
 	})
 
-	t.Run("AccusativusNeuterSing", func(t *testing.T) {
-		words := []string{"μῆλον", "δῶρον"}
-		for _, word := range words {
-			declensions, err := handler.StartFindingRules(word)
-			assert.Nil(t, err)
-			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results {
-					assert.Contains(t, declension.Rule, "neut")
+	t.Run("HappyPathParticpleNeutGenSing", func(t *testing.T) {
+		searchWord := "λυὀντος"
+		expected := "pres act part - sing - neut - gen"
+		expectedSearchResult := "λυω"
+
+		declensionConfig, err := QueryRuleSet(nil, "dionysos")
+		assert.Nil(t, err)
+
+		handler := DionysosHandler{}
+
+		var foundRules models.FoundRules
+
+		for _, declension := range declensionConfig.Declensions {
+			switch declension.Type {
+			case "participia":
+				for _, element := range declension.Declensions {
+					rules := handler.loopOverDeclensions(searchWord, element, contraction)
+					for _, rule := range rules.Rules {
+						foundRules.Rules = append(foundRules.Rules, rule)
+					}
 				}
-			} else {
-				assert.Contains(t, declensions.Results[0].Rule, "noun - sing - neut - acc")
+
+			default:
+				continue
 			}
 		}
-	})
 
-	t.Run("NominativusNeuterPlural", func(t *testing.T) {
-		words := []string{"μῆλα", "δῶρα"}
-		for _, word := range words {
-			declensions, err := handler.StartFindingRules(word)
-			assert.Nil(t, err)
-			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results {
-					assert.Contains(t, declension.Rule, "neut")
-				}
-			} else {
-				assert.Contains(t, declensions.Results[0].Rule, "noun - plural - neut - nom")
+		assert.Equal(t, 2, len(foundRules.Rules))
+		expectedRuleFound := false
+		for _, rule := range foundRules.Rules {
+			if rule.Rule == expected {
+				expectedRuleFound = true
 			}
+			assert.Equal(t, expectedSearchResult, rule.SearchTerms[0])
 		}
+		assert.True(t, expectedRuleFound)
 	})
 
-	t.Run("GenitivusNeuterPlural", func(t *testing.T) {
-		words := []string{"μήλων", "δῶρων"}
-		for _, word := range words {
-			declensions, err := handler.StartFindingRules(word)
-			assert.Nil(t, err)
-			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results {
-					assert.Contains(t, declension.Rule, "gen")
-				}
-			} else {
-				assert.Contains(t, declensions.Results[0].Rule, "noun - plural - neut - gen")
+	t.Run("HappyPathParticpleAndVerbaResult", func(t *testing.T) {
+		searchWord := "λυουσι"
+		expected := "pres act part - plural - masc - dat"
+		expectedVerba := "3th plural - pres - ind - act"
+		expectedSearchResult := "λυω"
+
+		declensionConfig, err := QueryRuleSet(nil, "dionysos")
+		assert.Nil(t, err)
+
+		handler := DionysosHandler{
+			Config: &configs.DionysosConfig{DeclensionConfig: *declensionConfig},
+		}
+
+		foundRules, err := handler.searchForDeclensions(searchWord)
+		assert.Nil(t, err)
+
+		assert.Equal(t, 3, len(foundRules.Rules))
+		expectedRuleFound := false
+		expectedVerbaFound := false
+		for _, rule := range foundRules.Rules {
+			if rule.Rule == expected {
+				expectedRuleFound = true
 			}
-		}
-	})
 
-	t.Run("DativusNeuterPlural", func(t *testing.T) {
-		words := []string{"μήλοις", "δῶροις"}
-		for _, word := range words {
-			declensions, err := handler.StartFindingRules(word)
-			assert.Nil(t, err)
-			assert.Contains(t, declensions.Results[0].Rule, "noun - plural - neut - dat")
-		}
-	})
-
-	t.Run("AccusativusNeuterPlural", func(t *testing.T) {
-		words := []string{"μῆλα", "δῶρα"}
-		for _, word := range words {
-			declensions, err := handler.StartFindingRules(word)
-			assert.Nil(t, err)
-			if len(declensions.Results) > 1 {
-				for _, declension := range declensions.Results {
-					assert.Contains(t, declension.Rule, "neut")
-				}
-			} else {
-				assert.Contains(t, declensions.Results[0].Rule, "noun - plural - neut - acc")
+			if rule.Rule == expectedVerba {
+				expectedVerbaFound = true
 			}
+			assert.Equal(t, expectedSearchResult, rule.SearchTerms[0])
 		}
+		assert.True(t, expectedRuleFound)
+		assert.True(t, expectedVerbaFound)
 	})
 }

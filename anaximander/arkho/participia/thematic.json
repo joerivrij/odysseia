@@ -1,0 +1,189 @@
+{
+  "name": "thematic",
+  "type": "participia",
+  "dialect": "attic",
+  "declensions": [
+    {
+      "declension": "-ὠν",
+      "ruleName": "pres act part - sing - masc - nom",
+      "searchTerm": [
+        "ω"
+      ]
+    },
+    {
+      "declension": "-ὀντος",
+      "ruleName": "pres act part - sing - masc - gen",
+      "searchTerm": [
+        "ω"
+      ]
+    },
+    {
+      "declension": "-ὀντι",
+      "ruleName": "pres act part - sing - masc - dat",
+      "searchTerm": [
+        "ω"
+      ]
+    },
+    {
+      "declension": "-ὀντα",
+      "ruleName": "pres act part - sing - masc - acc",
+      "searchTerm": [
+        "ω"
+      ]
+    },
+    {
+      "declension": "-ὀυσα",
+      "ruleName": "pres act part - sing - fem - nom",
+      "searchTerm": [
+        "ω"
+      ]
+    },
+    {
+      "declension": "-ὀυσης",
+      "ruleName": "pres act part - sing - fem - gen",
+      "searchTerm": [
+        "ω"
+      ]
+    },
+    {
+      "declension": "-ὀυση",
+      "ruleName": "pres act part - sing - fem - dat",
+      "searchTerm": [
+        "ω"
+      ]
+    },
+    {
+      "declension": "-ὀυσαν",
+      "ruleName": "pres act part - sing - fem - acc",
+      "searchTerm": [
+        "ω"
+      ]
+    },
+    {
+      "declension": "-ὀν",
+      "ruleName": "pres act part - sing - neut - nom",
+      "searchTerm": [
+        "ω"
+      ]
+    },
+    {
+      "declension": "-ὀντος",
+      "ruleName": "pres act part - sing - neut - gen",
+      "searchTerm": [
+        "ω"
+      ]
+    },
+    {
+      "declension": "-ὀντι",
+      "ruleName": "pres act part - sing - neut - dat",
+      "searchTerm": [
+        "ω"
+      ]
+    },
+    {
+      "declension": "-ὀν",
+      "ruleName": "pres act part - sing - neut - acc",
+      "searchTerm": [
+        "ω"
+      ]
+    },
+    {
+      "declension": "-ὀντες",
+      "ruleName": "pres act part - plural - masc - nom",
+      "searchTerm": [
+        "ω"
+      ]
+    },
+    {
+      "declension": "-ὀντων",
+      "ruleName": "pres act part - plural - masc - gen",
+      "searchTerm": [
+        "ω"
+      ]
+    },
+    {
+      "declension": "-οὐσι",
+      "ruleName": "pres act part - plural - masc - dat",
+      "searchTerm": [
+        "ω"
+      ]
+    },
+    {
+      "declension": "-οὐσιν",
+      "ruleName": "pres act part - plural - masc - dat",
+      "searchTerm": [
+        "ω"
+      ]
+    },
+    {
+      "declension": "-ὀντας",
+      "ruleName": "pres act part - plural - masc - acc",
+      "searchTerm": [
+        "ω"
+      ]
+    },
+    {
+      "declension": "-οὐσαι",
+      "ruleName": "pres act part - plural - fem - nom",
+      "searchTerm": [
+        "ω"
+      ]
+    },
+    {
+      "declension": "-οὐσων",
+      "ruleName": "pres act part - plural - fem - gen",
+      "searchTerm": [
+        "ω"
+      ]
+    },
+    {
+      "declension": "-οὐσαις",
+      "ruleName": "pres act part - plural - fem - dat",
+      "searchTerm": [
+        "ω"
+      ]
+    },
+    {
+      "declension": "-οὐσας",
+      "ruleName": "pres act part - plural - fem - acc",
+      "searchTerm": [
+        "ω"
+      ]
+    },
+    {
+      "declension": "-ὀντα",
+      "ruleName": "pres act part - plural - neut - nom",
+      "searchTerm": [
+        "ω"
+      ]
+    },
+    {
+      "declension": "-ὀντων",
+      "ruleName": "pres act part - plural - neut - gen",
+      "searchTerm": [
+        "ω"
+      ]
+    },
+    {
+      "declension": "-οὐσι",
+      "ruleName": "pres act part - plural - neut - dat",
+      "searchTerm": [
+        "ω"
+      ]
+    },
+    {
+      "declension": "-οὐσιν",
+      "ruleName": "pres act part - plural - neut - dat",
+      "searchTerm": [
+        "ω"
+      ]
+    },
+    {
+      "declension": "-ὀντα",
+      "ruleName": "pres act part - plural - neut - acc",
+      "searchTerm": [
+        "ω"
+      ]
+    }
+  ]
+}

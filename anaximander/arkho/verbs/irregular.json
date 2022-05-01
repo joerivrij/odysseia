@@ -1,0 +1,112 @@
+{
+  "name": "irregular",
+  "type": "irregular",
+  "dialect": "attic",
+  "declensions": [
+    {
+      "declension": "εἰμῐ́",
+      "ruleName": "1st sing - pres - ind - act",
+      "searchTerm": [
+        "εἰμί"
+      ]
+    },
+    {
+      "declension": "εἶ",
+      "ruleName": "2nd sing - pres - ind - act",
+      "searchTerm": [
+        "εἰμί"
+      ]
+    },
+    {
+      "declension": "ἐστί",
+      "ruleName": "3th sing - pres - ind - act",
+      "searchTerm": [
+        "εἰμί"
+      ]
+    },
+    {
+      "declension": "ἐστίν",
+      "ruleName": "3th sing - pres - ind - act",
+      "searchTerm": [
+        "εἰμί"
+      ]
+    },
+    {
+      "declension": "ἐσμέν",
+      "ruleName": "1st plural - pres - ind - act",
+      "searchTerm": [
+        "εἰμί"
+      ]
+    },
+    {
+      "declension": "ἐστέ",
+      "ruleName": "2nd plural - pres - ind - act",
+      "searchTerm": [
+        "εἰμί"
+      ]
+    },
+    {
+      "declension": "εἰσί",
+      "ruleName": "3th plural - pres - ind - act",
+      "searchTerm": [
+        "εἰμί"
+      ]
+    },
+    {
+      "declension": "εἰσίν",
+      "ruleName": "3th plural - pres - ind - act",
+      "searchTerm": [
+        "εἰμί"
+      ]
+    },
+    {
+      "declension": "ἦ",
+      "ruleName": "1st sing - impf - ind - act",
+      "searchTerm": [
+        "εἰμί"
+      ]
+    },
+    {
+      "declension": "ἦν",
+      "ruleName": "1st sing - impf - ind - act",
+      "searchTerm": [
+        "εἰμί"
+      ]
+    },
+    {
+      "declension": "ἦσθα",
+      "ruleName": "2nd sing - impf - ind - act",
+      "searchTerm": [
+        "εἰμί"
+      ]
+    },
+    {
+      "declension": "ἦν",
+      "ruleName": "3th sing - impf - ind - act",
+      "searchTerm": [
+        "εἰμί"
+      ]
+    },
+    {
+      "declension": "ἦμεν",
+      "ruleName": "1st plural - impf - ind - act",
+      "searchTerm": [
+        "εἰμί"
+      ]
+    },
+    {
+      "declension": "ἦτε",
+      "ruleName": "2nd plural - impf - ind - act",
+      "searchTerm": [
+        "εἰμί"
+      ]
+    },
+    {
+      "declension": "ἦσαν",
+      "ruleName": "3th plural - impf - ind - act",
+      "searchTerm": [
+        "εἰμί"
+      ]
+    }
+  ]
+}

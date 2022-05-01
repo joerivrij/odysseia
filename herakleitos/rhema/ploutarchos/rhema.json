@@ -21,6 +21,17 @@
       "chapter":  25,
       "section": 4,
       "perseusTextLink": "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0007.tlg060.perseus-grc2:25.4/"
+    },
+    {
+      "author": "Ploutarchos",
+      "greek": "τῶν δ̓ εἰσιόντων ἑκάστῳ δείξας ὁ πρεσβύτατος τὰς θύρας, διὰ τούτων φησίν, ἔξω λόγος οὐκ ἐκπορεύεται δοκιμάζεσθαι δὲ τὸν βουλόμενον τοῦ συσσιτίου μετασχεῖν οὕτω φασί. λαβὼν τῶν συσσίτων ἕκαστος ἀπομαγδαλίαν εἰς τὴν χεῖρα, τοῦ διακόνου φέροντος ἀγγεῖον ἐπὶ τῆς κεφαλῆς, ἔβαλλε σιωπῇ καθάπερ ψῆφον, ὁ μὲν δοκιμάζων ἁπλῶς, ὁ δ’ ἐκκρίνων σφόδρα τῇ χειρὶ πιέσας.",
+      "translations" : [
+        "As each one came in, the eldest of the company pointed to the door and said to him: Through that door no word goes forth outside. And they say that a candidate for membership in one of these messes underwent the following ordeal. Each of the mess-mates took in his hand a bit of soft bread, and when a servant came along with a bowl upon his head, then they cast it into this without a word, like a ballot, leaving it just as it was if he approved of the candidate, but if he disapproved, squeezing it tight in his hand first."
+      ],
+      "book": 2,
+      "chapter":  12,
+      "section": 5,
+      "perseusTextLink": "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0007.tlg004.perseus-grc2:12.5"
     }
   ]
 }

@@ -1,0 +1,204 @@
+{
+  "name": "present",
+  "type": "present",
+  "dialect": "attic",
+  "declensions": [
+    {
+      "declension": "-ω",
+      "ruleName": "1st sing - pres - ind - act",
+      "searchTerm": [
+        "ω"
+      ]
+    },
+    {
+      "declension": "-ωμι",
+      "ruleName": "1st sing - pres - ind - act",
+      "searchTerm": [
+        "ωμι"
+      ]
+    },
+    {
+      "declension": "-ομαι",
+      "ruleName": "1st sing - pres - ind - act",
+      "searchTerm": [
+        "ομαι"
+      ]
+    },
+    {
+      "declension": "-εις",
+      "ruleName": "2nd sing - pres - ind - act",
+      "searchTerm": [
+        "ω"
+      ]
+    },
+    {
+      "declension": "-ως",
+      "ruleName": "2nd sing - pres - ind - act",
+      "searchTerm": [
+        "ωμι"
+      ]
+    },
+    {
+      "declension": "-ει",
+      "ruleName": "2nd sing - pres - ind - act",
+      "searchTerm": [
+        "ομαι"
+      ]
+    },
+    {
+      "declension": "-ῃ",
+      "ruleName": "2nd sing - pres - ind - act",
+      "searchTerm": [
+        "ομαι"
+      ]
+    },
+    {
+      "declension": "-ει",
+      "ruleName": "3th sing - pres - ind - act",
+      "searchTerm": [
+        "ω"
+      ]
+    },
+    {
+      "declension": "-ωσι",
+      "ruleName": "3th sing - pres - ind - act",
+      "searchTerm": [
+        "ωμι"
+      ]
+    },
+    {
+      "declension": "-ωσιν",
+      "ruleName": "3th sing - pres - ind - act",
+      "searchTerm": [
+        "ωμι"
+      ]
+    },
+    {
+      "declension": "-ωσῐ",
+      "ruleName": "3th sing - pres - ind - act",
+      "searchTerm": [
+        "ωμι"
+      ]
+    },
+    {
+      "declension": "-ωσῐν",
+      "ruleName": "3th sing - pres - ind - act",
+      "searchTerm": [
+        "ωμι"
+      ]
+    },
+    {
+      "declension": "-εται",
+      "ruleName": "3th sing - pres - ind - act",
+      "searchTerm": [
+        "ομαι"
+      ]
+    },
+    {
+      "declension": "-ομεν",
+      "ruleName": "1st plural - pres - ind - act",
+      "searchTerm": [
+        "ω",
+        "ωμι"
+      ]
+    },
+    {
+      "declension": "-όμεθᾰ",
+      "ruleName": "1st plural - pres - ind - act",
+      "searchTerm": [
+        "ομαι"
+      ]
+    },
+    {
+      "declension": "-όμεθα",
+      "ruleName": "1st plural - pres - ind - act",
+      "searchTerm": [
+        "ομαι"
+      ]
+    },
+    {
+      "declension": "-ετε",
+      "ruleName": "2nd plural - pres - ind - act",
+      "searchTerm": [
+        "ω"
+      ]
+    },
+    {
+      "declension": "-οτε",
+      "ruleName": "2nd plural - pres - ind - act",
+      "searchTerm": [
+        "ωμι"
+      ]
+    },
+    {
+      "declension": "-εσθε",
+      "ruleName": "2nd plural - pres - ind - act",
+      "searchTerm": [
+        "ομαι"
+      ]
+    },
+    {
+      "declension": "-ουσι",
+      "ruleName": "3th plural - pres - ind - act",
+      "searchTerm": [
+        "ω"
+      ]
+    },
+    {
+      "declension": "-ουσιν",
+      "ruleName": "3th plural - pres - ind - act",
+      "searchTerm": [
+        "ω"
+      ]
+    },
+    {
+      "declension": "-οασι",
+      "ruleName": "3th plural - pres - ind - act",
+      "searchTerm": [
+        "ωμι"
+      ]
+    },
+    {
+      "declension": "-οασιν",
+      "ruleName": "3th plural - pres - ind - act",
+      "searchTerm": [
+        "ωμι"
+      ]
+    },
+    {
+      "declension": "-όασι",
+      "ruleName": "3th plural - pres - ind - act",
+      "searchTerm": [
+        "ωμι"
+      ]
+    },
+    {
+      "declension": "-όασιν",
+      "ruleName": "3th plural - pres - ind - act",
+      "searchTerm": [
+        "ωμι"
+      ]
+    },
+    {
+      "declension": "-όᾱσῐ",
+      "ruleName": "3th plural - pres - ind - act",
+      "searchTerm": [
+        "ωμι"
+      ]
+    },
+    {
+      "declension": "-όᾱσῐν",
+      "ruleName": "3th plural - pres - ind - act",
+      "searchTerm": [
+        "ωμι"
+      ]
+    },
+    {
+      "declension": "-ονται",
+      "ruleName": "3th plural - pres - ind - act",
+      "searchTerm": [
+        "ομαι"
+      ]
+    }
+  ]
+}

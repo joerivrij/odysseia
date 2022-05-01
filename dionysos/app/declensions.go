@@ -162,7 +162,6 @@ func (d *DionysosHandler) StartFindingRules(word string) (*models.DeclensionTran
 				}
 				results.Results = append(results.Results, result)
 			}
-
 		}
 	}
 
@@ -191,68 +190,112 @@ func (d *DionysosHandler) StartFindingRules(word string) (*models.DeclensionTran
 func (d *DionysosHandler) searchForDeclensions(word string) (*models.FoundRules, error) {
 	var foundRules models.FoundRules
 
-	firstDeclensionForms := d.loopOverDeclensions(word, d.Config.DeclensionConfig.FirstDeclension.Declensions)
-	for _, form := range firstDeclensionForms.Rules {
-		rule := models.Rule{
-			Form:        d.Config.DeclensionConfig.FirstDeclension.Type,
-			Declension:  d.Config.DeclensionConfig.FirstDeclension.Name,
-			Rule:        form.Rule,
-			SearchTerms: form.SearchTerms,
+	for _, declension := range d.Config.DeclensionConfig.Declensions {
+		var contract bool
+		switch declension.Type {
+		case "past":
+			contract = true
+		case "irregular":
+			rules := d.loopOverIrregularVerbs(word, declension.Declensions)
+			for _, rule := range rules.Rules {
+				foundRules.Rules = append(foundRules.Rules, rule)
+			}
+			continue
+		default:
+			contract = false
 		}
-		foundRules.Rules = append(foundRules.Rules, rule)
-	}
-	secondDeclensionForms := d.loopOverDeclensions(word, d.Config.DeclensionConfig.SecondDeclension.Declensions)
-	for _, form := range secondDeclensionForms.Rules {
-		rule := models.Rule{
-			Form:        d.Config.DeclensionConfig.SecondDeclension.Type,
-			Declension:  d.Config.DeclensionConfig.SecondDeclension.Name,
-			Rule:        form.Rule,
-			SearchTerms: form.SearchTerms,
+
+		for _, declensionForm := range declension.Declensions {
+			result := d.loopOverDeclensions(word, declensionForm, contract)
+			if len(result.Rules) >= 1 {
+				for _, rule := range result.Rules {
+					inArray := seeIfStringIsInArray(rule.Rule, foundRules.Rules)
+					if inArray {
+						continue
+					}
+					foundRules.Rules = append(foundRules.Rules, rule)
+				}
+			}
 		}
-		foundRules.Rules = append(foundRules.Rules, rule)
 	}
 
 	return &foundRules, nil
 }
 
-func (d *DionysosHandler) loopOverDeclensions(word string, form []models.DeclensionElement) models.FoundRules {
+func (d *DionysosHandler) loopOverDeclensions(word string, form models.DeclensionElement, contraction bool) models.FoundRules {
 	var declensions models.FoundRules
 
-	for _, outcome := range form {
-		trimmedLetters := strings.Replace(outcome.Declension, "-", "", -1)
-		lengthOfDeclension := utf8.RuneCountInString(trimmedLetters)
-		wordInRune := []rune(word)
-		lettersOfWord := string(wordInRune[len(wordInRune)-lengthOfDeclension:])
-		if lettersOfWord == trimmedLetters {
-			rootOfWord := string(wordInRune[0 : len(wordInRune)-lengthOfDeclension])
-			var words []string
-			for _, term := range outcome.SearchTerm {
-				searchTerm := fmt.Sprintf("%s%s", rootOfWord, term)
-				words = append(words, searchTerm)
-			}
+	rootCutOff := 0
+	if contraction {
+		rootCutOff = 1
+	}
+	trimmedLetters := d.removeAccents(strings.Replace(form.Declension, "-", "", -1))
+	lengthOfDeclension := utf8.RuneCountInString(trimmedLetters)
+	wordInRune := []rune(word)
+	if lengthOfDeclension > len(wordInRune) {
+		return declensions
+	}
 
-			if len(declensions.Rules) > 0 {
-				inArray := seeIfStringIsInArray(outcome.RuleName, declensions.Rules)
+	lettersOfWord := d.removeAccents(string(wordInRune[len(wordInRune)-lengthOfDeclension:]))
+	if lettersOfWord == trimmedLetters {
+		rootOfWord := string(wordInRune[rootCutOff : len(wordInRune)-lengthOfDeclension])
+		firstLetter := d.removeAccents(string(wordInRune[0]))
+		var words []string
+		for _, term := range form.SearchTerm {
+			if contraction {
+				legitimateStartLetters := []string{"η", "ε"}
+				legitimate := false
+				for _, startLetter := range legitimateStartLetters {
+					if startLetter == firstLetter {
+						legitimate = true
+					}
+				}
 
-				if inArray {
+				if !legitimate {
 					continue
 				}
-				declension := models.Rule{
-					Rule:        outcome.RuleName,
-					SearchTerms: words,
+				if firstLetter == "η" {
+					vowels := []string{"α", "ε"}
+					for _, vowel := range vowels {
+						searchTerm := fmt.Sprintf("%s%s%s", vowel, rootOfWord, term)
+						words = append(words, searchTerm)
+					}
+					continue
+
 				}
-				declensions.Rules = append(declensions.Rules, declension)
-			} else {
-				declension := models.Rule{
-					Rule:        outcome.RuleName,
-					SearchTerms: words,
-				}
-				declensions.Rules = append(declensions.Rules, declension)
 			}
+
+			searchTerm := fmt.Sprintf("%s%s", rootOfWord, term)
+			words = append(words, searchTerm)
 		}
+
+		declension := models.Rule{
+			Rule:        form.RuleName,
+			SearchTerms: words,
+		}
+
+		declensions.Rules = append(declensions.Rules, declension)
 	}
 
 	return declensions
+}
+
+func (d *DionysosHandler) loopOverIrregularVerbs(word string, declensions []models.DeclensionElement) models.FoundRules {
+	var rules models.FoundRules
+	strippedWord := d.removeAccents(word)
+
+	for _, outcome := range declensions {
+		strippedOutcomeWord := d.removeAccents(outcome.Declension)
+		if strippedWord == strippedOutcomeWord {
+			declension := models.Rule{
+				Rule:        outcome.RuleName,
+				SearchTerms: outcome.SearchTerm,
+			}
+			rules.Rules = append(rules.Rules, declension)
+		}
+	}
+
+	return rules
 }
 
 func seeIfStringIsInArray(s string, slice []models.Rule) bool {

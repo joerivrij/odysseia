@@ -2,6 +2,7 @@ package app
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/models"
@@ -71,7 +72,7 @@ func TestHealthEndPoint(t *testing.T) {
 	})
 }
 
-func TestCheckGrammarEndPoint(t *testing.T) {
+func TestCheckGrammarEndPointNouns(t *testing.T) {
 	t.Run("HappyPathFemFirst", func(t *testing.T) {
 		fixtureFile := "dionysosFemaleNoun"
 		mockCode := 200
@@ -197,7 +198,7 @@ func TestCheckGrammarEndPoint(t *testing.T) {
 			DeclensionConfig: *declensionConfig,
 		}
 		router := InitRoutes(testConfig)
-		response := performGetRequest(router, "/dionysos/v1/checkGrammar?word=εἰς")
+		response := performGetRequest(router, "/dionysos/v1/checkGrammar?word=ιςθεηφςσεφξκ")
 
 		var declensions models.DeclensionTranslationResults
 		err = json.NewDecoder(response.Body).Decode(&declensions)
@@ -266,6 +267,182 @@ func TestCheckGrammarEndPoint(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, http.StatusNotFound, response.Code)
 		assert.Equal(t, expected, notFoundError.Message.Reason)
+	})
+}
+
+func TestCheckGrammarEndPointVerbaPresent(t *testing.T) {
+	t.Run("HappyPathPresentVerbaFirstSing", func(t *testing.T) {
+		searchWord := "φέρω"
+		fixtureFile := "dionysosVerbaPresentOmega"
+		mockCode := 200
+		expected := "1st sing - pres - ind - act"
+		mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
+		assert.Nil(t, err)
+
+		declensionConfig, _ := QueryRuleSet(nil, "dionysos")
+		assert.Nil(t, err)
+
+		testConfig := configs.DionysosConfig{
+			Elastic:          mockElasticClient,
+			SecondaryIndex:   dictionaryIndexDefault,
+			Index:            elasticIndexDefault,
+			DeclensionConfig: *declensionConfig,
+		}
+		router := InitRoutes(testConfig)
+		response := performGetRequest(router, fmt.Sprintf("/dionysos/v1/checkGrammar?word=%s", searchWord))
+
+		var declensions models.DeclensionTranslationResults
+		err = json.NewDecoder(response.Body).Decode(&declensions)
+		assert.Nil(t, err)
+		assert.Equal(t, http.StatusOK, response.Code)
+		assert.True(t, len(declensions.Results) == 2)
+		assert.Equal(t, expected, declensions.Results[0].Rule)
+		assert.Equal(t, expected, declensions.Results[1].Rule)
+	})
+
+	t.Run("HappyPathPresentVerbaThirdPluralOmega", func(t *testing.T) {
+		searchWord := "φέρουσιν"
+		fixtureFile := "dionysosVerbaPresentOmega"
+		mockCode := 200
+		expected := "3th plural - pres - ind - act"
+		mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
+		assert.Nil(t, err)
+
+		declensionConfig, _ := QueryRuleSet(nil, "dionysos")
+		assert.Nil(t, err)
+
+		testConfig := configs.DionysosConfig{
+			Elastic:          mockElasticClient,
+			SecondaryIndex:   dictionaryIndexDefault,
+			Index:            elasticIndexDefault,
+			DeclensionConfig: *declensionConfig,
+		}
+		router := InitRoutes(testConfig)
+		response := performGetRequest(router, fmt.Sprintf("/dionysos/v1/checkGrammar?word=%s", searchWord))
+
+		var declensions models.DeclensionTranslationResults
+		err = json.NewDecoder(response.Body).Decode(&declensions)
+		assert.Nil(t, err)
+		assert.Equal(t, http.StatusOK, response.Code)
+		assert.True(t, len(declensions.Results) == 2)
+		assert.Equal(t, expected, declensions.Results[0].Rule)
+		assert.Equal(t, expected, declensions.Results[1].Rule)
+	})
+
+	t.Run("HappyPathPresentVerbaThirdPlurMi", func(t *testing.T) {
+		searchWord := "δῐδόᾱσῐ"
+		fixtureFile := "dionysosVerbaPresentMi"
+		mockCode := 200
+		expected := "3th plural - pres - ind - act"
+		mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
+		assert.Nil(t, err)
+
+		declensionConfig, _ := QueryRuleSet(nil, "dionysos")
+		assert.Nil(t, err)
+
+		testConfig := configs.DionysosConfig{
+			Elastic:          mockElasticClient,
+			SecondaryIndex:   dictionaryIndexDefault,
+			Index:            elasticIndexDefault,
+			DeclensionConfig: *declensionConfig,
+		}
+		router := InitRoutes(testConfig)
+		response := performGetRequest(router, fmt.Sprintf("/dionysos/v1/checkGrammar?word=%s", searchWord))
+
+		var declensions models.DeclensionTranslationResults
+		err = json.NewDecoder(response.Body).Decode(&declensions)
+		assert.Nil(t, err)
+		assert.Equal(t, http.StatusOK, response.Code)
+		assert.True(t, len(declensions.Results) == 2)
+		assert.Equal(t, expected, declensions.Results[0].Rule)
+		assert.Equal(t, expected, declensions.Results[1].Rule)
+	})
+
+	t.Run("HappyPathPresentVerbaThirdMi", func(t *testing.T) {
+		searchWord := "δῐ́δωσῐ"
+		fixtureFile := "dionysosVerbaPresentMi"
+		mockCode := 200
+		expected := "3th sing - pres - ind - act"
+		mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
+		assert.Nil(t, err)
+
+		declensionConfig, _ := QueryRuleSet(nil, "dionysos")
+		assert.Nil(t, err)
+
+		testConfig := configs.DionysosConfig{
+			Elastic:          mockElasticClient,
+			SecondaryIndex:   dictionaryIndexDefault,
+			Index:            elasticIndexDefault,
+			DeclensionConfig: *declensionConfig,
+		}
+		router := InitRoutes(testConfig)
+		response := performGetRequest(router, fmt.Sprintf("/dionysos/v1/checkGrammar?word=%s", searchWord))
+
+		var declensions models.DeclensionTranslationResults
+		err = json.NewDecoder(response.Body).Decode(&declensions)
+		assert.Nil(t, err)
+		assert.Equal(t, http.StatusOK, response.Code)
+		assert.True(t, len(declensions.Results) == 2)
+		assert.Equal(t, expected, declensions.Results[0].Rule)
+		assert.Equal(t, expected, declensions.Results[1].Rule)
+	})
+
+	t.Run("HappyPathPresentVerbaSecondPluralMai", func(t *testing.T) {
+		searchWord := "μάχεσθε"
+		fixtureFile := "dionysosVerbaPresentMai"
+		mockCode := 200
+		expected := "2nd plural - pres - ind - act"
+		mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
+		assert.Nil(t, err)
+
+		declensionConfig, _ := QueryRuleSet(nil, "dionysos")
+		assert.Nil(t, err)
+
+		testConfig := configs.DionysosConfig{
+			Elastic:          mockElasticClient,
+			SecondaryIndex:   dictionaryIndexDefault,
+			Index:            elasticIndexDefault,
+			DeclensionConfig: *declensionConfig,
+		}
+		router := InitRoutes(testConfig)
+		response := performGetRequest(router, fmt.Sprintf("/dionysos/v1/checkGrammar?word=%s", searchWord))
+
+		var declensions models.DeclensionTranslationResults
+		err = json.NewDecoder(response.Body).Decode(&declensions)
+		assert.Nil(t, err)
+		assert.Equal(t, http.StatusOK, response.Code)
+		assert.True(t, len(declensions.Results) == 2)
+		assert.Equal(t, expected, declensions.Results[0].Rule)
+		assert.Equal(t, expected, declensions.Results[1].Rule)
+	})
+
+	t.Run("HappyPathPresentVerbaSecondSingMai", func(t *testing.T) {
+		searchWord := "μάχει"
+		fixtureFile := "dionysosVerbaPresentMai"
+		mockCode := 200
+		expected := "2nd sing - pres - ind - act"
+		mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
+		assert.Nil(t, err)
+
+		declensionConfig, _ := QueryRuleSet(nil, "dionysos")
+		assert.Nil(t, err)
+
+		testConfig := configs.DionysosConfig{
+			Elastic:          mockElasticClient,
+			SecondaryIndex:   dictionaryIndexDefault,
+			Index:            elasticIndexDefault,
+			DeclensionConfig: *declensionConfig,
+		}
+		router := InitRoutes(testConfig)
+		response := performGetRequest(router, fmt.Sprintf("/dionysos/v1/checkGrammar?word=%s", searchWord))
+
+		var declensions models.DeclensionTranslationResults
+		err = json.NewDecoder(response.Body).Decode(&declensions)
+		assert.Nil(t, err)
+		assert.Equal(t, http.StatusOK, response.Code)
+		assert.True(t, len(declensions.Results) == 2)
+		assert.Equal(t, expected, declensions.Results[0].Rule)
+		assert.Equal(t, expected, declensions.Results[1].Rule)
 	})
 }
 
