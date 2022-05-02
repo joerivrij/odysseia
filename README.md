@@ -1,6 +1,6 @@
 # Odysseia <!-- omit in toc -->
 
-Odysseia (Ὀδύσσεια) is one of the two famous poems bij Homeros. It describes the journey of Odysseus and his crew to get home. Learning Greek is a bit like that - a odyssey. It is a hobby project that combines a few of my passions, both ancient Greek (history) and finding technical solutions for problems. As This is a hobby project first and foremost any mistakes are my own, either in translation or in interpation of text.
+Odysseia (Ὀδύσσεια) is one of the two famous poems by Homeros. It describes the journey of Odysseus and his crew to get home. Learning Greek is a bit like that - a odyssey. It is a hobby project that combines a few of my passions, both ancient Greek (history) and finding technical solutions for problems. As This is a hobby project first and foremost any mistakes are my own, either in translation or in interpation of text.
 
 The goal is for people to learn or rehearse ancient Greek. Some of it is in Dutch but most of it is in English. There is also a dictionary that you can search through. Most of it is still very much a work in progress.
 
