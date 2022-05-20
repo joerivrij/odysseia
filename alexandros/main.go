@@ -28,8 +28,8 @@ func main() {
 
 	//https://patorjk.com/software/taag/#p=display&f=Crawford2&t=ALEXANDROS
 	glg.Info("\n  ____  _        ___  __ __   ____  ____   ___    ____   ___   _____\n /    || |      /  _]|  |  | /    ||    \\ |   \\  |    \\ /   \\ / ___/\n|  o  || |     /  [_ |  |  ||  o  ||  _  ||    \\ |  D  )     (   \\_ \n|     || |___ |    _]|_   _||     ||  |  ||  D  ||    /|  O  |\\__  |\n|  _  ||     ||   [_ |     ||  _  ||  |  ||     ||    \\|     |/  \\ |\n|  |  ||     ||     ||  |  ||  |  ||  |  ||     ||  .  \\     |\\    |\n|__|__||_____||_____||__|__||__|__||__|__||_____||__|\\_|\\___/  \\___|\n                                                                    \n")
-	glg.Info("\"ὅτι τοῦ κρατεῖν πέρας ἡμῖν ἐστι τὸ μὴ ταὐτὰ ποιεῖν τοῖς κεκρατημένοις;’\"")
-	glg.Info("\"Know ye not,’ said he, ‘that the end and object of conquest is to avoid doing the same thing as the conquered?\"")
+	glg.Info("\"Ου κλέπτω την νίκην’\"")
+	glg.Info("\"I will not steal my victory\"")
 	glg.Info("starting up.....")
 	glg.Debug("starting up and getting env variables")
 

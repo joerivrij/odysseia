@@ -1,11 +1,11 @@
 <template>
   <div>
-    <search-area></search-area>
+    <dictionary-area></dictionary-area>
   </div>
 </template>
 
 <script>
-import SearchArea from "@/components/SearchArea";
+import DictionaryArea from "@/components/DictionaryArea";
 
 export default {
   name: 'Alexandros',
@@ -14,8 +14,8 @@ export default {
     }
   },
   components: {
-    SearchArea,
-    'search-area': SearchArea
+    DictionaryArea,
+    'dictionary-area': DictionaryArea
   },
   methods: {},
   computed: {

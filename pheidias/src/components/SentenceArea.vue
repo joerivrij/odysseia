@@ -330,7 +330,7 @@ export default {
       this.getNewSentence()
     },
     queryWord: function (word) {
-      let url = `${this.$dionysosUrl}/checkGrammar?word=${word}`
+      let url = `${this.$dionysiosUrl}/checkGrammar?word=${word}`
       this.$apiClient.get(url)
           .then((response) => {
             let extraTranslation = []

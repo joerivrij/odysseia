@@ -26,8 +26,8 @@ func main() {
 		port = standardPort
 	}
 
-	//https://patorjk.com/software/taag/#p=display&f=Crawford2&t=DIONYSOS
-	glg.Info("\n ___    ____  ___   ____   __ __  _____  ___   _____\n|   \\  |    |/   \\ |    \\ |  |  |/ ___/ /   \\ / ___/\n|    \\  |  ||     ||  _  ||  |  (   \\_ |     (   \\_ \n|  D  | |  ||  O  ||  |  ||  ~  |\\__  ||  O  |\\__  |\n|     | |  ||     ||  |  ||___, |/  \\ ||     |/  \\ |\n|     | |  ||     ||  |  ||     |\\    ||     |\\    |\n|_____||____|\\___/ |__|__||____/  \\___| \\___/  \\___|\n                                                    \n")
+	//https://patorjk.com/software/taag/#p=display&f=Crawford2&t=DIONYSIOS
+	glg.Info("\n ___    ____  ___   ____   __ __  _____ ____  ___   _____\n|   \\  |    |/   \\ |    \\ |  |  |/ ___/|    |/   \\ / ___/\n|    \\  |  ||     ||  _  ||  |  (   \\_  |  ||     (   \\_ \n|  D  | |  ||  O  ||  |  ||  ~  |\\__  | |  ||  O  |\\__  |\n|     | |  ||     ||  |  ||___, |/  \\ | |  ||     |/  \\ |\n|     | |  ||     ||  |  ||     |\\    | |  ||     |\\    |\n|_____||____|\\___/ |__|__||____/  \\___||____|\\___/  \\___|\n                                                         \n")
 	glg.Info("\"Γραμματική ἐστιν ἐμπειρία τῶν παρὰ ποιηταῖς τε καὶ συγγραφεῦσιν ὡς ἐπὶ τὸ πολὺ λεγομένων.’\"")
 	glg.Info("\"Grammar is an experimental knowledge of the usages of language as generally current among poets and prose writers\"")
 	glg.Info("starting up.....")
