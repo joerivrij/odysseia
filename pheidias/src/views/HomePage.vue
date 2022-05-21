@@ -15,7 +15,7 @@
               class="text-center"
               cols="12"
           >
-            <h1 class="text-h1 text--primary">
+            <h1 class="text-lg-h1 text--primary">
               Welcome to Odysseia!
             </h1>
           </v-col>
@@ -27,7 +27,7 @@
           color="triadic"
       >
         <v-card-text
-            :style="setThatStyle">
+            :style="paddingStyle">
           <p class="text-h5 text--primary">
             Odysseia is an app to help you learn and interact with Ancient (Attic) Greek
           </p>
@@ -45,6 +45,7 @@
         </v-card>
       <v-container
           fluid
+          background="background"
       >
         <v-row dense>
           <v-col
@@ -101,7 +102,7 @@ export default {
   data () {
     return {
       flex: 6,
-      setThatStyle: "padding: 5em 22em;",
+      paddingStyle: "padding: 5em 22em;",
       schoolOfAthens: require('@/assets/school_of_athens.jpg'),
       cards: [
       {
@@ -164,7 +165,7 @@ export default {
   created() {
     if (this.isMobile()) {
       this.flex = 12;
-      this.setThatStyle = "padding: 1em 2em;"
+      this.paddingStyle = "padding: 1em 2em;"
     }
     else {
       this.flex = 6;

@@ -1,8 +1,9 @@
 <template>
   <v-app id="odysseia">
       <v-card flat>
-              <v-toolbar
-                  color=triadic>
+              <v-app-bar
+                  color=triadic
+              >
                 <v-menu
                     bottom
                     left
@@ -30,10 +31,9 @@
                     </v-list-item>
                   </v-list>
                 </v-menu>
-              </v-toolbar>
+              </v-app-bar>
       </v-card>
     <v-main>
-      <h2></h2>
       <router-view></router-view>
       <v-btn
           v-scroll="onScroll"
@@ -48,6 +48,34 @@
       >
         <v-icon>keyboard_arrow_up</v-icon>
       </v-btn>
+    <v-footer
+    color="background">
+      <v-card
+          flat
+          width="100%"
+          class="footer lighten-1 text-center"
+      >
+        <v-card-text>
+          <v-btn
+              v-for="item in footerItems"
+              :key="item.icon"
+              :href="item.path" target="_blank"
+              class="mx-4"
+              icon
+          >
+            <v-icon size="24px">
+              {{ item.icon }}
+            </v-icon>
+          </v-btn>
+        </v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-text class="white--text">
+          {{ new Date().getFullYear() }} — <strong>Odysseia</strong>
+        </v-card-text>
+      </v-card>
+    </v-footer>
     </v-main>
   </v-app>
 </template>
@@ -61,6 +89,10 @@ export default {
       fab: false,
       appTitle: 'Odysseia',
       closeOnClick: true,
+      footerItems: [
+        {icon:'mdi-github', path: 'https://github.com/joerivrij/odysseia'},
+        {icon: 'mdi-linkedin', path: 'https://nl.linkedin.com/in/joeri-vrijaldenhoven-22713a80'}
+  ],
       menuItems: [
         { title: 'Home', path: '/', icon: 'mdi-home-variant' },
         { title: 'Quiz', path: '/quiz', icon: 'mdi-alphabet-greek' },
