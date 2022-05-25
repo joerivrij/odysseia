@@ -21,7 +21,7 @@ require (
 )
 
 require (
-	github.com/hashicorp/vault v1.10.0
+	github.com/hashicorp/vault v1.10.3
 	github.com/hashicorp/vault/api v1.5.0
 	github.com/michaelklishin/rabbit-hole/v2 v2.12.0 // indirect
 )
