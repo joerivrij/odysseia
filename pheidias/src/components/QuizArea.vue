@@ -121,7 +121,6 @@
               </v-stepper-items>
             </v-stepper>
           </div>
-          <h2>Method: {{this.selectedMethod}} - Category: {{ this.category}} - Chapter {{this.selectedChapter}}</h2>
           <h4>Available Methods</h4>
           <v-row justify="center" align="center">
             <v-menu
@@ -189,10 +188,10 @@
           <br>
 
           <div v-if="quizWord.length">
+          <h2>Method: {{this.selectedMethod}} - Category: {{ this.category}} - Chapter {{this.selectedChapter}}</h2>
           <h3>Translate:</h3>
           <h3>{{quizWord}}</h3>
           <br />
-
           <div v-if="showAnswer">
             <div style="min-height: 4px">
               <v-progress-linear
@@ -263,7 +262,7 @@
                 color="triadic"
                 :width="widthStyle"
             >
-                {{ item }}
+              <span>{{ item }}</span>
             </v-btn>
           </div>
           <br />
@@ -392,13 +391,6 @@ export default {
       for (let i = shuffeledArray.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [shuffeledArray[i], shuffeledArray[j]] = [shuffeledArray[j], shuffeledArray[i]];
-      }
-
-      for (let i = shuffeledArray.length - 1; i > 0; i--) {
-        if (shuffeledArray[i].length > 35) {
-          const first = shuffeledArray[i].slice(0, 33)
-          shuffeledArray[i] = first + "..."
-        }
       }
 
       return shuffeledArray
