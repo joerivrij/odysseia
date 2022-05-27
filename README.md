@@ -7,7 +7,7 @@ The goal is for people to learn or rehearse ancient Greek. Some of it is in Dutc
 # Table of contents <!-- omit in toc -->
 - [Backend](#backend)
   - [Alexandros - Αλέξανδρος](#alexandros---αλέξανδρος)
-  - [Dionysos - Διονύσιος ὁ Θρᾷξ](#dionysos---διονύσιος-ὁ-θρᾷξ)
+  - [Dionysios - Διονύσιος ὁ Θρᾷξ](#dionysios---διονύσιος-ὁ-θρᾷξ)
   - [Herodotos - Ἡρόδοτος](#herodotos---ἡρόδοτος)
   - [Sokrates - Σωκράτης](#sokrates---σωκράτης)
   - [Solon - Σόλων](#solon---σόλων)
@@ -28,6 +28,7 @@ The goal is for people to learn or rehearse ancient Greek. Some of it is in Dutc
 - [Init](#init)
   - [Drakon - Δράκων](#drakon---δράκων)
   - [Periandros - Περίανδρος](#periandros---περίανδρος)
+  - [Thrasyboulos - Θρασύβουλος](#thrasyboulos---Θρασύβουλος)
 - [Ops](#ops)
   - [Archimedes - Ἀρχιμήδης](#archimedes---ἀρχιμήδης)
   - [Lykourgos - Λυκοῦργος](#lykourgos---λυκοῦργος)
@@ -42,11 +43,15 @@ The goal is for people to learn or rehearse ancient Greek. Some of it is in Dutc
 
 ### Alexandros - Αλέξανδρος
 
+Ου κλέπτω την νίκην - I will not steal my victory
+
 <img src="https://upload.wikimedia.org/wikipedia/commons/5/59/Alexander_and_Bucephalus_-_Battle_of_Issus_mosaic_-_Museo_Archeologico_Nazionale_-_Naples_BW.jpg" alt="Alexandros" width="200"/>
 
 What could I ever say in a few lines that would do justice to one of the most influential people of all time? Alexandros's energy and search for the end of the world was relentless, so too is his search for Greek words within odysseia.
 
-### Dionysos - Διονύσιος ὁ Θρᾷξ
+### Dionysios - Διονύσιος ὁ Θρᾷξ
+
+Γραμματική ἐστιν ἐμπειρία τῶν παρὰ ποιηταῖς τε καὶ συγγραφεῦσιν ὡς ἐπὶ τὸ πολὺ λεγομένων - Grammar is an experimental knowledge of the usages of language as generally current among poets and prose writers
 
 <img src="https://alchetron.com/cdn/dionysius-thrax-73e8d598-e6d3-4f5f-bb04-debff25a456-resize-750.jpeg" alt="Dionysos" width="200"/>
 

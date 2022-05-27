@@ -5,7 +5,8 @@ const routerOptions = [
     { path: "/", view: "HomePage" },
     { path: "/quiz", view: "Sokrates" },
     { path: "/texts", view: "Herodotos" },
-    { path: "/search", view: "Alexandros" },
+    { path: "/dictionary", view: "Alexandros" },
+    { path: "/grammar", view: "Dionysios"},
     { path: "*", view: "NotFound" }
 ];
 

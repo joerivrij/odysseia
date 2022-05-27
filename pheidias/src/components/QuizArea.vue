@@ -121,7 +121,6 @@
               </v-stepper-items>
             </v-stepper>
           </div>
-          <h2>Method: {{this.selectedMethod}} - Category: {{ this.category}} - Chapter {{this.selectedChapter}}</h2>
           <h4>Available Methods</h4>
           <v-row justify="center" align="center">
             <v-menu
@@ -189,6 +188,7 @@
           <br>
 
           <div v-if="quizWord.length">
+          <h2>Method: {{this.selectedMethod}} - Category: {{ this.category}} - Chapter {{this.selectedChapter}}</h2>
           <h3>Translate:</h3>
           <h3>{{quizWord}}</h3>
           <br />
@@ -252,7 +252,7 @@
               </v-row>
             </v-alert>
           </div>
-          <div v-if="!showAnswer">
+          <div v-if="!showAnswer && showButtons">
             <v-btn
                 v-for="(item, index) in answers"
                 :key="index"
@@ -260,8 +260,9 @@
                 v-on:click="postAnswer();showLoader();"
                 class="ma-4"
                 color="triadic"
+                :width="widthStyle"
             >
-              {{ item }}
+              <span>{{ item }}</span>
             </v-btn>
           </div>
           <br />
@@ -306,7 +307,9 @@ export default {
   },
   data() {
     return {
+      widthStyle : "50%",
       valid: true,
+      showButtons: false,
       alignments: [
         'start',
         'center',
@@ -369,23 +372,28 @@ export default {
         }
       }, 3000);
     },
-    getQuestion: function () {
-      console.log('getting question')
+    async getQuestion () {
+      this.showButtons = false
       let url = `${this.$sokratesUrl}/createQuestion?method=${this.selectedMethod}&category=${this.category}&chapter=${this.selectedChapter}`
       this.$apiClient.get(url)
-          .then((response) => {
-            let shuffeledArray = response.data.slice(1, 5)
-            for (let i = shuffeledArray.length - 1; i > 0; i--) {
-              const j = Math.floor(Math.random() * (i + 1));
-              [shuffeledArray[i], shuffeledArray[j]] = [shuffeledArray[j], shuffeledArray[i]];
-            }
-            this.answers = shuffeledArray;
+          .then(async (response) => {
             this.quizWord = response.data[0];
             this.correctAnswer = response.data[1]
+            let slicedArray = response.data.slice(1, 5)
+            this.answers = await this.createNewArray(slicedArray);
+            this.showButtons = true
           })
           .catch(e => {
             this.errors.push(e)
           })
+    },
+    async createNewArray(shuffeledArray) {
+      for (let i = shuffeledArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffeledArray[i], shuffeledArray[j]] = [shuffeledArray[j], shuffeledArray[i]];
+      }
+
+      return shuffeledArray
     },
     getCategories: function (method) {
       let url = `${this.$sokratesUrl}/methods/${method}/categories`
@@ -409,7 +417,6 @@ export default {
       this.getQuestion()
     },
     postAnswer: function () {
-      this.showAnswer = true;
       this.answered++
       this.$apiClient({
         method: 'post',
@@ -422,6 +429,7 @@ export default {
       })
           .then((response) => {
             this.correct = response.data['correct']
+            this.showAnswer = true;
             if (this.correct) {
               this.correctlyAnswered++
             }
@@ -434,6 +442,7 @@ export default {
             this.errors.push(e)
           })
       this.hideAlert()
+
     },
     setCategory(category) {
       this.category = category
@@ -481,6 +490,9 @@ export default {
         this.setChapter(this.inputChapter)
       }
     },
+    isMobile() {
+      return screen.width <= 800;
+    },
   },
   mounted() {
     this.getMethods()
@@ -490,6 +502,12 @@ export default {
   },
   created() {
     this.getMethods()
+    if (this.isMobile()) {
+      this.widthStyle = "90%"
+    }
+    else {
+      this.flex = 6;
+    }
   },
   beforeDestroy () {
     clearInterval(this.interval)
