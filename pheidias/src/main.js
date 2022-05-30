@@ -12,13 +12,13 @@ Vue.http = Vue.prototype.$apiClient = axios;
 Vue.prototype.$sokratesUrl = store.state.SokratesUrl
 Vue.prototype.$herodotosUrl = store.state.HerodotosUrl
 Vue.prototype.$alexandrosUrl = store.state.AlexandrosUrl
-Vue.prototype.$dionysiosUrl = store.state.DionysosUrl
+Vue.prototype.$dionysiosUrl = store.state.DionysiosUrl
 
 if (process.env.NODE_ENV === 'development') {
   Vue.prototype.$sokratesUrl = "https://odysseia-greek.com/sokrates/v1"
   Vue.prototype.$herodotosUrl = "https://odysseia-greek.com/herodotos/v1"
   Vue.prototype.$alexandrosUrl = "https://odysseia-greek.com/alexandros/v1"
-  Vue.prototype.$dionysiosUrl = "https://odysseia-greek.com/dionysos/v1"
+  Vue.prototype.$dionysiosUrl = "https://odysseia-greek.com/dionysios/v1"
 }
 
 console.log(`sokrates proxy found at: ${Vue.prototype.$sokratesUrl}`)

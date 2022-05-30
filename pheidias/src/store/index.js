@@ -8,6 +8,6 @@ export default new Vuex.Store({
         SokratesUrl: document.location.origin + "/sokrates/v1",
         HerodotosUrl: document.location.origin + "/herodotos/v1",
         AlexandrosUrl: document.location.origin + "/alexandros/v1",
-        DionysosUrl: document.location.origin + "/dionysos/v1"
+        DionysiosUrl: document.location.origin + "/dionysios/v1"
     },
 })

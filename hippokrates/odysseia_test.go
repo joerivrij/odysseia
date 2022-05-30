@@ -15,7 +15,7 @@ const (
 	sokratesApi   = "sokrates"
 	herodotosApi  = "herodotos"
 	alexandrosApi = "alexandros"
-	dionysosApi   = "dionysos"
+	dionysiosApi  = "dionysios"
 	ResponseBody  = "responseBody"
 	ErrorBody     = "errorBody"
 	ContextAuthor = "contextAuthor"
@@ -53,8 +53,8 @@ func (l *odysseiaFixture) theIsRunning(service string) error {
 		if err != nil {
 			return err
 		}
-	case dionysosApi:
-		response, err = l.clients.Dionysos().Health()
+	case dionysiosApi:
+		response, err = l.clients.Dionysios().Health()
 		if err != nil {
 			return err
 		}
@@ -133,7 +133,7 @@ func InitializeScenario(ctx *godog.ScenarioContext) {
 	ctx.Step(`^that question is answered with a "([^"]*)" answer$`, odysseia.thatQuestionIsAnsweredWithAAnswer)
 	ctx.Step(`^the result should be "([^"]*)"$`, odysseia.theResultShouldBe)
 
-	//dionysos
+	//dionysios
 	ctx.Step(`^the grammar is checked for word "([^"]*)"$`, odysseia.theGrammarIsCheckedForWord)
 	ctx.Step(`^the grammar for word "([^"]*)" is queried with an error$`, odysseia.theGrammarForWordIsQueriedWithAnError)
 	ctx.Step(`^the declension "([^"]*)" should be included in the response$`, odysseia.theDeclensionShouldBeIncludedInTheResponse)

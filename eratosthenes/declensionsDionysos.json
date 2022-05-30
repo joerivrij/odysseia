@@ -15,7 +15,7 @@
     "max_score" : 1.0,
     "hits" : [
       {
-        "_index" : "dionysos",
+        "_index" : "dionysios",
         "_type" : "_doc",
         "_id" : "nkCcSnwBOynGst3YOhX5",
         "_score" : 1.0,
@@ -340,7 +340,7 @@
         }
       },
       {
-        "_index" : "dionysos",
+        "_index" : "dionysios",
         "_type" : "_doc",
         "_id" : "n0CcSnwBOynGst3YPhUT",
         "_score" : 1.0,

@@ -18,21 +18,21 @@ func TestFirstDeclensionFemNouns(t *testing.T) {
 	}
 	t.Parallel()
 
-	baseConfig := configs.DionysosConfig{}
+	baseConfig := configs.DionysiosConfig{}
 	unparsedConfig, err := aristoteles.NewConfig(baseConfig)
 	if err != nil {
 		glg.Error(err)
 		glg.Fatal("death has found me")
 	}
-	dionysosConfig, ok := unparsedConfig.(*configs.DionysosConfig)
+	dionysiosConfig, ok := unparsedConfig.(*configs.DionysiosConfig)
 	if !ok {
 		glg.Fatal("could not parse config")
 	}
 
-	declensionConfig, _ := QueryRuleSet(dionysosConfig.Elastic, dionysosConfig.Index)
-	dionysosConfig.DeclensionConfig = *declensionConfig
+	declensionConfig, _ := QueryRuleSet(dionysiosConfig.Elastic, dionysiosConfig.Index)
+	dionysiosConfig.DeclensionConfig = *declensionConfig
 
-	handler := DionysosHandler{Config: dionysosConfig}
+	handler := DionysosHandler{Config: dionysiosConfig}
 
 	t.Run("NominativusFemSing", func(t *testing.T) {
 		words := []string{"μάχη", "δόξα"}
@@ -156,11 +156,11 @@ func TestFirstDeclensionMascNouns(t *testing.T) {
 	mockCode := 200
 	mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
 
-	declensionConfig, err := QueryRuleSet(mockElasticClient, "dionysos")
+	declensionConfig, err := QueryRuleSet(mockElasticClient, "dionysios")
 	assert.NotNil(t, declensionConfig)
 	assert.Nil(t, err)
 
-	testConfig := configs.DionysosConfig{
+	testConfig := configs.DionysiosConfig{
 		Elastic:          mockElasticClient,
 		SecondaryIndex:   dictionaryIndexDefault,
 		Index:            elasticIndexDefault,
@@ -270,11 +270,11 @@ func TestSecondDeclensionMascNouns(t *testing.T) {
 	mockCode := 200
 	mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
 
-	declensionConfig, err := QueryRuleSet(mockElasticClient, "dionysos")
+	declensionConfig, err := QueryRuleSet(mockElasticClient, "dionysios")
 	assert.NotNil(t, declensionConfig)
 	assert.Nil(t, err)
 
-	testConfig := configs.DionysosConfig{
+	testConfig := configs.DionysiosConfig{
 		Elastic:          mockElasticClient,
 		SecondaryIndex:   dictionaryIndexDefault,
 		Index:            elasticIndexDefault,
@@ -414,11 +414,11 @@ func TestSecondDeclensionNeuterNouns(t *testing.T) {
 	mockCode := 200
 	mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
 
-	declensionConfig, err := QueryRuleSet(mockElasticClient, "dionysos")
+	declensionConfig, err := QueryRuleSet(mockElasticClient, "dionysios")
 	assert.NotNil(t, declensionConfig)
 	assert.Nil(t, err)
 
-	testConfig := configs.DionysosConfig{
+	testConfig := configs.DionysiosConfig{
 		Elastic:          mockElasticClient,
 		SecondaryIndex:   dictionaryIndexDefault,
 		Index:            elasticIndexDefault,

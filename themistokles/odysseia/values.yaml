@@ -18,7 +18,7 @@ envVariables:
     port: 3000
   alexandros:
     port: 5000
-  dionysos:
+  dionysios:
     port: 5000
   sokrates:
     port: 5000

@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   description: |
-    This is a sample Dionysos server which is part of odysseia.
+    This is a sample dionysios server which is part of odysseia.
 
     # Introduction
     This API is documented in **OpenAPI format** and is using [ReDoc](https://github.com/Redocly/redoc)
@@ -16,13 +16,13 @@ info:
   termsOfService: https://github.com/joerivrij/odysseia
   contact:
     email: joerivrijaldenhoven@odysseia.io
-  title: Dionysos
+  title: dionysios
   version: v0.1.0
   license:
     name: MIT License
     url: https://opensource.org/licenses/MIT
 host: localhost:5000
-basePath: /dionysos/v1
+basePath: /dionysios/v1
 tags:
   - name: health
     description: Endpoints relating to health and checks
@@ -40,7 +40,7 @@ paths:
       x-code-samples:
         - lang: 'Golang'
           source: |
-            resp, err := http.Get("http://localhost:5000/dionysos/v1/ping")
+            resp, err := http.Get("http://localhost:5000/dionysios/v1/ping")
             if err != nil {
               // handle error
             }
@@ -74,7 +74,7 @@ paths:
       x-code-samples:
         - lang: 'Golang'
           source: |
-            resp, err := http.Get("http://localhost:5000/dionysos/v1/health")
+            resp, err := http.Get("http://localhost:5000/dionysios/v1/health")
             if err != nil {
               // handle error
             }

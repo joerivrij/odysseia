@@ -4,7 +4,7 @@ import "github.com/odysseia/hippokrates/client/models"
 
 type OdysseiaClient interface {
 	Alexandros() Alexandros
-	Dionysos() Dionysos
+	Dionysios() Dionysios
 	Herodotos() Herodotos
 	Sokrates() Sokrates
 	Solon() Solon
@@ -12,7 +12,7 @@ type OdysseiaClient interface {
 
 type Odysseia struct {
 	alexandros *AlexandrosImpl
-	dionysos   *DionysosImpl
+	dionysios  *DionysiosImpl
 	herodotos  *HerodotosImpl
 	sokrates   *SokratesImpl
 	solon      *SolonImpl
@@ -23,7 +23,7 @@ type Alexandros interface {
 	QueryWord(word string) ([]models.Meros, error)
 }
 
-type Dionysos interface {
+type Dionysios interface {
 	Health() (*models.Health, error)
 	CheckGrammar(word string) (*models.DeclensionTranslationResults, error)
 }
@@ -54,7 +54,7 @@ type Solon interface {
 type ClientConfig struct {
 	Scheme        string
 	AlexandrosUrl string
-	DionysosUrl   string
+	DionysiosUrl  string
 	HerodotosUrl  string
 	SokratesUrl   string
 	SolonUrl      string
@@ -68,7 +68,7 @@ func NewClient(config ClientConfig) (OdysseiaClient, error) {
 		return nil, err
 	}
 
-	dionysosImpl, err := NewDionysosImpl(config.Scheme, config.DionysosUrl, client)
+	dionysiosImpl, err := NewDionysiosImpl(config.Scheme, config.DionysiosUrl, client)
 	if err != nil {
 		return nil, err
 	}
@@ -90,7 +90,7 @@ func NewClient(config ClientConfig) (OdysseiaClient, error) {
 
 	return &Odysseia{
 		alexandros: alexandrosImpl,
-		dionysos:   dionysosImpl,
+		dionysios:  dionysiosImpl,
 		herodotos:  herodotosImpl,
 		sokrates:   sokratesImpl,
 		solon:      solonImpl,
@@ -104,11 +104,11 @@ func (o *Odysseia) Alexandros() Alexandros {
 	return o.alexandros
 }
 
-func (o *Odysseia) Dionysos() Dionysos {
+func (o *Odysseia) Dionysios() Dionysios {
 	if o == nil {
 		return nil
 	}
-	return o.dionysos
+	return o.dionysios
 }
 
 func (o *Odysseia) Herodotos() Herodotos {

@@ -53,7 +53,7 @@ What could I ever say in a few lines that would do justice to one of the most in
 
 Γραμματική ἐστιν ἐμπειρία τῶν παρὰ ποιηταῖς τε καὶ συγγραφεῦσιν ὡς ἐπὶ τὸ πολὺ λεγομένων - Grammar is an experimental knowledge of the usages of language as generally current among poets and prose writers
 
-<img src="https://alchetron.com/cdn/dionysius-thrax-73e8d598-e6d3-4f5f-bb04-debff25a456-resize-750.jpeg" alt="Dionysos" width="200"/>
+<img src="https://alchetron.com/cdn/dionysius-thrax-73e8d598-e6d3-4f5f-bb04-debff25a456-resize-750.jpeg" alt="dionysios" width="200"/>
 
 Probably the first Greek Grammarian who wrote the "Τέχνη Γραμματική". Even though often called "the Thracian" he was most likely from Alexandria which was the hub for Greek learning for a long time.
 

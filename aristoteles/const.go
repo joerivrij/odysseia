@@ -82,4 +82,5 @@ var validFields = []string{
 	"Job",
 	"Queue",
 	"HttpClients",
+	"Cache",
 }

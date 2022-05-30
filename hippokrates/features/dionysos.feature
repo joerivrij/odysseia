@@ -1,82 +1,82 @@
-Feature: Dionysos
+Feature: Dionysios
   In order to use grammar functions
   As a greek enthusiast
-  We need to be able to validate the functioning of the Dionysos api
+  We need to be able to validate the functioning of the Dionysios api
 
-  @dionysos
+  @dionysios
   Scenario Outline: Feminine first declensions result in the correct declension rule
     Given the "<service>" is running
     When the grammar is checked for word "<word>"
     Then the declension "<declension>" should be included in the response
     Examples:
       | service  | declension                | word   |
-      | dionysos | noun - sing - fem - nom   | μάχη   |
-      | dionysos | noun - sing - fem - gen   | οἰκίας |
-      | dionysos | noun - sing - fem - dat   | οἰκίᾳ  |
-      | dionysos | noun - sing - fem - acc   | τιμήν  |
-      | dionysos | noun - plural - fem - nom | μάχαι  |
-      | dionysos | noun - plural - fem - gen | θεῶν   |
-      | dionysos | noun - plural - fem - dat | δόξαις |
-      | dionysos | noun - plural - fem - acc | χώρᾱς  |
+      | dionysios | noun - sing - fem - nom   | μάχη   |
+      | dionysios | noun - sing - fem - gen   | οἰκίας |
+      | dionysios | noun - sing - fem - dat   | οἰκίᾳ  |
+      | dionysios | noun - sing - fem - acc   | τιμήν  |
+      | dionysios | noun - plural - fem - nom | μάχαι  |
+      | dionysios | noun - plural - fem - gen | θεῶν   |
+      | dionysios | noun - plural - fem - dat | δόξαις |
+      | dionysios | noun - plural - fem - acc | χώρᾱς  |
 
-  @dionysos
+  @dionysios
   Scenario Outline: Masculine first declensions result in the correct declension rule
     Given the "<service>" is running
     When the grammar is checked for word "<word>"
     Then the declension "<declension>" should be included in the response
     Examples:
       | service  | declension                 | word     |
-      | dionysos | noun - sing - masc - nom   | πολίτης  |
-      | dionysos | noun - sing - masc - gen   | κριτοῦ   |
-      | dionysos | noun - sing - masc - dat   | νεανίᾳ   |
-      | dionysos | noun - sing - masc - acc   | πολίτην  |
-      | dionysos | noun - plural - masc - nom | κριταί   |
-      | dionysos | noun - plural - masc - gen | πολίτῶν  |
-      | dionysos | noun - plural - masc - dat | νεανίαις |
-      | dionysos | noun - plural - masc - acc | κριτᾱ́ς  |
+      | dionysios | noun - sing - masc - nom   | πολίτης  |
+      | dionysios | noun - sing - masc - gen   | κριτοῦ   |
+      | dionysios | noun - sing - masc - dat   | νεανίᾳ   |
+      | dionysios | noun - sing - masc - acc   | πολίτην  |
+      | dionysios | noun - plural - masc - nom | κριταί   |
+      | dionysios | noun - plural - masc - gen | πολίτῶν  |
+      | dionysios | noun - plural - masc - dat | νεανίαις |
+      | dionysios | noun - plural - masc - acc | κριτᾱ́ς  |
 
-  @dionysos
+  @dionysios
   Scenario Outline: Masculine second declensions result in the correct declension rule
     Given the "<service>" is running
     When the grammar is checked for word "<word>"
     Then the declension "<declension>" should be included in the response
     Examples:
       | service  | declension                 | word     |
-      | dionysos | noun - sing - masc - nom   | δοῦλος   |
-      | dionysos | noun - sing - masc - gen   | πόλεμου  |
-      | dionysos | noun - sing - masc - dat   | δοῦλῳ    |
-      | dionysos | noun - sing - masc - acc   | πόλεμον  |
-      | dionysos | noun - plural - masc - nom | θεοί     |
-      | dionysos | noun - plural - masc - gen | νεανίῶν  |
-      | dionysos | noun - plural - masc - dat | πόλεμοις |
-      | dionysos | noun - plural - masc - acc | θεούς    |
+      | dionysios | noun - sing - masc - nom   | δοῦλος   |
+      | dionysios | noun - sing - masc - gen   | πόλεμου  |
+      | dionysios | noun - sing - masc - dat   | δοῦλῳ    |
+      | dionysios | noun - sing - masc - acc   | πόλεμον  |
+      | dionysios | noun - plural - masc - nom | θεοί     |
+      | dionysios | noun - plural - masc - gen | νεανίῶν  |
+      | dionysios | noun - plural - masc - dat | πόλεμοις |
+      | dionysios | noun - plural - masc - acc | θεούς    |
 
-  @dionysos
+  @dionysios
   Scenario Outline: Neuter second declensions result in the correct declension rule
     Given the "<service>" is running
     When the grammar is checked for word "<word>"
     Then the declension "<declension>" should be included in the response
     Examples:
       | service  | declension                 | word   |
-      | dionysos | noun - sing - neut - nom   | μῆλον  |
-      | dionysos | noun - sing - neut - gen   | δῶρου  |
-      | dionysos | noun - sing - neut - dat   | δῶρῳ   |
-      | dionysos | noun - sing - neut - acc   | μῆλον  |
-      | dionysos | noun - plural - neut - nom | δῶρα   |
-      | dionysos | noun - plural - neut - gen | δῶρων  |
-      | dionysos | noun - plural - neut - dat | μήλοις |
-      | dionysos | noun - plural - neut - acc | μῆλα   |
+      | dionysios | noun - sing - neut - nom   | μῆλον  |
+      | dionysios | noun - sing - neut - gen   | δῶρου  |
+      | dionysios | noun - sing - neut - dat   | δῶρῳ   |
+      | dionysios | noun - sing - neut - acc   | μῆλον  |
+      | dionysios | noun - plural - neut - nom | δῶρα   |
+      | dionysios | noun - plural - neut - gen | δῶρων  |
+      | dionysios | noun - plural - neut - dat | μήλοις |
+      | dionysios | noun - plural - neut - acc | μῆλα   |
 
-  @dionysos
+  @dionysios
   Scenario Outline: Queries with no results return an error
     Given the "<service>" is running
     When the grammar for word "<word>" is queried with an error
     Then an error containing "<message>" is returned
     Examples:
       | service  | word             | message         |
-      | dionysos | ναυμαχίαναυμαχία | 200 but got 404 |
+      | dionysios | ναυμαχίαναυμαχία | 200 but got 404 |
 
-  @dionysos
+  @dionysios
   Scenario Outline: Some words have multiple dictionary entries
     Given the "<service>" is running
     When the grammar is checked for word "<word>"
@@ -85,10 +85,10 @@ Feature: Dionysos
     And the number of declensions should be equal to or exceed "<declensions>"
     Examples:
       | service  | results | translations | declensions | word    |
-      | dionysos | 2       | 2            | 1           | πόλεμου |
-      | dionysos | 2       | 2            | 1           | μάχη    |
+      | dionysios | 2       | 2            | 1           | πόλεμου |
+      | dionysios | 2       | 2            | 1           | μάχη    |
 
-  @dionysos
+  @dionysios
   Scenario Outline: Some words have multiple declensions
     Given the "<service>" is running
     When the grammar is checked for word "<word>"
@@ -97,5 +97,5 @@ Feature: Dionysos
     And the number of declensions should be equal to or exceed "<declensions>"
     Examples:
       | service  | results | translations | declensions | word |
-      | dionysos | 2       | 1            | 2           | δῶρα |
-      | dionysos | 2       | 2            | 2           | θεῶν |
+      | dionysios | 2       | 1            | 2           | δῶρα |
+      | dionysios | 2       | 2            | 2           | θεῶν |

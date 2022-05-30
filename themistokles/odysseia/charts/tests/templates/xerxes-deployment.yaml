@@ -99,7 +99,7 @@ spec:
             value: {{ .Values.envVariables.load.spawnRate | quote }}
         ports:
           - containerPort: {{ .Values.envVariables.load.sokratesPort }}
-      - name: {{ template "load.uname" . }}-dionysos
+      - name: {{ template "load.uname" . }}-dionysios
         {{- if .Values.config.externalRepo | quote }}
         image: {{ .Values.images.imageRepo}}{{ .Values.images.load.repo }}:{{ .Values.images.tag }}
         imagePullPolicy: {{ .Values.config.pullPolicy }}
@@ -115,7 +115,7 @@ spec:
         - name: LOCUST_WEB_PORT
           value: {{ .Values.envVariables.load.dionysosPort | quote }}
         - name: LOCUST_LOCUSTFILE
-          value: locustfiles/dionysos-locustfile.py
+          value: locustfiles/dionysios-locustfile.py
         - name: LOCUST_USERS
           value: {{ .Values.envVariables.load.locustUsers | quote }}
         - name: SPAWN_RATE

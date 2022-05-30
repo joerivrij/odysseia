@@ -53,7 +53,7 @@ envVariables:
   load:
     alexandrosHost: http://alexandros-service:5000
     alexandrosPort: 8086
-    dionysosHost: http://dionysos-service:5000
+    dionysosHost: http://dionysios-service:5000
     dionysosPort: 8087
     herodotosHost: http://herodotos-service:5000
     herodotosPort: 8088

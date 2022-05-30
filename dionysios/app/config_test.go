@@ -17,7 +17,7 @@ func TestCreateElasticConfig(t *testing.T) {
 		mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
 		assert.Nil(t, err)
 
-		declensionConfig, err := QueryRuleSet(mockElasticClient, "dionysos")
+		declensionConfig, err := QueryRuleSet(mockElasticClient, "dionysios")
 		assert.NotNil(t, declensionConfig)
 		assert.Nil(t, err)
 
@@ -36,7 +36,7 @@ func TestCreateElasticConfig(t *testing.T) {
 		mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
 		assert.Nil(t, err)
 
-		declensionConfig, err := QueryRuleSet(mockElasticClient, "dionysos")
+		declensionConfig, err := QueryRuleSet(mockElasticClient, "dionysios")
 		assert.NotNil(t, declensionConfig)
 		assert.Nil(t, err)
 
@@ -54,7 +54,7 @@ func TestCreateElasticConfig(t *testing.T) {
 		mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
 		assert.Nil(t, err)
 
-		declensionConfig, err := QueryRuleSet(mockElasticClient, "dionysos")
+		declensionConfig, err := QueryRuleSet(mockElasticClient, "dionysios")
 		assert.Nil(t, declensionConfig)
 		assert.NotNil(t, err)
 

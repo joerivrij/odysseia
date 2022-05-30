@@ -7,7 +7,7 @@ import (
 )
 
 func (l *odysseiaFixture) theGrammarForWordIsQueriedWithAnError(word string) error {
-	_, err := l.clients.Dionysos().CheckGrammar(word)
+	_, err := l.clients.Dionysios().CheckGrammar(word)
 	if err != nil {
 		l.ctx = context.WithValue(l.ctx, ErrorBody, err.Error())
 	}
@@ -16,7 +16,7 @@ func (l *odysseiaFixture) theGrammarForWordIsQueriedWithAnError(word string) err
 }
 
 func (l *odysseiaFixture) theGrammarIsCheckedForWord(word string) error {
-	response, err := l.clients.Dionysos().CheckGrammar(word)
+	response, err := l.clients.Dionysios().CheckGrammar(word)
 	if err != nil {
 		return err
 	}
