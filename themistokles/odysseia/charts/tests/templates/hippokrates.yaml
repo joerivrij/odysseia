@@ -46,7 +46,7 @@ spec:
                 - name: HERODOTOS_SERVICE
                   value: http://herodotos:5000
                 - name: DIONYSOS_SERVICE
-                  value: http://dionysos:5000
+                  value: http://dionysios:5000
                 - name: SOLON_SERVICE
                   value: http://solon:5000
               command:

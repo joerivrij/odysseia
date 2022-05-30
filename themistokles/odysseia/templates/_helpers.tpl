@@ -77,11 +77,11 @@ Create the name of the service account to use
 {{- end -}}
 {{- end -}}
 
-{{- define "dionysos.uname" -}}
-{{- if empty .Values.services.dionysos.name -}}
-{{ .Values.images.dionysos }}
+{{- define "dionysios.uname" -}}
+{{- if empty .Values.services.dionysios.name -}}
+{{ .Values.images.dionysios }}
 {{- else -}}
-{{ .Values.services.dionysos.name }}
+{{ .Values.services.dionysios.name }}
 {{- end -}}
 {{- end -}}
 

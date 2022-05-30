@@ -128,13 +128,13 @@ spec:
             - containerPort: {{ .Values.envVariables.odysseiaapi.port }}
           livenessProbe:
             httpGet:
-              path: /dionysos/v1/health
+              path: /dionysios/v1/health
               port: {{ .Values.envVariables.odysseiaapi.port }}
             initialDelaySeconds: {{ .Values.config.initialDelayLiveness }}
             periodSeconds: {{ .Values.config.periodSeconds }}
           readinessProbe:
             httpGet:
-              path: /dionysos/v1/ping
+              path: /dionysios/v1/ping
               port: {{ .Values.envVariables.odysseiaapi.port }}
             initialDelaySeconds: {{ .Values.config.initialDelayReadiness }}
             periodSeconds: {{ .Values.config.periodSeconds }}

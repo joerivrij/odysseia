@@ -10,7 +10,7 @@ import (
 )
 
 type DionysosHandler struct {
-	Config *configs.DionysosConfig
+	Config *configs.DionysiosConfig
 }
 
 // PingPong pongs the ping
@@ -49,6 +49,26 @@ func (d *DionysosHandler) checkGrammar(w http.ResponseWriter, req *http.Request)
 
 	glg.Debugf("trying to get the possibilities for %s", queryWord)
 
+	cacheItem, _ := d.Config.Cache.Read(queryWord)
+	if cacheItem != nil {
+		d, err := models.UnmarshalDeclensionTranslationResults(cacheItem)
+		if err != nil {
+			e := models.ValidationError{
+				ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
+				Messages: []models.ValidationMessages{
+					{
+						Field:   "cache",
+						Message: err.Error(),
+					},
+				},
+			}
+			middleware.ResponseWithJson(w, e)
+			return
+		}
+		middleware.ResponseWithJson(w, d)
+		return
+	}
+
 	declensions, _ := d.StartFindingRules(queryWord)
 	if len(declensions.Results) == 0 || declensions.Results == nil {
 		e := models.NotFoundError{
@@ -61,5 +81,22 @@ func (d *DionysosHandler) checkGrammar(w http.ResponseWriter, req *http.Request)
 		middleware.ResponseWithJson(w, e)
 		return
 	}
+
+	stringifiedDeclension, _ := declensions.Marshal()
+	err := d.Config.Cache.Set(queryWord, string(stringifiedDeclension))
+	if err != nil {
+		e := models.ValidationError{
+			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
+			Messages: []models.ValidationMessages{
+				{
+					Field:   "cache",
+					Message: err.Error(),
+				},
+			},
+		}
+		middleware.ResponseWithJson(w, e)
+		return
+	}
+
 	middleware.ResponseWithJson(w, *declensions)
 }

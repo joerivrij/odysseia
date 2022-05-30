@@ -168,22 +168,23 @@ func TestDemokritosConfigCreation(t *testing.T) {
 	})
 }
 
-func TestDionysosConfigCreation(t *testing.T) {
+func TestDionysiosConfigCreation(t *testing.T) {
 	t.Run("StandardConfig", func(t *testing.T) {
 		expected := "testrole"
 		os.Setenv(EnvIndex, expected)
 		os.Setenv(EnvHealthCheckOverwrite, "yes")
-		cfg := configs.DionysosConfig{}
+		cfg := configs.DionysiosConfig{}
 
 		sut, err := NewConfig(cfg)
 		assert.Nil(t, err)
 		assert.NotNil(t, sut)
 
-		dionysosConfig, ok := sut.(*configs.DionysosConfig)
+		dionysiosConfig, ok := sut.(*configs.DionysiosConfig)
 		assert.True(t, ok)
 
-		assert.NotNil(t, dionysosConfig.Elastic)
-		assert.Equal(t, expected, dionysosConfig.Index)
+		assert.NotNil(t, dionysiosConfig.Elastic)
+		assert.NotNil(t, dionysiosConfig.Cache)
+		assert.Equal(t, expected, dionysiosConfig.Index)
 
 		os.Unsetenv(EnvIndex)
 		os.Unsetenv(EnvHealthCheckOverwrite)
@@ -193,17 +194,17 @@ func TestDionysosConfigCreation(t *testing.T) {
 		expected := "testrole"
 		os.Setenv(EnvSecondaryIndex, expected)
 		os.Setenv(EnvHealthCheckOverwrite, "yes")
-		cfg := configs.DionysosConfig{}
+		cfg := configs.DionysiosConfig{}
 
 		sut, err := NewConfig(cfg)
 		assert.Nil(t, err)
 		assert.NotNil(t, sut)
 
-		dionysosConfig, ok := sut.(*configs.DionysosConfig)
+		dionysiosConfig, ok := sut.(*configs.DionysiosConfig)
 		assert.True(t, ok)
 
-		assert.NotNil(t, dionysosConfig.Elastic)
-		assert.Equal(t, expected, dionysosConfig.SecondaryIndex)
+		assert.NotNil(t, dionysiosConfig.Elastic)
+		assert.Equal(t, expected, dionysiosConfig.SecondaryIndex)
 
 		os.Unsetenv(EnvSecondaryIndex)
 		os.Unsetenv(EnvHealthCheckOverwrite)

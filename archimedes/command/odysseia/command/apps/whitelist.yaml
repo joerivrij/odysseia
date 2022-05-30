@@ -4,8 +4,9 @@ appsToInstall:
   - solon
   - pheidias
   - alexandros
-  - dionysos
+  - dionysios
   - herodotos
   - sokrates
   - thales
   - docs
+  - ingress

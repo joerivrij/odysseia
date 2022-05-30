@@ -21,6 +21,7 @@ require (
 )
 
 require (
+	github.com/dgraph-io/badger/v3 v3.2103.2 // indirect
 	github.com/hashicorp/vault v1.10.3
 	github.com/hashicorp/vault/api v1.5.0
 	github.com/michaelklishin/rabbit-hole/v2 v2.12.0 // indirect

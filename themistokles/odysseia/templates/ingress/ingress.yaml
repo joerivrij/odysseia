@@ -44,12 +44,12 @@ spec:
                 port:
                   number: {{ .Values.envVariables.alexandros.port }}
           - pathType: Prefix
-            path: /dionysos/v1
+            path: /dionysios/v1
             backend:
               service:
-                name: dionysos-service
+                name: dionysios-service
                 port:
-                  number: {{ .Values.envVariables.dionysos.port }}
+                  number: {{ .Values.envVariables.dionysios.port }}
           - pathType: Prefix
             path: /solon/v1
             backend:

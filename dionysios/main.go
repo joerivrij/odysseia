@@ -4,7 +4,7 @@ import (
 	"github.com/kpango/glg"
 	"github.com/odysseia/aristoteles"
 	"github.com/odysseia/aristoteles/configs"
-	"github.com/odysseia/dionysos/app"
+	"github.com/odysseia/dionysios/app"
 	"net/http"
 	"os"
 )
@@ -33,21 +33,21 @@ func main() {
 	glg.Info("starting up.....")
 	glg.Debug("starting up and getting env variables")
 
-	baseConfig := configs.DionysosConfig{}
+	baseConfig := configs.DionysiosConfig{}
 	unparsedConfig, err := aristoteles.NewConfig(baseConfig)
 	if err != nil {
 		glg.Error(err)
 		glg.Fatal("death has found me")
 	}
-	dionysosConfig, ok := unparsedConfig.(*configs.DionysosConfig)
+	dionysiosConfig, ok := unparsedConfig.(*configs.DionysiosConfig)
 	if !ok {
 		glg.Fatal("could not parse config")
 	}
 
-	declensionConfig, _ := app.QueryRuleSet(dionysosConfig.Elastic, dionysosConfig.Index)
-	dionysosConfig.DeclensionConfig = *declensionConfig
+	declensionConfig, _ := app.QueryRuleSet(dionysiosConfig.Elastic, dionysiosConfig.Index)
+	dionysiosConfig.DeclensionConfig = *declensionConfig
 
-	srv := app.InitRoutes(*dionysosConfig)
+	srv := app.InitRoutes(*dionysiosConfig)
 
 	glg.Infof("%s : %s", "running on port", port)
 	err = http.ListenAndServe(port, srv)

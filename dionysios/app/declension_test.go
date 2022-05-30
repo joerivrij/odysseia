@@ -15,7 +15,7 @@ func TestCheckGrammarEndPointIrregularVerb(t *testing.T) {
 		expected := "3th plural - impf - ind - act"
 		expectedSearchResult := "εἰμί"
 
-		declensionConfig, err := QueryRuleSet(nil, "dionysos")
+		declensionConfig, err := QueryRuleSet(nil, "dionysios")
 		assert.Nil(t, err)
 
 		handler := DionysosHandler{}
@@ -52,11 +52,11 @@ func TestCheckGrammarEndPointIrregularVerb(t *testing.T) {
 		expected := "3th plural - impf - ind - act"
 		expectedSearchResult := "εἰμί"
 
-		declensionConfig, err := QueryRuleSet(nil, "dionysos")
+		declensionConfig, err := QueryRuleSet(nil, "dionysios")
 		assert.Nil(t, err)
 
 		handler := DionysosHandler{
-			Config: &configs.DionysosConfig{DeclensionConfig: *declensionConfig},
+			Config: &configs.DionysiosConfig{DeclensionConfig: *declensionConfig},
 		}
 
 		foundRules, err := handler.searchForDeclensions(searchWord)
@@ -84,7 +84,7 @@ func TestDeclensionImperfectumResult(t *testing.T) {
 		expected := "1st sing - impf - ind - act"
 		expectedSearchResult := "φερω"
 
-		declensionConfig, err := QueryRuleSet(nil, "dionysos")
+		declensionConfig, err := QueryRuleSet(nil, "dionysios")
 		assert.Nil(t, err)
 
 		handler := DionysosHandler{}
@@ -130,7 +130,7 @@ func TestDeclensionAoristResult(t *testing.T) {
 		expected := "1st sing - aorist - ind - act"
 		expectedSearchResult := "γρᾰφω"
 
-		declensionConfig, err := QueryRuleSet(nil, "dionysos")
+		declensionConfig, err := QueryRuleSet(nil, "dionysios")
 		assert.Nil(t, err)
 
 		handler := DionysosHandler{}
@@ -161,7 +161,7 @@ func TestDeclensionAoristResult(t *testing.T) {
 		expected := "1st plural - aorist - ind - act"
 		expectedSearchResult := "λύω"
 
-		declensionConfig, err := QueryRuleSet(nil, "dionysos")
+		declensionConfig, err := QueryRuleSet(nil, "dionysios")
 		assert.Nil(t, err)
 
 		handler := DionysosHandler{}
@@ -192,7 +192,7 @@ func TestDeclensionAoristResult(t *testing.T) {
 		expected := "3th sing - aorist - ind - act"
 		expectedSearchResult := "πλέκω"
 
-		declensionConfig, err := QueryRuleSet(nil, "dionysos")
+		declensionConfig, err := QueryRuleSet(nil, "dionysios")
 		assert.Nil(t, err)
 
 		handler := DionysosHandler{}
@@ -231,7 +231,7 @@ func TestDeclensionAoristResult(t *testing.T) {
 		expected := "2nd plural - aorist - ind - act"
 		expectedSearchResult := "δῐδᾰ́σκω"
 
-		declensionConfig, err := QueryRuleSet(nil, "dionysos")
+		declensionConfig, err := QueryRuleSet(nil, "dionysios")
 		assert.Nil(t, err)
 
 		handler := DionysosHandler{}
@@ -269,7 +269,7 @@ func TestDeclensionAoristResult(t *testing.T) {
 		expected := "3th plural - aorist - ind - act"
 		expectedSearchResult := "λεγω"
 
-		declensionConfig, err := QueryRuleSet(nil, "dionysos")
+		declensionConfig, err := QueryRuleSet(nil, "dionysios")
 		assert.Nil(t, err)
 
 		handler := DionysosHandler{}
@@ -308,7 +308,7 @@ func TestDeclensionAoristResult(t *testing.T) {
 		expected := "2nd sing - aorist - ind - act"
 		expectedSearchResult := "αρχω"
 
-		declensionConfig, err := QueryRuleSet(nil, "dionysos")
+		declensionConfig, err := QueryRuleSet(nil, "dionysios")
 		assert.Nil(t, err)
 
 		handler := DionysosHandler{}
@@ -352,7 +352,7 @@ func TestDeclensionParticiplesResult(t *testing.T) {
 		expected := "pres act part - sing - masc - nom"
 		expectedSearchResult := "λυω"
 
-		declensionConfig, err := QueryRuleSet(nil, "dionysos")
+		declensionConfig, err := QueryRuleSet(nil, "dionysios")
 		assert.Nil(t, err)
 
 		handler := DionysosHandler{}
@@ -390,7 +390,7 @@ func TestDeclensionParticiplesResult(t *testing.T) {
 		expected := "pres act part - plural - fem - dat"
 		expectedSearchResult := "λυω"
 
-		declensionConfig, err := QueryRuleSet(nil, "dionysos")
+		declensionConfig, err := QueryRuleSet(nil, "dionysios")
 		assert.Nil(t, err)
 
 		handler := DionysosHandler{}
@@ -428,7 +428,7 @@ func TestDeclensionParticiplesResult(t *testing.T) {
 		expected := "pres act part - sing - neut - gen"
 		expectedSearchResult := "λυω"
 
-		declensionConfig, err := QueryRuleSet(nil, "dionysos")
+		declensionConfig, err := QueryRuleSet(nil, "dionysios")
 		assert.Nil(t, err)
 
 		handler := DionysosHandler{}
@@ -467,11 +467,11 @@ func TestDeclensionParticiplesResult(t *testing.T) {
 		expectedVerba := "3th plural - pres - ind - act"
 		expectedSearchResult := "λυω"
 
-		declensionConfig, err := QueryRuleSet(nil, "dionysos")
+		declensionConfig, err := QueryRuleSet(nil, "dionysios")
 		assert.Nil(t, err)
 
 		handler := DionysosHandler{
-			Config: &configs.DionysosConfig{DeclensionConfig: *declensionConfig},
+			Config: &configs.DionysiosConfig{DeclensionConfig: *declensionConfig},
 		}
 
 		foundRules, err := handler.searchForDeclensions(searchWord)

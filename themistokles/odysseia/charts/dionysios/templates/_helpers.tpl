@@ -108,7 +108,7 @@ Create the name of the role to use
 Create the name of the roleBinding to use
 */}}
 {{- define "bindingName" -}}
-{{- default "dionysos-binding" }}
+{{- default "dionysios-binding" }}
 {{- end -}}
 
 {{/*

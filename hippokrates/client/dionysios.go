@@ -9,36 +9,36 @@ import (
 	"path"
 )
 
-type DionysosImpl struct {
+type DionysiosImpl struct {
 	Scheme  string
 	BaseUrl string
 	Client  HttpClient
 }
 
 const (
-	dionysosService string = "dionysos"
-	checkGrammar    string = "checkGrammar"
+	dionysiosService string = "dionysios"
+	checkGrammar     string = "checkGrammar"
 )
 
-func NewDionysosImpl(scheme, baseUrl string, client HttpClient) (*DionysosImpl, error) {
-	return &DionysosImpl{Scheme: scheme, BaseUrl: baseUrl, Client: client}, nil
+func NewDionysiosImpl(scheme, baseUrl string, client HttpClient) (*DionysiosImpl, error) {
+	return &DionysiosImpl{Scheme: scheme, BaseUrl: baseUrl, Client: client}, nil
 }
 
-func (d *DionysosImpl) Health() (*models.Health, error) {
+func (d *DionysiosImpl) Health() (*models.Health, error) {
 	healthPath := url.URL{
 		Scheme: d.Scheme,
 		Host:   d.BaseUrl,
-		Path:   path.Join(dionysosService, version, healthEndPoint),
+		Path:   path.Join(dionysiosService, version, healthEndPoint),
 	}
 
 	return Health(healthPath, d.Client)
 }
 
-func (d *DionysosImpl) CheckGrammar(word string) (*models.DeclensionTranslationResults, error) {
+func (d *DionysiosImpl) CheckGrammar(word string) (*models.DeclensionTranslationResults, error) {
 	urlPath := url.URL{
 		Scheme: d.Scheme,
 		Host:   d.BaseUrl,
-		Path:   path.Join(dionysosService, version, checkGrammar),
+		Path:   path.Join(dionysiosService, version, checkGrammar),
 	}
 
 	q := urlPath.Query()

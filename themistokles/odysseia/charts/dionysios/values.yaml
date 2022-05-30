@@ -36,7 +36,7 @@ services:
   init:
     name: "periandros"
   odysseiaapi:
-    name: "dionysos"
+    name: "dionysios"
     role: "api"
     access: "grammar"
     secondaryAccess: "dictionary"
@@ -56,7 +56,7 @@ images:
   init:
     repo: periandros
   odysseiaapi:
-    repo: dionysos
+    repo: dionysios
   seeder:
     repo: anaximander
 

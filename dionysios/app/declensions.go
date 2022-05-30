@@ -165,6 +165,38 @@ func (d *DionysosHandler) StartFindingRules(word string) (*models.DeclensionTran
 		}
 	}
 
+	if results.Results == nil {
+		singleSearchResult, err := d.queryWordInElastic(word)
+		if err != nil {
+			glg.Debug("no result for single word continuing loop")
+		}
+
+		if len(singleSearchResult) > 0 {
+			for _, searchResult := range singleSearchResult {
+				translation, _ := d.parseDictResults(searchResult)
+				doNotAdd := false
+				for _, res := range results.Results {
+					if res.Translation == translation {
+						doNotAdd = true
+						break
+					}
+				}
+
+				if doNotAdd {
+					continue
+				}
+
+				result := models.Result{
+					Word:        word,
+					Rule:        "preposition",
+					RootWord:    searchResult.Greek,
+					Translation: translation,
+				}
+				results.Results = append(results.Results, result)
+			}
+		}
+	}
+
 	if len(results.Results) > 1 {
 		lastResult := models.Result{
 			Word:        "",
