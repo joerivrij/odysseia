@@ -70,6 +70,32 @@ func (c *ConfigurationImpl) CreateSecret(namespace, secretName string, data map[
 	return nil
 }
 
+func (c *ConfigurationImpl) UpdateSecret(namespace, secretName string, data map[string][]byte) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
+	defer cancel()
+
+	secret := corev1.Secret{
+		TypeMeta: metav1.TypeMeta{
+			Kind:       "Secret",
+			APIVersion: "v1",
+		},
+		ObjectMeta: metav1.ObjectMeta{
+			Name: secretName,
+		},
+		Immutable:  nil,
+		Data:       data,
+		StringData: nil,
+		Type:       corev1.SecretTypeOpaque,
+	}
+
+	_, err := c.client.Secrets(namespace).Update(ctx, &secret, metav1.UpdateOptions{})
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (c *ConfigurationImpl) CreateDockerSecret(namespace, secretName string, data map[string]string) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
 	defer cancel()

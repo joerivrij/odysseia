@@ -23,6 +23,41 @@ func NewWorkloadClient(kube kubernetes.Interface) (*WorkloadImpl, error) {
 	return &WorkloadImpl{client: kube}, nil
 }
 
+func (w *WorkloadImpl) ListDeployments(namespace string) (*appsv1.DeploymentList, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
+	defer cancel()
+
+	deployments, err := w.client.AppsV1().Deployments(namespace).List(ctx, metav1.ListOptions{})
+	if err != nil {
+		return nil, err
+	}
+
+	return deployments, nil
+}
+
+func (w *WorkloadImpl) UpdateDeploymentViaAnnotation(namespace, name string, annotation map[string]string) (*appsv1.Deployment, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
+	defer cancel()
+
+	deployment, err := w.GetDeployment(namespace, name)
+	if err != nil {
+		return nil, err
+	}
+
+	for key, value := range annotation {
+		deployment.Spec.Template.Annotations[key] = value
+	}
+
+	return w.client.AppsV1().Deployments(namespace).Update(ctx, deployment, metav1.UpdateOptions{})
+}
+
+func (w *WorkloadImpl) GetDeployment(namespace, name string) (*appsv1.Deployment, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
+	defer cancel()
+
+	return w.client.AppsV1().Deployments(namespace).Get(ctx, name, metav1.GetOptions{})
+}
+
 func (w *WorkloadImpl) GetDeploymentStatus(namespace string) (bool, error) {
 	finished := false
 

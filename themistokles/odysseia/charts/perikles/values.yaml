@@ -1,0 +1,56 @@
+# Default values for Odysseia.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+config:
+  externalRepo: true
+  privateImagesInRepo: false
+  environment: minikube
+  tls: true
+  sidecarOverwrite: true
+  pullPolicy: Never
+  harborPullPolicy: Always
+  replicas:
+    low: 1
+    medium: 2
+    high: 4
+  initialDelayLiveness: 20
+  initialDelayReadiness: 1
+  periodSeconds: 20
+
+services:
+  backend:
+    labels: {
+      domain: backend
+    }
+  perikles:
+    name: "perikles"
+    requests:
+      memory: "64Mi"
+      cpu: "100m"
+    limits:
+      memory: "128Mi"
+      cpu: "250m"
+
+images:
+  imageRepo: core.harbor.domain:30003/odysseia/
+  pullSecret: harbor-images
+  tag: 4952f80
+  odysseiaapi:
+    repo: perikles
+  init:
+    repo: drakon
+
+envVariables:
+  perikles:
+    extraEnvs:
+      - name: VAULT_SERVICE
+        value: http://vault:8200
+
+serviceAccount:
+  name: perikles-access-sa
+
+namespaceOverride: odysseia
+
+role:
+  name: perikles-api-access

@@ -458,6 +458,23 @@ func TestPeriandrosCreation(t *testing.T) {
 	})
 }
 
+func TestPeriklesConfigCreation(t *testing.T) {
+	t.Run("StandardConfigCanBeParsed", func(t *testing.T) {
+		os.Setenv(EnvHealthCheckOverwrite, "yes")
+		cfg := configs.PeriklesConfig{}
+
+		sut, err := NewConfig(cfg)
+		assert.Nil(t, err)
+		assert.NotNil(t, sut)
+
+		config, ok := sut.(*configs.PeriklesConfig)
+		assert.True(t, ok)
+		assert.NotNil(t, config)
+
+		os.Unsetenv(EnvHealthCheckOverwrite)
+	})
+}
+
 func TestPtolemaiosConfigCreation(t *testing.T) {
 	t.Run("StandardConfigCanBeParsed", func(t *testing.T) {
 		cfg := configs.PtolemaiosConfig{}

@@ -45,7 +45,7 @@ images:
 
 envVariables:
   solon:
-    port: 5000
+    port: 5443
     extraEnvs:
       - name: VAULT_SERVICE
         value: http://vault:8200
@@ -83,6 +83,11 @@ secretMounts:
   - name: elastic-certificate-pem
     secretName: elastic-certificate-pem
     path: /app/config/certs
+  - name: vault-server-tls
+    secretName: vault-server-tls
+    items:
+      - key: vault.crt
+        path: /app/config/vault
 
 serviceAccount:
   name: solon-access-sa

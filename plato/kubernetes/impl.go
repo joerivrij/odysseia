@@ -30,6 +30,7 @@ type Configuration interface {
 	GetSecret(namespace, secretName string) (*corev1.Secret, error)
 	ListSecrets(namespace string) (*corev1.SecretList, error)
 	CreateSecret(namespace, secretName string, data map[string][]byte) error
+	UpdateSecret(namespace, secretName string, data map[string][]byte) error
 	CreateDockerSecret(namespace, secretName string, data map[string]string) error
 }
 
@@ -58,6 +59,9 @@ type Workload interface {
 	GetStatefulSets(namespace string) (*appsv1.StatefulSetList, error)
 	GetPodsBySelector(namespace, selector string) (*corev1.PodList, error)
 	GetPodByName(namespace, name string) (*corev1.Pod, error)
+	ListDeployments(namespace string) (*appsv1.DeploymentList, error)
+	UpdateDeploymentViaAnnotation(namespace, name string, annotation map[string]string) (*appsv1.Deployment, error)
+	GetDeployment(namespace, name string) (*appsv1.Deployment, error)
 	GetDeploymentStatus(namespace string) (bool, error)
 	CreateJob(namespace string, spec *batchv1.Job) (*batchv1.Job, error)
 	GetJob(namespace, name string) (*batchv1.Job, error)

@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+      annotations:
+        perikles/secret: perikles-test-secret
+        perikles/host: perikles-service
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.14.2
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: foo
+              mountPath: "/etc/foo"
+              readOnly: true
+      volumes:
+        - name: foo
+          secret:
+            secretName: perikles-test-secret
+            items:
+              - key: perikles.key
+                path: ssl/perikles.key
+              - key: perikles.crt
+                path: ssl/perikles.crt
