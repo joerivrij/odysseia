@@ -52,13 +52,6 @@ spec:
                 port:
                   number: {{ .Values.envVariables.dionysios.port }}
           - pathType: Prefix
-            path: /solon/v1
-            backend:
-              service:
-                name: solon
-                port:
-                  number: {{ .Values.envVariables.solon.port }}
-          - pathType: Prefix
             path: /ploutarchos
             backend:
               service:

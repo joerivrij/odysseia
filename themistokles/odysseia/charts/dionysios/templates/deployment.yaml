@@ -13,7 +13,7 @@ metadata:
     {{ $key }}: {{ $value | quote }}
     {{- end }}
 spec:
-  replicas: {{ int .Values.config.replicas.low }}
+  replicas: {{ int .Values.config.replicas.medium }}
   selector:
     matchLabels:
       app: "{{ template "odysseiaapi.uname" . }}"

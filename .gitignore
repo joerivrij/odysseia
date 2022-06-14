@@ -140,3 +140,4 @@ secret.tfvars
 
 # vault file
 cluster-keys.json
+/lykourgos/terraform/leafcloud/clouds.yaml
