@@ -1,14 +1,11 @@
 package app
 
 import (
-	"crypto/rsa"
 	"github.com/odysseia/aristoteles/configs"
 )
 
 type PeriklesHandler struct {
-	Config     *configs.PeriklesConfig
-	Ca         []byte
-	PrivateKey *rsa.PrivateKey
+	Config *configs.PeriklesConfig
 }
 
 func (p *PeriklesHandler) Flow() {

@@ -3,12 +3,15 @@ package app
 import (
 	"fmt"
 	"github.com/kpango/glg"
+	"strconv"
 	"time"
 )
 
 const (
-	ANNOTATION_ACCESS = "perikles/secret"
-	ANNOTATION_UPDATE = "perikles/updated"
+	AnnotationAccess   = "perikles/secret"
+	AnnotationUpdate   = "perikles/updated"
+	AnnotationValidity = "perikles/validity"
+	AnnotationHost     = "perikles/host"
 )
 
 func (p *PeriklesHandler) CheckForAnnotations(ch chan struct{}) error {
@@ -19,9 +22,19 @@ func (p *PeriklesHandler) CheckForAnnotations(ch chan struct{}) error {
 
 	for _, deployment := range deployments.Items {
 		for key, value := range deployment.Spec.Template.Annotations {
-			if key == ANNOTATION_ACCESS {
-				//this has to come from annotations?
-				hostName := "perikles-service"
+			if key == AnnotationAccess {
+				var validity int
+				var hostName string
+				for k, v := range deployment.Spec.Template.Annotations {
+					if k == AnnotationValidity {
+						validity, _ = strconv.Atoi(v)
+					}
+
+					if k == AnnotationHost {
+						hostName = v
+					}
+				}
+
 				orgName := deployment.Namespace
 				for _, v := range deployment.Spec.Template.Spec.Volumes {
 					glg.Info(v.Name)
@@ -36,9 +49,7 @@ func (p *PeriklesHandler) CheckForAnnotations(ch chan struct{}) error {
 					fmt.Sprintf("%s.%s.svc.cluster.local", hostName, orgName),
 				}
 
-				organizations := []string{orgName}
-
-				err := p.createCert(hosts, organizations, "perikles", value)
+				err := p.createCert(hosts, validity, "perikles", value)
 				if err != nil {
 					ch <- struct{}{}
 					return nil
@@ -61,7 +72,7 @@ func (p *PeriklesHandler) CheckForAnnotations(ch chan struct{}) error {
 
 func (p *PeriklesHandler) restartDeployment(ns, deploymentName string) error {
 	newAnnotation := make(map[string]string)
-	newAnnotation[ANNOTATION_UPDATE] = time.Now().String()
+	newAnnotation[AnnotationUpdate] = time.Now().String()
 	_, err := p.Config.Kube.Workload().UpdateDeploymentViaAnnotation(ns, deploymentName, newAnnotation)
 	return err
 }

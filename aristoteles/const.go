@@ -12,6 +12,7 @@ const (
 	defaultMqPort            = "50000"
 	defaultJobName           = "demokritos"
 	defaultSolonService      = "http://odysseia-greek.internal"
+	defaultCaValidity        = "3650"
 	EnvHealthCheckOverwrite  = "HEALTH_CHECK_OVERWRITE"
 	EnvPodName               = "POD_NAME"
 	EnvNamespace             = "NAMESPACE"
@@ -36,6 +37,7 @@ const (
 	EnvMqAddress             = "MQ_SERVICE"
 	EnvMqPort                = "MQ_PORT"
 	EnvJobName               = "JOB_NAME"
+	EnvCAValidity            = "CA_VALIDITY"
 	AuthMethodKube           = "kubernetes"
 	AuthMethodToken          = "token"
 	baseDir                  = "base"
@@ -83,4 +85,5 @@ var validFields = []string{
 	"Queue",
 	"HttpClients",
 	"Cache",
+	"Cert",
 }

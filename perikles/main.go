@@ -29,9 +29,15 @@ func main() {
 		glg.Fatal("could not parse config")
 	}
 
-	//ca, privateKey, err := generator.GenerateCa()
-
 	handler := app.PeriklesHandler{Config: periklesConfig}
+
+	glg.Info("init for CA started...")
+	err = handler.Config.Cert.InitCa()
+	if err != nil {
+		glg.Fatal(err)
+	}
+
+	glg.Info("CA created starting app")
 
 	handler.Flow()
 

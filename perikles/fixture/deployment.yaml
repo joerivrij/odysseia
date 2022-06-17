@@ -16,6 +16,7 @@ spec:
       annotations:
         perikles/secret: perikles-test-secret
         perikles/host: perikles-service
+        perikles/validity: "10"
     spec:
       containers:
         - name: nginx

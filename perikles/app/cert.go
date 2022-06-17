@@ -2,16 +2,10 @@ package app
 
 import (
 	"fmt"
-	"github.com/odysseia/plato/generator"
 )
 
-func (p *PeriklesHandler) createCert(hosts, organizations []string, name, secretName string) error {
-	ca, privateKey, err := generator.GenerateCa(hosts, organizations)
-	if err != nil {
-		return err
-	}
-
-	crt, key, err := generator.CreateKeyPairWithCa(ca, privateKey)
+func (p *PeriklesHandler) createCert(hosts []string, validityDays int, name, secretName string) error {
+	crt, key, err := p.Config.Cert.GenerateKeyAndCertSet(hosts, validityDays)
 	if err != nil {
 		return err
 	}
@@ -19,7 +13,7 @@ func (p *PeriklesHandler) createCert(hosts, organizations []string, name, secret
 	certData[fmt.Sprintf("%s.key", name)] = key
 	certData[fmt.Sprintf("%s.crt", name)] = crt
 
-	err = p.Config.Kube.Configuration().UpdateSecret("odysseia", secretName, certData)
+	err = p.Config.Kube.Configuration().UpdateSecret(p.Config.Namespace, secretName, certData)
 	if err != nil {
 		return err
 	}

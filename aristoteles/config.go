@@ -6,6 +6,7 @@ import (
 	"github.com/kpango/glg"
 	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/plato/cache"
+	"github.com/odysseia/plato/certificates"
 	"github.com/odysseia/plato/elastic"
 	"github.com/odysseia/plato/kubernetes"
 	"github.com/odysseia/plato/models"
@@ -243,10 +244,18 @@ func (c *Config) fillFields(e *reflect.Value) {
 		case reflect.TypeOf((*cache.Client)(nil)).Elem():
 			reflectedBadger, err := c.getBadgerClient()
 			if err != nil {
-				glg.Fatal("error getting badgerClient")
+				glg.Fatal("error getting badger client")
 			}
 			vv := reflect.ValueOf(reflectedBadger)
 			e.FieldByName(fieldName).Set(vv)
+
+		case reflect.TypeOf((*certificates.CertClient)(nil)).Elem():
+			reflectedCert, err := c.getCertClient()
+			if err != nil {
+				glg.Fatal("error getting cert client")
+			}
+			vc := reflect.ValueOf(reflectedCert)
+			e.FieldByName(fieldName).Set(vc)
 
 		case reflect.TypeOf((*service.OdysseiaClient)(nil)).Elem():
 			mq, err := c.getOdysseiaClient()

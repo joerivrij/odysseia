@@ -11,6 +11,7 @@ import (
 	vaultCommand "github.com/odysseia/archimedes/command/vault/command"
 	"github.com/odysseia/archimedes/util"
 	"github.com/odysseia/aristoteles/configs"
+	"github.com/odysseia/plato/certificates"
 	"github.com/odysseia/plato/generator"
 	"github.com/odysseia/plato/harbor"
 	"github.com/odysseia/plato/helm"
@@ -582,7 +583,16 @@ func (o *OdysseiaInstaller) installHarborHelmChart() error {
 	org := []string{
 		command.DefaultNamespace,
 	}
-	crt, key, _ := generator.GenerateKeyAndCertSet(hosts, org)
+
+	validity := 3650
+
+	certClient, err := certificates.NewCertGeneratorClient(org, validity)
+	err = certClient.InitCa()
+	if err != nil {
+		return err
+	}
+
+	crt, key, _ := certClient.GenerateKeyAndCertSet(hosts, validity)
 	certData := make(map[string][]byte)
 	certData["tls.key"] = key
 	certData["tls.crt"] = crt
