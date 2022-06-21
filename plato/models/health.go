@@ -15,11 +15,10 @@ func (r *Health) Marshal() ([]byte, error) {
 }
 
 type Health struct {
-	Healthy       bool           `json:"healthy"`
-	Time          string         `json:"time"`
-	Database      DatabaseHealth `json:"databaseHealth"`
-	Memory        Memory         `json:"memory"`
-	CPUPercentage string         `json:"cpuPercentage"`
+	Healthy  bool           `json:"healthy"`
+	Time     string         `json:"time"`
+	Database DatabaseHealth `json:"databaseHealth"`
+	Memory   Memory         `json:"memory"`
 }
 
 type DatabaseHealth struct {

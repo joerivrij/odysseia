@@ -48,4 +48,4 @@ spec:
               cpu: {{ .Values.services.odysseiaapi.requests.cpu }}
             limits:
               memory: {{.Values.services.odysseiaapi.limits.memory}}
-              cpu: {{.Values.services.odysseiaapi.limits.memory}}
+              cpu: {{.Values.services.odysseiaapi.limits.cpu}}

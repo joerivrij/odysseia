@@ -1,0 +1,7 @@
+elastic:
+  volumeClaimTemplate:
+    accessModes: [ "ReadWriteOnce" ]
+    storageClassName: csi-cinder-sc-delete
+    resources:
+      requests:
+        storage: 2Gi
