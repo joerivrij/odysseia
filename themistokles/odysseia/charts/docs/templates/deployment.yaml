@@ -39,3 +39,10 @@ spec:
           {{- end}}
           ports:
             - containerPort: {{ .Values.config.port }}
+          resources:
+            requests:
+              memory: {{ .Values.services.openapi.requests.memory }}
+              cpu: {{ .Values.services.openapi.requests.cpu }}
+            limits:
+              memory: {{.Values.services.openapi.limits.memory}}
+              cpu: {{.Values.services.openapi.limits.cpu}}

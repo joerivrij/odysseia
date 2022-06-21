@@ -15,6 +15,8 @@ func NewClusterClient(config []byte) (*ClusterImpl, error) {
 
 func (c *ClusterImpl) GetHostServer() (string, error) {
 	var server string
+	var configCluster string
+
 	config, err := models.UnmarshalKubeConfig(c.kubeConfig)
 	if err != nil {
 		return "", err
@@ -22,8 +24,15 @@ func (c *ClusterImpl) GetHostServer() (string, error) {
 
 	currentCtx := config.CurrentContext
 
+	for _, context := range config.Contexts {
+		if context.Name == currentCtx {
+			configCluster = context.Context.Cluster
+			break
+		}
+	}
+
 	for _, cluster := range config.Clusters {
-		if cluster.Name == currentCtx {
+		if cluster.Name == configCluster {
 			server = cluster.Cluster.Server
 		}
 	}
@@ -38,9 +47,16 @@ func (c *ClusterImpl) GetHostCaCert() ([]byte, error) {
 	}
 
 	currentCtx := config.CurrentContext
+	var configCluster string
+	for _, context := range config.Contexts {
+		if context.Name == currentCtx {
+			configCluster = context.Context.Cluster
+			break
+		}
+	}
 
 	for _, cluster := range config.Clusters {
-		if cluster.Name == currentCtx {
+		if cluster.Name == configCluster {
 			if cluster.Cluster.CertificateAuthorityData == "" {
 				filePath := cluster.Cluster.CertificateAuthority
 				content, err := ioutil.ReadFile(filePath)

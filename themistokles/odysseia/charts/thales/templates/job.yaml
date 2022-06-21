@@ -105,7 +105,7 @@ spec:
               cpu: {{ .Values.services.sidecar.requests.cpu }}
             limits:
               memory: {{.Values.services.sidecar.limits.memory}}
-              cpu: {{.Values.services.sidecar.limits.memory}}
+              cpu: {{.Values.services.sidecar.limits.cpu}}
         - name: "{{ template "job.uname" . }}"
           {{- if .Values.config.externalRepo | quote }}
           image: {{ .Values.images.imageRepo}}{{ .Values.images.job.repo }}:{{ .Values.images.tag }}

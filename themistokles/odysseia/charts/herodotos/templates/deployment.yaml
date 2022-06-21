@@ -91,7 +91,7 @@ spec:
               cpu: {{ .Values.services.sidecar.requests.cpu }}
             limits:
               memory: {{.Values.services.sidecar.limits.memory}}
-              cpu: {{.Values.services.sidecar.limits.memory}}
+              cpu: {{.Values.services.sidecar.limits.cpu}}
         - name: "{{ template "odysseiaapi.uname" . }}"
           {{- if .Values.config.externalRepo | quote }}
           image: {{ .Values.images.imageRepo}}{{ .Values.images.odysseiaapi.repo }}:{{ .Values.images.tag }}
@@ -135,4 +135,4 @@ spec:
               cpu: {{ .Values.services.odysseiaapi.requests.cpu }}
             limits:
               memory: {{.Values.services.odysseiaapi.limits.memory}}
-              cpu: {{.Values.services.odysseiaapi.limits.memory}}
+              cpu: {{.Values.services.odysseiaapi.limits.cpu}}

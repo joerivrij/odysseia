@@ -4,7 +4,7 @@ metadata:
   name: cinder-csi-plugin
   namespace: kube-system
 spec:
-  chart:
+  chart: openstack-cinder-csi
   repo: https://kubernetes.github.io/cloud-provider-openstack
   targetNamespace: kube-system
   bootstrap: True
@@ -14,7 +14,7 @@ spec:
       create: true
       name: cinder-csi-cloud-config
       data:
-        cloud-config: |-
+        cloud.conf: |-
             [Global]
             auth-url=${auth_url}
             application-credential-id=${app_id}

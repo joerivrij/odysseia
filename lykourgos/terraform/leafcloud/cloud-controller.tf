@@ -1,17 +1,5 @@
-data "openstack_identity_auth_scope_v3" "scope" {
-  name = "auth_scope"
-}
-
-data "openstack_networking_subnet_v2" "nodes_subnet" {
-  subnet_id = module.master.subnet_id
-}
-
-resource "openstack_identity_application_credential_v3" "rke2_csi" {
-  name = "${var.cluster_name}-csi-credentials"
-}
-
 locals {
-  depends_on = [module.master]
+  depends_on = [module.controlplane]
   identity_service = [for entry in data.openstack_identity_auth_scope_v3.scope.service_catalog :
   entry if entry.type == "identity"][0]
   identity_endpoint = [for endpoint in local.identity_service.endpoints :
@@ -33,8 +21,20 @@ locals {
     app_secret          = openstack_identity_application_credential_v3.rke2_csi.secret
     floating_network_id = data.openstack_networking_subnet_v2.public_subnet.network_id
     floating_subnet_id  = data.openstack_networking_subnet_v2.public_subnet.id
-    subnet_id           = module.master.subnet_id
+    subnet_id           = module.controlplane.subnet_id
   }))
+}
+
+data "openstack_identity_auth_scope_v3" "scope" {
+  name = "auth_scope"
+}
+
+data "openstack_networking_subnet_v2" "nodes_subnet" {
+  subnet_id = module.controlplane.subnet_id
+}
+
+resource "openstack_identity_application_credential_v3" "rke2_csi" {
+  name = "${var.cluster_name}-csi-credentials"
 }
 
 resource "openstack_networking_secgroup_rule_v2" "nodeport" {
@@ -44,5 +44,5 @@ resource "openstack_networking_secgroup_rule_v2" "nodeport" {
   port_range_min    = 30000
   port_range_max    = 32768
   remote_ip_prefix  = data.openstack_networking_subnet_v2.nodes_subnet.cidr
-  security_group_id = module.master.node_config.secgroup_id
+  security_group_id = module.controlplane.node_config.secgroup_id
 }

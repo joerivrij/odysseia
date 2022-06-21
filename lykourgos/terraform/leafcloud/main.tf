@@ -2,12 +2,12 @@ data "openstack_networking_subnet_v2" "public_subnet" {
   name = "external"
 }
 
-module "master" {
+module "controlplane" {
   source           = "remche/rke2/openstack"
   cluster_name     = var.cluster_name
   write_kubeconfig = true
   image_name       = "Ubuntu-20.04"
-  flavor_name      = "ec1.small"
+  flavor_name      = "ec1.medium"
   public_net_name  = "external"
   ssh_keypair_name = var.ssh_key
   system_user      = "ubuntu"
@@ -22,11 +22,11 @@ module "master" {
   }
 }
 
-module "node_group" {
+module "blue_node" {
   source           = "remche/rke2/openstack//modules/agent"
   image_name       = "Ubuntu-20.04"
   nodes_count      = 2
   name_prefix      = "blue"
-  flavor_name      = "en1.small"
-  node_config      = module.master.node_config
+  flavor_name      = "ec1.medium"
+  node_config      = module.controlplane.node_config
 }
