@@ -80,7 +80,7 @@
                     <br>
                     Between brackets (for example: Chapters (1 -93)) are the available chapters
                   <br>
-                  You can only set a chapter after you have chosen a method and catergory</v-card>
+                  You can only set a chapter after you have chosen a method and catergory. Each chapter is 10 words at this time.</v-card>
 
 
                   <v-btn

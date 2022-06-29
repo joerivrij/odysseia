@@ -730,6 +730,67 @@
       "greek": "πρός + gen.",
       "translation": "van/aan de kant van",
       "chapter": 19
+    },
+
+    {
+      "greek": "ἀνά + acc.",
+      "translation": "langs ... omhoog, (verspreid) over",
+      "chapter": 20
+    },
+    {
+      "greek": "καὶ μήν",
+      "translation": "(ja)zeker, inderdaad",
+      "chapter": 20
+    },
+    {
+      "greek": "ὄπισθεν",
+      "translation": "aan de achterkant, later",
+      "chapter": 20
+    },
+    {
+      "greek": "οὗ rel.",
+      "translation": "waar",
+      "chapter": 20
+    },
+    {
+      "greek": "πρός + dat.",
+      "translation": "bij, tegen ... aan",
+      "chapter": 20
+    },
+    {
+      "greek": "ταύτῃ bijwoord",
+      "translation": "daar(langs), op die manier",
+      "chapter": 20
+    },
+    {
+      "greek": "τῃδε",
+      "translation": "hier(langs), op deze manier",
+      "chapter": 20
+    },
+    {
+      "greek": "ὧδε",
+      "translation": "zo, op deze/de volgende manier",
+      "chapter": 20
+    },
+    {
+      "greek": "ὡς in vergelijkingen",
+      "translation": "zoals, als",
+      "chapter": 20
+    },
+    {
+      "greek": "ὡς + indir. rede",
+      "translation": "dat (eigenlijk hoe)",
+      "chapter": 20
+    },
+    {
+      "greek": "ὡς + ptc.",
+      "translation": "omdat, in de veronderstelling dat (bij subjectieve reden)",
+      "chapter": 20
+    },
+    {
+      "greek": "ὡς + ptc. fut.",
+      "translation": "om te (geeft een bedoeling aan)",
+      "chapter": 20
     }
   ]
 }

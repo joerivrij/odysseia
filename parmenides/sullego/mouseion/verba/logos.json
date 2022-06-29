@@ -1011,6 +1011,57 @@
       "greek": "τρέφω",
       "translation": "voeden, grootbrengen, onderhouden",
       "chapter": 19
+    },
+
+    {
+      "greek": "ἀδικέω",
+      "translation": "onrecht doen, onrechtvaardig (be)handelen",
+      "chapter": 20
+    },
+    {
+      "greek": "ἀποδίδωμι",
+      "translation": "1. teruggeven, (als verschuldigd) geven; 2. betalen",
+      "chapter": 20
+    },
+    {
+      "greek": "ἀποκτείνω",
+      "translation": "doden",
+      "chapter": 20
+    },
+    {
+      "greek": "ζημιόω",
+      "translation": "straffen",
+      "chapter": 20
+    },
+    {
+      "greek": "θύω",
+      "translation": "offeren",
+      "chapter": 20
+    },
+    {
+      "greek": "πάσχω",
+      "translation": "lijden, te verduren hebben, ondervinden, ervaren",
+      "chapter": 20
+    },
+    {
+      "greek": "πίπτω",
+      "translation": "vallen",
+      "chapter": 20
+    },
+    {
+      "greek": "σημαίνω",
+      "translation": "(door een teken) duidelijk maken, betekenen",
+      "chapter": 20
+    },
+    {
+      "greek": "τρέχω",
+      "translation": "rennen",
+      "chapter": 20
+    },
+    {
+      "greek": "φυλάττω",
+      "translation": "de wacht houden, bewaken, bewaren",
+      "chapter": 20
     }
   ]
 }
