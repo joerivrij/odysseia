@@ -20,6 +20,11 @@ type KubeClient interface {
 	Workload() Workload
 	Nodes() Nodes
 	Namespaces() Namespace
+	V1Alpha1() V1Alpha1
+}
+
+type V1Alpha1 interface {
+	ServiceMapping() ServiceMapping
 }
 
 type Access interface {
@@ -32,6 +37,8 @@ type Configuration interface {
 	CreateSecret(namespace, secretName string, data map[string][]byte) error
 	UpdateSecret(namespace, secretName string, data map[string][]byte) error
 	CreateDockerSecret(namespace, secretName string, data map[string]string) error
+	CreateTlSSecret(namespace, secretName string, data map[string][]byte) error
+	UpdateTLSSecret(namespace, secretName string, data map[string][]byte) error
 }
 
 type Cluster interface {
@@ -75,6 +82,7 @@ type Nodes interface {
 
 type Kube struct {
 	set           *kubernetes.Clientset
+	v1alpha       *V1Alpha1Impl
 	access        *AccessImpl
 	util          *UtilImpl
 	cluster       *ClusterImpl
@@ -161,16 +169,22 @@ func NewConfigBasedKube(config []byte, ns string) (*Kube, error) {
 		return nil, err
 	}
 
+	v1alphaClient, err := NewV1AlphaClient(config)
+	if err != nil {
+		return nil, err
+	}
+
 	return &Kube{
 		set:           clientSet,
-		config:        config,
+		v1alpha:       v1alphaClient,
 		access:        access,
+		util:          util,
 		cluster:       cluster,
 		configuration: configuration,
 		workload:      workload,
-		util:          util,
 		nodes:         nodes,
 		namespace:     namespaceClient,
+		config:        config,
 	}, nil
 }
 
@@ -263,6 +277,13 @@ func NewInClusterKube(ns string) (*Kube, error) {
 		configuration: configuration,
 		workload:      workload,
 	}, nil
+}
+
+func (k *Kube) V1Alpha1() V1Alpha1 {
+	if k == nil {
+		return nil
+	}
+	return k.v1alpha
 }
 
 func (k *Kube) Access() Access {

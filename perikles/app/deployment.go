@@ -3,70 +3,77 @@ package app
 import (
 	"fmt"
 	"github.com/kpango/glg"
+	"k8s.io/api/apps/v1"
 	"strconv"
 	"time"
 )
 
 const (
-	AnnotationAccess   = "perikles/secret"
+	AnnotationAccess   = "perikles/access"
 	AnnotationUpdate   = "perikles/updated"
 	AnnotationValidity = "perikles/validity"
-	AnnotationHost     = "perikles/host"
+	AnnotationHost     = "perikles/hostname"
+	SERVER             = "server"
 )
 
-func (p *PeriklesHandler) CheckForAnnotations(ch chan struct{}) error {
-	deployments, err := p.Config.Kube.Workload().ListDeployments(p.Config.Namespace)
-	if err != nil {
-		return err
-	}
-
-	for _, deployment := range deployments.Items {
-		for key, value := range deployment.Spec.Template.Annotations {
-			if key == AnnotationAccess {
-				var validity int
-				var hostName string
-				for k, v := range deployment.Spec.Template.Annotations {
-					if k == AnnotationValidity {
-						validity, _ = strconv.Atoi(v)
-					}
-
-					if k == AnnotationHost {
-						hostName = v
-					}
+func (p *PeriklesHandler) checkForAnnotations(deployment v1.Deployment) error {
+	for key, value := range deployment.Spec.Template.Annotations {
+		if key == AnnotationAccess {
+			glg.Info("looking through annotation")
+			var validity int
+			var hostName string
+			var secretName string
+			for k, v := range deployment.Spec.Template.Annotations {
+				if k == AnnotationValidity {
+					validity, _ = strconv.Atoi(v)
+					glg.Info(fmt.Sprintf("validity set to %s", v))
 				}
 
-				orgName := deployment.Namespace
-				for _, v := range deployment.Spec.Template.Spec.Volumes {
-					glg.Info(v.Name)
-					// get the secretname from here
-					// annotation should change to server - client
-					// update a secret and find all consumers
-				}
-				hosts := []string{
-					fmt.Sprintf("%s", hostName),
-					fmt.Sprintf("%s.%s", hostName, orgName),
-					fmt.Sprintf("%s.%s.svc", hostName, orgName),
-					fmt.Sprintf("%s.%s.svc.cluster.local", hostName, orgName),
-				}
-
-				err := p.createCert(hosts, validity, "perikles", value)
-				if err != nil {
-					ch <- struct{}{}
-					return nil
-				}
-
-				err = p.restartDeployment(deployment.Namespace, deployment.Name)
-				if err != nil {
-					ch <- struct{}{}
-					return nil
+				if k == AnnotationHost {
+					hostName = v
+					glg.Info(fmt.Sprintf("host set to %s", hostName))
 				}
 			}
+
+			orgName := deployment.Namespace
+			for _, volume := range deployment.Spec.Template.Spec.Volumes {
+				if volume.Secret != nil {
+					secretName = volume.Secret.SecretName
+				}
+			}
+			hosts := []string{
+				fmt.Sprintf("%s", hostName),
+				fmt.Sprintf("%s.%s", hostName, orgName),
+				fmt.Sprintf("%s.%s.svc", hostName, orgName),
+				fmt.Sprintf("%s.%s.svc.cluster.local", hostName, orgName),
+			}
+
+			glg.Info("creating certs")
+			err := p.createCert(hosts, validity, secretName)
+			if err != nil {
+				return err
+			}
+
+			clientName := ""
+			if value != SERVER {
+				clientName = value
+			}
+
+			go func() {
+				err := p.syncMapping(hostName, clientName, validity)
+				if err != nil {
+				}
+			}()
+
+			glg.Info("restarting deployment")
+			err = p.restartDeployment(deployment.Namespace, deployment.Name)
+			if err != nil {
+				return err
+			}
+
 		}
 	}
 
-	ch <- struct{}{}
-
-	time.Sleep(10 * time.Second)
 	return nil
 }
 

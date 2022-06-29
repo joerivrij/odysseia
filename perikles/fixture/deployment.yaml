@@ -14,8 +14,8 @@ spec:
       labels:
         app: nginx
       annotations:
-        perikles/secret: perikles-test-secret
-        perikles/host: perikles-service
+        perikles/access: server
+        perikles/hostname: perikles
         perikles/validity: "10"
     spec:
       containers:
@@ -32,7 +32,7 @@ spec:
           secret:
             secretName: perikles-test-secret
             items:
-              - key: perikles.key
-                path: ssl/perikles.key
+              - key: tls.key
+                path: ssl/tls.key
               - key: perikles.crt
-                path: ssl/perikles.crt
+                path: ssl/tls.crt

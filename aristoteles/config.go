@@ -178,6 +178,12 @@ func (c *Config) fillFields(e *reflect.Value) {
 				e.FieldByName(fieldName).SetString(defaultRoleAnnotation)
 			case "AccessAnnotation":
 				e.FieldByName(fieldName).SetString(defaultAccessAnnotation)
+			case "CrdName":
+				vs := c.getStringFromEnv(EnvCrdName, defaultCrdName)
+				e.FieldByName(fieldName).SetString(vs)
+			case "TLSFiles":
+				vs := c.getStringFromEnv(EnvTLSFiles, defaultTLSFileLocation)
+				e.FieldByName(fieldName).SetString(vs)
 			}
 		}
 

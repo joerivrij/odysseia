@@ -8,12 +8,18 @@ metadata:
     release: {{ .Release.Name | quote }}
     chart: "{{ .Chart.Name }}"
 rules:
-  - apiGroups: [""] # "" indicates the core API group
-    resources: ["pods"]
-    verbs: ["get", "list"]
   - apiGroups:
       - coordination.k8s.io
     resources:
       - leases
     verbs:
       - '*'
+  - apiGroups: [""] # "" indicates the core API group
+    resources: ["secrets"]
+    verbs: ["get", "list", "update", "create"]
+  - apiGroups: ["apps"] # "" indicates the core API group
+    resources: ["deployments"]
+    verbs: ["update", "get"]
+  - apiGroups: ["odysseia-greek.com"]
+    resources: ["servicemapping"]
+    verbs: ["get", "list", "create", "update", "delete"]

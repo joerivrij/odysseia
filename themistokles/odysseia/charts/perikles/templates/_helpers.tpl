@@ -69,9 +69,9 @@ Create the name of the roleBinding to use
 */}}
 {{- define "perikles.bindingName" -}}
 {{- if .Values.role.create -}}
-{{- default (include "perikles.fullname" .) .Values.role.name }}
+{{- default (include "perikles.fullname" .) .Values.roleBinding.name }}
 {{- else -}}
-    {{- default (include "perikles.roleName" .) "api-access-binding" }}
+    {{- default (include "perikles.roleName" .) .Values.roleBinding.name }}
 {{- end -}}
 {{- end -}}
 
@@ -92,13 +92,4 @@ Allow the release namespace to be overridden for multi-namespace deployments in 
   {{- else -}}
     {{- .Release.Namespace -}}
   {{- end -}}
-{{- end -}}
-
-
-{{- define "drakon.uname" -}}
-{{- if empty .Values.services.drakon.name -}}
-{{ .Values.images.drakon }}
-{{- else -}}
-{{ .Values.services.drakon.name }}
-{{- end -}}
 {{- end -}}

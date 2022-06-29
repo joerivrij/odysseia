@@ -8,14 +8,14 @@ import (
 
 func TestGeneration(t *testing.T) {
 	hosts := []string{
-		"vault",
-		"vault.odysseia",
-		"vault.odysseia.svc",
-		"vault.odysseia.svc.cluster.local",
+		"perikles",
+		"perikles.odysseia",
+		"perikles.odysseia.svc",
+		"perikles.odysseia.svc.cluster.local",
 	}
 	organizations := []string{"test"}
 	validityCa := 3650
-	validityCert := 10
+	validityCert := 3650
 
 	t.Run("Authority", func(t *testing.T) {
 		impl, err := NewCertGeneratorClient(organizations, validityCa)

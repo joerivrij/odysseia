@@ -121,6 +121,57 @@ func (c *ConfigurationImpl) CreateDockerSecret(namespace, secretName string, dat
 	return nil
 }
 
+func (c *ConfigurationImpl) CreateTlSSecret(namespace, secretName string, data map[string][]byte) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
+	defer cancel()
+
+	secret := corev1.Secret{
+		TypeMeta: metav1.TypeMeta{
+			Kind:       "Secret",
+			APIVersion: "v1",
+		},
+		ObjectMeta: metav1.ObjectMeta{
+			Name: secretName,
+		},
+		Immutable: nil,
+		Data:      data,
+		Type:      corev1.SecretTypeTLS,
+	}
+
+	_, err := c.client.Secrets(namespace).Create(ctx, &secret, metav1.CreateOptions{})
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (c *ConfigurationImpl) UpdateTLSSecret(namespace, secretName string, data map[string][]byte) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
+	defer cancel()
+
+	secret := corev1.Secret{
+		TypeMeta: metav1.TypeMeta{
+			Kind:       "Secret",
+			APIVersion: "v1",
+		},
+		ObjectMeta: metav1.ObjectMeta{
+			Name: secretName,
+		},
+		Immutable:  nil,
+		Data:       data,
+		StringData: nil,
+		Type:       corev1.SecretTypeTLS,
+	}
+
+	_, err := c.client.Secrets(namespace).Update(ctx, &secret, metav1.UpdateOptions{})
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // GetSecret a secrets in a namespace in your kube cluster
 func (c *ConfigurationImpl) GetSecret(namespace, secretName string) (*corev1.Secret, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Minute)

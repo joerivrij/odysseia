@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: "{{ template "perikles.uname" . }}"
+  namespace: {{ template "perikles.namespace" . }}
+spec:
+  selector:
+    app: "{{ template "perikles.uname" . }}"
+  ports:
+    - appProtocol: https
+      name: https-webhook
+      port: 443
+      protocol: TCP
+      targetPort: webhook-tcp

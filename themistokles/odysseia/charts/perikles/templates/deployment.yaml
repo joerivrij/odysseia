@@ -24,8 +24,6 @@ spec:
         release: {{ .Release.Name }}
         version: {{ .Values.images.tag }}
       annotations:
-        elastic/indices: "dictionary;grammar;text;quiz"
-        elastic/roles: "api;seeder;hybrid"
         perikles/ssl-access: "solon;vault"
         perikles/ssl-service: "perikles-service"
     spec:
@@ -48,36 +46,31 @@ spec:
             value: {{ .Values.config.environment }}
           - name: TLSENABLED
             value: {{ .Values.config.tls | quote }}
-          - name: SIDECAR_OVERWRITE
-            value:  {{ .Values.config.sidecarOverwrite | quote }}
+          - name: PORT
+            value: {{ .Values.envVariables.odysseiaapi.port | quote }}
+          - name: TLS_FILES
+            value: {{ .Values.envVariables.odysseiaapi.TLSFiles }}
+          - name: CRD_NAME
+            value: {{ .Values.envVariables.odysseiaapi.crdName }}
           - name: NAMESPACE
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
-{{- if .Values.envVariables.perikles.extraEnvs }}
-{{ toYaml .Values.envVariables.perikles.extraEnvs | indent 10 }}
-{{- end }}
+          ports:
+            - containerPort: {{ .Values.envVariables.odysseiaapi.port }}
+              name: webhook-tcp
           volumeMounts:
-            {{- range .Values.secretMounts }}
-            - name: {{ .name }}
-              mountPath: {{ .path }}
-              {{- if .subPath }}
-              subPath: {{ .subPath }}
-            {{- end }}
-          {{- end }}
+            - name: webhook-certs
+              mountPath: {{ .Values.envVariables.odysseiaapi.TLSFiles }}
+              readOnly: true
           resources:
             requests:
               memory: {{ .Values.services.perikles.requests.memory }}
               cpu: {{ .Values.services.perikles.requests.cpu }}
             limits:
               memory: {{.Values.services.perikles.limits.memory}}
-              cpu: {{.Values.services.perikles.limits.memory}}
+              cpu: {{.Values.services.perikles.limits.cpu}}
       volumes:
-        {{- range .Values.secretMounts }}
-        - name: {{ .name }}
+        - name: webhook-certs
           secret:
-            secretName: {{ .secretName }}
-            {{- if .defaultMode }}
-            defaultMode: {{ .defaultMode }}
-        {{- end }}
-  {{- end }}
+            secretName: perikles-certs
