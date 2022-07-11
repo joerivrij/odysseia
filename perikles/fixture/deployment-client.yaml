@@ -14,8 +14,7 @@ spec:
       labels:
         app: nginx
       annotations:
-        perikles/hostname: perikles
-        perikles/validity: "10"
+        perikles/accesses: perikles
     spec:
       containers:
         - name: nginx

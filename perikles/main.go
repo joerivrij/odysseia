@@ -82,6 +82,7 @@ func main() {
 		glg.Debugf("created mapping %s", createdCrd.Name)
 
 	}
+
 	srv := app.InitRoutes(*periklesConfig)
 
 	cfg := &tls.Config{

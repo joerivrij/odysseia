@@ -121,7 +121,7 @@ func (c *ConfigurationImpl) CreateDockerSecret(namespace, secretName string, dat
 	return nil
 }
 
-func (c *ConfigurationImpl) CreateTlSSecret(namespace, secretName string, data map[string][]byte) error {
+func (c *ConfigurationImpl) CreateTlSSecret(namespace, secretName string, data map[string][]byte, immutable bool) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
 	defer cancel()
 
@@ -133,7 +133,7 @@ func (c *ConfigurationImpl) CreateTlSSecret(namespace, secretName string, data m
 		ObjectMeta: metav1.ObjectMeta{
 			Name: secretName,
 		},
-		Immutable: nil,
+		Immutable: &immutable,
 		Data:      data,
 		Type:      corev1.SecretTypeTLS,
 	}
@@ -146,9 +146,11 @@ func (c *ConfigurationImpl) CreateTlSSecret(namespace, secretName string, data m
 	return nil
 }
 
-func (c *ConfigurationImpl) UpdateTLSSecret(namespace, secretName string, data map[string][]byte) error {
+func (c *ConfigurationImpl) UpdateTLSSecret(namespace, secretName string, data map[string][]byte, annotation map[string]string) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
 	defer cancel()
+
+	immutable := false
 
 	secret := corev1.Secret{
 		TypeMeta: metav1.TypeMeta{
@@ -156,12 +158,12 @@ func (c *ConfigurationImpl) UpdateTLSSecret(namespace, secretName string, data m
 			APIVersion: "v1",
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Name: secretName,
+			Name:        secretName,
+			Annotations: annotation,
 		},
-		Immutable:  nil,
-		Data:       data,
-		StringData: nil,
-		Type:       corev1.SecretTypeTLS,
+		Immutable: &immutable,
+		Data:      data,
+		Type:      corev1.SecretTypeTLS,
 	}
 
 	_, err := c.client.Secrets(namespace).Update(ctx, &secret, metav1.UpdateOptions{})

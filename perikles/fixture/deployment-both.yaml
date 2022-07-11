@@ -16,6 +16,7 @@ spec:
       annotations:
         perikles/hostname: perikles
         perikles/validity: "10"
+        perikles/accesses: solon;herodotos
     spec:
       containers:
         - name: nginx
@@ -35,6 +36,22 @@ spec:
                 path: perikles/tls.key
               - key: tls.crt
                 path: perikles/tls.crt
+        - name: foo
+          secret:
+            secretName: solon-test-secret
+            items:
+              - key: tls.key
+                path: solon/tls.key
+              - key: tls.crt
+                path: solon/tls.crt
+        - name: foo
+          secret:
+            secretName: solon-test-secret
+            items:
+              - key: tls.key
+                path: herodotos/tls.key
+              - key: tls.crt
+                path: herodotos/tls.crt
   strategy:
     type: RollingUpdate
     rollingUpdate:

@@ -63,6 +63,18 @@ spec:
             - name: webhook-certs
               mountPath: {{ .Values.envVariables.odysseiaapi.TLSFiles }}
               readOnly: true
+          livenessProbe:
+            httpGet:
+              path: /perikles/v1/ping
+              port: {{ .Values.envVariables.odysseiaapi.port }}
+            initialDelaySeconds: {{ .Values.config.initialDelayLiveness }}
+            periodSeconds: {{ .Values.config.periodSeconds }}
+          readinessProbe:
+            httpGet:
+              path: /perikles/v1/ping
+              port: {{ .Values.envVariables.odysseiaapi.port }}
+            initialDelaySeconds: {{ .Values.config.initialDelayReadiness }}
+            periodSeconds: {{ .Values.config.readinessSeconds }}
           resources:
             requests:
               memory: {{ .Values.services.perikles.requests.memory }}

@@ -37,8 +37,8 @@ type Configuration interface {
 	CreateSecret(namespace, secretName string, data map[string][]byte) error
 	UpdateSecret(namespace, secretName string, data map[string][]byte) error
 	CreateDockerSecret(namespace, secretName string, data map[string]string) error
-	CreateTlSSecret(namespace, secretName string, data map[string][]byte) error
-	UpdateTLSSecret(namespace, secretName string, data map[string][]byte) error
+	CreateTlSSecret(namespace, secretName string, data map[string][]byte, immutable bool) error
+	UpdateTLSSecret(namespace, secretName string, data map[string][]byte, annotation map[string]string) error
 }
 
 type Cluster interface {

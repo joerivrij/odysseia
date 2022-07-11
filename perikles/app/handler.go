@@ -33,21 +33,48 @@ func (p *PeriklesHandler) validate(w http.ResponseWriter, req *http.Request) {
 	}
 
 	if len(body) == 0 {
-		glg.Error("empty body")
-		http.Error(w, "empty body", http.StatusBadRequest)
+		e := models.ValidationError{
+			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
+			Messages: []models.ValidationMessages{
+				{
+					Field:   "body",
+					Message: "request body was empty",
+				},
+			},
+		}
+		middleware.ResponseWithJson(w, e)
 		return
 	}
+
 	arRequest := v1beta1.AdmissionReview{}
 	if err := json.Unmarshal(body, &arRequest); err != nil {
-		glg.Error("incorrect body")
-		http.Error(w, "incorrect body", http.StatusBadRequest)
+		e := models.ValidationError{
+			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
+			Messages: []models.ValidationMessages{
+				{
+					Field:   "body",
+					Message: "incorrect body was send: cannot unmarshal request into AdmissionReview",
+				},
+			},
+		}
+		middleware.ResponseWithJson(w, e)
+		return
 	}
 
 	raw := arRequest.Request.Object.Raw
 	glg.Debug(string(raw))
 	deploy := v1.Deployment{}
 	if err := json.Unmarshal(raw, &deploy); err != nil {
-		glg.Error("error deserializing deployment")
+		e := models.ValidationError{
+			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
+			Messages: []models.ValidationMessages{
+				{
+					Field:   "body",
+					Message: "incorrect body was send: cannot unmarshal request into Deployment",
+				},
+			},
+		}
+		middleware.ResponseWithJson(w, e)
 		return
 	}
 
