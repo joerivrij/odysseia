@@ -2,24 +2,47 @@
   "rhemai": [
     {
       "author": "Herodotos",
-      "greek": "ἀπικομένους δὲ τούς Φοίνικας ἐς δὴ τὸ Ἄργος τοῦτο διατίθεσθαι τὸν φόρτον",
-      "translations": ["The Phoenicians came to Argos, and set out their cargo"],
-      "book": 1,
-      "chapter":  1,
-      "section": 0,
-      "perseusTextLink": "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0016.tlg001.perseus-grc2:1.1.0-1.1.4?right=perseus-eng2"
-    },
-    {
-      "author": "Herodotos",
-      "greek" : "Ἡροδότου Ἁλικαρνησσέος ἱστορίης ἀπόδεξις ἥδε",
+      "greek" : "Ἡροδότου Ἁλικαρνησσέος ἱστορίης ἀπόδεξις ἥδε, ὡς μήτε τὰ γενόμενα ἐξ ἀνθρώπων τῷ χρόνῳ ἐξίτηλα γένηται, μήτε ἔργα μεγάλα τε καὶ θωμαστά, τὰ μὲν Ἕλλησι τὰ δὲ βαρβάροισι ἀποδεχθέντα, ἀκλεᾶ γένηται, τά τε ἄλλα καὶ διʼ ἣν αἰτίην ἐπολέμησαν ἀλλήλοισι.ε",
       "translations" : [
-        "This is the display of the inquiry of Herodotus of Halicarnassus",
-        "This is the display of the inquiry of Herodotos of Halicarnassos"
+        "This is the display of the inquiry of Herodotus of Halicarnassus, so that things done by man not be forgotten in time, and that great and marvelous deeds, some displayed by the Hellenes, some by the barbarians, not lose their glory, including among others what was the cause of their waging war on each other."
         ],
       "book": 1,
       "chapter":  1,
+      "section": 0,
+      "perseusTextLink": "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0016.tlg001.perseus-grc2:1.1.0?right=perseus-eng2"
+    },
+    {
+      "author": "Herodotos",
+      "greek": "Περσέων μέν νυν οἱ λόγιοι Φοίνικας αἰτίους φασὶ γενέσθαι τῆς διαφορῆς. τούτους γὰρ ἀπὸ τῆς Ἐρυθρῆς καλεομένης θαλάσσης ἀπικομένους ἐπὶ τήνδε τὴν θάλασσαν, καὶ οἰκήσαντας τοῦτον τὸν χῶρον τὸν καὶ νῦν οἰκέουσι, αὐτίκα ναυτιλίῃσι μακρῇσι ἐπιθέσθαι, ἀπαγινέοντας δὲ φορτία Αἰγύπτιά τε καὶ Ἀσσύρια τῇ τε ἄλλῃ ἐσαπικνέεσθαι καὶ δὴ καὶ ἐς Ἄργος.",
+      "translations": [
+        "The Persian learned men say that the Phoenicians were the cause of the dispute. These (they say) came to our seas from the sea which is called Red,[*] and having settled in the country which they still occupy, at once began to make long voyages. Among other places to which they carried Egyptian and Assyrian merchandise, they came to Argos,"
+      ],
+      "book": 1,
+      "chapter":  1,
+      "section": 1,
+      "perseusTextLink": "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0016.tlg001.perseus-grc2:1.1.1?right=perseus-eng2"
+    },
+    {
+      "author": "Herodotos",
+      "greek": "τὸ δὲ Ἄργος τοῦτον τὸν χρόνον προεῖχε ἅπασι τῶν ἐν τῇ νῦν Ἑλλάδι καλεομένῃ χωρῇ. ἀπικομένους δὲ τούς Φοίνικας ἐς δὴ τὸ Ἄργος τοῦτο διατίθεσθαι τὸν φόρτον.",
+      "translations": [
+        "which was at that time preeminent in every way among the people of what is now called Hellas. The Phoenicians came to Argos, and set out their cargo."
+      ],
+      "book": 1,
+      "chapter":  1,
       "section": 2,
-      "perseusTextLink": "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0016.tlg001.perseus-grc2:1.1.0-1.1.4?right=perseus-eng2"
+      "perseusTextLink": "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0016.tlg001.perseus-grc2:1.1.2?right=perseus-eng2"
+    },
+    {
+      "author": "Herodotos",
+      "greek" : "πέμπτῃ δὲ ἢ ἕκτῃ ἡμέρῃ ἀπʼ ἧς ἀπίκοντο, ἐξεμπολημένων σφι σχεδόν πάντων, ἐλθεῖν ἐπὶ τὴν θάλασσαν γυναῖκας ἄλλας τε πολλάς καὶ δὴ καὶ τοῦ βασιλέος θυγατέρα· τὸ δέ οἱ οὔνομα εἶναι, κατὰ τὠυτὸ τὸ καὶ Ἕλληνές λέγουσι, Ἰοῦν τὴν Ἰνάχου·",
+      "translations" : [
+        "On the fifth or sixth day after their arrival, when their wares were almost all sold, many women came to the shore and among them especially the daughter of the king, whose name was Io (according to Persians and Greeks alike), the daughter of Inachus."
+      ],
+      "book": 1,
+      "chapter":  1,
+      "section": 3,
+      "perseusTextLink": "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0016.tlg001.perseus-grc2:1.1.3?right=perseus-eng2"
     },
     {
       "author": "Herodotos",
@@ -31,6 +54,28 @@
       "chapter":  79,
       "section": 2,
       "perseusTextLink": "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0016.tlg001.perseus-grc2:1.79.2?right=perseus-eng2&q=&qk=form"
+    },
+    {
+      "author": "Herodotos",
+      "greek" : "τελευτήσαντος δὲ Κύρου παρέλαβε τὴν βασιληίην Καμβύσης, Κύρου ἐὼν παῖς καὶ Κασσανδάνης τῆς Φαρνάσπεω θυγατρός, τῆς προαποθανούσης Κῦρος αὐτός τε μέγα πένθος ἐποιήσατο καὶ τοῖσι ἄλλοισι προεῖπε πᾶσι τῶν ἦρχε πένθος ποιέεσθαι.",
+      "translations" : [
+        "After the death of Cyrus, Cambyses inherited his throne. He was the son of Cyrus and of Cassandane, the daughter of Pharnaspes, for whom Cyrus mourned deeply when she died before him, and had all his subjects mourn also."
+      ],
+      "book": 2,
+      "chapter":  1,
+      "section": 1,
+      "perseusTextLink": "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0016.tlg001.perseus-grc2:2.1.0-2.2.0?right=perseus-eng2"
+    },
+    {
+      "author": "Herodotos",
+      "greek" : "ἐπὶ τοῦτον δὴ τὸν Ἄμασιν Καμβύσης ὁ Κύρου ἐστρατεύετο, ἄγων καί ἄλλους τῶν ἦρχε καὶ Ἑλλήνων Ἴωνάς τε καὶ Αἰολέας, διʼ αἰτίην τοιήνδε. πέμψας Καμβύσης ἐς Αἴγυπτον κήρυκα αἴτεε Ἄμασιν θυγατέρα, αἴτεε δὲ ἐκ βουλῆς ἀνδρὸς Αἰγυπτίου, ὃς μεμφόμενος Ἄμασιν ἔπρηξε ταῦτα ὅτι μιν ἐξ ἁπάντων τῶν ἐν Αἰγύπτῳ ἰητρῶν ἀποσπάσας ἀπὸ γυναικός τε καὶ τέκνων ἔκδοτον ἐποίησε ἐς Πέρσας, ὅτε Κῦρος πέμψας παρὰ Ἄμασιν αἴτεε ἰητρὸν ὀφθαλμῶν ὃς εἴη ἄριστος τῶν ἐν Αἰγύπτῳ.",
+      "translations" : [
+        "Cyrus' son Cambyses was leading an army of his subjects, Ionian and Aeolian Greeks among them,[*] against this Amasis for the following reason. Cambyses had sent a herald to Egypt asking Amasis for his daughter; he asked on the advice of an Egyptian, who advised it out of resentment against Amasis, that out of all the Egyptian physicians Amasis had dragged him away from his wife and children and sent him up to Persia when Cyrus sent to Amasis asking for the best eye-doctor in Egypt.\n"
+      ],
+      "book": 3,
+      "chapter":  1,
+      "section": 1,
+      "perseusTextLink": "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0016.tlg001.perseus-grc2:3.1.1?right=perseus-eng2"
     }
   ]
 }

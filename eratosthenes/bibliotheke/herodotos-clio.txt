@@ -1,60 +1,3207 @@
-Αἰγύπτιος Egyptian 
-αἴτιος to blame, blameworthy, culpable 
-ἄλλῃ in another place, elsewhere 
-ἄλλος other, another 
-ἀπαγινέω paying tribute 
-ἀπό from, away from. c. gen. 
-Ἄργος Argos 
-ἄρχω 
-Ἀσσύριος Assyrian 
-αὐτίκα forthwith, straightway, at once 
-αὐτός unemph. 3rd pers.pronoun; -self; [the] same 
-ἀφικνέομαι to come to 
-βασιλεία a kingdom, dominion 
-γάρ for 
-γίγνομαι become, be born 
-δέ but 
-δή [interactional particle: S&H on same page] 
-διαφορά difference, distinction 
-εἰμί to be 
-εἰς into, to c. acc. 
-εἰσαφικνέομαι to come into 
-ἐπί on, upon with gen., dat., and acc. 
-ἐπιτίθημι to lay, put on; 
-ἐρυθρός red 
-θάλασσα the sea 
-θυγάτηρ a daughter 
-καί and, also 
-καλέω to call, summon 
-Καμβύσης Cambyses 
-Κασσανδάνη Cassandane 
-Κῦρος Cyrus 
-λόγιος versed in tales 
-μακρός long 
-μέγας big, great 
-μέν on the one hand, on the other hand 
-ναυτιλία sailing, seamanship 
-νῦν now at this very time 
-ὁ the 
-ὅδε this 
-οἰκέω to inhabit, occupy 
-ὅς who, that, which: relative pronoun 
-οὗτος this; that 
-παῖς a child 
-παραλαμβάνω to receive from 
-πᾶς all, the whole 
-πένθος grief, sadness, sorrow 
-Περσεύς Perseus 
-Πέρσης a Persian; Perses 
-ποιέω to make, to do 
-προαγορεύω to tell beforehand 
-προαποθνῄσκω to die before 
-προεῖπον to tell 
-τε and 
-τελευτάω to complete, finish, accomplish; pple. finally, in the end 
-Φαρνάσπης Pharnaspes 
-φημί to say, to claim 
-Φοῖνιξ a Phoenician 
-φορτίον a load, burden 
-χῶρος a piece of ground, ground, place 
+Ἄβαι Abae, town in Phocis
+Ἄβαντες Abantes, a tribe on Euboea
+Ἄβδηρα town of Abdera, known for stupidity of inhabitants
+ἁβρός delicate, graceful, beauteous, pretty
+ἀγαθός good
+ἀγάλλω to make glorious, glorify, exalt
+ἄγαλμα a glory, delight, honour; a cult statue
+ἄγαμαι to wonder, be astonished
+Ἀγαμεμνονίδης Agamemnon's son
+Ἀγαμέμνων Agamemnon, lit. the very steadfast
+ἀγγεῖον vessel, reservoir
+ἀγγελία a message, tidings, news
+ἀγγελιαφόρος a messenger
+ἀγγέλλω to bear a message
+ἄγγελος a messenger, envoy
+ἄγγος a vessel
+ἀγείρω to bring together, gather together
+ἀγεννής of no family, low-born
+ἀγκών the bend of the arm, the elbow
+ἁγνεύω to consider as part of purity, make it a point of religion
+ἀγορά an assembly of the people
+ἀγοραῖος in, of the market
+ἀγορεύω to speak in the assembly, harangue, speak
+ἄγρα a catching, hunting
+ἀγρεύς a hunter
+ἄγριος (living in the fields) wild, savage, harsh
+ἀγρός fields, lands
+Ἄγρων Agron
+Ἀγυλλαῖος of Agylla (later Caere, Cerveteri)
+ἄγχιστος nearest
+ἀγχοῦ near, nigh
+ἄγω to lead
+ἀγών a gathering; a contest, a struggle, a trial
+ἀγωνίζομαι to contend for a prize
+ἀγώνισμα a contest
+ἀδεής without fear, fearless; causing no fear
+ἀδελφιδέος a brother’s or sister’s son, a nephew
+ἀδελφός sons of the same mother
+ἀδικέω to do wrong
+ἀδίκημα a wrong done, a wrong
+ἀδικία injustice
+ἄδικος wrong-doing, unrighteous, unjust
+Ἄδραστος Adrastus
+Ἀδρίας the Adriatic
+ἁδρός thick
+ἁδρύνω to make ripe, ripen
+ἀδύνατος unable, impossible
+ἄδυτον the innermost sanctuary
+ἀεί always, for ever
+ἀείδω to sing
+ἀεικία unseemly treatment, outrage
+ἀείρω to lift, heave, raise up
+ἀέκων against one's will, unwilling
+ἄελπτος unexpectedly
+ἀέναος ever-flowing
+ἀετός an eagle
+ἀζήμιος free from further payment: without loss, scot-free
+ἀήρ the lower air, the air
+ἀθάνατος undying, immortal
+Ἀθῆναι the city of Athens
+Ἀθήναια Panathenaia
+Ἀθήναιον the temple of Athena
+Ἀθηναῖος Athenian, of Athens
+Ἀθήναιος Athenaeus
+Ἀθήνη Athena
+ἀθλέω to contend, to struggle, to be an athlete, to hold games
+ἆθλος a contest for a prize
+ἀθλοφόρος bearing away the prize, victorious
+ἀθυμία want of heart, faintheartedness
+αἶα land
+Αἴας Ajax
+Αἰγαί town in Achaea, seat of worship of Poseidon
+Αἰγαῖαι Aegaeae, Aeolian town in Achaea
+Αἰγεύς Aegeus
+Αἴγιον Aegion, town in Achaea
+Αἰγύπτιος Egyptian
+Αἴγυπτος Egypt (f.); king Aegyptus (m.)
+αἰδέομαι to be ashamed to do
+αἰδοῖον the genitals, pudenda
+αἰδώς a sense of shame, shame, modesty, self-respect
+αἰθρία in clear weather
+αἷμα blood
+αἱμασιά a wall
+αἰνέω (to tell;) to praise, approve, acquiesce in
+Αἰολεύς Aeolian
+αἰπόλιον a herd of goats
+αἵρεσις a taking especially
+αἱρετός that may be taken
+αἱρέω to take, (mid.) to choose
+αἴρω to take up, raise, lift up
+αἰσχρός causing shame, abusive
+αἰσχύνη shame done one, disgrace, dishonour
+αἰσχύνω to make ugly, disfigure, mar
+αἰτέω to ask, beg; postulate .
+αἰτία a charge, accusation .
+αἴτιος to blame, blameworthy, culpable 0)
+αἰχμάλωτος taken by the spear, captive to one's spear, taken prisoner
+αἰχμή the point of a spear
+αἰχμοφόρος one who trails a pike, a spearman
+ἀΐω perceive .
+ἀκανθώδης full of thorns, thorny
+Ἀκαρνάν Acarnan, Acarnania
+ἀκέομαι to heal, cure
+ἀκίνητος unmoved, motionless
+ἀκλεής without fame, inglorious, unsung
+ἀκμάζω to be in full bloom, be at one's prime
+ἄκμων a thunderbolt
+ἀκοή a hearing, the sound heard
+ἀκοντίζω to hurl a javelin
+ἀκόντιον javelin
+ἄκος a cure, relief, remedy for
+ἀκούω to hear
+ἄκρα a headland, foreland, cape
+ἀκροθίνιον the topmost part of a heap, the choice part, first-fruits
+ἀκρόπολις the upper city .
+ἄκρος at the furthest point
+ἄκων against one's will > ἀέκων
+Ἀλέα Alea, epithet of Athena
+Ἀλέξανδρος Alexander .
+ἀλέξω to ward
+ἀλήθεια truth
+ἀληθεύω to speak truth
+ἀληθής unconcealed, true .
+ἀληθίζω dye with genuine purple; mid. speak the truth
+ἁλής assembled, thronged, in a mass, all at once
+ἁλία an assembly of the people
+ἁλίζω to gather together, to muster
+ἁλίζω to salt
+Ἁλικαρνασσεύς a Halicarnassian
+Ἁλικαρνασσός Halicarnassus
+Ἀλιλάτ Alilat
+ἁλίσκομαι to be caught, conquered, caught in the act .
+Ἀλκαῖος Alcaeus
+ἄλκιμος strong, stout
+Ἀλκμαίων Alcmaeon
+ἀλλά otherwise, but
+ἄλλῃ in another place, elsewhere
+ἀλλήλων of one another, to one another, one another
+ἀλλογνοέω to take one for another, not know
+ἀλλόθροος speaking a strange tongue
+ἄλλος other, another
+ἄλλως in another way
+Ἀλυάττης Alyattes
+Ἅλυς Halys
+ἅλωσις a taking, capture, conquest, destruction
+ἅμα at once, at the same time
+ἀμαθής unlearned, ignorant, stupid, boorish
+ἄμαξα a wagon, wain
+ἁμαρτάνω to miss, miss the mark
+ἁμαρτάς error
+ἁμαρτία a failure, fault, sin
+Ἄμασις Amasis
+ἄμαχος without battle
+ἀμείβω change, alternate, respond
+ἀμείνων better, abler, stronger, braver .
+ἀμηχανέω to be at a loss for
+ἀμήχανος without means
+Ἄμμων Zeus-Ammon
+ἄμορφος misshapen, unsightly
+ἀμπέλινος of the vine
+ἄμπελος clasping tendrils
+ἀμύνω to keep off, ward off
+ἀμφί on both sides
+Ἀμφιάραος Amphiaraus
+ἀμφίβληστρον anything thrown round; a net
+ἀμφίς on both sides; apart, asunder
+ἀμφορεύς an amphora, jar, urn
+ἀμφότερος each of two, both
+ἄν modal particle
+ἀνά up, upon
+ἀναβαίνω to go up, mount, to go up to .
+ἀνάβασις a going up, mounting
+ἀναβιβάζω to make go up, cause to mount
+ἀναβοάω to shout aloud, utter a loud cry
+ἀναγιγνώσκω to know well, know certainly; to read
+ἀναγκάζω to force, compel
+ἀναγκαῖος necessary, forcible (subst. kin, necessities for life)
+ἀνάγκη force, constraint, necessity .
+ἀνάγνωσις recognition
+ἀναδέω to bind
+ἀναδίδωμι to hold up and give
+ἀναζητέω to examine into, investigate
+ἀνάθημα a votive offering set up
+ἀναιρέω to take up; to destroy .
+ἀναισιμόω to use up, use, consume
+ἀναίτιος not being the cause
+ἀνακαίω to light up
+ἀνάκειμαι to be laid up
+ἀνακτάομαι to regain for oneself, get back again, recover
+ἀναλαμβάνω to take up, take into one's hands
+ἀνάλωτος not to be taken, invincible, impregnable
+ἀναμάρτητος without missing, unfailing, unerring
+ἀναμάσσω to wipe off
+ἀναμείγνυμι mix up, mix together
+ἀναμίξ promiscuously
+ἄναξ a lord, master
+ἀνάξιος unworthy, not deemed
+ἀναξυρίδες the trousers
+ἀναπαυστήριος of or for resting
+ἀναπαύω to make to cease, to stop
+ἀναπείθω to bring over, convince
+ἀναπλέω to sail up, to go up stream
+ἀναπλόω to unfold, open
+ἀναπτύσσω to unfold
+ἀναρτάω to hang to
+ἀνασκολοπίζω to fix on a pole
+ἀνάστατος made to rise up and depart, driven from one's home
+ἀναστενάζω didst thou groan forth
+ἀνασχίζω to rip up
+ἀνασῴζω recover what is lost, rescue
+ἀνατέλλω to make to rise up
+ἀνατίθημι dedicate, refer .
+ἀνατολή a rising, rise
+ἀναφαίνω to make to give light, make to blaze up
+ἀναφέρω to bring up, bring back
+ἀναφύρω to mix up, confound
+ἀναχώννυμι to heap up into a mound
+ἀναχωρέω to go back
+ἁνδάνω to please, delight, gratify
+ἀνδραγαθία bravery, manly virtue, the character of a brave honest man
+ἀνδραποδίζω to reduce to slavery, enslave
+ἀνδρεῖος of or for a man; courageous
+ἀνδριάς the image of a man, a statue
+ἀνδρίς woman
+ἀνδρόω to rear up into manhood
+ἀνδρών the men's apartment
+ἄνειμι go up, reach
+ἀνέκαθεν from above, from the first
+ἄνεμος wind
+ἀνεπιτήδειος unserviceable, unfit
+ἄνευ without
+ἀνευρίσκω to find out, make out, discover
+ἀνέχω to hold up; (mid.) endure, put up with
+ἀνήκεστος not to be healed, incurable, irreparable, fatal
+ἀνηκουστέω to be unwilling to hear, to disobey
+ἀνήκω to have come up to
+ἀνήρ a man
+ἀνθρώπειος of man, of mankind
+ἄνθρωπος man, person, human
+ἀνθρωποφυής of man's nature
+ἄνιππος without horse, not serving on horseback
+ἀνίστημι to make to stand up, raise up
+ἀνόητος not thought on, unheard of; senseless, silly
+ἀνοίγνυμι to open
+ἀνοικοδομέω to build up
+ἄνολβος unblest, wretched, luckless
+ἀνομέω to act lawlessly
+ἀνομία lawlessness
+ἄνομος without law, lawless
+ἀνορθόω to set up again, restore, rebuild
+ἀνόσιος unholy, profane
+ἀνταποδίδωμι to give back, repay, tender in repayment
+ἀντάω to come opposite to, meet face to face, meet with
+ἀντέρομαι to ask in turn (see ἀντείρομαι)
+ἀντέχω to hold out against, withstand
+ἀντί over against, opposite. c. gen.
+ἀντιάζω to meet face to face
+ἀντιδίδωμι to give in return, repay
+ἀντιθέω to run against
+ἀντίξοος opposed, adverse
+ἀντίον part of the loom
+ἀντιόομαι to resist, oppose
+ἀντίος set against
+ἀντιπράσσω to act against, seek to counteract
+ἀντιστασιώτης one of the opposite faction
+ἀντιστρατοπεδεύω to encamp over against
+ἀντιτίθημι to set against, oppose
+ἀντίτυπος repelled
+ἀνύω to effect, achieve, accomplish, complete
+ἄνω to accomplish, achieve, finish .
+ἄνω up, upwards .
+ἄνωθεν from above, from on high
+ἀνώτερος higher
+ἀξιαφήγητος worth telling
+ἀξιοθέατος well worth seeing
+ἄξιος worthy
+ἀξιόχρεως worthy of a thing
+ἀξιόω to think worthy of; to expect
+ἀοιδή song, a singing
+ἀπαγγέλλω to bring tidings, report, announce
+ἀπαγινέω paying tribute
+ἀπαγορεύω to forbid; to give up, renounce
+ἀπάγω to lead away, carry off .
+ἀπαγωγή a leading away
+ἀπαιτέω to demand back, demand
+ἀπαλλαγή deliverance, release, relief from
+ἀπαλλαξείω to wish to be delivered from
+ἀπαλλάσσω to set free, release, deliver
+ἁπαλός soft to the touch, tender
+ἀπαμύνω to keep off, ward off
+ἅπαξ once
+ἀπαρχή the beginning of a sacrifice, the primal offering
+ἅπας quite all, the whole
+ἀπάτη a trick, fraud, deceit
+Ἀπατούρια the Apatouria
+ἄπεδος even, level, flat
+ἀπειλέω [to force back]
+ἀπειλέω threaten
+ἀπειλή boasts, threats
+ἄπειμι be absent
+ἄπειμι go away
+ἀπεῖπον to speak out, tell out, declare (Hom.), deny, refuse, forbid
+ἀπείργω to keep away from, debar from
+ἀπελαύνω to drive away, expel from .
+ἀπέρχομαι to go away, depart from
+ἄπεφθος boiled down
+ἀπεχθάνομαι to be hated, incur hatred, be roused to hatred
+ἀπέχω to keep off
+ἀπήμων unharmed, unhurt
+ἀπιστέω to disbelieve, distrust; to disobey
+ἀπιστία disbelief, distrust, mistrust
+ἄπιστος not to be trusted
+ἄπλετος boundless, immense
+ἄπληστος not to be filled, insatiate
+ἀπό from, away from. c. gen.
+ἀποβαίνω to step off from
+ἀποβάλλω to throw off
+ἀπόγονος born or descended from, offspring
+ἀποδάσμιος parted from
+ἀποδείκνυμι display, appoint, demonstrate
+ἀπόδειξις a shewing forth, exhibiting
+ἀπόδεξις acceptance
+ἀποδέχομαι to accept from
+ἀποδημέω to be away from home, be abroad
+ἀποδίδωμι to give back, give what is due; (mid.) sell .
+ἀποδοκεῖ it seems good not
+ἀποδοκιμάζω to reject on scrutiny, to reject for want of qualification
+ἀποδοκιμάω to reject
+ἀποθαυμάζω marvel much at a thing
+ἀποθνῄσκω to die, be killed (7)
+ἀποικία a settlement far from home, a colony settlement
+ἀποικίζω to send away from home
+ἄποικος away from home
+ἀποικτίζομαι to complain loudly of
+ἀποκλείω to shut off from
+ἀποκρεμάννυμι to let hang down
+ἀποκρίνω to separate, set apart; mid. answer
+ἀποκτείνω to kill, slay
+ἀποκωλύω to hinder
+ἀπολαμβάνω to take away, receive one’s due, cut off
+ἀπολαμπρύνω to make famous
+ἀπολείπω to leave over
+ἀπόλλυμι to destroy, kill; to lose (5)
+Ἀπόλλων Apollo
+ἀπομάχομαι to fight from
+ἀπονίναμαι to have the use
+ἀπονοστέω to return, come home
+ἀποξηραίνω to dry up
+ἀποπαύω to stop
+ἀποπειράομαι to make trial, essay
+ἀποπέμπω to send off
+ἀποπλέω to sail away, sail off .
+ἀπόπληκτος disabled by a stroke
+ἀπορέω to be at a loss
+ἀπορία difficulty of passing
+ἀπορράπτω to sew up again
+ἀπορρίπτω to throw away, put away
+ἀποσπάω to tear
+ἀποστέλλω to send off .
+ἀπόστολος a messenger, ambassador, envoy
+ἀποστρέφω to turn back, turn to flight, turn away
+ἀποσχίζω to split
+ἀποτέμνω to cut off, sever
+ἀποτήκω melt away from
+ἀποτίλλω to pluck
+ἀπότομος cut off, abrupt, precipitous
+ἀποτρέπω to turn away from, dissuade
+ἀποφαίνω to shew fort, display, produce
+ἀποφέρω to carry off
+ἀποφεύγω to flee from, escape
+ἀποχράω to suffice, be sufficient, be enough; to be content with
+ἄποψις an outlook, view, prospect
+ἀπρόσμικτος holding no communion with
+ἅπτω to fasten, bind fast; mid. touch
+ἀπωθέω to thrust away, push back
+ἀπωστός thrust
+ἄρα particle: 'so'
+Ἀράβιος Arabian .
+Ἀράξης the river Araxes
+ἀράομαι to pray to
+Ἀργεῖος of/from Argos, Argive
+Ἀργολίς a district in Peloponnesus
+Ἄργος Argos
+ἀργύρεος silver, of silver
+ἀργύριον a piece of silver, a silver coin
+ἄργυρος silver
+ἄρδις point of an arrow
+Ἄρδυς Ardys
+ἄρδω to water
+Ἄρειος devoted to Ares, warlike, martial; (πάγος:) the hill of Ares
+ἀρείων better, stouter, stronger, braver, more excellent
+ἀρέσκω (to make good, make up), to please
+ἀρετή goodness, excellence
+Ἄρης Ares
+ἀριθμός number .
+Ἀρίσβα Arisba: a town in the Troad; a town on Lesbos
+ἀριστερός left, on the left
+ἄριστον the morning meal, breakfast
+ἄριστος best
+Ἀρίστων Ariston
+Ἀρίων Arion
+Ἀρκαδία Arcadia
+Ἀρκάς Arcadian
+ἀρκέω to ward off; to be sufficient
+ἄρκτος a bear
+ἅρμα a chariot
+Ἀρμένιον copper carbonate, azurite
+Ἀρμένιος Armenian, of Armenia
+ἄρνειος of a lamb
+ἀρνός wool
+ἀροτήρ a plougher, husbandman
+ἄρουρα tilled or arable land, ground, fatherland
+ἀρόω to plough
+ἁρπαγή seizure, rapine, robbery, rape
+ἁρπάγη hook, rake, grappling iron
+ἅρπαγος hook
+Ἅρπαγος Harpagus .
+ἁρπάζω to snatch away, carry off
+ἅρπαξ rapacious
+Ἀρσάμης Arsames
+ἄρσην male
+Ἀρτάβαζος Artabazus
+ἀρτάβη artaba
+ἀρτάω to fasten to
+Ἀρτεμβάρης Artembares
+Ἄρτεμις Artemis
+ἄρτισις equipment
+ἄρτος bread, loaf of bread
+ἀρτύω to arrange, devise, prepare
+ἀρχαῖος from the beginning
+ἀρχή a beginning, rule, office, empire
+ἀρχῆθεν from the beginning, from of old, from olden time
+ἀρχήν to begin with, .. at all (see ἀρχή A
+Ἀρχίλοχος Archilochus
+ἀρχός a leader, chief, commander; the rectum, anus
+ἄρχω (to be first) to rule, to begin
+ἄρχων a ruler, commander, chief, captain
+ἀσεβέω to be impious, to act profanely, sin against the gods
+ἄση distress, nausea
+ἄσημος without mark
+ἀσθενής without strength, weak, feeble, weakly
+Ἀσία Asia
+ἀσινής unhurt, unharmed
+Ἀσκάλων Ascalon
+ἀσκέω to work curiously, form by art, fashion
+ἀσκός a leathern-bag, a wine-skin
+ἄσμενος well-pleased, glad
+ἀσπάζομαι to welcome kindly, bid welcome, greet
+ἀσπαίρω to pant, gasp, struggle convulsively
+ἀσπαστός welcome
+ἀσπίς a round shield
+Ἀσσήσιος Assesian, inhabitant of Assesus
+Ἀσσησός Assesus
+Ἀσσυρία Assyria, the country of the Assyrians
+Ἀσσύριος Assyrian
+ἀστός a townsman, citizen .
+ἀστράγαλος one of the neck-vertebrae
+ἄστυ a city, town .
+Ἀστυάγης Astyages
+ἀσφαλής not liable to fall, immoveable, steadfast, firm
+ἄσφαλτος asphalt, bitumen
+ἀσφαλτόω smear with pitch
+Ἀταρνεύς Atarneus
+ἅτε just as (both pre-and postposed); w. part.: because
+ἀτέλεια exemption from public burdens
+ἀτελής without end
+Ἀτλαντίς the Atlantic ocean
+ἀτρεκής real, genuine .
+ἀτρεμίζω to keep quiet
+Ἀττικός Attic, Athenian .
+Ἄτυς Atys
+αὐαίνω to dry, to wither away
+αὐδάω to utter sounds, speak
+αὐθέντης one who does by his own hand; a murderer
+αὖθις back, back again (3)
+αὐλέω to play on the flute
+αὐλή court
+αὐλητής a flute-player
+αὐλός aulos (wind instrument resembling oboe)
+αὐξάνω to make large, increase, augment
+αὐτίκα forthwith, straightway, at once
+αὐτόθεν from the very spot
+αὐτόθι on the spot
+αὐτομολέω to desert
+αὐτόνομος living under one's own laws, independent
+αὐτός unemph.
+αὐτοῦ at the very place, just here, just there
+αὐτοχειρία murder perpetrated by one's own hand
+αὐτόχθων sprung from the land itself
+αὔτως in this very manner, even so, just so, as it is
+αὐχήν the neck, throat
+αὐχμώδης looking dry, squalid
+ἀφαιρέω to take from, take away from
+ἀφειδής unsparing
+ἀφεστήξω I shall be absent, away from 0)
+ἀφέψω to refine by boiling off
+ἀφηγέομαι to lead from
+ἄφθογγος voiceless, speechless
+ἄφθονος without envy
+ἀφίημι to send forth, discharge
+ἀφικνέομαι to come to
+ἄφιξις an arrival
+ἀφίστημι to put away, remove; (mid.) revolt
+ἀφοράω to look away from
+ἀφοσιόω to purify from guilt
+Ἀφροδίτη Aphrodite
+ἄφωνος voiceless, speechless, dumb, silent
+Ἀχαία epithet of Demeter, Achaea
+Ἀχαιμενίδης descendant of Achaemenes, of the lineage of the Persian kings
+Ἀχαιός Achaian
+ἄχαρις without grace
+ἀχάριστος ungracious, unpleasant, unpleasing
+ἀχάριτος ungrateful, thankless
+ἄχθος a weight, burden, load
+ἀχρεῖος useless, unprofitable, good for nothing
+ἀχρήματος without money
+ἄχρηστος useless, unprofitable, unserviceable
+ἄχρι until, up to; (Hom.) to the uttermost, utterly
+ἀψευδής without lie and deceit, truthful, sincere, trusty
+Βαβυλών Babylon
+Βαβυλώνιος Babylonian, of Babylon .
+βάθος depth
+βάθρον that on which anything stands
+βαθύς deep
+βαίνω to walk, step
+Βάκτριος Bactrian
+βαλανηφάγος acorn-eating
+βάλλω to throw
+βάρβαρος barbarous
+βαρυσύμφορος weighed down by ill-luck
+βασανίζω to put to the test, to torture
+βασιλεία a kingdom, dominion
+βασίλεια a queen, princess
+βασίλειον a kingly dwelling, palace
+βασίλειος of the king, kingly, royal .
+βασιλεύς a king, chief
+βασιλεύω to be king, to rule, reign
+βέλος projectile; arrow, weapon
+Βῆλος Belus, Bel; Baal
+βία bodily strength, force, power, might
+βίαιος forcible, violent
+Βίας Bias
+βιάω to constrain
+βιβλίον a paper, scroll, letter
+Βιθυνός Bithynian
+βῖκος a wine-jar
+βιός a bow
+βίος life
+βιόω to live, pass one's life
+Βίτων Biton
+βιώσιμος to be lived, worth living
+βλάβη hurt, harm, damage
+βλέπω to see, have the power of sight
+βοάω to cry aloud, to shout
+βοηθέω to come to aid, to succour, assist, aid
+Βοιώτιος Boeotian
+Βοιωτός a Boeotian
+βόλος a throw with a casting-net, a cast
+Βορέας North wind .
+βόσκω to feed, tend
+βουκολία a herd of cattle
+βουκόλιον a herd of cattle
+βουκόλος a cowherd, herdsman
+βουλευτήριον a council-chamber, senate-house
+βουλεύω to take counsel, deliberate, concert measures
+βουλή will, determination; council, senate
+βούλομαι to will, wish, be willing
+βοῦς cow .
+Βραγχίδαι Branchidae, see also Didyma
+βραχύς short
+βρέχω to be wetted, get wet
+Βυβάσσιος of Bubassus, a town in Caria
+βωμός any raised platform, a stand
+γαλαθηνός sucking, young, tender
+γαλακτοπότης a milk-drinker
+γαμβρός any one connected by marriage
+γαμέω to marry
+γάμος a wedding, wedding-feast
+γάρ for
+γαστήρ the paunch, belly
+γε at least, at any rate
+γείνομαι to be born; to beget
+γελάω to laugh
+γενεά race, stock, family
+γένεσις an origin, source, productive cause
+γενναῖος noble, excellent
+γένος race, stock, family
+γέρας a gift of honour
+γέρων an old man (in apposition as adj., old)
+γεύω to give a taste of
+γέφυρα a dyke, dam .
+γῆ earth
+γίγνομαι become, be born
+γιγνώσκω to learn to know, to perceive, mark, learn
+Γλαῦκος Glaucus
+γλῶσσα the tongue .
+γνώμη a means of knowing, a mark, token
+γόμος a ship's freight, burden, tonnage
+γονεύς a begetter, father
+γόνος that which is begotten, offspring, a child
+γόνυ the knee
+Γορδίας Gordias
+γοῦν at least then, at any rate, any way
+γράμμα (drawing, scratch) letter, character, writing, document
+γραφή drawing, writing; indictment
+γράφω to scratch, draw, write
+Γυγάδας of Gyges
+Γύγης Gyges
+γυμνικός of or for gymnastic exercises, gymnastic
+γυμνός naked, unclad
+γυναικεῖος of or belonging to women
+γυναικόω make effeminate
+γυνή a woman
+γωνία a corner, angle
+δαίμων god; divine power
+δαίνυμι to divide
+δαίς feast
+δαιτυμών one that is entertained, an invited guest
+δακρύω to weep, shed tears
+δάκτυλος a finger
+δαπάνη outgoing, cost, expense, expenditure
+Δαρεῖος Darius
+Δάσκυλος Dascylus
+δατέομαι to divide among themselves
+δέ but
+δεῖ it is necessary
+δείδω to fear
+δείκνυμι to show
+δειλία cowardice
+δειμαίνω to be afraid, in a fright
+δεινολογέομαι to complain loudly
+δεινός fearful, terrible, dread, dire
+δεῖπνον the principal meal
+δέκα ten
+δεκαετής ten years old
+δεκατεύω to exact the tenth part from
+δελφίς the dolphin
+Δελφοί Delphi; Delphians
+Δελφός Delphic, of Delphi
+δέμας the (physical frame, form of the) body
+δέμω to build
+δένδρεον a tree
+δένδρον a tree
+δεξιά the right hand
+δεξιός on the right hand
+δέος fear, alarm
+δέρμα the skin, hide
+δεσμός anything for binding, a band, bond
+δέσποινα the mistress, lady of the house
+δεσπότης a master, lord, the master of the house .
+Δευκαλίων Deucalion
+δευτερεῖος of second place, second quality; δευτερεῖα second prize
+δεύτερος second
+δέχομαι to take, accept, receive
+δέω to bind, tie, fetter
+δέω to lack, miss, stand in need of
+δή [interactional particle: S&H on same page]
+δῆθεν really, in very truth
+Δηιόκης Deioces
+δήλησις mischief, ruin, bane
+δῆλος visible, conspicuous
+Δῆλος Delos
+δηλόω to make visible .
+Δημήτηρ Demeter
+δημός fat .
+δῆμος people; (originally) a country-district, country, land .
+δημόσιος belonging to the people
+Δηρουσιαῖος Derusiaeans
+διά through c. gen.; because of c. acc.
+διαβαίνω to cross (a river, etc.); to stand with feet apart
+διαβάλλω to throw over
+διάβασις a crossing over, passage
+διαβατός to be crossed
+διαβιβάζω to carry over
+διαγιγνώσκω to distinguish, discern
+διάγω to carry over
+διαδείκνυμι to shew clearly, shew plainly
+διάδοχος succeeding
+διαιρέω to take one from another, to cleave in twain, to divide into parts
+δίαιτα a way of living, mode of life
+διαιτάω act. to treat; to arbitrate; mid. to live (a certain way)
+διάκειμαι to be in a certain state, to be disposed
+διακελεύομαι to exhort, give orders, direct
+διακλέπτω to steal at different times
+διακομίζω to carry over
+διακόσιοι two hundred
+διακοσμέω to divide and marshal, muster in array
+διακρίνω to separate one from another
+διαλαγχάνω to divide
+διαλαμβάνω to take severally, to divide, to intercept
+διαλέγομαι talk
+διαλέγω to pick out one from another, to pick out
+διαλλαγή interchange, exchange
+διαλύω to loose one from another, to part asunder, undo
+διαμετρέω to measure through, out
+διαμιστύλλω to cut up piecemeal
+διάνοια a thought, intention, purpose
+διάπειρα an experiment, trial
+διαπέμπω to send off in different directions, send to and fro, send about
+διαπορθμεύω to carry over
+διαπράσσω to pass over; bring about, accomplish
+διαρπάζω to tear in pieces
+διασκεδάννυμι to scatter abroad, scatter to the winds, disperse
+διασπάω to tear asunder, part forcibly
+διαστοιβάζω to stuff in between
+διάστροφος twisted, distorted
+διατάσσω to appoint
+διατίθημι to place separately, arrange
+διατρίβω to rub between, rub hard, rub away, consume, waste
+διαφέρω to carry through; be different from, excel
+διαφεύγω to flee through, get away from, escape
+διαφθείρω to destroy, ruin; to corrupt
+διαφοιτάω to wander
+διαφορά difference, distinction
+διαφορέω to spread abroad
+διαφύομαι to intervene
+διαχράομαι to use constantly
+διδάσκω to teach
+δίδωμι to give
+διείργω to keep asunder, separate
+διέξειμι go through, tell in detail
+διεξελαύνω to drive, ride, march through
+διεξέρχομαι to go through, pass through
+διέξοδος a way out through, an outlet, passage, channel
+διεργάζομαι to make an end of, kill, destroy
+διέρχομαι to go through, pass through
+δίζημαι to seek out, look for
+δίζω to be in doubt, at a loss
+Δίη Dia
+διθύραμβος the dithyramb;
+διΐστημι set apart, separate
+δικάζω to judge, to give judgment on
+δίκαιος just, observant of custom, correct, balanced
+δικαιοσύνη righteousness, justice
+δικαιόω to set right
+δικαστής a judge
+δίκη (custom, usage) justice, lawsuit, penalty .
+δίκτυον a casting-net, a net
+Δινδυμήνη Dindymene, name of Cybele
+διό wherefore, on which account .
+Δίον Dion
+Διόνυσος Dionysus
+διότι for the reason that, since
+δίς twice, doubly
+δισμύριοι twenty thousand
+διτάλαντος worth
+διφάσιος two-fold, double
+διφθέρα a prepared hide, tanned skin, piece of leather
+δίχα in two, asunder
+διῶρυξ a trench, conduit, canal
+διωρυχή a digging through
+δοκεύς a kind of meteor
+δοκέω seem, impers. it seems best..
+δοκή a vision, fancy
+δόκιμος assayed, examined, tested .
+δόλος a bait, trap, cunning
+δολόω to beguile, ensnare, take by craft
+δόμος a house; a course of stone
+δόξα a notion
+δοξάζω to think, imagine, suppose, fancy, conjecture
+δοράτιον (small) spear (dim. of δόρυ)
+δόρυ tree, plank, spear
+δορυφόρος spear-bearing
+δόσις a giving
+δούλη slave
+δοῦλος slave .
+δουλοσύνη slavery, slavish work
+δουλόω to make a slave of, enslave
+δρέπανον a scythe
+Δρύοψ Dryops
+δυάω to plunge in misery
+δύη woe, misery, anguish, pain
+Δύμη Dyme
+δύναμαι to be able, capable, strong enough
+δύναμις power, might, strength .
+δυνατός strong, mighty, able
+δύο two
+δυώδεκα twelve .
+δωδέκατος the twelfth
+Δωδώνη Dodona
+δῶμα a house
+δωρέω to give, present
+Δωριεύς a Dorian, descendant of Dorus .
+Δωρικός Doric
+δῶρον a gift, present .
+δωτίνη a gift, present
+ἐάν if
+ἔαρ spring
+ἑαυτοῦ himself, herself, themselves
+ἐάω to let, suffer, allow, permit
+ἑβδομήκοντα seventy
+ἕβδομος seventh
+ἐγγίγνομαι to be born or bred in; be innate, be native
+ἐγγράφω to mark in
+ἐγγυητής one who gives security, a surety
+ἐγγυητός wedded
+ἐγγύς near, nigh, at hand
+ἐγείρω to awaken, wake up, rouse
+ἐγκολάπτω to cut
+ἔγκυος pregnant
+ἐγχειρίδιον dagger; (later) handle, tool, manual
+ἐγχειρίδιος in the hand
+ἐγώ I (first person pronoun)
+ἔδαφος the bottom, foundation, base
+ἑδώλιον a seat
+ἕζομαι to seat oneself, sit
+ἐθελοκακέω to be slack in duty, play the coward purposely
+ἐθελοντήν voluntarily
+ἐθελοντής volunteer
+ἐθέλω to will, wish, purpose
+ἔθνος a number of people accustomed to live together, a company, body of men
+εἰ conj. if, whether; part. w/wishes, adv. w/imperatives
+εἶδον to see
+εἶδος that which is seen, form, shape, figure
+εἰκάζω to make like to, represent by a likeness, portray
+εἰκοσαετής of twenty years
+εἴκοσι twenty
+εἰκών a likeness, image, portrait
+εἴλη troops
+εἷμα a garment
+εἰμί to be
+εἶμι come, go
+εἶπον to speak, say
+εἰρεσία rowing
+εἰρήνη peace, time of peace
+εἴρω to fasten together in rows, to string .
+εἰς into, to c. acc.
+εἷς one
+εἰσάγω to lead in
+εἰσαίω to listen
+εἰσακοντίζω to throw
+εἰσακούω to hearken
+εἰσαφικνέομαι to come into
+εἰσβαίνω to go into
+εἰσβάλλω to throw into, put into
+εἰσβιβάζω to put on board ship
+εἰσδέχομαι to take into, admit
+εἴσειμι to go into
+εἰσέρχομαι to go in
+εἰσέχω to stretch into, reach, extend
+εἰσίημι to send into
+εἴσοδος a way in, entrance
+εἰσπέμπω to send in, bring in, let in
+εἰσπίπτω to fall into
+εἰστίθημι to put into, place in
+εἰσφέρω to bring in, to propose (a question, a law), to pay tax (εἰσφορά)
+εἴσω to within, into
+εἴτε whether..or (regardless of whether A or B)
+εἴωθα to be accustomed
+ἐκ from out of
+ἑκάς far, afar, far off
+ἕκαστος every, every one, each, each one
+ἑκάστοτε each time, on each occasion
+ἑκάτερος each of two, either, each singly .
+ἑκατόν a hundred
+ἑκατοστός the hundredth
+ἐκβαίνω to step out of
+ἐκβάλλω to throw
+Ἐκβάτανα Agbatana, Ecbatana
+ἐκγίγνομαι to be born of
+ἔκγονος born of, sprung from
+ἐκδείκνυμι to shew forth, exhibit, display
+ἐκδέχομαι to take
+ἐκδημέω to be abroad, to be on one's travels
+ἐκδίδωμι to give up, surrender
+ἔκδοσις a giving out
+ἐκδύω to take off, strip off
+ἐκεῖ there, in that place
+ἐκεῖθεν from that place, thence
+ἐκεῖθι there, in that place
+ἐκεῖνος that over there, that
+ἔκθεσις a putting out, exposing
+ἐκκαλύπτω to uncover
+ἔκκειμαι to be cast out
+ἐκκλείω to shut out from
+ἐκκομίζω to carry out
+ἐκλέγω to pick out; single out
+ἐκλείπω to leave out, omit, pass over .
+ἐκμανθάνω to learn thoroughly
+ἐκπέμπω to send out
+ἐκπετάννυμι to spread out
+ἐκπηδάω to leap out
+ἐκπίμπλημι to fill up
+ἐκπίπτω to fall out of
+ἐκπλέω to sail out, sail away, weigh anchor
+ἐκπλήσσω (to knock out); to astound, shock, amaze
+ἐκπλύνω to wash out
+ἐκποιέω to put out
+ἐκστρατεύω to march out
+ἐκτίθημι to set out, place outside
+ἐκτίνω to pay off, pay in full
+ἐκτοξεύω to shoot out, shoot away
+ἕκτος sixth
+ἐκτρέπω to turn out of the course, to turn aside
+ἐκτρέφω to bring up from childhood, rear up
+ἐκφαίνω to shew forth, bring to light, disclose, reveal, make manifest
+ἐκφέρω to carry out of
+ἐκφεύγω to flee out
+ἐκφορέω to carry out
+ἐκχωρέω to go out and away, depart, emigrate
+ἑκών willing, of free will, readily
+ἐλαία the olive-tree
+ἔλαιον olive-oil
+ἐλάσσων smaller, less
+ἐλαύνω to drive, drive on, set in motion
+ἐλαφρός lightly, buoyantly
+ἐλάχιστος the smallest, least
+ἔλεγος a song of mourning, a lament
+ἐλέγχω cross-examine; put to the test; prove; refute
+Ἑλένη Helen
+ἐλευθερία freedom, liberty
+ἐλεύθερος free .
+ἐλευθερόω to free, set free
+Ἑλίκη Helice
+Ἑλικώνιος Heliconian, of Helicon
+ἑλκέω to drag about, tear asunder
+ἕλκω to draw, drag .
+ἐλλάμπω to shine upon, to illuminate
+Ἑλλάς Hellas
+ἔλλεσχος commonly talked of
+Ἕλλην Hellen; Greek
+Ἑλληνικός Hellenic, Greek .
+Ἑλλήσποντος the Hellespont
+ἕλος low ground by rivers, a marsh-meadow
+ἐλπίζω to hope for, look for, expect .
+ἐλπίς hope, expectation
+ἔλπω to make to hope
+ἔλυτρον the case, sheath, reservoir
+ἐμαυτοῦ of me, of myself
+ἐμβαίνω to step in
+ἐμβάλλω to throw in, put in
+ἐμβάς a felt-shoe
+ἐμβολή a putting into
+ἐμβόλιμος inserted, intercalated
+ἔμβολος pointed so as to be thrust in: ram, peg, bolt
+ἐμέω to vomit, throw up
+ἐμός mine
+ἔμπαλιν backwards, back
+ἔμπηρος crippled, maimed
+ἐμπίμπλημι fill quite full
+ἐμπίμπρημι to kindle, burn, set on fire
+ἐμπίπτω to fall in
+ἔμπλεος quite full of
+ἐμπόδιος at one's feet, coming in the way, meeting
+ἐμποδών at the feet, in the way, in one's path
+ἐμπόριον trading station, market place
+ἐμπρήθω to blow up, inflate
+ἐμπτύω to spit into
+ἐμφανής obvious
+ἐμφορέω to be borne about in
+ἔμψυχος having life in one, alive, living
+ἐν in, among. c. dat.
+ἐναγής under a curse, excommunicate, accurst
+ἐναγίζω to offer sacrifice to the dead
+ἐναντίος opposite
+ἐναπονίζω to wash clean in
+Ἐνάρεες Scythian loanword, for ἀνδρόγυνοι?
+ἔνατος ninth
+ἐναφίημι to let drop into
+ἐνδείκνυμι to mark, point out
+ἕνδεκα eleven; the Eleven, police commissioners at Athens
+ἑνδέκατος the eleventh
+ἐνδέχομαι to take upon oneself; to be possible
+ἐνδέω to bind in, on
+ἐνδέω to be in want of
+ἐνδίδωμι to give in
+ἔνδον in, within, in the house, at home
+ἐνδύω to go into
+ἔνειμι to be in; to be possible
+ἕνεκα on account of, for the sake of, because of, for
+ἐνεός dumb, deaf and dumb
+ἐνεργάζομαι to make in, produce in
+ἔνερθε from beneath, up from below
+ἐνετός inserted
+ἐνέχω to hold within
+ἔνθα there .
+ἐνθάδε here, in this place, at this point
+ἐνθεάζω to be inspired
+ἔνθεν whence; thence
+ἐνιαυτός year
+ἐνιδρύω to set in
+ἔνιοι some
+ἐνίστημι to put, set, place in
+ἐννοέω to have in one's thoughts, to think, consider, reflect
+ἕννυμι to put clothes on
+ἐνοικέω to dwell in
+ἐνοράω to see, remark, observe
+ἕνος belonging to the former of two periods, last year's .
+ἐνουρέω make water in
+ἐνσκήπτω to hurl, dart in
+ἐνστέλλω to dress in
+ἐνταῦθα here, there; at that juncture
+ἐντείνω to stretch
+ἐντέλλω to enjoin, command
+ἐντεταμένως vehemently, vigorously
+ἐντεῦθεν hence
+ἐντολή an injunction, order, command, behest
+ἐντός within, inside
+ἐντυγχάνω to light upon, fall in with, meet with
+ἐνύπνιον a thing seen in sleep
+ἐνύπνιος in dreams appearing
+ἐνυφαίνω to weave in as a pattern
+ἕξ six .
+ἐξαγγέλλω to send out
+ἐξάγω to lead out
+ἐξαιρέω to take out of .
+ἐξαιτέω to demand
+ἐξαίφνης suddenly
+ἑξακισχίλιοι six thousand
+ἑξακόσιοι six hundred
+ἐξαμελέω to be utterly careless of
+ἑξάμετρος of six metres, hexameter
+ἐξαναχωρέω to go out of the way, withdraw, retreat
+ἐξανδραποδίζω to reduce to utter slavery
+ἐξανίστημι to raise up: to make one rise
+ἑξαπάλαστος of six hands-breadth
+ἐξαπατάω to deceive
+Ἑξάπολις a League of six cities
+ἐξαπόλλυμι to destroy utterly
+ἐξάπτω to fasten from
+ἐξαρτύω to get ready, equip thoroughly, fit out
+ἐξεγείρω to awaken
+ἔξειμι go out
+ἐξελαύνω to drive out from .
+ἐξεμπολάω to traffic; to sell off
+ἐξεπίσταμαι to know thoroughly, know well
+ἐξεργάζομαι to work out, make completely, finish off, bring to perfection
+ἐξερεύγομαι to empty themselves
+ἐξερύω to draw out of
+ἐξέρχομαι to go out, come out
+ἔξεστι it is allowed, it is in one's power, is possible
+ἐξεύρεσις a searching out, search
+ἐξεύρημα a thing found out, an invention
+ἐξευρίσκω to find out, discover .
+ἐξηγέομαι to be leader of
+ἐξηγητής one who leads on, an adviser
+ἑξήκοντα sixty
+ἐξήκω to have reached
+ἐξημερόω to tame
+ἐξίημι to send out, let
+ἐξικνέομαι to reach, arrive at
+ἐξίτηλος going out, losing colour, fading, evanescent
+ἐξορύσσω to dig out
+ἔξω out .
+ἔξωθεν from without
+ἐξωνέομαι to buy off, redeem
+ἔοικα to be like; to look like
+ἑορτή a feast
+ἑός his, her own
+ἐπαγγέλλω to tell, proclaim, announce
+ἐπάγω to bring on
+ἐπαείδω to sing to, to sing incantations, to soothe by singing
+ἔπαινος approval, praise, commendation
+ἐπαίρω to lift up and set on
+ἐπαισχύνομαι to be ashamed at
+ἐπαιτιάομαι to bring a charge against, accuse
+ἐπαλλαγή an interchange
+ἐπαναβάλλω to throw back over
+ἐπαναπλέω to put to sea against
+ἐπανείρομαι question again and again
+ἐπανίστημι to set up again
+ἐπάνω above, atop, on the upper side
+ἐπαπειλέω to hold out as a threat to
+ἐπάργυρος overlaid with silver
+ἐπαρκέω to ward off; to be sufficient, to prevail; to supply
+ἔπαυλις a fold
+ἐπαύω to shout over
+ἐπεί after, since, when
+ἔπειμι be there (in addition, later, set over)
+ἔπειμι (go) come upon, approach, attack .
+ἐπεῖπον to say besides
+ἐπείρομαι ask besides
+ἐπεισέρχομαι to come in besides
+ἔπειτα then, next
+ἐπελαύνω to drive upon
+ἐπενδύνω to put on
+ἐπέξειμι go out against, prosecute
+ἐπεξέρχομαι to go out against, make a sally against
+ἐπέρομαι to ask besides
+ἐπέρχομαι come near; come upon; attack 5)
+ἐπερωτάω to inquire of, question, consult .
+ἐπέχω to hold on; hold out; hold back; adjourn; occupy
+ἐπηγορέω blame someone (τινι) for something (τι)
+ἔπηλυς one who comes to
+ἐπί on, upon with gen., dat., and acc.
+ἐπιβαίνω to go upon
+ἐπιβάλλω to throw
+ἐπιβοάω to call upon
+ἐπιβουλεύω to plot against
+ἐπιβουλή a plan against
+ἐπίγαμος marriageable
+ἐπιγίγνομαι to be born after, come into being after
+ἐπιγράφω scratch; (after Homer) inscribe, register
+Ἐπιδαύριος of Epidaurus
+ἐπιδείκνυμι to exhibit as a specimen
+ἐπιδέω to bind on
+ἐπιδέω to want
+ἐπιδιαγιγνώσκω to consider anew
+ἐπιδιαιρέω to divide anew
+ἐπιδίζημαι to inquire besides, to go on to inquire
+ἐπίδοξος likely
+ἐπιδρομή a sudden inroad, a raid, attack
+ἐπιεικής fitting, meet, suitable
+ἐπιζώννυμι to gird on
+ἐπιθαλάσσιος situated, living on the coast
+ἐπίθημα something put on, a lid, cover
+ἐπιθυμέω to set one's heart upon
+ἐπικαλέω to call upon
+ἐπικαμπή the bend, return
+ἐπικάρσιος athwart, cross-wise, at an angle
+ἐπικατακλύζω to overflow besides
+ἐπικατασφάζω to slay upon
+ἐπικηρυκεύομαι to send a message by a herald
+ἐπικίρνημι mix in addition
+ἐπίκλησις a surname
+ἐπίκοινος common to many, promiscuous
+ἐπικοσμέω to add ornaments to, to decorate after
+ἐπίκουρος an assister, ally
+ἐπικρατέω to rule over
+ἐπιλαμβάνω to lay hold of, seize, attack
+ἐπιλέγω to choose, pick out, select .
+ἐπιμανθάνω to learn besides
+ἐπίμαχος easily attacked, assailable
+ἐπιμειξία mixing with
+ἐπιμελέομαι to take care of, have charge of, have the management of
+ἐπιμελής careful
+ἐπιμέμφομαι to cast blame upon
+ἐπιμηχανάομαι to devise plans against, take precautions
+ἐπιμιμνήσκομαι to remember, think of; to mention
+ἐπινοέω to think on
+ἐπιπέμπω to send besides
+ἔπιπλα implements, utensils, furniture, moveable property
+ἐπίπλεος quite full of
+ἐπιπλέω to sail upon
+ἐπιπολή surface, ἐπιπολῆς on top
+ἐπισάττω to pile a load upon
+ἐπίσημον any distinguishing mark, a device
+ἐπισκιάζω to throw a shade upon, overshadow
+ἐπίσταμαι to know
+ἐπιστρεφής turning one's eyes
+ἐπιστρέφω to turn about, turn round
+ἐπίσχω to hold
+ἐπιτάρροθος a helper, defender, ally
+ἐπιτάσσω to put upon one as a duty, to enjoin
+ἐπιτείνω to stretch upon
+ἐπιτελειόω to complete
+ἐπιτελέω to complete, finish, accomplish .
+ἐπιτελής brought to an end, completed, accomplished
+ἐπιτέλλω to lay upon, enjoin, prescribe, ordain, command
+ἐπίτεξ at the birth, about to bring forth
+ἐπιτεχνάομαι to contrive for
+ἐπιτήδειος suitable; useful, necessary; deserving; associate
+ἐπιτηδεύω to pursue
+ἐπιτίθημι to lay, put on; (mid.) to attack .
+ἐπιτρέπω to turn over to, entrust, command
+ἐπιτρέφω to rear upon
+ἐπιτρέχω to run upon
+ἐπιτροπεύω to be a trustee, administrator, guardian, governor
+ἐπίτροπος one to whom a charge is entrusted, a trustee, administrator
+ἐπιτυγχάνω to hit the mark
+ἐπιφέρω to bring, put
+ἐπιφοιτάω to come habitually to, visit again and again
+ἐπιφόρημα dishes served up besides
+ἐπιφράζω to say besides
+ἐπιχειρέω to attempt, attack, put one’s hand to
+ἐπίχρυσος overlaid with gold
+ἐπιχώριος in or of the country, local, native .
+ἕπομαι follow
+ἐπόμνυμι to swear after, swear accordingly
+ἔπος a word
+ἐποτρύνω to stir up, excite, urge on
+ἔποψις a view over
+ἑπτά seven
+ἑπτακαίδεκα seventeen
+ἑπτάπηχυς seven cubits long
+ἑπτάς period of seven days
+ἐπῳδή an enchantment, spell, charm
+ἐπωνυμία name, title; derived, significant name, nickname
+ἐπώχατο were kept shut
+ἔραμαι to love, to be in love with
+ἐράω to love, to be in love with
+ἐργάζομαι to work, labour
+ἐργασία work, daily labour, business
+ἔργον work
+ἔρδω to do
+ἐρείπω throw
+Ἐρέτρια Eretria
+ἐρέω Epic: ask, enquire
+ἐρῆμος desolate, lone, lonely, lonesome, solitary .
+ἐρημόω to strip bare, to desolate, lay waste
+ἐρίνεος of wool, woollen
+ἔριον wool
+ἔρις strife, quarrel, debate, contention
+ἑρμηνεύς interpreter
+Ἕρμος Hermus
+ἔρομαι to ask, enquire .
+ἑρπετόν a walking animal, quadruped
+Ἐρυθραί Erythrae, town in Ionia
+Ἐρυθραῖος of Erythrae
+ἐρυθρός red
+ἐρύω protect, guard
+ἔρχομαι to come
+ἐρῶ [I will say]
+ἐρωτάω to ask
+ἐσθής dress, clothing, raiment .
+ἐσθίω to eat
+ἑσπέρα evening, eventide, eve .
+ἑστία the hearth of a house, fireside; family
+ἔσχατος outermost
+ἔσω to the interior
+ἔσωθεν from within
+ἐτάζω to examine, test
+ἑταιρεῖος of or belonging to a friend; of friendship
+ἑτεροῖος of a different kind
+ἕτερος the one; the other (of two)
+ἑτέρωθι on the other side
+ἔτης clansmen
+ἔτι yet, as yet, still, besides
+ἑτοῖμος at hand, ready, prepared 5)
+ἔτος a year
+εὖ well
+εὐδαιμονέω to be prosperous, well off, happy
+εὐδαιμονία prosperity, good fortune, wealth, weal, happiness
+εὐδαίμων fortunate, wealthy, happy
+εὐδοκιμέω to be of good repute, to be held in esteem, honoured, famous, popular
+εὕδω to sleep, lie down to sleep
+εὐειδής well-shaped, goodly, beautiful, beauteous
+εὐεργεσία well-doing
+εὐεστώ well-being, prosperity
+εὔζωνος well-girdled
+εὐήθεια goodness of heart, good nature, guilelessness, simplicity, honesty
+εὐήθης good-hearted, open-hearted, simpleminded, guileless
+εὐθηνέω to thrive, flourish, prosper
+εὐθύς straight, direct .
+εὔμορφος fair of form, comely, goodly
+εὐνή a bed
+εὐνομέομαι to have good laws, to be orderly
+εὐνομία good order, order
+εὔξενος kind to strangers, hospitable
+Εὔξενος Euxenus
+εὐπάθεια the enjoyment of good things, comfort, ease
+εὐπετής falling well; favourable
+εὐπρεπής well-looking, goodly, comely
+εὑρίσκω to find
+εὖρος breadth, width
+εὐρύς wide, broad
+Εὐρώπη Europa, Europe
+εὔτυκος ready
+εὐτυχέω to be well off, successful, prosperous
+εὐτυχία good luck, success, prosperity
+Εὐφράτης the river Euphrates
+εὐχή a prayer, vow
+εὔχομαι to pray, offer prayers, pay one's vows, make a vow
+εὐώνυμος of good name, left
+εὐωχέω to feast, entertain sumptuously
+ἐφέδρα a sitting by
+ἐφέπω to go after, follow, pursue
+Ἐφέσια the feast of Ephesian Artemis
+Ἐφέσιος of Ephesus
+Ἔφεσος Ephesus (f., the city; m., the founder)
+ἐφέστιος at one's own fireside, at home
+ἐφίημι to send to; (mid) to long for
+ἐφίστημι to set on, over; set in charge of
+ἐφοράω to oversee, observe, survey
+ἔχθρα hatred, enmity
+ἐχθρός hated, hateful; enemy
+ἔχω to have
+ἕψω to boil, seethe
+ἕως (w. aor or as prep.) until; (w. pres) as long as
+ζεύγλη the strap or loop of the yoke
+ζεύγνυμι to yoke, put to
+ζεῦγος a yoke of beasts, a pair of mules, oxen
+Ζεύς Zeus
+Ζέφυρος Zephyrus, the west wind
+ζέω to boil, seethe
+ζημία loss, damage
+ζητέω to seek, seek for
+ζήω to live (LSJ ζῶ) .
+ζωγρέω to take alive, revive
+ζῴδιον a small figure
+ζωή a living
+ζῷον a living being, animal
+ζωός alive, living
+ζωστήρ a girdle
+ἤ either..or; than
+ἦ in truth, truly, verily, of a surety
+ἡβηδόν from the youth upwards
+ἡγεμονία a leading the way, going first
+ἡγέομαι to lead; to consider, believe
+ἤδη already
+ἥδομαι to enjoy oneself, take delight, take one's pleasure
+Ἠετίων Eetion
+ἠθέω to sift, strain
+ἦθος custom, character
+ἥκιστος least
+ἥκω to have come, be present, be here
+ἠλίθιος idle, vain, random
+ἡλικία time of life, age
+ἡλίκος as big as
+ἧλιξ of the same age
+ἥλιος the sun
+ἦμαρ day
+ἡμέρα day
+ἡμερολογέω to count by days
+ἥμερος tame, tamed, reclaimed
+ἡμέτερος our .
+ἡμιόνειος of, belonging to a mule
+ἡμίονος a half-ass
+ἡμιπλίνθιον a half-plinth, a brick
+ἡμιτάλαντον a half-talent
+ἤν see! see there! lo!
+ἤπειρος terra-firma, the land
+ἠπειρώτης of the mainland, living there
+Ἥρα Hera
+Ἥραιον sanctuary of Hera
+Ἡρακλέης Heracles .
+Ἡρακλείδης son of Heracles
+Ἡρόδοτος Herodotus
+ἥρως hero
+ἡσσάομαι to be less than another, inferior to .
+ἥσσων less, weaker
+ἡσυχία stillness, rest, quiet
+ἡσύχιος still, quiet, at rest, at ease
+ἥσυχος still, quiet, at rest, at ease, at leisure
+ἤτοι now surely, truly, verily
+ἠώς the morning red, daybreak, dawn 5)
+θᾶκος a seat, chair
+θάλαμος an inner room
+θάλασσα the sea
+Θαλῆς Thales
+θαμβέω to be astounded, amazed
+θάνατος death .
+θανατόω to put to death
+θάπτω to bury, to honour with funeral rites
+θαρσέω to be of good courage, take courage
+θάσσων quicker, swifter
+θαῦμα whatever one regards with wonder, a wonder, marvel
+θαυμάζω to wonder, marvel, be astonished
+θαυμαστός wondrous, wonderful, marvellous
+θεά a goddess
+θέα a seeing, looking at, view
+θεάομαι to look on, gaze at, view, behold .
+θείνω to strike, wound
+θεῖον brimstone
+θεῖος of/from the gods, divine
+θέμις that which is laid down
+θεοβλαβής stricken of God, infatuated
+θεογονία the generation
+Θεόδωρος Theodorus
+θεοπρόπιον a prophecy, oracle
+θεοπρόπος foretelling things by a spirit of prophecy, prophetic
+θεός god
+θεοσεβής fearing God, religious
+θεοφάνια a festival at Delphi, at which the statues of Apollo and other gods were shewn to the people
+θεοφιλής dear to the gods, highly favoured
+θεραπεία a waiting on, service
+θεράπων a waiting-man, attendant
+θέρειος of summer, in summer
+θερμός hot, warm
+θέρμος lupine, Lupinus albus
+θέρος summer, summertime; harvest, crop
+θεσπίζω to declare by oracle, prophesy, divine
+Θεσσαλιῶτις Thessaliotis, one of the four districts of Thessaly
+θέω to run
+θεωρέω to look at, view, behold
+θεωρία a looking at, viewing, beholding
+Θῆβαι Thebes (usu. plural) .
+Θηβαιεύς the Theban
+Θηβαῖος Theban .
+θήκη a case to put anything in, a box, chest
+θῆλυς female
+θήρα a hunting of wild beasts, the chase
+θηρευτής a hunter, huntsman
+θηρεύω to hunt, go hunting
+θηρίον a wild animal, beast
+θηριώδης full of wild beasts, infested by them
+θησαυρός a store laid up, treasure
+θνητός liable to death, mortal
+θοινάω to feast on, eat
+Θόρναξ Thornax
+Θρᾴκη Thrace
+Θρᾷξ a Thracian; 0)
+Θρασύβουλος Thrasybulus
+θραύω to break in pieces, shatter, shiver
+θρῆνος a funeral-song, dirge, lament
+θρόμβος a lump, piece
+θρόνος a seat, chair
+θυγάτηρ a daughter
+θυμαλγής heart-grieving
+θυμίαμα that which is burnt as incense
+θυμός the soul
+θύννος the tunny-fish
+θυόω to fill with sweet smells
+θύρα a door
+Θυρέα Thyrea, Thyreae
+θυρωρός a door-keeper, porter
+θυσία burnt offering, sacrifice
+θύσιμος fit for sacrifice
+θύω to sacrifice
+θύω rage, seethe
+θῶμιγξ a cord, string
+θώραξ a breastplate, cuirass, corslet
+ἰά a voice, cry
+Ἰάλυσος Ialysus (f., the city; m., the hero)
+ἴαμβος an iambus
+Ἰάονες the Ionians
+Ἰάρδανος the river Iardanus
+Ἰάς Ionian, Ionic
+ἰατρός one who heals, a mediciner, physician
+Ἰβηρία Iberia: area near Causasus, or current-day Spain
+ἰδέα form
+ἴδη a timber-tree
+Ἴδη Ida
+ἴδιος one's own, pertaining to oneself
+ἰδιώτης a private person, an individual
+ἰδιωτικός of or for a private person, unskilled, unprofessional
+ἱδρύω to make to sit down, to seat .
+ἱέρεια a priestess
+ἱερεῖον a victim, an animal for sacrifice
+ἱερεύς a priest, sacrificer .
+ἱερόν sanctuary
+ἱερός super-human, mighty, divine, wonderful
+ἵζω to make to sit, seat, place 5)
+ἵημι to set a going, put in motion .
+ἰθύνω to make straight, straighten
+ἰθύς straight, direct
+ἰθύω to go straight, press right on
+ἱκανός becoming, befitting, sufficing
+ἱκετεύω to approach as a suppliant
+ἱκέτης one who comes to seek protection, a suppliant
+ἱκνέομαι to come
+ἰλαδόν in troops
+ἱλάσκομαι to appease
+ἴλη a crowd, band, troop
+Ἴλιον Ilium
+Ἰλλυριοί Illyrians
+ἱμάτιον an outer garment, a cloak
+ἵμερος a longing
+ἵνα in order that (conj.); where (rel. adv.)
+Ἴναχος Inachus
+Ἰνδικός Indian
+ἱππάς a riding-dress; the class of cavalry in Athens
+ἱππεύς a horseman
+ἱππεύω to be a horseman
+Ἱππίας Hippias
+ἱππικός of a horse
+Ἱπποκράτης Hippocrates
+Ἱππόλοχος Hippolochus
+ἵππος a horse, mare
+ἱππότης a driver
+ἴς sinew, tendon
+ἰσθμός neck, narrow passage .
+Ἰσμήνιος Ismenian
+ἰσοπαλής equal in the struggle, well-matched
+ἴσος equal to, the same as; adv. perhaps .
+Ἰσσηδόνες Issedones
+ἵστημι to make to stand
+Ἱστιαιῶτις Histiaeotis
+ἱστορέω to inquire into
+ἱστορία a learning by inquiry, inquiry
+Ἴστρος Ister, Danube .
+ἰσχυρός strong, mighty 5)
+ἴσχω to hold, check, curb, keep back, restrain
+Ἰταλία Italy
+ἰτέα a willow
+ἰχθύς a fish
+ἰχνεύω track out, hunt after
+Ἰώ Io
+Ἴωνες Ionians
+Ἰωνία Ionia .
+Ἰωνικός Ionic, Ionian
+Καδμεῖος Cadmean, Theban
+Κάδμος Cadmus
+Κάειρα a Carian woman
+καθαγίζω to devote, dedicate, offer
+καθαιρέω to take down
+καθαίρω to make pure
+καθαρός clear of dirt, clean, spotless, unsoiled
+καθάρσιος cleansing
+κάθαρσις a cleansing
+καθήκω to have come; to suit, to belong to, be one’s duty
+κάθημαι to be seated
+καθιερόω to dedicate, devote, hallow
+καθίζω to make to sit down, seat
+καθίστημι to set down, place
+κάθοδος a going down, descent
+καθυβρίζω to treat despitefully, to insult or affront wantontly
+καθύπερθε from above, down from above .
+καθυπέρτερος above
+καί and, also
+καίπερ although, albeit
+καίριος in time, at the right moment, vital, fatal
+καιρός time; the right moment, opportunity
+καίω to light, kindle
+κάκη wickedness, vice
+κακοδαιμονία unhappiness, misfortune
+κακόνομος with bad laws, ill-governed
+κακός bad
+κακοῦργος doing ill, mischievous, knavish, villanous
+κακόω to treat ill, maltreat, afflict, distress
+καλάμη the stalk
+κάλαμος a reed
+καλέω to call, summon
+καλλίας tame ape
+καλλιόω make more beautiful
+καλλιστεύω to be the most beautiful
+καλός beautiful
+καμάρα anything with an arched cover: a covered carriage, barge, vault
+Καμβύσης Cambyses
+Κάμειρος Camirus (a hero, and the town on Rhodes he founds)
+κάμηλος a camel
+κάμινος an oven, furnace, kiln
+κάμνω to work, toil, be sick
+Κανδαύλης dog-throttler
+κάνεον a basket of reed
+καπηλεύω to be a retail-dealer
+κάπηλος a retail-dealer, huckster, hawker, peddlar, higgler
+Καππαδόκαι the Cappadocians
+Καππαδοκία Cappadocia
+Κάρ a Carian .
+Καρικός Carian
+Κάριος Carian, (fem. noun) Caria
+καρπός fruit .
+καρπός the wrist
+καρποφόρος fruit-bearing, fruitful
+καρπόω to bear fruit
+κάρτα very, very, much, extremely
+καρτερός strong, staunch, stout, sturdy;
+κάρτος strength, vigour, courage
+Καρχηδόνιος Carthaginian
+Καρχηδών Carthage
+Κάσπιος Caspian; see also entries for Caspium [mare]
+κατά down, against with gen.; according to, throughout with acc.
+καταβαίνω to step down, go
+καταβάλλω to throw down, overthrow
+κατάβασις a going down, way down, descent
+καταβιβάζω to make to go down, bring down, bring down
+καταγορεύω to denounce
+κατάγω to lead down
+καταγωγή a bringing down from
+καταδείκνυμι to discover and make known
+κατάδηλος quite manifest, plain, visible
+καταδικάζω to give judgment against
+καταδοκέω to suppose
+καταδουλόω to reduce to slavery, enslave
+καταινέω to agree to
+κατακαίω to burn down, burn completely
+κατακαλύπτω to cover up
+κατακερτομέω to rail violently
+κατακηρόω to cover with wax
+κατακλίνω to lay down
+κατακόπτω to cut down, cut in pieces, cut up
+κατακρύπτω to cover over, hide away, conceal
+κατακυλίνδω to roll down
+καταλαμβάνω to seize upon, lay hold of
+καταλέγω recount, tell at length and in order
+καταλείπω to leave behind .
+καταλεύω to stone to death
+καταλλάσσω to change
+καταλύω to put down, destroy; settle (disputes); lodge, rest
+καταμεθύσκω to make quite drunk
+καταντίον over against, right opposite, facing
+καταπαύω to lay to rest, put an end to
+καταπίπτω to fall
+καταπλέω to sail down
+καταποντίζω to throw into the sea, drown therein
+καταποντόω to throw into the sea, drown therein
+καταπορνεύω to prostitute
+κατάρα a curse
+καταρρήγνυμι to break down
+κατασβέννυμι to put out, quench
+κατασιτέομαι to eat up, feed on
+κατασκευάζω to equip
+κατάσκοπος one who keeps a look out, a scout, spy
+κατασπάω to draw, pull down
+καταστρέφω to turn down, trample on
+καταστροφή an overturning
+κατατείνω to stretch
+κατατέμνω to cut in pieces, cut up
+κατατίθημι to place, put
+καταφαίνω to declare, make known
+καταφέρω to bring down
+καταφεύγω to flee for refuge
+καταφονεύω to slaughter
+καταφρονέω to think down upon
+καταχαίρω to exult over
+καταχέω to pour down upon, pour over
+καταχράομαι to make full use of, apply; to finish off, execute
+καταχράω to suffice, see καταχράομαι end of entry
+κατειλέω to force into a narrow space, to coop up
+κάτειμι go down
+κατεῖπον to speak against
+κατεργάζομαι to effect by labour, to achieve, accomplish
+κατέρχομαι to go down from; return from exile
+κατεσθίω to eat up, devour
+κατεύχομαι to pray earnestly
+κατευωχέομαι to feast and make merry
+κατέχω to hold fast
+κατήκοος hearing; obedient; eavesdropping
+κατηλογέω to make of small account, take no account of, neglect
+κατοικέω to settle; to inhabit
+κατοικτείρω to have mercy
+κατορρωδέω to be dismayed at, dread greatly
+κάτω down, downwards
+Καύκασος Mt. Caucasus
+Καύκωνες Caucones, Cauconians
+Καυνικός Caunian, of Caunus
+Καύνιος of or from Caunus (in Caria)
+Καῦνος Caunus
+κέγχρος millet
+κεῖμαι to lie; to have been set/put (as perf. pass. of τίθημι)
+κελευσμοσύνη order, command
+κελεύω to urge
+κενός empty
+κεραΐζω ravage, plunder
+Κεραμεικός the Potters’ Quarter in Athens; (adj.) of Ceramus, in Caria
+κερδαίνω to gain, derive profit
+κεφαλή the head
+κήδω to trouble, distress, vex; mid. care for
+κήλων a swipe
+κηλώνειον swing, swing beam, for irrigation
+κῆρυξ a herald, pursuivant, marshal, public messenger
+κηρύσσω to be a herald, officiate as herald
+κίβδηλος adulterated, spurious, base
+κιθαρίζω to play the cithara
+κιθαρῳδός one who plays and sings to the cithara, a harper
+Κίλιξ a Cilician
+Κίλλα Cilla
+Κιμμέριοι the Cimmerians
+κίνδυνος a danger, risk, hazard, venture, enterprise
+κινέω to set in motion, to move
+κίων a pillar
+Κλαζομεναί Clazomenae
+Κλαζομένιος of Clazomenae
+κλαίω to weep, lament, wail
+κλαυθμός a weeping
+κλέπτω to steal, filch, purloin
+κλῆρος lot, casting of lots, allotment
+κλίνη that on which one lies, a couch
+κλίνω to make to bend, slope; recline
+κλώψ a thief
+κνάφος the prickly teasel
+Κνίδιος of or from Cnidus, Cnidian
+Κνίδος Cnidos
+Κόδρος legendary king; prov. old-fashioned persons
+κόθορνος high boot
+κοίῃ how? in what way? in what respect?
+κοιμάω to lull
+κοινός common, shared in common .
+κοίτη the marriage-bed
+κοῖτος a place to lie on, bed
+κόλλησις a glueing
+κολλητός glued together, closely joined, well-framed
+Κολοφών Colophon
+Κολοφώνιος inhabitant of Colophon, Colophonian
+κόλπος bosom; gulf .
+Κολχίς Colchis
+Κόλχος a Colchian
+κολωνός a hill
+κομάω to let the hair grow long; give oneself airs
+κομίζω to take care of, provide for
+κόπτω to strike, smite, knock down
+κορέννυμι to sate, satiate, satisfy
+Κορίνθιος Corinthian
+Κόρινθος Corinth, (masc) Korinthos son of Zeus, founder of Corinth
+κοσμέω to order, arrange
+κόσμος order
+κουρίδιος wedded
+κοῦφος light, nimble
+Κρᾶθις Crathis, name of a river (m); of a mountain (f)
+κράνος a helmet
+κραταίρινος hard-shelled
+κρατερός strong, stout, mighty
+κρατέω to be strong, mighty, powerful
+κρατήρ a mixing vessel
+κράτιστος strongest, mightiest
+κράτος strength, might
+κρατύνω to strengthen
+κρέας flesh, meat, a piece of meat
+κρείσσων stronger, mightier, more powerful
+κρεμάννυμι to hang, hang up
+κρηπίς a half-boot
+Κρής a Cretan
+Κρήτη Crete
+Κρητικός of Crete, Cretan
+κριθή barley-corns, barley
+κρίνον a lily
+κρίνω to pick out, choose, judge, determine
+Κροῖσος Croesus
+κρύπτω to hide, cover, cloak
+κτάομαι to procure for oneself, to get, gain, acquire .
+κτείνω to kill, slay
+κτῆνος flocks and herds
+κτῆσις acquisition
+κτίζω to found
+Κυαξάρης Cyaxares
+κύβος dice
+Κύθηρα Cythera
+Κυθήριος Cytherean
+κύκλος a ring, circle, round
+κυκλοτερής made round by turning
+Κυμαῖος of Cumae
+Κύμη Cyme, Cumae
+κυνάω to play the Cynic
+κυνέη a dog skin; cap, helmet
+κυνέω to kiss
+κυνηγέσιον a hunting-establishment, huntsmen and hounds, a pack of hounds
+Κῦνος Cynus
+Κύπριος of Cyprus, Cyprian
+Κύπρος Cyprus
+κυρέω to hit, light upon
+κυρία authority; in Rome, comitia
+Κύρνος Cyrnus
+Κῦρος Cyrus
+Κύψελος pr.n. Cypselus
+κύων a dog
+κώμη country town
+κῶμος a village festival: a revel, carousal, merry-making
+Κῶς Cos
+κωφός blunt, dull, obtuse
+λάβρος furious, boisterous
+λαγχάνω to obtain by lot, by fate, by the will of the gods
+λαγώς hare
+λαγῶς a hare
+Λακεδαιμόνιος Spartan
+Λακεδαίμων Lacedaemon
+Λάκων a Laconian
+Λακωνικός Laconian
+λαμβάνω to take, seize, receive
+λαμπρός bright, brilliant, radiant
+λάμπω to give light, shine, beam, be bright, brilliant, radiant
+λανθάνω to escape notice, to be unknown, unseen, unnoticed
+λαός the people
+λαοφόρος bearing people
+λαύρα an alley, lane, passage
+λεαίνω to smooth
+λέβης a kettle
+λέγω to pick; to say
+λεία tool for smoothing stone
+λεία booty, plunder
+λειμών any moist, grassy place, a meadow, mead, holm
+λείπω to leave, quit
+Λέλεγες the Leleges (sg. Lelex, their mythical founder)
+λέπρα leprosy
+λεπτόν a very small coin, a mite; small intestine; a jar (LSJ λεπτός)
+Λέσβιος Lesbian, of Lesbos
+Λέσβος Lesbos
+λεύκη white leprosy
+λευκός light, bright, clear
+λευρός smooth, level, even
+λέων a lion
+Λέων Leon
+λήϊον standing crop
+λιβανωτός frankincense, the gum of the tree
+Λιβύη Libya, the north part of Africa
+λίθος a stone
+Λιμενήιον Limeneium
+λιμήν a harbour, haven, creek
+λίμνη a pool of standing water; a lake
+λιμός hunger, famine
+Λίνδος from Lindos
+λίνεος of flax, flaxen, linen
+λιπαρέω to persist, persevere, hold out
+λίσσομαι to beg, pray, entreat, beseech
+λιτή a prayer, entreaty
+λογάς gathered, picked, chosen
+λογίζομαι to count, reckon, calculate, compute
+λόγιμος worth mention, notable, remarkable, famous
+λόγιον an announcement, oracle
+λόγιος versed in tales
+λόγος the word .
+λόγχη a spear-head, javelin-head
+λοιπός remaining, the rest
+Λοξίας Loxias
+λούω to wash
+λόφος the back of the neck
+λοχίζω to lie in wait for
+Λύγδαμις Lygdamis
+Λυδία Lydia
+Λυδίας the river Lydias
+Λυδικός Lydian
+Λύδιος of Lydia, Lydian
+Λυδός (adj) Lydian; (subst) Lydus, their mythical ancestor
+Λύκιος Lycian; (fem. noun) Lycia
+Λύκος Lycus
+Λυκοῦργος Lycurgus
+λυμαίνομαι to treat with indignity, to outrage, to maltreat
+λυπέω to give pain to, to pain, distress, grieve, vex, annoy
+λυσιτελέω to bring profit, gain
+λύω to loose .
+λωΐων more desirable, more agreeable
+Μαγνησία Magnesia
+Μάγος a Magus, Magian
+Μάγων Mago, Carthaginian
+μᾶζα a barley-cake
+Μαζάρης Mazares
+μάθημα that which is learnt, a lesson
+Μαίανδρος Maeander
+Μαιῆτις Maeotian (lake)
+μαίνομαι to rage, be furious
+μακαρίζω to bless, to deem
+μακρός long .8)
+μάλα very, very much, exceedingly .
+Μαλέα Malea
+μάλιστα most
+μᾶλλον more, rather
+μανθάνω to learn
+μαντεῖον an oracle
+μαντεῖος oracular, prophetic
+μαντεύομαι to divine, prophesy, presage
+Μαραθών Marathon
+Μάρδος Mardus
+Μαριανδυνός a people of Bithynia; (fig.) wild, barbaric
+μαρτύρομαι to call to witness, attest, invoke
+Μασσαγέται Massagetae
+μάσσω to knead
+μαστιγόω to whip, flog
+μασχαλιστήρ a broad strap passing round the horse
+μάχη battle, fight, combat
+μάχομαι to fight
+μεγαίρω to look on
+μεγαλοπρέπεια magnificence, elevation
+Μεγαρεύς a citizen of Megara
+μέγαρον a large room
+μέγας big, great
+μέγεθος greatness, magnitude, size, height, stature
+μέδιμνος the medimnus
+μεθίημι to let go, let loose, release
+μεθίστημι to place in another way, to change
+μεθύσκω to make drunk, intoxicate, inebriate
+μείγνυμι to mix, mix up, mingle, properly of liquids
+μείς a month .
+Μέλανθος Melanthus
+μέλεος idle, useless
+μέλι honey
+μέλλω to think of doing, intend to do, to be about to do
+μέλος a limb; a phrase of song; a song
+μέλω to be an object of care
+μέμφομαι to blame, censure, find fault with
+μέν on the one hand, on the other hand
+μέντοι however, nevertheless; of course (answers)
+μένω to stay at home, stay where one is, not stir
+Μερμνάδαι Mermnadae
+μέρος a part, share
+μέση mese
+μεσημβρία mid-day, noon; south
+μέσης a wind between
+μεσόγαια the inland parts, interior
+μεσόγαιος inland, in the heart of a country
+μέσος middle, in the middle
+μεσόω to form the middle, be in
+μεστός full, filled, filled full
+μετά (w gen) with, among; (w acc) after
+μεταβαίνω to pass over from one place to another
+μεταβάλλω to throw into a different position, to turn quickly
+μεταβολή a change, changing
+μεταβουλεύω to alter one's plans, change one's mind
+μεταγιγνώσκω to change one's mind, to repent
+μετάγνωσις change of mind
+μεταδίδωμι to give part of, give a share of
+μετακινέω to transpose, shift, remove
+μεταλλαγή change
+μεταμανθάνω to learn differently
+μεταμέλομαι feel repentance, regret
+μεταξύ betwixt, between
+μεταπέμπω to send after .
+μεταῦθις afterwards
+μεταφορέω change, transfer, shift
+μετεξέτεροι some among many, certain persons
+μετέπειτα afterwards, thereafter
+μετέχω to partake of, enjoy a share of, share in, take part in
+μετέωρος raised from the ground, hanging
+μετοχή participation, communion
+μετρέω to measure in any way
+μέτριος within measure
+μέτρον that by which anything is measured
+μέτωπον the space between the eyes, the brow, forehead
+μέχρι until (prep. and conj. w. aor.), as long as (conj. w. pres.)
+μή not
+μηδαμός none
+μηδαμῶς not at all
+μηδέ but not .9)
+Μήδεια Medea
+μηδείς (and not one); not one, no-one
+Μηδικός Median, of the Medes
+Μῆδος a Mede, Median
+Μηθυμναῖος of Methymna
+μῆκος length
+μήλειος of a sheep
+μήλη a probe
+μῆλον a sheep
+μῆλον tree-fruit
+μήν now verily, full surely
+μήνη the moon
+μηνύω to disclose what is secret, reveal, betray
+μηρός the thigh
+μήτε neither / nor
+μήτηρ a mother .
+μητροπάτωρ one's mother's father
+μηχανάομαι to prepare, make ready .
+Μῄων Maeonian
+Μίδας Midas
+μικρός small, little .
+Μιλήσιος Milesian
+Μίλητος Miletus
+μιμέομαι to mimic, imitate, represent, portray
+μιμνήσκω to remind
+μιν him, her, it
+Μινύης Minyas, legendary king of Orchomenos
+Μίνως Minos
+μίξις mixing, mingling
+μισθός wages, pay, hire
+μισθόω to let out for hire, farm out, let
+μισθωτός hired
+μίτρα a belt, girdle; a turban; a bandage
+Μίτρα Mitra
+μνᾶ a weight,
+μνάομαι be mindful of; woo
+μνήμη a remembrance, memory, record
+μνημονεύω to call to mind, remember
+μνημόσυνον a remembrance, memorial, record
+μόγις (with toil and pain); barely, scarcely
+μοῖρα a part, portion; fate
+μοιχίδιος born in adultery
+Μολοσσός Molossian
+μόλυβδος lead
+μοναρχία the rule of one, monarchy, sovereignty
+μονόθεν alone, singly
+μονόκωλος with but one leg
+μόνος alone, left alone, forsaken solitary
+μονόω to make single
+μόρος man's appointed doom, fate, destiny
+μόχθος toil, hard work hardship, distress, trouble
+μύδρος a mass of red-hot metal
+Μυκάλη Mycale
+Μυόεις Myous
+μυρίζω to rub with ointment
+μυρίος numberless, countless, infinite
+μύρμηξ ant
+Μυρσίλος Myrsilus
+μυρσίνη a branch or wreath of myrtle
+Μύρσος Myrsus
+Μύσιος of Mysia, (Aesch.) subst. a Mysian dirge
+Μυσός a Mysian
+Μυτιληναῖος of Mytilene
+Μυτιλήνη Mytilene
+μωρία silliness, folly
+ναί yea, verily
+Νάξιος Naxian
+Νάξος Naxos
+ναός the dwelling of a god, a temple .8)
+ναυβάτης a seaman, sea-going
+ναύκληρος a shipowner, ship-master
+ναυμαχία a sea-fight
+ναυπηγέω to build ships
+ναυπηγία shipbuilding
+ναῦς a ship
+ναυσιπέρατος navigable
+ναυτιλία sailing, seamanship
+ναυτίλλομαι to sail, go by sea
+νέα fallow land (LSJ νειός)
+νεανίας young man
+νεάω to plough up anew
+νέηλυς newly come, a new-comer
+νειός fallow land
+νεκρός a dead body, corpse
+νέκυς a dead body, a corpse, corse
+νέμεσις distribution of what is due;
+νέμω to deal out, distribute, dispense
+νεόγαμος newly married, a young husband
+νέος young, youthful .
+νεοσσεύω to hatch
+νέφος a cloud, mass
+νέω to swim
+νέω to spin
+νέω
+νεώτερος younger
+νηνεμία stillness in the air, a calm
+νήπιος infant, childish
+νησιώτης an islander
+νῆσος an island
+νήφω to drink no wine
+νικάω to conquer, prevail, vanquish
+νίκη victory
+Νίνος (fem.) the city Ninus, Niniveh; (masc.) Ninus, founder of Niniveh
+Νίσαια Nisaea
+Νίτωκρις Nitocris
+νοέω to perceive by the eyes, observe, notice
+νομαῖος of/for a herdsman's life, pastoral
+νόμαιος customary
+νομάς roaming about for pasture
+νομεύς a shepherd, herdsman; pl. ribs of a ship
+νομή a pasture, pasturage
+νομίζω to have as a custom; to believe
+νόμισμα anything sanctioned by usage, a custom, institution
+νομός place of pasture; district (nome), esp. in Egypt
+νόμος usage, custom, law, ordinance
+νόος mind, perception .
+νοόω convert into pure Intelligence
+νοσέω to be sick, ill, to ail
+νόσος sickness, disease, malady
+νοστέω to come
+Νότιον Notium
+νότος the south
+νυκτομαχία a night- battle
+νῦν now at this very time
+νύξ the night (5)
+νῶτον the back
+Ξάνθιος of Xanthus, Xanthian
+Ξάνθος Xanthus (m. of persons and rivers; f. of town)
+ξενία the rights of a guest, hospitality, friendly entertainment
+ξενίζω to receive a guest; to surprise, to make strange
+ξενικός of or for a stranger, alien, mercenary, non-Attic; hospitable
+ξένος a guest, guest-friend, stranger; foreign
+Ξέρξης Xerxes
+ξύλον wood .
+ξυστόν the polished shaft; covered colonnade
+ὁ the
+ὀγδοήκοντα eighty
+ὅδε this
+ὁδός a way, path, track, journey
+ὀδούς tooth
+ὅθεν from where, whence
+οἷ whither; where (to)
+οἷα causal particle w pple.s see οἷος V
+οἰακίζω to steer
+οἶδα to know
+οἰκεῖος in or of the house
+οἰκειόω to make one's own
+οἰκέτης a house-slave, menial
+οἰκέω to inhabit, occupy
+οἴκημα any inhabited place, a dwellingplace .
+οἰκία a building, house, dwelling .
+οἰκίον house, palace (always plural) .
+οἰκοδομέω to build a house
+οἶκος a house, abode, dwelling .
+οἶκτος pity, compassion
+οἰμάω to swoop
+οἶνος wine
+Οἰνοῦσσαι Oenusae
+οἷος (such a kind) as; for οἷός τε see οἷος III
+οἴχομαι to be gone, to have gone
+ὀκτακόσιοι eight hundred
+ὀκτώ eight .
+ὀκτωκαίδεκα eighteen
+ὄλβιος happy, blest
+ὄλεθρος ruin, destruction, death
+ὀλίγος few, little, scanty, small
+ὀλιγοχρόνιος lasting
+ὀλιγωρία an esteeming lightly, slighting, contempt
+ὅλμος a round smooth stone: a mortar, kneading trough
+ὅλος whole, entire, complete in all its parts
+Ὀλύμπιος Olympian, of Olympus, dwelling on Olympus
+Ὄλυμπος Olympus
+ὁμῆλιξ of the same age
+ὅμηρος a pledge for the maintenance of unity, a surety, a hostage
+Ὅμηρος Homer
+ὁμιλία a being together, communion, intercourse, converse, company
+ὅμιλος any assembled crowd, a throng of people
+ὄμμα the eye
+ὄμνυμι to swear
+ὁμόγλωσσος speaking the same tongue
+ὅμοιος like, resembling
+ὁμοιόω to make like
+ὁμολογέω agree, say the same thing as
+ὁμολογία agreement
+ὁμομήτριος born of the same mother
+ὅμορος having the same borders with, marching with, bordering on
+ὁμοσιτέω to eat with, take one's meals with
+ὁμοῦ at the same place, together
+ὁμοφωνέω to speak the same language with
+ὁμῶς equally, likewise, alike
+ὅμως all the same, nevertheless
+ὀνειδίζω to throw a reproach upon
+ὀνειροπόλος interpreter of dreams
+ὄνειρος a dream
+ὀνεύω to draw up with a windlass
+ὄνομα name
+ὀνομάζω to name .
+ὀνομαστός named, to be named
+ὄνος an ass
+ὅπη by which way
+ὄπισθεν behind, at the back
+ὀπίσω backwards
+ὁπλίζω to equip, make ready; to arm
+ὅπλον a tool, implement, (pl.) arms, weapons .
+ὁπόθεν whence, from what place
+ὁποῖος of what sort
+ὁπόσος as many as
+ὁπότερος which of two, whether of the twain
+ὅπου where
+ὀπτάω to roast, broil
+ὀπτός roasted, broiled
+ὅπως how, that, in order that, as
+ὁράω to see
+ὀργή natural impulse
+ὀρεινός mountainous, hilly
+Ὀρέστης Orestes; pl., the Orestae, an Epirot people
+ὀρθός straight .
+ὀρθόω to set straight
+ὄρθρος day-break, dawn, cock-crow
+ὅρκιον an oath
+ὅρκιος belonging to an oath
+ὅρκος the object by which one swears, the witness of an oath
+ὁρμάω to set in motion, urge
+ὁρμέω to be moored, lie at anchor .
+ὄρνις a bird
+ὄρος a mountain, hill
+ὅρος a boundary, landmark
+ὀρρωδέω to fear, dread, shrink from
+ὄρυγμα a trench, ditch, moat
+ὀρύσσω to dig .
+ὀρχέομαι to dance in a row
+ὄρχησις dancing, the dance
+Ὀρχομένιος of Orchomenos
+ὅς who, that, which: relative pronoun
+ὅς [possessive pronoun]
+ὁσάκις as many times as, as often as
+ὀσμή a smell, scent, odour
+ὅσος as much/many as
+Ὄσσα Ossa, a mountain in Thessaly
+ὅστε who, which
+ὀστέον bone
+ὅστις indef. relative or indirect interrogative
+ὀσφραίνομαι to catch scent of, smell, scent, track
+ὅταν when, whenever
+ὅτε when 0)
+ὅτι adv. + superl., as...as possible; ὅτι μή except
+ὅτι conj.: that, because
+οὐ not
+οὗ where
+οὗ him, her (οὗ οἷ ἕ)
+οὐδαμά never, not at all
+οὐδαμῇ nowhere, in no place
+οὐδαμός not even one, no one
+οὐδαμῶς in no wise
+οὐδέ and/but not; not even
+οὐδείς not one, nobody
+οὐδέτερος not either, neither of the two
+οὐδός a threshold
+οὐκέτι no more, no longer, no further .
+οὐκοῦν therefore, then, accordingly
+οὔκουν not therefore, so not
+οὐλαί barley-corns, barley-groats
+οὐλή a scar
+οὖν so, then, therefore
+οὔπω not yet
+Οὐρανία Urania, the heavenly one
+οὐράνιος heavenly, of or in heaven, dwelling in heaven
+οὐρανός heaven
+οὐρέω to urinate
+οὖρον urine
+οὖρον boundary
+οὐρός a trench
+οὖρος a fair wind
+οὖρος a watcher, warder, guardian
+οὖρος
+οὐσία that which is one's own, one's substance, property
+οὔτε neither / nor .
+οὔτι in no wise
+οὔτις no one
+οὔτοι indeed not
+οὗτος this; that
+οὕτως so, in this manner
+ὀφείλω to owe, have to pay
+ὀφθαλμός the eye
+ὄφις a serpent, snake
+ὄχανον the holder of a shield, a bar across the hollow of the shield
+ὀχέω to uphold, sustain, endure
+ὀχληρός troublesome, irksome, importunate
+ὄψις look, appearance, aspect
+πάγχυ quite, wholly, entirely, altogether
+πάθη a passive state
+πάθημα anything that befals one, a suffering, calamity, misfortune
+πάθος anything that befalls one, an incident, accident
+Παιανιεύς of the deme of Paiania
+παιγνία play, sport, a game
+παιδεύω to bring up
+παιδίον a child 0)
+παιδίσκη a young girl, maiden
+παίζω to play like a child, to sport, play
+παῖς a child
+Πακτύη Pactye, town in Thrace
+Πακτύης Pactyes, leader of Lydian revolt
+πάλαι long ago, in olden time, in days of yore, in time gone by
+παλαιός old in years
+Παλαιστίνη Palaestina, Palestine
+παλαστιαῖος a palm long
+παλιλλογέω to say again, repeat, recapitulate
+πάλιν back, backwards
+παλλακή concubine, mistress
+Παλληνεύς an inhabitant of Παλλήνη
+πάλλω to poise, shake, sway, leap
+Πάμφυλος Pamphylus, Pamphylian
+Πανδίων Pandion
+πανήγυρις a general, festive assembly
+Πανιώνιον Panionium, sanctuary of the united Ionians; pl. their festival
+Πανιώνιος Pan-Ionian, epithet of Apollo
+πανοπλία suit of armour of a ὁπλίτης
+Πάνορμος Panormus
+πανστρατιά a levy of the whole army
+πανστρατιᾷ with the whole army
+πάντῃ every way, on every side
+παντοδαπός of every kind, of all sorts, manifold
+παντοῖος of all sorts
+πάντως altogether;
+παρά from the side of, c. gen., beside, alongside of, c. dat., to the side of, motion alongside of, c. acc.
+παραβάλλω to throw beside
+παραγίγνομαι to come near, attend upon
+παραγυμνόω to lay bare at the side
+παράγω to lead by
+παραγωγεύς introducer
+παραγωγή a leading by, past, astray; dialect variation, misleading argument
+παραδείκνυμι to exhibit side by side
+παραδέχομαι to receive from
+παραδίδωμι to hand over, to surrender
+παραινέω to exhort, recommend, advise
+Παραιτακηνός of Paraetacene
+παραιτέομαι to beg from
+παρακαλέω to call to
+παράκειμαι to lie beside
+παραλαμβάνω to receive from
+πάραλος by the sea, on the coast
+παραλύω to loose from the side, take off, detach
+παραμείβω to leave on one side, pass by
+παραμείγνυμι intermingle, mix with
+παραμελέω to pass by and disregard, to be disregardful of
+παραμένω to stay beside
+παράπαν altogether, absolutely
+παραπλήσιος coming near, nearly resembling, such-like
+παρασκευάζω to get ready, prepare
+παρατείνω to stretch out along
+παρατίθημι to place beside
+παρατυγχάνω to happen to be near, be among
+παραυτίκα immediately, forthwith, straightway
+παραφέρω to bring to
+παραφορέω to set before
+παραφρονέω to be beside oneself, be deranged
+παραχέω to pour in beside, pour in
+παραχράομαι to use improperly, misuse, abuse
+παραχώννυμι to throw up beside
+παρειάς bandage for the cheek
+πάρειμι be present
+πάρειμι go past, march along, come forward
+παρενθήκη something put in beside, an addition, appendix
+παρέξ outside, before
+παρεξέρχομαι to go out beside, slip past
+παρέρχομαι to go by, beside
+παρευρίσκω to discover besides, invent
+παρέχω to furnish, provide, supply
+παρθένος a maid, maiden, virgin, girl
+παρίημι to pass over, let go, relax, yield, allow
+Πάριος from the island of Paros
+παρίστημι to make to stand
+παροίχομαι to have passed by
+παροράω to look at by the way, notice, remark
+πᾶς all, the whole
+πᾶσις acquisition, possession
+πάσχω to experience, to suffer
+πατήρ a father
+Πατρεύς an inhabitant of Patras
+πατριά lineage, pedigree, by the father's side
+πάτριος of one’s father, ancestral, native
+πατρίς fatherland, homeland; of one’s father
+πατρῷος of or belonging to the father
+παύω to make to cease
+Παφλαγών a Paphlagonian
+πέδη a fetter
+πεδίον a plain .
+πεζός on foot
+πείθω to prevail upon, win over, persuade
+πεινάω to be hungry, suffer hunger, be famished
+πειράω to attempt, endeavour, try
+Πεισίστρατος Peisistratus .
+πελαγίζω to form a sea
+πέλαγος the sea
+πέλας near, hard by, close
+Πελασγικός Pelasgian
+Πελασγός a Pelasgian;
+Πελλήνη Pellene
+Πελοπόννησος the Peloponnesus
+πεμπτός sent
+πέμπτος the fifth, oneself with four others
+πέμπω to send, despatch
+πένης one who works for his daily bread, a day-labourer, a poor man
+πένθος grief, sadness, sorrow
+πενταετής five years old
+πεντακισχίλιοι five thousand
+πεντακόσιοι five hundred
+πεντάπολις league of five cities
+πέντε five
+πεντεκαίδεκα fifteen
+πεντήκοντα fifty
+πεντηκόντερος ship with fifty oars
+πεντηκόντορος a ship of burden with fifty oars
+περ precisely; w. pple. even though (later καίπερ)
+περαιόω to carry to the opposite side, carry over
+πέραν on the other side, across, beyond
+πέρθω to waste, ravage, sack, destroy
+περί around, round about with gen., dat., and acc.
+περιάγω to lead
+Περίανδρος Periander
+περιβάλλω to throw round
+περίβολος going round, encircling; (subst.) circuit of walls
+περιγίγνομαι to be superior to; to survive
+περίειμι be superior, survive, be left over .
+περίειμι go around
+περιέλασις a place for driving round, a roadway
+περιελαύνω to drive round
+περιέπω to treat with great care
+περιέρχομαι to go round, go about
+περιέχω to encompass, embrace, surround
+περιημεκτέω to be much aggrieved, to chafe greatly at
+περιθέω to run round
+περιίζομαι to sit round about
+περιίστημι to place round
+περικάθημαι to be seated
+περίκειμαι to lie round about
+περίμετρος excessive
+περιμήκης very tall
+πέριξ round about, all round
+περίοδος one who goes the rounds, patrol
+περίοδος a going round, a flank march
+περιοικέω to dwell round
+περιοικίς neighboring (subst., surrounding territory of a town)
+περίοικος dwelling round
+περιοράω to look over, overlook
+περιπέμπω to send round
+περιπίπτω to fall around, so as to embrace
+περιποιέω to make to remain over and above, to keep safe, preserve
+περιρραντήριον an utensil for besprinkling
+περίρροος flowing round
+περισκοπέω to look round
+περιστέλλω to dress, clothe, wrap up
+περιστερά the common pigeon
+περιτείνω to stretch all round
+περιτίθημι to place round
+περιφέρω to carry round
+περιχαρής exceeding joyous
+περιχωρέω to go round
+Περσείδης descendant of Perseus
+Περσεύς Perseus
+Πέρσης a Persian; Perses (pr.n.)
+Περσικός Persian
+πεσσός an oval-shaped stone for playing a game like our draughts
+πετεινός able to fly, full fledged
+πέτρα a rock, a ledge
+πῃ in some way, somehow
+πηγή running waters, streams
+πήγνυμι to make fast
+πηκτίς an ancient harp
+πῆμα suffering, misery, calamity, woe, bane
+πῆρος loss of strength, dotage
+πῆχυς the fore-arm
+πιέζω to press, squeeze; oppress, distress
+πίθος a wine-jar
+πίθων a little ape
+πικρός pointed, sharp, keen
+πικρότης pungency, bitterness
+πίμπλημι to fill full of
+πινάω to be dirty
+Πίνδος Pindus
+πίνω to drink
+πιπράσκω to sell
+πίπτω to fall, fall down
+πιστεύω to trust, trust to
+πιστός liquid (medicines)
+πιστός to be trusted
+πίσυνος trusting on, relying
+Πιττακός Pittacus
+πίων fat, plump
+πλάνη a wandering, roaming
+πλάτος breadth, width
+πλεῖστος most, largest
+πλείων more, larger
+πλέος full.
+πλέω to sail, go by sea
+πλέως full of .
+πλῆθος a great number, a throng, crowd, multitude
+πλῆκτρον anything to strike with
+πλήν except
+πλήρης filled
+πληρόω to make full
+πλήσσω to strike, smite
+πλινθεύω to make into bricks
+πλίνθος a brick
+πλοῖον a floating vessel, a ship, vessel
+πλόος a sailing, voyage
+πλοῦτος wealth, riches
+πνέω to blow
+πόα grass, herb
+ποδαβρός tenderfooted
+ποδηνεκής reaching to the feet
+ποθεν from some place
+πόθεν whence? (i.e., from where?)
+πόθος a longing, yearning, fond desire
+ποιέω to make, to do
+ποίημα anything made
+ποιητέος to be made
+ποικίλος many-coloured, spotted, mottled, pied, dappled
+ποίμνη a flock
+ποιός of a certain nature, kind
+ποῖος of what nature? of what sort?
+πολεμέω to be at war
+πολέμιος hostile; enemy
+πολεμιστήριος of or for a warrior
+πόλεμος battle, fight, war
+πολιά grayness of hair .
+πόλιον hulwort, Teucrium Polium
+πολιορκέω to hem in a city, blockade, beleaguer, besiege (3)
+πολιορκία a besieging, siege
+πολιοῦχος protecting a city
+πόλις a city
+πόλισμα a city, town
+πολίτης (fellow) citizen
+πολλάκις many times, often, oft
+πολλαχῆ many times, often
+πολύευκτος much-wished-for, much-desired
+πολυπλάνητος wandering
+πολύς much, many
+πολυχρόνιος long-existing, of olden time, ancient
+πολυψήφις with many pebbles, pebbly
+πομπεύς one who attends
+πομπός a conductor, escort, guide
+πόνος work
+πόντος the sea
+πορεῖν have offered, given
+πορεύω to make to go, carry, convey
+πορθέω to destroy, ravage, waste, plunder
+πορθμεύς a ferryman
+πορνεύω to prostitute
+πορφύρεος darkgleaming, dark;
+Ποσειδῶν Poseidon
+Ποσειδωνιάτης of Posidonia (Paestum)
+πόσις a husband, spouse, mate
+πόσος how much? how many?
+ποσσίκροτος struck with the foot
+ποταμός a river, stream
+ποτε ever, sometime
+πότερος which of the two?
+που anywhere, somewhere .
+πούς a foot 5)
+πρᾶγμα that which has been done, a deed, act
+πρᾶσις a selling, sale
+πράσσω do, (w. adv) fare, (mid.) charge payment
+πρέσβυς an old man; pl. ambassadors
+πρεσβύτης age
+πρεσβύτης old man
+Πρίαμος Priam
+πρίασθαι to buy
+Πριηνεύς of Priene, Prienian
+Πριήνη Priene
+πρίν before; (after negated main clause) until
+πρό before
+προαγορεύω to tell beforehand .
+προαιδέομαι to owe
+προάστειον the space immediately in front of or round a town, a suburb
+προάστιον suburb; house or estate in the suburbs
+προβαίνω to step on, step forward, advance
+προβάλλω to throw before, throw
+πρόβατον sheep; small cattle
+προβοσκός an assistant herdsman
+προβουλεύω to contrive
+πρόγονος a forefather, ancestor
+προδείκνυμι to shew by way of example
+πρόδρομος running forward, with headlong speed
+προεδρία the privilege of the front seats
+προεῖδον to see beforehand, catch sight of
+πρόειμι go forward
+προεῖπον to tell
+προεισάγω to bring in
+προέρχομαι to go forward, go on, advance
+προέχω to hold before, to pretend; to jut out, to excel
+προθυμέομαι to be ready, willing, eager, zealous to do
+προθυμία readiness, willingness, eagerness, zeal
+πρόθυμος ready, willing, eager, zealous
+προΐημι send forth, send forward; abandon
+προΐστημι set before
+προΐσχω hold before, hold out
+προκαθίζω to sit down
+πρόκειμαι to be set before one
+προκόπτω to advance
+προκρίνω to choose before others, choose by preference, prefer, select
+προλέγω pick before; foretell; proclaim
+προμαντεία the right of consulting the Delphic Oracle first
+πρόμαντις a prophet
+προμαχεών a bulwark, rampart
+προμήθεια foresight, forethought
+πρόναος before a temple
+πρόνοια foresight, foreknowledge
+πρόοιδα to know beforehand
+προοράω to see before one, to take forethought
+προπέμπω to send before, send on
+προποιέω to do before
+προπυνθάνομαι to learn by inquiring before, hear beforehand
+πρός (w. gen.) from; (w. dat.) at, near, in addition to; (w. acc.) to, toward, regarding
+προσαγορεύω to address, greet, accost
+προσάγω to bring to
+προσαπόλλυμι to destroy besides
+προσβαίνω to step upon
+προσβάλλω to strike
+προσδέχομαι to receive favourably, accept
+προσδέω to bind on
+προσδέω to need besides
+προσδοκάω to expect
+προσδόκιμος expected, looked for
+πρόσειμι be there (in addition)
+πρόσειμι approach
+προσεπικτάομαι to acquire besides
+προσέρχομαι to come
+προσέτι over and above, besides
+προσεύχομαι to offer prayers
+προσέχω to hold to, offer
+προσήκω to have come; to belong to, to fit
+προσημαίνω to presignify, foretell, announce
+πρόσθεν before
+προσθέω to run towards
+προσίημι to send to
+προσίστημι to place near, bring near
+προσκαλέω to call to, call on, summon
+πρόσκειμαι to be placed at, by; to be attached to, devoted to
+προσκτάομαι to gain, get
+προσκυνέω to make obeisance
+πρόσοδος approach, income
+πρόσοικος dwelling near to, bordering on, neighbouring
+προσοράω to look at, behold
+προσπασσαλεύω to nail fast to
+προσπίπτω to fall upon, strike against
+προσποιέω to make over to; mid. procure, pretend
+προσπταίω to strike against
+προσρέω to flow towards a point, to stream in, assemble
+προστάσσω to order
+προστάτης one who stands before, a front-rank-man
+προστίθημι to add, to apply, to close (a door); mid. to join (a group), take as an ally
+προσφέρω to bring to
+προσφιλής dear, beloved
+προσχωρέω to go to, approach
+πρόσω forwards, onwards, further .
+πρόσωπον the face, visage, countenance
+προσωτέρω further on, further
+προτείνω to stretch out before, hold before
+προτεραῖος on the day before
+πρότερος before, earlier
+προτίθημι to place before, to propose, to prefer
+προτιμάω to honour
+προτρέπω to urge forwards
+προφαίνω to bring forth, bring to light, shew forth, manifest, display
+πρόφασις that which is alleged as the cause, an allegation, plea
+προφέρω to bring before
+προφυλάσσω to keep guard before, to guard
+προχωρέω to go forward, advance
+πρύμνα the hindmost part of a ship, the stern, poop
+πρυτανεῖον the presidents' hall, town-hall
+πρῷρα the forepart of a ship, a ship's head, prow, bow
+πρῶτος first
+Πρῶτος Protus
+πτέρυξ the wing
+πτύω to spit out
+Πύθερμος pr.n., Pythermus
+Πυθία the Pythia, priestess of Pythian Apollo
+Πύθιος Pythian
+Πυθώ Pytho, the region of Delphi
+πύθω to make rot, to rot
+Πύλαι Thermopylae
+πύλη one wing of a pair of double gates
+Πύλιος of Pylos, Pylian; (pr.n.) Pylius, godfather of Heracles
+πυλίς a postern
+πυνθάνομαι to learn by hearsay
+πῦρ fire
+πυρά (fem.sg.) funeral-pyre
+πύργος a tower
+πυργόω to provide with towers: to protect, to raise to lofty heights
+πυρή any place where fire is kindled
+πυρήν the stone
+πυρός wheat
+πω up to this time, yet .
+πώγων the beard
+πωλέομαι to go up and down, go to and fro
+πωλέω to exchange; to sell
+πως somehow, in some way
+ῥεῖθρον that which flows, a river, stream
+ῥέος a stream
+ῥέω to flow, run, stream, gush
+Ῥήγιον Rhegium
+ῥήγνυμι to break, break asunder
+ῥῆσις a saying, speaking, speech
+ῥητός stated, specified
+ῥίζα a root
+ῥιζόω to make to strike root
+ῥίπτω to throw, cast, hurl
+ῥόδον the rose
+Ῥόδος Rhodes
+ῥύομαι to draw to oneself
+ῥώμη bodily strength, strength, might
+σάγαρις a single edged axe
+Σαδυάττης Sadyattes
+Σάκαι the Sacae, a Scythian tribe
+σάκος a shield
+Σάμιος of Samos
+Σάμος Samos
+σάν Doric name for sigma, symbol Ϻ
+Σάνδανις Sandanis
+Σάρδεις Sardes
+Σαρδιανός from Sardis
+Σαρδώ Sardinia
+σάρξ flesh
+Σαρπηδών Sarpedon
+σατραπεία a satrapy, the office
+σαφηνής the plain truth
+σαφής clear, plain, distinct, manifest
+σβέννυμι to quench, put out
+σεαυτοῦ of thyself
+σέβομαι to feel awe
+σεληναῖος lighted by the moon
+σελήνη the moon
+Σεμίραμις Semiramis
+σεμνόω to make solemn
+σεμνύνω to exalt, magnify
+σήθω sift, bolt
+σῆμα a sign, mark, token
+σημαίνω to shew by a sign, indicate, make known, point out
+σημεῖον a sign, a mark, token
+σής a moth
+σήσαμον sesame seed
+σιγάω to be silent
+σιγή silence
+σῖγμα sigma
+σιδήρεος made of iron
+σίδηρος iron
+σιδηρόω to overlay with iron
+Σικελία Sicily
+Σικυών Sicyon
+σιναμωρέω to ravage
+σινδών sindon, a fine cloth
+σίνομαι to do
+Σινώπη Sinope
+σιτέομαι to take food, eat
+σιτέω take food, eat
+σιτίον grain, corn: food made from grain, bread
+σιτοδεία want of corn
+σῖτος corn, grain
+σιτοφόρος carrying corn
+σκαιός left, on the left side
+σκέπη a covering, shelter, protection
+σκέπτομαι to look about, look carefully
+σκευάζω to prepare, make ready
+σκευή equipment, attire, apparel, dress
+σκευοφόρος carrying baggage
+σκῆπτρον a staff
+σκῆψις a pretext, plea, excuse, pretence
+σκολιός curved, winding, twisted, tangled
+σκοπέω to look at
+Σκύθης a Scythian
+Σκυθικός Scythian .
+σκύτινος leathern, made of leather
+σμύρνα myrrh
+Σμύρνα Smyrna
+Σμυρναῖος of Smyrna
+Σόλοι Soli
+Σόλυμοι Solymi, a Lycian tribe
+Σόλων Solon
+σορός a vessel for holding
+σός your
+Σοῦσα Susa .
+σοφία skill
+σοφίζω to make wise, instruct
+σοφιστής a master of one's craft
+σοφός wise, skilled, clever
+σπανίζω to be rare, scarce, scanty
+Σπάρτη Sparta
+Σπαρτιάτης a Spartan (5)
+σπειράομαι to be coiled
+σπείρω to sow
+σπέρχω to set in rapid motion
+σπεύδω to set a-going, to urge on, hasten, quicken
+σπονδή drink-offering; (pl.) truce, treaty
+σπουδαῖος earnest, serious
+σπουδή haste, speed
+στάδιον a stade, = ca.
+στάδιος standing firm
+σταθμόν weight
+σταθμός a standing place, weight
+στασιάζω to rebel, revolt, rise in rebellion
+στάσις a standing, the posture of standing
+στασιώτης the members of a party
+στατήρ gold stater
+στέγαρχος master of the house
+στεγαστρίς that serves for covering
+στείχω to walk, march, go
+στέλλω to set in order, to arrange, array, equip, make ready
+στέμμα a wreath, garland
+στενός narrow, strait
+στερεός stiff, stark, firm, solid
+στερέω to deprive, bereave, rob of
+στέρνον the breast, chest
+στέφανος that which surrounds
+στεφανόω to wreathe, to crown
+στήλη a block of stone
+στολή an equipment, armament
+στόλος an expedition; a voyage; equipment
+στόμα the mouth .
+στόμιον mouth, cavity, bridle-bit
+στρατεία an expedition, campaign
+στράτευμα an expedition, campaign
+στράτευσις an expedition
+στρατεύω to serve in war, serve as a soldier, do military service, take the field, march
+στρατηγέω to be general
+στρατηγία the office, dignity
+στρατηγός the leader
+στρατηλατέω to lead an army into the field
+στρατιά army
+στρατοπεδεύω to encamp, bivouac, take up a position
+στρατόπεδον the ground on which soldiers are encamped, a camp, encampment
+στρατός an encamped army
+στρογγύλος round, spherical
+στρουθός the sparrow
+Στρυμών the Strymon
+σύ you (personal pronoun)
+συγγενής born with, congenital, natural, in-born
+συγγίγνομαι to be with
+συγγιγνώσκω to think with, agree with
+συγγνώμη forgiveness
+σύγγραμμα a writing, a written paper
+συγγραφή a writing
+συγγράφω to write down, describe, compose
+συγκαλέω to call to council, convoke, convene
+συγκαταγηράσκω to grow old together with
+συγκατακλείω to shut in, enclose together with
+συγκατεργάζομαι to help
+συγκομίζω to carry
+συγκυρέω to come together by chance
+συγχώννυμι to heap all together, to heap with earth, cover with a mound, bank up
+Συέννεσις Syennesis
+συκῆ the fig-tree
+σῦκον fig
+συλάω to strip off
+συλλαμβάνω to collect, gather together
+συλλέγω to collect, gather
+συμβαίνω meet, agree, happen
+συμβάλλω to throw together, dash together
+σύμβασις an agreement, arrangement, treaty
+συμβιβάζω to bring together
+συμβολή a coming together, meeting, joining
+συμβουλεύω to advise, counsel .9)
+συμβουλή counsel, consultation, deliberation, debate
+Σύμη Syme
+συμμαχέω to be an ally, to be in alliance
+συμμαχία an alliance offensive and defensive
+σύμμαχος fighting along with, allied with
+συμμείγνυμι mix together, commingle .
+συμμένω to hold together, keep together
+συμπαίζω to play
+συμπέμπω to send with
+συμπίπτω to fall together, meet in battle, come to blows
+συμπολιορκέω to join in besieging, to besiege jointly
+συμφέρω to bring together; impers. to benefit .
+συμφορά an event, circumstance, chance, hap 0)
+συμφορεύς aide-de-camp
+συμψάω to sweep away
+σύν along with, in company with, together with
+συναγείρω to gather together, assemble
+συνάγω to bring together, gather together, collect, convene
+συναλίζω to bring together, collect
+συναμφότεροι both together
+συνάπας all together
+συνάπτω to tie
+συναρμόζω to fit together
+συνδιαφέρω to bear along with one
+σύνδουλος a fellow-slave
+σύνειμι come together
+συνεκδύομαι to put off at the same time
+συνεκπίπτω to rush out together with
+συνεκπλέω to sail out along with
+συνεξαιρέω to take out together, to help in removing
+συνεπελαφρύνω to help to make light
+συνέρχομαι come together, meet
+συνετός intelligent, sagacious, wise
+συνεχής holding together
+συνέχω to hold or keep together, secure; mid. to be afflicted
+συνηρεφής thickly covered
+συνίημι to bring together; understand
+συνίστημι to set together, combine, associate, unite, band together
+συννέω to pile or heap together, heap up
+συννέω to swim together
+σύννοια meditation, deep thought
+σύνοδος fellow-traveller
+σύνοδος an assembly, meeting
+συνοικέω to dwell together
+συνοίκησις cohabitation
+σύνοικος dwelling in the same house with
+συνόμνυμι to swear together
+συνταράσσω to throw all together into confusion, to confound, disturb, trouble
+συντίθημι to put together
+συντρέχω to run together so as to meet, to encounter
+σύντροφος brought up together with
+συντυγχάνω to meet with, fall in with
+συντυχία an occurrence, a hap, chance, event, incident
+συνωνέομαι to collect by offering money
+Συρία Syria
+σῦριγξ a pipe
+Σύριος Syrian
+συρρήγνυμι to break in pieces
+συσπεύδω to assist zealously
+συστρέφω to twist up into a ball
+συχνός long .
+σφάζω to slay, slaughter
+σφαῖρα a ball, playing-ball
+σφάλμα trip, stumble, false step
+σφεῖς personal and (ind.) reflexive pronoun
+σφέτερος their own, their
+σφός their, their own, belonging to them
+σφραγίς a seal, signet, seal-ring
+σφῦρα a hammer
+σχεδόν close, near, hard by, nigh
+σχῆμα form, figure, appearance
+σχοινίον a cord
+σχοῖνος a rush
+σχοινοτενής stretched outlike a measuring line, drawn in a straight line
+σῶμα the body .
+σωρός a heap
+σῶς safe and sound, alive and well, in good case
+σώφρων of sound mind
+Τάβαλος Tabalus
+Ταίναρος Taenarus
+τάλαντον a balance
+Τάρας Tarentum
+ταραχώδης troublous, turbulent
+ταρσός a wickerwork basket, frame, mat
+Ταρτήσσιος Tartessian
+Ταρτησσός Tartessos, Tarshish
+τάσσω to arrange, put in order
+ταύτῃ in this way.
+ταφεύς a burier
+ταφή burial
+τάφος a burial, funeral
+τάφρος a ditch, trench
+τάχα (Homer, later rare) quickly, presently; (post-Homer) perhaps
+τάχος swiftness, speed, fleetness, velocity
+ταχύς quick, swift, fleet (5)
+τε and
+Τεγέα Tegea
+Τεγεάτης of Tegea
+τέθριππος with four horses abreast, four-horsed
+τειχέω to build walls
+τειχήρης enclosed by walls, beleaguered, besieged
+τειχίζω to build a wall
+τεῖχος a wall
+τεκμαίρομαι to fix by a mark
+τέκνον a child .
+τεκνοποιός child-bearing
+τελαμών a broad strap for bearing
+τέλειος having reached its end, finished, complete
+τελειόω to make perfect, complete
+τελευτάω to complete, finish, accomplish; pple. finally, in the end
+τελευτή a finishing, completion, accomplishment
+τελέω to complete, fulfil, accomplish
+Τέλλος Tellus
+τέλλω to make to arise, accomplish (v. ἐπιτέλλω Hom.)
+τέλμα a pool, mud, mortar
+τέλος the fulfilment .
+τέμενος a piece of land cut off, assigned as a domain
+τέμνω to cut, hew
+τέναγος shoal-water, a shoal, shallow, lagoon
+Τενέδιος of Tenedos
+Τένεδος Tenedos
+τεός = σός, 'your' .
+τέρας a sign, wonder, marvel
+Τερμίλαι Termilae
+τεσσαράκοντα forty
+τέσσαρες four
+τεσσαρεσκαίδεκα fourteen
+τεσσαρεσκαιδέκατος fourteenth
+τέταρτος fourth
+τετράγωνος with four equal angles, rectangular
+τετρακόσιοι four hundred
+τετράκυκλος four-wheeled
+τετρώροφος of four stories
+τεύχω to make ready, make, build, work
+τέχνη art, skill, craft in work, cunning of hand
+τέως so long, meanwhile, the while
+Τέως Teos, an Ionian polis
+τῆ take
+τῇ here, there
+τῇδε here, thus
+Τήϊος of or from Teos
+τήκω to melt, melt down
+τηνικαῦτα at that time, then
+τιάρα a tiara
+τίη why? wherefore?
+τίθημι to set, put, place
+τίκτω to bring into the world .
+τιμάω to honor; to value something at a price (gen.) .
+τιμή that which is paid in token of worth
+τιμωρέω to help, aid, succour .
+τιμωρία help, aid, assistance, succour
+τίνω to pay a price
+τις any one, any thing, some one, some thing;
+τίς who? which?
+τίσις payment by way of return
+τιτρώσκω to wound
+τίω to pay honour to
+Τμῶλος Mt. Tmolus in Lydia
+τοι let me tell you, surely, verily
+τοίνυν therefore, accordingly
+τοιόσδε such a
+τοιοῦτος such as this
+τοκεύς one who begets, a father
+τόκος a bringing forth, childbirth, parturition
+τολμάω to undertake, take heart
+Τόμυρις Tomyris
+τόνος rope, cord, brace; stretching, raising, exertion, pitch
+τοξεύω to shoot with the bow
+τόξον a bow
+τοξότης a bowman, archer
+τοξοφόρος bow-bearing
+τοσόσδε so strong, so able
+τοσοῦτος so large, so tall
+τοτέ at times, now and then
+τότε at that time, then
+τράπεζα four-legged a table
+τραῦμα a wound, hurt
+τραυματίζω to wound
+τραχύς rugged, rough
+τρεῖς three
+τρέπω to turn
+τρέφω to nourish, rear, maintain
+τρέχω to run
+τρέω to flee from fear, flee away .
+τριάκοντα thirty .
+τριακόσιοι three hundred
+τρίβω to rub: to rub
+τρίμετρος consisting of three metres;
+τριπάλαστος three hands broad, long
+τρίπους three-footed, of or with three feet
+τρίς thrice, three times
+τρισσός threefold
+τρισχίλιοι three thousand
+τριτημόριος forming a third part of
+τριτημορίς a third
+τρίτος the third
+τριφάσιος threefold
+τρίφυλλος three-leaved
+τριώροφος of three stories
+τροπός a twisted leathern thong
+τρόπος a turn, direction, course, way; character
+τροφή nourishment, food, victuals
+Τροφώνιος Trophonius
+τρύω to rub down, wear out
+τρώγω to gnaw, nibble, munch
+τυγχάνω (with gen.) to hit the mark, to get; (with pple) to happen to, to actually
+τύμβος a sepulchral mound, cairn, barrow
+τύπος a blow
+τύπτω to beat, strike, smite
+τυραννεύω to be a monarch, an absolute ruler
+τυραννίς kingly power, sovereignty
+τύραννος an absolute sovereign
+Τύρος Tyre
+Τυρσηνία Etruria
+Τυρσηνός Tyrrhenian, Etruscan
+τύχη (good) fortune, luck, chance
+τῷ therefore, in this wise, thereupon
+ὑβρίζω to wax wanton, run riot
+ὕβρις wantonness, wanton violence
+ὑβριστής a violent, overbearing person, a wanton, insolent man
+ὑγιαίνω to be sound, healthy
+ὑγιής sound, healthy, hearty, sound in
+ὑγρός wet, moist, running, fluid
+ὑδροποτέω to drink water
+ὕδωρ water
+Ὑέλη Velia
+υἱός a son
+ὗλις mud
+Ὕλλος Hyllus
+ὑμέτερος your, yours
+ὑπάρχω to begin; to exist
+ὕπειμι be under
+ὑπεκδύομαι to slip out of, escape
+ὑπεκτρέχω to run out from under, escape from
+ὑπεξέρχομαι to go out from under: to go out secretly, withdraw, retire
+ὑπέρ over, above, w. gen, over, beyond, w. acc.
+ὑπεράκριος over the heights
+ὑπερβαίνω to step over, mount, scale
+ὑπερβάλλω to throw over .
+ὑπερεπαινέω to praise above measure
+ὑπερήδομαι to be overjoyed at
+ὑπερήμισυς above half, more than half
+ὑπερθύριον the lintel of a door
+ὕπερος a pestle to bray and pound with
+ὑπερτίθημι to communicate; mid. to surpass, to defer
+ὑπερφρονέω to be over-proud, to have high thoughts
+ὑπέχω to hold under, uphold; undergo, suffer, be accountable
+ὑπήκοος giving ear, listening to
+ὑπηρετέω to do service on board ship, to do rower's service
+ὑπισχνέομαι to promise
+ὕπνον lichen
+ὕπνος sleep, slumber
+ὑπό from under, by, c. gen. under, c. dat., towards c. acc.
+ὑποβολιμαῖος substituted by stealth, supposititious
+ὑποβρύχιος under water
+ὑποδεής somewhat deficient, inferior;
+ὑποδείκνυμι to shew secretly
+ὑποδέχομαι to receive, entertain; to promise
+ὑποδέω to bind under: put shoes on
+ὑπόδημα sandal, shoe
+ὑποδύω to put on under
+ὑποζύγιον a beast for the yoke, a beast of burden
+ὑποθήκη a suggestion, counsel, warning, piece of advice
+ὑποθωπεύω to flatter a little, win by flattery
+ὑποκρατηρίδιον the stand of a κρατήρ
+ὑποκρίνω separate gradually, mid. to answer
+ὑποκρισία acting, declamation
+ὑπόκρισις a reply, answer; performance
+ὑποκύπτω to stoop under a yoke
+ὑπολαμβάνω take up; understand, interpret; assume; reply, rejoin
+ὑπολάμπω to shine under, shine in under
+ὑπολείπω to leave remaining
+ὑπόλοιπος left behind, staying behind
+ὑπονοστέω to go back, retire
+ὑποπάσσω to strew under
+ὑποστόρνυμι spread, lay
+ὑποτελέω to pay off, discharge a payment
+ὑποτίθημι to place under, to suggest
+ὑπούργημα a service done
+ὑποχείριος under the hand, in hand
+ὑπώρεια the foot of a mountain, the skirts of a mountain range
+ὗς wild swine
+Ὑστάσπης Hystaspes
+ὑστεραῖος on the day after, the next day
+ὑστερέω to be behind, come late
+ὕστερον the afterbirth
+ὕστερος latter, last .
+ὑφάπτω to set on fire from underneath
+ὑφίημι to let down
+ὑφίστημι to place under; mid. to submit, to promise
+ὑψηλός high, lofty, high-raised
+ὕψος height
+ὕω to send rain, to rain
+φαίνω to bring to light, make to appear
+φάλαρα bosses
+φάλαρον boss, disc, cheekpiece (usu. plural)
+φαρετρεών quiver
+φαρμακός one sacrificed, scapegoat
+φάρμακος poisoner, sorcerer, magician
+φάρσος a part, portion
+Φᾶσις the river Phasis
+φάτις a voice from heaven, the voice of an oracle, an oracle
+φαῦλος slight, indifferent, trivial, common, simple
+φείδομαι to spare
+φερνή dowry
+φέρω to bear
+φεύγω to flee, take flight, run away
+φεύζω to cry φεῦ
+φήμη a voice from heaven, a prophetic voice
+φημί to say, to claim
+φῆμις speech, talk
+φθέγγομαι to utter a sound
+φθείρω to ruin, waste, spoil, destroy
+Φθία Phthia
+Φθιῶτις land of Phthia, Phthiotis
+φθονερός envious, jealous, grudging
+φιάλη a broad, flat vessel, a bowl
+φιλέω to love, regard with affection
+φίλος friend; loved, beloved, dear .
+φῖλος [> φιλία friendship]
+φιλοσοφέω to love knowledge, pursue it, philosophise
+φιλότης friendship, love, affection
+φλαῦρος petty, paltry, trivial
+φοβέω to put to flight, to terrify; mid. to fear
+φόβος fear, panic, flight
+Φοινίκη Phoenicia
+φοινικήϊος of the datepalm
+φοῖνιξ a purple-red, purple; date palm
+Φοῖνιξ a Phoenician (5)
+φοιτάω to go to and fro, up and down, to stalk .
+φονεύς a murderer, slayer, homicide
+φονεύω to murder, kill, slay
+φόνος murder, homicide, slaughter
+φορβή pasture, food, fodder, forage
+φορέω to bear .
+φόρον forum
+φόρος tribute, payment
+φορτίον a load, burden
+φόρτος a load, a ship's freight
+φράζω to point out, shew, indicate
+φράτρα a brotherhood
+φρέαρ a well
+φρήν the midriff; heart, mind
+φρονέω to think, to have understanding, to be sage, wise, prudent
+φροντίζω to think, consider, reflect, take thought, have a care, give heed
+φροντίς thought, care, heed, attention
+φρουρέω to keep watch
+Φρυγία Phrygia
+Φρύγιος Phrygian, of, from Phrygia
+Φρύξ a Phrygian
+φυγάς one who flees, exile, fugitive
+φυή growth, stature
+φυλάζω to divide into tribes
+φυλακεύς watching
+φυλακή a watching
+φυλακός guard
+φύλαξ a watcher, guard, sentinel
+φυλάσσω to keep watch and ward, keep guard
+φύλλον a leaf;
+φυσίζοος producing
+φυσίζους life-producing
+φύσις the nature, natural qualities, powers, constitution, condition
+φύω to bring forth, produce, put forth 0)
+Φώκαια Phocaea
+Φωκαιεύς Phocaean
+Φωκεύς a Phocian 0)
+φώκη a seal
+φωνέω to produce a sound
+φωνή a sound, tone
+χαίρω to rejoice, be glad, be delighted
+Χαλδαῖος a Chaldaean
+χαλεπαίνω to be severe, sore, grievous
+χαλεπός hard to bear, painful; difficult
+χαλινός a bridle, bit
+χάλκειος of copper
+χάλκεος of copper
+χαλκεύς a worker in copper, a smith
+χαλκόπυλος with gates of bronze
+χαλκός copper
+χαλκοῦς a copper coin
+Χάλυψ one of the nation of the Chalybes
+χαρακτήρ a mark engraved
+χαρίζω to do a favor, to oblige, to please
+χάρις gratitude, favor, grace, charm
+χεῖλος lip
+χειμερινός of or in winter, wintry; stormy
+χειμών winter; storm, stormy weather .
+χείρ the hand
+χειροποίητος made by hand, artificial
+χειρόω master, subdue
+χειρῶναξ one who is master of his hands
+χελώνη a tortoise
+Χερσόνησος the (Thracian) Chersonese; the Crimea
+χέω to pour
+χίλιοι a thousand .9)
+Χίλων Chilo
+Χίος Chios (island)
+Χῖος Chian (inhabitant of Chios)
+χιτών the garment worn next the skin, a frock
+χλανίδιον a woman's mantle
+Χοάσπης Choaspes
+χοῖνιξ a choenix, a dry
+χόλος gall, bile
+χοῦς measure of capacity
+χοῦς earth, dust, dirt
+χόω to throw
+χράομαι use, experience
+χραύω to scrape, graze, wound slightly
+χράω to fall upon, attack, assail
+χράω proclaim an oracle, (rare) furnish; mid.: consult an oracle, lend
+χρέος that which one needs must pay, an obligation, debt
+χρεών necessity; it is necessary
+χρή it is fated, necessary
+χρῄζω to need, want, lack, have need of
+χρῆμα thing, (pl.) goods, property, money
+χρήσιμος useful, serviceable, good for use, good, apt
+χρησμολόγος uttering oracles, divining
+χρησμός the answer of an oracle, oracular response, oracle
+χρηστηριάζω to give oracles, prophesy
+χρηστήριον an oracle
+χρηστήριος oracular, prophetic
+χρηστός useful, good of its kind, serviceable .
+Χρομίος Chromius
+χρόνος time
+χρύσεος golden, of gold, decked (3)
+χρυσίον a piece of gold
+χρυσός gold
+χῶμα earth thrown up, a bank, mound
+χώρα land
+χωρέω give way, draw back, retire, withdraw
+χωρίζω to separate, part, sever, divide
+χωρίον a particular place, a place, spot, district .
+χωρίς separately, asunder, apart, by oneself
+χῶρος a piece of ground, ground, place
 χῶρος north-west wind
+ψάλλω to touch sharply, to pluck, pull, twitch
+Ψαμμήτιχος Psammetichus
+ψάμμος sand
+ψευδής lying, false
+ψευδόρκιος perjured, forsworn
+ψεῦδος a falsehood, untruth, lie
+ψεύδω to cheat by lies, beguile
+ψῆγμα that which is rubbed
+ψιλός bare, stripped; (soldier) without heavy armor, light troops
+ψυχή breath, soul
+ψυχρόομαι to grow cold, be cool
+ψυχρός cold, chill
+ὦ O! oh!
+ὧδε in this wise, so, thus
+ὠθέω to thrust, push, shove, force onwards
+Ὤλενος Olenos
+ὠμός raw, crude
+ὦμος shoulder (with the upper arm)
+ὠνέομαι to buy, purchase
+ὠνή a buying, purchasing
+ὤρα care, concern, heed
+ὥρα [sacrificial victim]
+ὥρα time, season, climate .
+ὡραῖος produced at the right season (subst. ἡ ὡραία harvest time)
+ὡς as, how
+ὡσαύτως in like manner, just so
+ὥσπερ just as if, even as
+ὥστε so that

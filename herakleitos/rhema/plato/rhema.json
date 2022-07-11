@@ -2,12 +2,45 @@
   "rhemai": [
     {
       "author": "Plato",
+      "greek": "πρῶτον μέν, ἦν δʼ ἐγώ, τὸ μέγιστον καὶ περὶ τῶν μεγίστων ψεῦδος ὁ εἰπὼν οὐ καλῶς ἐψεύσατο ὡς Οὐρανός τε ἠργάσατο ἅ φησι δρᾶσαι αὐτὸν Ἡσίοδος, ὅ τε αὖ Κρόνος",
+      "translations": [
+        "There is, first of all, I said, the greatest lie about the things of greatest concernment, which was no pretty invention of him who told how Uranus did what Hesiod says he did to Cronos, and how Cronos in turn took his revenge;"
+      ],
+      "book": 2,
+      "chapter": 1,
+      "section": 378,
+      "perseusTextLink": "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0059.tlg030.perseus-grc2:2.378?right=perseus-eng2&q=&qk=form"
+    },
+    {
+      "author": "Plato",
+      "greek": "ὡς ἐτιμωρήσατο αὐτόν. τὰ δὲ δὴ τοῦ Κρόνου ἔργα καὶ πάθη ὑπὸ τοῦ ὑέος, οὐδʼ ἂν εἰ ἦν ἀληθῆ ᾤμην δεῖν ῥᾳδίως οὕτως λέγεσθαι πρὸς ἄφρονάς τε καὶ νέους, ἀλλὰ μάλιστα μὲν σιγᾶσθαι, εἰ δὲ ἀνάγκη τις ἦν λέγειν, διʼ ἀπορρήτων ἀκούειν ὡς ὀλιγίστους, θυσαμένους οὐ χοῖρον ἀλλά τι μέγα καὶ ἄπορον θῦμα, ὅπως ὅτι ἐλαχίστοις συνέβη ἀκοῦσαι.\nκαὶ γάρ, ἦ δʼ ὅς, οὗτοί γε οἱ λόγοι χαλεποί.",
+      "translations": [
+        "and then there are the doings and sufferings of Cronos at the hands of his son. Even if they were true I should not think that they ought to be thus lightly told to thoughtless young persons. But the best way would be to bury them in silence, and if there were some necessity[*] for relating them, that only a very small audience should be admitted under pledge of secrecy and after sacrificing, not a pig,[*] but some huge and unprocurable victim, to the end that as few as possible should have heard these tales. Why, yes, said he, such stories are hard sayings. Yes, and they are not to be told,"
+      ],
+      "book": 2,
+      "chapter": 2,
+      "section": 378,
+      "perseusTextLink": "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0059.tlg030.perseus-grc2:2.378?right=perseus-eng2&q=&qk=form"
+    },
+    {
+      "author": "Plato",
+      "greek": "καὶ οὐ λεκτέοι γʼ, ἔφην, ὦ Ἀδείμαντε, ἐν τῇ ἡμετέρᾳ πόλει. οὐδὲ λεκτέον νέῳ ἀκούοντι ὡς ἀδικῶν τὰ ἔσχατα οὐδὲν ἂν θαυμαστὸν ποιοῖ, οὐδʼ αὖ ἀδικοῦντα πατέρα κολάζων παντὶ τρόπῳ, ἀλλὰ δρῴη ἂν ὅπερ θεῶν οἱ πρῶτοί τε καὶ μέγιστοι.\nοὐ μὰ τὸν Δία, ἦ δʼ ὅς, οὐδὲ αὐτῷ μοι δοκεῖ ἐπιτήδεια εἶναι λέγειν.\nοὐδέ γε, ἦν δʼ ἐγώ, τὸ παράπαν ὡς θεοὶ θεοῖς πολεμοῦσ",
+      "translations": [
+        "Adeimantus, in our city, nor is it to be said in the hearing of a young man, that in doing the utmost wrong he would do nothing to surprise anybody, nor again in punishing his father’s[*] wrong-doings to the limit, but would only be following the example of the first and greatest of the gods.[*] No, by heaven, said he, I do not myself think that they are fit to be told. Neither must we admit at all, said I, that gods war with gods[*] and plot against one another and contend—for it is not true either—"
+      ],
+      "book": 2,
+      "chapter": 3,
+      "section": 378,
+      "perseusTextLink": "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0059.tlg030.perseus-grc2:2.378?right=perseus-eng2&q=&qk=form"
+    },
+    {
+      "author": "Plato",
       "greek": "τε καὶ ἐπιβουλεύουσι καὶ μάχονται—οὐδὲ γὰρ ἀληθῆ—εἴ γε δεῖ ἡμῖν τοὺς μέλλοντας τὴν πόλιν φυλάξειν αἴσχιστον νομίζειν τὸ ῥᾳδίως ἀλλήλοις ἀπεχθάνεσθαι—πολλοῦ δεῖ γιγαντομαχίας τε μυθολογητέον αὐτοῖς καὶ ποικιλτέον, καὶ ἄλλας ἔχθρας πολλὰς καὶ παντοδαπὰς θεῶν τε καὶ ἡρώων πρὸς συγγενεῖς τε καὶ οἰκείους αὐτῶν—ἀλλʼ εἴ πως μέλλομεν πείσειν ὡς οὐδεὶς πώποτε πολίτης ἕτερος ἑτέρῳ ἀπήχθετο οὐδʼ ἔστιν τοῦτο ὅσιον, τοιαῦτα λεκτέα μᾶλλον πρὸς",
       "translations": [
         "if we wish our future guardians to deem nothing more shameful than lightly to fall out with one another; still less must we make battles of gods and giants the subject for them of stories and embroideries,[*] and other enmities many and manifold of gods and heroes toward their kith and kin. But if there is any likelihood of our persuading them that no citizen ever quarrelled with his fellow-citizen and that the very idea of it is an impiety,"
       ],
       "book": 2,
-      "chapter": 1,
+      "chapter": 4,
       "section": 378,
       "perseusTextLink": "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0059.tlg030.perseus-grc2:2.378?right=perseus-eng2&q=&qk=form"
     }

@@ -1,0 +1,37 @@
+{
+  "rhemai": [
+    {
+      "author": "Aristophanes",
+      "greek": "Εἴπω τι τῶν εἰωθότων ὦ δέσποτα,\nἐφ᾽ οἷς ἀεὶ γελῶσιν οἱ θεώμενοι;",
+      "translations": [
+        "Master, should I tell one of those usual jokes\nwhich always make the audience laugh?"
+      ],
+      "book": 1,
+      "chapter": 1,
+      "section": 1,
+      "perseusTextLink": "http://www.perseus.tufts.edu/hopper/text?doc=Perseus%3atext%3a1999.01.0032"
+    },
+    {
+      "author": "Aristophanes",
+      "greek": "νὴ τὸν Δί᾽ ὅ τι Βούλει γε, πλὴν ‘πιέζομαι,’\nτοῦτο δὲ φύλαξαι: πάνυ γάρ ἐστ᾽ ἤδη χολή.",
+      "translations": [
+        "By Zeus, say what you want—except “I'm hard pressed”\nForget that one, it's really quite annoying."
+      ],
+      "book": 1,
+      "chapter": 1,
+      "section": 2,
+      "perseusTextLink": "http://www.perseus.tufts.edu/hopper/text?doc=Perseus%3atext%3a1999.01.0032"
+    },
+    {
+      "author": "Aristophanes",
+      "greek": "ἀλλ᾽ εἴ τις ἐς Βακχεῖον αὐτὰς ἐκάλεσεν,\nἢ 'ς Πανὸς ἢ 'πὶ Κωλιάδ᾽ ἢ 'ς Γενετυλλίδος,\nοὐδ᾽ ἂν διελθεῖν ἦν ἂν ὑπὸ τῶν τυμπάνων.\nνῦν δ᾽ οὐδεμία πάρεστιν ἐνταυθοῖ γυνή:\n5πλὴν ἥ γ᾽ ἐμὴ κωμῆτις ἥδ᾽ ἐξέρχεται.\nχαῖρ᾽ ὦ Καλονίκη.",
+      "translations": [
+        "If they were trysting for a Bacchanal,\nA feast of Pan or Colias or Genetyllis,\nThe tambourines would block the rowdy streets,\nBut now there's not a woman to be seen\nExcept—ah, yes—this neighbour of mine yonder.\nEnter CALONICE.\n\nGood day Calonice."
+      ],
+      "book": 2,
+      "chapter": 1,
+      "section": 1,
+      "perseusTextLink": "http://www.perseus.tufts.edu/hopper/text?doc=Perseus%3atext%3a1999.01.0035"
+    }
+  ]
+}
