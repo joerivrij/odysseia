@@ -13,6 +13,17 @@
     },
     {
       "author": "Thucydides",
+      "greek" : "κίνησις γὰρ αὕτη μεγίστη δὴ τοῖς Ἕλλησιν ἐγένετο καὶ μέρει τινὶ τῶν βαρβάρων, ὡς δὲ εἰπεῖν καὶ ἐπὶ πλεῖστον ἀνθρώπων.",
+      "translations" : [
+        "No movement ever stirred Hellas more deeply than this; it was shared by many of the Barbarians, and might be said even to affect the world at large."
+      ],
+      "book": 1,
+      "chapter":  1,
+      "section": 2,
+      "perseusTextLink": "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0003.tlg001.perseus-grc2:1.1.2?q=&qk=form&right=perseus-eng5"
+    },
+    {
+      "author": "Thucydides",
       "greek": "καταστάσης δὲ ἐκκλησίας ἐς ἀντιλογίαν ἦλθον, καὶ οἱ μὲν Κερκυραῖοι ἔλεξαν τοιάδε.",
       "translations" : [
         "An assembly was convoked, and the rival advocates appeared: the Corcyraeans spoke as follows:—"
@@ -43,6 +54,50 @@
       "chapter":  71,
       "section": 5,
       "perseusTextLink": "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0003.tlg001.perseus-grc2:1.71.5?right=perseus-eng6"
+    },
+    {
+      "author": "Thucydides",
+      "greek": "‘οἱ μὲν πολλοὶ τῶν ἐνθάδε ἤδη εἰρηκότων ἐπαινοῦσι τὸν προσθέντα τῷ νόμῳ τὸν λόγον τόνδε, ὡς καλὸν ἐπὶ τοῖς ἐκ τῶν πολέμων θαπτομένοις ἀγορεύεσθαι αὐτόν. ἐμοὶ δὲ ἀρκοῦν ἂν ἐδόκει εἶναι ἀνδρῶν ἀγαθῶν ἔργῳ γενομένων ἔργῳ καὶ δηλοῦσθαι τὰς τιμάς, οἷα καὶ νῦν περὶ τὸν τάφον τόνδε δημοσίᾳ παρασκευασθέντα ὁρᾶτε, καὶ μὴ ἐν ἑνὶ ἀνδρὶ πολλῶν ἀρετὰς κινδυνεύεσθαι εὖ τε καὶ χεῖρον εἰπόντι πιστευθῆναι.",
+      "translations" : [
+        "'Most of those who have spoken here before me have commended the lawgiver who[*] added this oration to our other funeral customs; it seemed to them a worthy thing that such an honour should be given at their burial to the dead who have fallen on the field of battle.But I should have preferred that, when men's deeds have been brave, they should be honoured in deed only, and with such an honour as this public funeral, which you are now witnessing. Then the reputation of many would not have been imperilled on the eloquence or want of eloquence of one, and their virtues believed or not as he spoke well or ill."
+      ],
+      "book": 2,
+      "chapter":  35,
+      "section": 1,
+      "perseusTextLink": "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0003.tlg001.perseus-grc2:2.35.1?q=&qk=form&right=perseus-eng5"
+    },
+    {
+      "author": "Thucydides",
+      "greek": "‘ἄρξομαι δὲ ἀπὸ τῶν προγόνων πρῶτον: δίκαιον γὰρ αὐτοῖς καὶ πρέπον δὲ ἅμα ἐν τῷ τοιῷδε τὴν τιμὴν ταύτην τῆς μνήμης δίδοσθαι. τὴν γὰρ χώραν οἱ αὐτοὶ αἰεὶ οἰκοῦντες διαδοχῇ τῶν ἐπιγιγνομένων μέχρι τοῦδε ἐλευθέραν δι’ ἀρετὴν παρέδοσαν.",
+      "translations" : [
+        "'I will speak first of our ancestors,for it is right and seemly that now, when we are lamenting[*] the dead, a tribute should be paid to their memory.There has never been a time when they did not inhabit this land, which by their valour they have handed down from generation to generation, and we have received from them a free state."
+      ],
+      "book": 2,
+      "chapter":  36,
+      "section": 1,
+      "perseusTextLink": "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0003.tlg001.perseus-grc2:2.36.1?q=&qk=form&right=perseus-eng5"
+    },
+    {
+      "author": "Thucydides",
+      "greek": "‘εἴρηται καὶ ἐμοὶ λόγῳ κατὰ τὸν νόμον ὅσα εἶχον πρόσφορα, καὶ ἔργῳ οἱ θαπτόμενοι τὰ μὲν ἤδη κεκόσμηνται, τὰ δὲ αὐτῶν τοὺς παῖδας τὸ ἀπὸ τοῦδε δημοσίᾳ ἡ πόλις μέχρι ἥβης θρέψει, ὠφέλιμον στέφανον τοῖσδέ τε καὶ τοῖς λειπομένοις τῶν τοιῶνδε ἀγώνων προτιθεῖσα: ἆθλα γὰρ οἷς κεῖται ἀρετῆς μέγιστα, τοῖς δὲ καὶ ἄνδρες ἄριστοι πολιτεύουσιν.",
+      "translations" : [
+        "'I have paid the required tribute, in obedience to the law, making use of such fitting words[*] as I had.The tribute of deeds has been paid in part; for the dead have been honourably interred, and it remains only that their children should be maintained at the public charge until they are grown up: this is the solid prize with which, as with a garland, Athens crowns her sons living and dead, after a struggle like theirs.For where the rewards of virtue are greatest, there the noblest citizens are enlisted in the service of the state."
+      ],
+      "book": 2,
+      "chapter":  46,
+      "section": 1,
+      "perseusTextLink": "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0003.tlg001.perseus-grc2:2.46.1?q=&qk=form&right=perseus-eng5"
+    },
+    {
+      "author": "Thucydides",
+      "greek": "νῦν δὲ ἀπολοφυράμενοι ὃν προσήκει ἑκάστῳ ἄπιτε.",
+      "translations" : [
+        "And now, when you have duly lamented, every one his own dead, you may depart."
+      ],
+      "book": 2,
+      "chapter":  46,
+      "section": 2,
+      "perseusTextLink": "https://scaife.perseus.org/reader/urn:cts:greekLit:tlg0003.tlg001.perseus-grc2:2.46.2?q=&qk=form&right=perseus-eng5"
     }
   ]
 }
