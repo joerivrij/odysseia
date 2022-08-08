@@ -39,8 +39,7 @@ type Service struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	Name              string   `json:"name"`
-	Type              string   `json:"type"`
-	KubeName          string   `json:"kubeName"`
+	KubeType          string   `json:"kubeType"`
 	SecretName        string   `json:"secretName"`
 	Namespace         string   `json:"namespace"`
 	Active            bool     `json:"active"`
@@ -54,6 +53,6 @@ type Client struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	Namespace         string `json:"namespace"`
-	DeploymentName    string `json:"deployment"`
-	Client            string `json:"client"`
+	Name              string `json:"name"`
+	KubeType          string `json:"kubeType"`
 }

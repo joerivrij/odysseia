@@ -11,70 +11,68 @@ const (
 	timeFormat string = "2006-01-02 15:04:05"
 )
 
-func (p *PeriklesHandler) syncMapping(serviceName, deploymentName, secretName string, validity int) error {
+func (p *PeriklesHandler) addHostToMapping(serviceName, secretName, kubeType string, validity int) error {
 	mapping, err := p.Config.Kube.V1Alpha1().ServiceMapping().Get(p.Config.CrdName)
 	if err != nil {
 		return err
 	}
 
-	found := false
-	inactive := false
-	index := 0
 	for i, service := range mapping.Spec.Services {
 		if service.Name == serviceName {
 			if service.Active == false {
-				inactive = true
-				index = i
-				continue
+				service.Active = true
+				service.Validity = validity
+				service.KubeType = kubeType
+				service.SecretName = secretName
 			}
-			found = true
+
+			mapping.Spec.Services[i] = service
+			glg.Debugf("updating existing service mapping %s", service.Name)
+			_, err = p.Config.Kube.V1Alpha1().ServiceMapping().Update(mapping)
+			if err != nil {
+				return err
+			}
+
+			return nil
 		}
 	}
 
-	if !found {
-		service := v1alpha.Service{
-			Name:           serviceName,
-			Namespace:      p.Config.Namespace,
-			DeploymentName: deploymentName,
-			SecretName:     secretName,
-			Active:         true,
-			Validity:       validity,
-			Created:        time.Now().UTC().Format(timeFormat),
-			Clients:        []v1alpha.Client{},
-		}
-
-		if inactive {
-			mapping.Spec.Services[index] = service
-		} else {
-			mapping.Spec.Services = append(mapping.Spec.Services, service)
-		}
+	service := v1alpha.Service{
+		Name:       serviceName,
+		KubeType:   kubeType,
+		Namespace:  p.Config.Namespace,
+		SecretName: secretName,
+		Active:     true,
+		Validity:   validity,
+		Created:    time.Now().UTC().Format(timeFormat),
+		Clients:    []v1alpha.Client{},
 	}
+	mapping.Spec.Services = append(mapping.Spec.Services, service)
 
-	v1, err := p.Config.Kube.V1Alpha1().ServiceMapping().Update(mapping)
+	glg.Debugf("updating new service mapping %s", serviceName)
+	_, err = p.Config.Kube.V1Alpha1().ServiceMapping().Update(mapping)
 	if err != nil {
 		return err
 	}
 
-	glg.Debug(v1)
-
 	return nil
 }
 
-func (p *PeriklesHandler) addClientToMapping(serviceName, clientName, deploymentName string) error {
+func (p *PeriklesHandler) addClientToMapping(hostName, clientName, kubeType string) error {
 	mapping, err := p.Config.Kube.V1Alpha1().ServiceMapping().Get(p.Config.CrdName)
 	if err != nil {
 		return err
 	}
 
 	client := v1alpha.Client{
-		Namespace:      mapping.Namespace,
-		Client:         clientName,
-		DeploymentName: deploymentName,
+		Name:      clientName,
+		KubeType:  kubeType,
+		Namespace: p.Config.Namespace,
 	}
 
 	found := false
 	for i, service := range mapping.Spec.Services {
-		if service.Name == serviceName {
+		if service.Name == hostName {
 			found = true
 			mapping.Spec.Services[i].Clients = append(mapping.Spec.Services[i].Clients, client)
 		}
@@ -82,25 +80,23 @@ func (p *PeriklesHandler) addClientToMapping(serviceName, clientName, deployment
 
 	if !found {
 		service := v1alpha.Service{
-			Name:           serviceName,
-			Namespace:      p.Config.Namespace,
-			DeploymentName: deploymentName,
-			SecretName:     "",
-			Active:         false,
-			Validity:       0,
-			Created:        time.Now().UTC().Format(timeFormat),
-			Clients:        []v1alpha.Client{},
+			Name:       hostName,
+			Namespace:  p.Config.Namespace,
+			KubeType:   "",
+			SecretName: "",
+			Active:     false,
+			Validity:   0,
+			Created:    time.Now().UTC().Format(timeFormat),
+			Clients:    []v1alpha.Client{},
 		}
 		service.Clients = append(service.Clients, client)
 		mapping.Spec.Services = append(mapping.Spec.Services, service)
 	}
 
-	v1, err := p.Config.Kube.V1Alpha1().ServiceMapping().Update(mapping)
+	_, err = p.Config.Kube.V1Alpha1().ServiceMapping().Update(mapping)
 	if err != nil {
 		return err
 	}
-
-	glg.Debug(v1)
 
 	return nil
 }
@@ -152,13 +148,13 @@ func (p *PeriklesHandler) checkMappingForUpdates() error {
 				return err
 			}
 
-			err = p.restartDeployment(service.Namespace, service.DeploymentName)
+			err = p.restartKubeResource(service.Namespace, service.Name, service.KubeType)
 			if err != nil {
 				return err
 			}
 
 			for _, client := range service.Clients {
-				go p.restartDeployment(client.Namespace, client.DeploymentName)
+				go p.restartKubeResource(client.Namespace, client.Name, client.KubeType)
 			}
 		}
 	}

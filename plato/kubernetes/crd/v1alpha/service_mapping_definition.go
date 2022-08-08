@@ -48,8 +48,7 @@ func CreateServiceMapping() *apiextensionv1.CustomResourceDefinition {
 													Properties: map[string]apiextensionv1.JSONSchemaProps{
 														"name":       {Type: "string"},
 														"namespace":  {Type: "string"},
-														"type":       {Type: "string"},
-														"kubeName":   {Type: "string"},
+														"kubeType":   {Type: "string"},
 														"secretName": {Type: "string"},
 														"active":     {Type: "boolean"},
 														"created":    {Type: "string"},
@@ -60,9 +59,9 @@ func CreateServiceMapping() *apiextensionv1.CustomResourceDefinition {
 																Schema: &apiextensionv1.JSONSchemaProps{
 																	Type: "object",
 																	Properties: map[string]apiextensionv1.JSONSchemaProps{
-																		"client":     {Type: "string"},
-																		"namespace":  {Type: "string"},
-																		"deployment": {Type: "string"},
+																		"name":      {Type: "string"},
+																		"namespace": {Type: "string"},
+																		"kubeType":  {Type: "string"},
 																	},
 																},
 															},

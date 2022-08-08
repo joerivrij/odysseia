@@ -118,30 +118,19 @@ func NewKubeClient(cfg []byte, ns string) (KubeClient, error) {
 	return kube, err
 }
 
-func NewConfigBasedKube(config []byte, ns string) (*Kube, error) {
-	c, err := clientcmd.NewClientConfigFromBytes(config)
-	if err != nil {
-		return nil, err
-	}
-
-	restConfig, err := c.ClientConfig()
-	if err != nil {
-		return nil, err
-	}
-
-	clientSet, err := kubernetes.NewForConfig(restConfig)
-	if err != nil {
-		return nil, err
-	}
-
+func New(clientSet *kubernetes.Clientset, restConfig *rest.Config, config []byte, ns string) (*Kube, error) {
 	access, err := NewAccessClient(clientSet, ns)
 	if err != nil {
 		return nil, err
 	}
 
-	cluster, err := NewClusterClient(config)
-	if err != nil {
-		return nil, err
+	cluster := &ClusterImpl{}
+
+	if config != nil {
+		cluster, err = NewClusterClient(config)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	configuration, err := NewConfigurationClient(clientSet)
@@ -169,7 +158,7 @@ func NewConfigBasedKube(config []byte, ns string) (*Kube, error) {
 		return nil, err
 	}
 
-	v1alphaClient, err := NewV1AlphaClient(config)
+	v1alphaClient, err := NewV1AlphaClient(restConfig)
 	if err != nil {
 		return nil, err
 	}
@@ -188,8 +177,42 @@ func NewConfigBasedKube(config []byte, ns string) (*Kube, error) {
 	}, nil
 }
 
+func NewConfigBasedKube(config []byte, ns string) (*Kube, error) {
+	c, err := clientcmd.NewClientConfigFromBytes(config)
+	if err != nil {
+		return nil, err
+	}
+
+	restConfig, err := c.ClientConfig()
+	if err != nil {
+		return nil, err
+	}
+
+	clientSet, err := kubernetes.NewForConfig(restConfig)
+	if err != nil {
+		return nil, err
+	}
+
+	return New(clientSet, restConfig, config, ns)
+
+}
+
+func NewInClusterKube(ns string) (*Kube, error) {
+	restConfig, err := rest.InClusterConfig()
+	clientSet, err := kubernetes.NewForConfig(restConfig)
+	if err != nil {
+		return nil, err
+	}
+
+	glg.Debug("created in cluster kube client")
+
+	return New(clientSet, restConfig, nil, ns)
+}
+
 func FakeKubeClient(ns string) (KubeClient, error) {
 	clientSet := fake.NewSimpleClientset()
+
+	glg.Debug("created fake kube client")
 
 	access, err := NewAccessClient(clientSet, ns)
 	if err != nil {
@@ -236,46 +259,6 @@ func FakeKubeClient(ns string) (KubeClient, error) {
 		util:          util,
 		nodes:         nodes,
 		namespace:     namespaceClient,
-	}, nil
-}
-
-func NewInClusterKube(ns string) (*Kube, error) {
-	config, err := rest.InClusterConfig()
-	clientSet, err := kubernetes.NewForConfig(config)
-	if err != nil {
-		return nil, err
-	}
-
-	glg.Debug("created in cluster kube client")
-
-	access, err := NewAccessClient(clientSet, ns)
-	if err != nil {
-		return nil, err
-	}
-
-	util, err := NewUtilClient(clientSet, ns)
-	if err != nil {
-		return nil, err
-	}
-
-	configuration, err := NewConfigurationClient(clientSet)
-	if err != nil {
-		return nil, err
-	}
-
-	workload, err := NewWorkloadClient(clientSet)
-	if err != nil {
-		return nil, err
-	}
-
-	return &Kube{
-		set:           clientSet,
-		config:        config.CAData,
-		access:        access,
-		util:          util,
-		cluster:       nil,
-		configuration: configuration,
-		workload:      workload,
 	}, nil
 }
 

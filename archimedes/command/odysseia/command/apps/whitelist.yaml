@@ -1,12 +1,2 @@
 appsToInstall:
-  - elasticsearch
-  - vault
-  - solon
-  - pheidias
-  - alexandros
-  - dionysios
-  - herodotos
-  - sokrates
-  - thales
-  - docs
   - perikles

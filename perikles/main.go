@@ -83,6 +83,7 @@ func main() {
 
 	}
 
+	glg.Debug("init routes")
 	srv := app.InitRoutes(*periklesConfig)
 
 	cfg := &tls.Config{
@@ -97,6 +98,8 @@ func main() {
 		},
 	}
 
+	glg.Debug("setting up server with https")
+
 	httpsServer := &http.Server{
 		Addr:         fmt.Sprintf(":%s", port),
 		Handler:      srv,
@@ -104,8 +107,10 @@ func main() {
 		TLSNextProto: make(map[string]func(*http.Server, *tls.Conn, http.Handler), 0),
 	}
 
+	glg.Debug("loading cert files from mount")
 	certFile := filepath.Join(periklesConfig.TLSFiles, crtFileName)
 	keyFile := filepath.Join(periklesConfig.TLSFiles, keyFileName)
+
 	err = httpsServer.ListenAndServeTLS(certFile, keyFile)
 	if err != nil {
 		glg.Fatal(err)

@@ -20,6 +20,3 @@ rules:
   - apiGroups: ["apps"] # "" indicates the core API group
     resources: ["deployments"]
     verbs: ["update", "get"]
-  - apiGroups: ["odysseia-greek.com"]
-    resources: ["servicemapping"]
-    verbs: ["get", "list", "create", "update", "delete"]

@@ -61,16 +61,13 @@ func (p *PeriklesHandler) validate(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	raw := arRequest.Request.Object.Raw
-	glg.Debug(string(raw))
-	deploy := v1.Deployment{}
-	if err := json.Unmarshal(raw, &deploy); err != nil {
+	if arRequest.Request == nil {
 		e := models.ValidationError{
 			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
 			Messages: []models.ValidationMessages{
 				{
-					Field:   "body",
-					Message: "incorrect body was send: cannot unmarshal request into Deployment",
+					Field:   "admission request",
+					Message: "cannot work with a nil request in an AdmissionReview",
 				},
 			},
 		}
@@ -78,12 +75,34 @@ func (p *PeriklesHandler) validate(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	go func() {
-		err := p.checkForAnnotations(deploy)
-		if err != nil {
-			glg.Error(err)
+	kubeType := arRequest.Request.RequestKind.Kind
+
+	raw := arRequest.Request.Object.Raw
+
+	switch kubeType {
+	case "Deployment":
+		deploy := v1.Deployment{}
+		if err := json.Unmarshal(raw, &deploy); err != nil {
+			e := models.ValidationError{
+				ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
+				Messages: []models.ValidationMessages{
+					{
+						Field:   "body",
+						Message: "incorrect body was send: cannot unmarshal request into Deployment",
+					},
+				},
+			}
+			middleware.ResponseWithJson(w, e)
+			return
 		}
-	}()
+
+		go func() {
+			err := p.checkForAnnotations(deploy)
+			if err != nil {
+				glg.Error(err)
+			}
+		}()
+	}
 
 	review := v1beta1.AdmissionReview{
 		TypeMeta: metav1.TypeMeta{

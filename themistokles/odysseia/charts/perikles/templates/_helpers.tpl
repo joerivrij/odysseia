@@ -65,6 +65,17 @@ Create the name of the role to use
 {{- end -}}
 
 {{/*
+Create the name of the role to use
+*/}}
+{{- define "perikles.clusterRoleName" -}}
+{{- if .Values.clusterRole.create -}}
+{{- default (include "perikles.fullname" .) .Values.clusterRole.name }}
+{{- else -}}
+    {{ default "default" .Values.clusterRole.name }}
+{{- end -}}
+{{- end -}}
+
+{{/*
 Create the name of the roleBinding to use
 */}}
 {{- define "perikles.bindingName" -}}
@@ -72,6 +83,17 @@ Create the name of the roleBinding to use
 {{- default (include "perikles.fullname" .) .Values.roleBinding.name }}
 {{- else -}}
     {{- default (include "perikles.roleName" .) .Values.roleBinding.name }}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Create the name of the clusterBinding to use
+*/}}
+{{- define "perikles.clusterBindingName" -}}
+{{- if .Values.clusterRoleBinding.create -}}
+{{- default (include "perikles.fullname" .) .Values.clusterRoleBinding.name }}
+{{- else -}}
+    {{- default (include "perikles.roleName" .) .Values.clusterRoleBinding.name }}
 {{- end -}}
 {{- end -}}
 

@@ -1,0 +1,573 @@
+{
+  "kind": "AdmissionReview",
+  "apiVersion": "admission.k8s.io/v1",
+  "request": {
+    "uid": "b5bb204f-ad69-4896-832c-87273dd138aa",
+    "kind": {
+      "group": "apps",
+      "version": "v1",
+      "kind": "Deployment"
+    },
+    "resource": {
+      "group": "apps",
+      "version": "v1",
+      "resource": "deployments"
+    },
+    "requestKind": {
+      "group": "apps",
+      "version": "v1",
+      "kind": "Deployment"
+    },
+    "requestResource": {
+      "group": "apps",
+      "version": "v1",
+      "resource": "deployments"
+    },
+    "name": "athena",
+    "namespace": "odysseia",
+    "operation": "UPDATE",
+    "userInfo": {
+      "username": "system:serviceaccount:odysseia:perikles-access-sa",
+      "uid": "c4723b8f-6039-474b-b38d-c9ea1b1e5953",
+      "groups": [
+        "system:serviceaccounts",
+        "system:serviceaccounts:odysseia",
+        "system:authenticated"
+      ],
+      "extra": {
+        "authentication.kubernetes.io/pod-name": [
+          "perikles-767f6678d7-bpwts"
+        ],
+        "authentication.kubernetes.io/pod-uid": [
+          "41afb735-30b0-4f8b-be81-c88c5b2ea8ec"
+        ]
+      }
+    },
+    "object": {
+      "kind": "Deployment",
+      "apiVersion": "apps/v1",
+      "metadata": {
+        "name": "athena",
+        "namespace": "odysseia",
+        "uid": "77b3b103-e9d5-430e-ab12-52d775329bf4",
+        "resourceVersion": "14308326",
+        "generation": 3,
+        "creationTimestamp": "2022-07-29T13:32:11Z",
+        "labels": {
+          "app": "nginx"
+        },
+        "annotations": {
+          "deployment.kubernetes.io/revision": "2",
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"nginx\"},\"name\":\"athena\",\"namespace\":\"odysseia\"},\"spec\":{\"replicas\":2,\"selector\":{\"matchLabels\":{\"app\":\"nginx\"}},\"strategy\":{\"rollingUpdate\":{\"maxSurge\":1,\"maxUnavailable\":0},\"type\":\"RollingUpdate\"},\"template\":{\"metadata\":{\"annotations\":{\"perikles/accesses\":\"solon;herodotos\",\"perikles/hostname\":\"perikles\",\"perikles/validity\":\"10\"},\"labels\":{\"app\":\"nginx\"}},\"spec\":{\"containers\":[{\"image\":\"nginx:1.14.2\",\"name\":\"nginx\",\"ports\":[{\"containerPort\":80}],\"volumeMounts\":[{\"mountPath\":\"/etc/ssl/athena\",\"name\":\"athena\",\"readOnly\":true},{\"mountPath\":\"/etc/ssl/solon\",\"name\":\"solon\",\"readOnly\":true},{\"mountPath\":\"/etc/ssl/herodotos\",\"name\":\"herodotos\",\"readOnly\":true}]}],\"volumes\":[{\"name\":\"athena\",\"secret\":{\"items\":[{\"key\":\"tls.key\",\"path\":\"tls.key\"},{\"key\":\"tls.crt\",\"path\":\"tls.crt\"}],\"secretName\":\"athena-test-secret\"}},{\"name\":\"solon\",\"secret\":{\"items\":[{\"key\":\"tls.key\",\"path\":\"tls.key\"},{\"key\":\"tls.crt\",\"path\":\"tls.crt\"}],\"secretName\":\"solon-test-secret\"}},{\"name\":\"herodotos\",\"secret\":{\"items\":[{\"key\":\"tls.key\",\"path\":\"tls.key\"},{\"key\":\"tls.crt\",\"path\":\"tls.crt\"}],\"secretName\":\"herodotos-test-secret\"}}]}}}}\n"
+        },
+        "managedFields": [
+          {
+            "manager": "kubectl-client-side-apply",
+            "operation": "Update",
+            "apiVersion": "apps/v1",
+            "time": "2022-07-29T13:32:11Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:kubectl.kubernetes.io/last-applied-configuration": {}
+                },
+                "f:labels": {
+                  ".": {},
+                  "f:app": {}
+                }
+              },
+              "f:spec": {
+                "f:progressDeadlineSeconds": {},
+                "f:replicas": {},
+                "f:revisionHistoryLimit": {},
+                "f:selector": {},
+                "f:strategy": {
+                  "f:rollingUpdate": {
+                    ".": {},
+                    "f:maxSurge": {},
+                    "f:maxUnavailable": {}
+                  },
+                  "f:type": {}
+                },
+                "f:template": {
+                  "f:metadata": {
+                    "f:annotations": {
+                      ".": {},
+                      "f:perikles/accesses": {},
+                      "f:perikles/hostname": {},
+                      "f:perikles/validity": {}
+                    },
+                    "f:labels": {
+                      ".": {},
+                      "f:app": {}
+                    }
+                  },
+                  "f:spec": {
+                    "f:containers": {
+                      "k:{\"name\":\"nginx\"}": {
+                        ".": {},
+                        "f:image": {},
+                        "f:imagePullPolicy": {},
+                        "f:name": {},
+                        "f:ports": {
+                          ".": {},
+                          "k:{\"containerPort\":80,\"protocol\":\"TCP\"}": {
+                            ".": {},
+                            "f:containerPort": {},
+                            "f:protocol": {}
+                          }
+                        },
+                        "f:resources": {},
+                        "f:terminationMessagePath": {},
+                        "f:terminationMessagePolicy": {},
+                        "f:volumeMounts": {
+                          ".": {},
+                          "k:{\"mountPath\":\"/etc/ssl/herodotos\"}": {
+                            ".": {},
+                            "f:mountPath": {},
+                            "f:name": {},
+                            "f:readOnly": {}
+                          },
+                          "k:{\"mountPath\":\"/etc/ssl/perikles\"}": {
+                            ".": {},
+                            "f:mountPath": {},
+                            "f:name": {},
+                            "f:readOnly": {}
+                          },
+                          "k:{\"mountPath\":\"/etc/ssl/solon\"}": {
+                            ".": {},
+                            "f:mountPath": {},
+                            "f:name": {},
+                            "f:readOnly": {}
+                          }
+                        }
+                      }
+                    },
+                    "f:dnsPolicy": {},
+                    "f:restartPolicy": {},
+                    "f:schedulerName": {},
+                    "f:securityContext": {},
+                    "f:terminationGracePeriodSeconds": {},
+                    "f:volumes": {
+                      ".": {},
+                      "k:{\"name\":\"herodotos\"}": {
+                        ".": {},
+                        "f:name": {},
+                        "f:secret": {
+                          ".": {},
+                          "f:defaultMode": {},
+                          "f:items": {},
+                          "f:secretName": {}
+                        }
+                      },
+                      "k:{\"name\":\"perikles\"}": {
+                        ".": {},
+                        "f:name": {},
+                        "f:secret": {
+                          ".": {},
+                          "f:defaultMode": {},
+                          "f:items": {},
+                          "f:secretName": {}
+                        }
+                      },
+                      "k:{\"name\":\"solon\"}": {
+                        ".": {},
+                        "f:name": {},
+                        "f:secret": {
+                          ".": {},
+                          "f:defaultMode": {},
+                          "f:items": {},
+                          "f:secretName": {}
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "manager": "kube-controller-manager",
+            "operation": "Update",
+            "apiVersion": "apps/v1",
+            "time": "2022-07-29T13:32:35Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  "f:deployment.kubernetes.io/revision": {}
+                }
+              },
+              "f:status": {
+                "f:conditions": {
+                  ".": {},
+                  "k:{\"type\":\"Available\"}": {
+                    ".": {},
+                    "f:lastTransitionTime": {},
+                    "f:lastUpdateTime": {},
+                    "f:message": {},
+                    "f:reason": {},
+                    "f:status": {},
+                    "f:type": {}
+                  },
+                  "k:{\"type\":\"Progressing\"}": {
+                    ".": {},
+                    "f:lastTransitionTime": {},
+                    "f:lastUpdateTime": {},
+                    "f:message": {},
+                    "f:reason": {},
+                    "f:status": {},
+                    "f:type": {}
+                  }
+                },
+                "f:observedGeneration": {},
+                "f:replicas": {},
+                "f:unavailableReplicas": {},
+                "f:updatedReplicas": {}
+              }
+            },
+            "subresource": "status"
+          },
+          {
+            "manager": "perikles",
+            "operation": "Update",
+            "apiVersion": "apps/v1",
+            "time": "2022-07-29T13:32:35Z",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:spec": {
+                "f:template": {
+                  "f:metadata": {
+                    "f:annotations": {
+                      "f:perikles/updated": {}
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "spec": {
+        "replicas": 2,
+        "selector": {
+          "matchLabels": {
+            "app": "nginx"
+          }
+        },
+        "template": {
+          "metadata": {
+            "labels": {
+              "app": "nginx"
+            },
+            "annotations": {
+              "perikles/accesses": "solon;herodotos",
+              "perikles/hostname": "athena",
+              "perikles/updated": "2022-07-29 13:32:41",
+              "perikles/validity": "10"
+            }
+          },
+          "spec": {
+            "volumes": [
+              {
+                "name": "athena",
+                "secret": {
+                  "secretName": "athena-test-secret",
+                  "items": [
+                    {
+                      "key": "tls.key",
+                      "path": "tls.key"
+                    },
+                    {
+                      "key": "tls.crt",
+                      "path": "tls.crt"
+                    }
+                  ],
+                  "defaultMode": 420
+                }
+              },
+              {
+                "name": "solon",
+                "secret": {
+                  "secretName": "solon-test-secret",
+                  "items": [
+                    {
+                      "key": "tls.key",
+                      "path": "tls.key"
+                    },
+                    {
+                      "key": "tls.crt",
+                      "path": "tls.crt"
+                    }
+                  ],
+                  "defaultMode": 420
+                }
+              },
+              {
+                "name": "herodotos",
+                "secret": {
+                  "secretName": "herodotos-test-secret",
+                  "items": [
+                    {
+                      "key": "tls.key",
+                      "path": "tls.key"
+                    },
+                    {
+                      "key": "tls.crt",
+                      "path": "tls.crt"
+                    }
+                  ],
+                  "defaultMode": 420
+                }
+              }
+            ],
+            "containers": [
+              {
+                "name": "nginx",
+                "image": "nginx:1.14.2",
+                "ports": [
+                  {
+                    "containerPort": 80,
+                    "protocol": "TCP"
+                  }
+                ],
+                "resources": {},
+                "volumeMounts": [
+                  {
+                    "name": "athena",
+                    "readOnly": true,
+                    "mountPath": "/etc/ssl/athena"
+                  },
+                  {
+                    "name": "solon",
+                    "readOnly": true,
+                    "mountPath": "/etc/ssl/solon"
+                  },
+                  {
+                    "name": "herodotos",
+                    "readOnly": true,
+                    "mountPath": "/etc/ssl/herodotos"
+                  }
+                ],
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "imagePullPolicy": "IfNotPresent"
+              }
+            ],
+            "restartPolicy": "Always",
+            "terminationGracePeriodSeconds": 30,
+            "dnsPolicy": "ClusterFirst",
+            "securityContext": {},
+            "schedulerName": "default-scheduler"
+          }
+        },
+        "strategy": {
+          "type": "RollingUpdate",
+          "rollingUpdate": {
+            "maxUnavailable": 0,
+            "maxSurge": 1
+          }
+        },
+        "revisionHistoryLimit": 10,
+        "progressDeadlineSeconds": 600
+      },
+      "status": {
+        "observedGeneration": 2,
+        "replicas": 3,
+        "updatedReplicas": 1,
+        "unavailableReplicas": 3,
+        "conditions": [
+          {
+            "type": "Available",
+            "status": "False",
+            "lastUpdateTime": "2022-07-29T13:32:11Z",
+            "lastTransitionTime": "2022-07-29T13:32:11Z",
+            "reason": "MinimumReplicasUnavailable",
+            "message": "Deployment does not have minimum availability."
+          },
+          {
+            "type": "Progressing",
+            "status": "True",
+            "lastUpdateTime": "2022-07-29T13:32:35Z",
+            "lastTransitionTime": "2022-07-29T13:32:11Z",
+            "reason": "ReplicaSetUpdated",
+            "message": "ReplicaSet \"athena-5d75465945\" is progressing."
+          }
+        ]
+      }
+    },
+    "oldObject": {
+      "kind": "Deployment",
+      "apiVersion": "apps/v1",
+      "metadata": {
+        "name": "athena",
+        "namespace": "odysseia",
+        "uid": "77b3b103-e9d5-430e-ab12-52d775329bf4",
+        "resourceVersion": "14308326",
+        "generation": 2,
+        "creationTimestamp": "2022-07-29T13:32:11Z",
+        "labels": {
+          "app": "nginx"
+        },
+        "annotations": {
+          "deployment.kubernetes.io/revision": "2",
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"nginx\"},\"name\":\"athena\",\"namespace\":\"odysseia\"},\"spec\":{\"replicas\":2,\"selector\":{\"matchLabels\":{\"app\":\"nginx\"}},\"strategy\":{\"rollingUpdate\":{\"maxSurge\":1,\"maxUnavailable\":0},\"type\":\"RollingUpdate\"},\"template\":{\"metadata\":{\"annotations\":{\"perikles/accesses\":\"solon;herodotos\",\"perikles/hostname\":\"perikles\",\"perikles/validity\":\"10\"},\"labels\":{\"app\":\"nginx\"}},\"spec\":{\"containers\":[{\"image\":\"nginx:1.14.2\",\"name\":\"nginx\",\"ports\":[{\"containerPort\":80}],\"volumeMounts\":[{\"mountPath\":\"/etc/ssl/perikles\",\"name\":\"perikles\",\"readOnly\":true},{\"mountPath\":\"/etc/ssl/solon\",\"name\":\"solon\",\"readOnly\":true},{\"mountPath\":\"/etc/ssl/herodotos\",\"name\":\"herodotos\",\"readOnly\":true}]}],\"volumes\":[{\"name\":\"perikles\",\"secret\":{\"items\":[{\"key\":\"tls.key\",\"path\":\"tls.key\"},{\"key\":\"tls.crt\",\"path\":\"tls.crt\"}],\"secretName\":\"perikles-test-secret\"}},{\"name\":\"solon\",\"secret\":{\"items\":[{\"key\":\"tls.key\",\"path\":\"tls.key\"},{\"key\":\"tls.crt\",\"path\":\"tls.crt\"}],\"secretName\":\"solon-test-secret\"}},{\"name\":\"herodotos\",\"secret\":{\"items\":[{\"key\":\"tls.key\",\"path\":\"tls.key\"},{\"key\":\"tls.crt\",\"path\":\"tls.crt\"}],\"secretName\":\"herodotos-test-secret\"}}]}}}}\n"
+        }
+      },
+      "spec": {
+        "replicas": 2,
+        "selector": {
+          "matchLabels": {
+            "app": "nginx"
+          }
+        },
+        "template": {
+          "metadata": {
+            "labels": {
+              "app": "nginx"
+            },
+            "annotations": {
+              "perikles/accesses": "solon;herodotos",
+              "perikles/hostname": "athena",
+              "perikles/updated": "2022-07-29 13:32:35",
+              "perikles/validity": "10"
+            }
+          },
+          "spec": {
+            "volumes": [
+              {
+                "name": "athena",
+                "secret": {
+                  "secretName": "athena-test-secret",
+                  "items": [
+                    {
+                      "key": "tls.key",
+                      "path": "tls.key"
+                    },
+                    {
+                      "key": "tls.crt",
+                      "path": "tls.crt"
+                    }
+                  ],
+                  "defaultMode": 420
+                }
+              },
+              {
+                "name": "solon",
+                "secret": {
+                  "secretName": "solon-test-secret",
+                  "items": [
+                    {
+                      "key": "tls.key",
+                      "path": "tls.key"
+                    },
+                    {
+                      "key": "tls.crt",
+                      "path": "tls.crt"
+                    }
+                  ],
+                  "defaultMode": 420
+                }
+              },
+              {
+                "name": "herodotos",
+                "secret": {
+                  "secretName": "herodotos-test-secret",
+                  "items": [
+                    {
+                      "key": "tls.key",
+                      "path": "tls.key"
+                    },
+                    {
+                      "key": "tls.crt",
+                      "path": "tls.crt"
+                    }
+                  ],
+                  "defaultMode": 420
+                }
+              }
+            ],
+            "containers": [
+              {
+                "name": "nginx",
+                "image": "nginx:1.14.2",
+                "ports": [
+                  {
+                    "containerPort": 80,
+                    "protocol": "TCP"
+                  }
+                ],
+                "resources": {},
+                "volumeMounts": [
+                  {
+                    "name": "athena",
+                    "readOnly": true,
+                    "mountPath": "/etc/ssl/athena"
+                  },
+                  {
+                    "name": "solon",
+                    "readOnly": true,
+                    "mountPath": "/etc/ssl/solon"
+                  },
+                  {
+                    "name": "herodotos",
+                    "readOnly": true,
+                    "mountPath": "/etc/ssl/herodotos"
+                  }
+                ],
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "imagePullPolicy": "IfNotPresent"
+              }
+            ],
+            "restartPolicy": "Always",
+            "terminationGracePeriodSeconds": 30,
+            "dnsPolicy": "ClusterFirst",
+            "securityContext": {},
+            "schedulerName": "default-scheduler"
+          }
+        },
+        "strategy": {
+          "type": "RollingUpdate",
+          "rollingUpdate": {
+            "maxUnavailable": 0,
+            "maxSurge": 1
+          }
+        },
+        "revisionHistoryLimit": 10,
+        "progressDeadlineSeconds": 600
+      },
+      "status": {
+        "observedGeneration": 2,
+        "replicas": 3,
+        "updatedReplicas": 1,
+        "unavailableReplicas": 3,
+        "conditions": [
+          {
+            "type": "Available",
+            "status": "False",
+            "lastUpdateTime": "2022-07-29T13:32:11Z",
+            "lastTransitionTime": "2022-07-29T13:32:11Z",
+            "reason": "MinimumReplicasUnavailable",
+            "message": "Deployment does not have minimum availability."
+          },
+          {
+            "type": "Progressing",
+            "status": "True",
+            "lastUpdateTime": "2022-07-29T13:32:35Z",
+            "lastTransitionTime": "2022-07-29T13:32:11Z",
+            "reason": "ReplicaSetUpdated",
+            "message": "ReplicaSet \"athena-5d75465945\" is progressing."
+          }
+        ]
+      }
+    },
+    "dryRun": false,
+    "options": {
+      "kind": "UpdateOptions",
+      "apiVersion": "meta.k8s.io/v1"
+    }
+  }
+}

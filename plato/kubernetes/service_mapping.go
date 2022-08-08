@@ -12,7 +12,6 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/client-go/kubernetes/scheme"
 	"k8s.io/client-go/rest"
-	"k8s.io/client-go/tools/clientcmd"
 	"time"
 )
 
@@ -31,17 +30,7 @@ type ServiceMappingsImpl struct {
 	Client          rest.Interface
 }
 
-func NewServiceMappingImpl(kubeConfig []byte) (*ServiceMappingsImpl, error) {
-	c, err := clientcmd.NewClientConfigFromBytes(kubeConfig)
-	if err != nil {
-		return nil, err
-	}
-
-	restConfig, err := c.ClientConfig()
-	if err != nil {
-		return nil, err
-	}
-
+func NewServiceMappingImpl(restConfig *rest.Config) (*ServiceMappingsImpl, error) {
 	config := *restConfig
 	config.ContentConfig.GroupVersion = &schema.GroupVersion{Group: v1alpha.GroupName, Version: v1alpha.Version}
 	config.APIPath = "/apis"
@@ -159,7 +148,7 @@ func (s *ServiceMappingsImpl) Update(mapping *v1alpha.Mapping) (*v1alpha.Mapping
 	return &result, err
 }
 
-// CreateInCluster retrieves the Haven CRD and will deploy it to the cluster when it's not installed yet.
+// CreateInCluster retrieves the CRD and will deploy it to the cluster when it's not installed yet.
 func (s *ServiceMappingsImpl) CreateInCluster() (bool, error) {
 	var created bool
 	crd := v1alpha.CreateServiceMapping()

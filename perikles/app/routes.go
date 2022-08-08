@@ -12,7 +12,7 @@ func InitRoutes(config configs.PeriklesConfig) *mux.Router {
 
 	periklesHandler := PeriklesHandler{Config: &config}
 
-	serveMux.HandleFunc("/perikles/v1/ping", middleware.Adapt(periklesHandler.pingPong, middleware.ValidateRestMethod("GET"), middleware.LogRequestDetails(), middleware.SetCorsHeaders()))
+	serveMux.HandleFunc("/perikles/v1/ping", middleware.Adapt(periklesHandler.pingPong, middleware.ValidateRestMethod("GET"), middleware.SetCorsHeaders()))
 	serveMux.HandleFunc("/perikles/v1/validate", middleware.Adapt(periklesHandler.validate, middleware.ValidateRestMethod("POST"), middleware.LogRequestDetails(), middleware.SetCorsHeaders()))
 
 	go periklesHandler.loopForMappingUpdates()

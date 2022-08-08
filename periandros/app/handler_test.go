@@ -22,11 +22,10 @@ func TestSolonHealthy(t *testing.T) {
 	}
 
 	healthModel := models.Health{
-		Healthy:       true,
-		Time:          "",
-		Database:      models.DatabaseHealth{},
-		Memory:        models.Memory{},
-		CPUPercentage: "",
+		Healthy:  true,
+		Time:     "",
+		Database: models.DatabaseHealth{},
+		Memory:   models.Memory{},
 	}
 
 	config := service.ClientConfig{
@@ -98,11 +97,10 @@ func TestSolonHealthy(t *testing.T) {
 		}
 
 		notHealthy := models.Health{
-			Healthy:       false,
-			Time:          "",
-			Database:      models.DatabaseHealth{},
-			Memory:        models.Memory{},
-			CPUPercentage: "",
+			Healthy:  false,
+			Time:     "",
+			Database: models.DatabaseHealth{},
+			Memory:   models.Memory{},
 		}
 
 		nr, err := notHealthy.Marshal()
@@ -143,11 +141,10 @@ func TestCreatUser(t *testing.T) {
 	}
 
 	healthModel := models.Health{
-		Healthy:       true,
-		Time:          "",
-		Database:      models.DatabaseHealth{},
-		Memory:        models.Memory{},
-		CPUPercentage: "",
+		Healthy:  true,
+		Time:     "",
+		Database: models.DatabaseHealth{},
+		Memory:   models.Memory{},
 	}
 
 	postResponse := models.SolonResponse{Created: true}
@@ -229,11 +226,10 @@ func TestCreatUser(t *testing.T) {
 		}
 
 		notHealthy := models.Health{
-			Healthy:       false,
-			Time:          "",
-			Database:      models.DatabaseHealth{},
-			Memory:        models.Memory{},
-			CPUPercentage: "",
+			Healthy:  false,
+			Time:     "",
+			Database: models.DatabaseHealth{},
+			Memory:   models.Memory{},
 		}
 
 		r, err := notHealthy.Marshal()

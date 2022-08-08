@@ -29,10 +29,10 @@ services:
     name: "perikles"
     requests:
       memory: "64Mi"
-      cpu: "50m"
+      cpu: "100m"
     limits:
       memory: "128Mi"
-      cpu: "150m"
+      cpu: "500m"
 
 images:
   imageRepo: core.harbor.domain:30003/odysseia/
@@ -57,3 +57,9 @@ role:
 
 roleBinding:
   name: perikles-api-access-binding
+
+clusterRole:
+  name: odysseia-greek-crd
+
+clusterRoleBinding:
+  name: odysseia-greek-crd-binding

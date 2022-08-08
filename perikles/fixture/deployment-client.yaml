@@ -1,11 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
+  name: athena
   labels:
     app: nginx
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: nginx
@@ -14,7 +14,7 @@ spec:
       labels:
         app: nginx
       annotations:
-        perikles/accesses: perikles
+        perikles/accesses: solon
     spec:
       containers:
         - name: nginx
@@ -28,12 +28,12 @@ spec:
       volumes:
         - name: foo
           secret:
-            secretName: perikles-test-secret
+            secretName: solon-test-secret
             items:
               - key: tls.key
-                path: perikles/tls.key
+                path: solon/tls.key
               - key: tls.crt
-                path: perikles/tls.crt
+                path: solon/tls.crt
   strategy:
     type: RollingUpdate
     rollingUpdate:

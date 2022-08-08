@@ -2,7 +2,7 @@
   "kind": "AdmissionReview",
   "apiVersion": "admission.k8s.io/v1",
   "request": {
-    "uid": "cf7c1c47-e1b1-491c-8b72-52ea0821e568",
+    "uid": "8aed971c-4df5-4cf3-ad14-a4fab013bb70",
     "kind": {
       "group": "apps",
       "version": "v1",
@@ -39,9 +39,9 @@
       "metadata": {
         "name": "athena",
         "namespace": "odysseia",
-        "uid": "5af8f21d-b918-457f-bb41-9220510d8101",
+        "uid": "e8772f57-ceec-464a-afdc-34b29bf2599a",
         "generation": 1,
-        "creationTimestamp": "2022-06-24T13:00:47Z",
+        "creationTimestamp": "2022-07-29T13:34:34Z",
         "labels": {
           "app": "nginx"
         },
@@ -50,7 +50,7 @@
             "manager": "kubectl-create",
             "operation": "Update",
             "apiVersion": "apps/v1",
-            "time": "2022-06-24T13:00:47Z",
+            "time": "2022-07-29T13:34:34Z",
             "fieldsType": "FieldsV1",
             "fieldsV1": {
               "f:metadata": {
@@ -76,9 +76,7 @@
                   "f:metadata": {
                     "f:annotations": {
                       ".": {},
-                      "f:perikles/host": {},
-                      "f:perikles/secret": {},
-                      "f:perikles/validity": {}
+                      "f:perikles/accesses": {}
                     },
                     "f:labels": {
                       ".": {},
@@ -105,7 +103,7 @@
                         "f:terminationMessagePolicy": {},
                         "f:volumeMounts": {
                           ".": {},
-                          "k:{\"mountPath\":\"/etc/foo\"}": {
+                          "k:{\"mountPath\":\"/etc/ssl\"}": {
                             ".": {},
                             "f:mountPath": {},
                             "f:name": {},
@@ -152,8 +150,7 @@
               "app": "nginx"
             },
             "annotations": {
-              "perikles/hostname": "solon",
-              "perikles/validity": "10"
+              "perikles/accesses": "perikles"
             }
           },
           "spec": {
@@ -161,15 +158,15 @@
               {
                 "name": "foo",
                 "secret": {
-                  "secretName": "solon-test-secret",
+                  "secretName": "perikles-test-secret",
                   "items": [
                     {
                       "key": "tls.key",
-                      "path": "solon/tls.key"
+                      "path": "perikles/tls.key"
                     },
                     {
                       "key": "tls.crt",
-                      "path": "solon/tls.crt"
+                      "path": "perikles/tls.crt"
                     }
                   ],
                   "defaultMode": 420
@@ -191,7 +188,7 @@
                   {
                     "name": "foo",
                     "readOnly": true,
-                    "mountPath": "/etc/foo"
+                    "mountPath": "/etc/ssl"
                   }
                 ],
                 "terminationMessagePath": "/dev/termination-log",
@@ -209,8 +206,8 @@
         "strategy": {
           "type": "RollingUpdate",
           "rollingUpdate": {
-            "maxUnavailable": "25%",
-            "maxSurge": "25%"
+            "maxUnavailable": 0,
+            "maxSurge": 1
           }
         },
         "revisionHistoryLimit": 10,

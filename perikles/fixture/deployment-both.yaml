@@ -1,11 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
+  name: athena
   labels:
     app: nginx
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: nginx
@@ -24,34 +24,40 @@ spec:
           ports:
             - containerPort: 80
           volumeMounts:
-            - name: foo
-              mountPath: "/etc/ssl"
+            - name: perikles
+              mountPath: "/etc/ssl/perikles"
+              readOnly: true
+            - name: solon
+              mountPath: "/etc/ssl/solon"
+              readOnly: true
+            - name: herodotos
+              mountPath: "/etc/ssl/herodotos"
               readOnly: true
       volumes:
-        - name: foo
+        - name: perikles
           secret:
             secretName: perikles-test-secret
             items:
               - key: tls.key
-                path: perikles/tls.key
+                path: tls.key
               - key: tls.crt
-                path: perikles/tls.crt
-        - name: foo
+                path: tls.crt
+        - name: solon
           secret:
             secretName: solon-test-secret
             items:
               - key: tls.key
-                path: solon/tls.key
+                path: tls.key
               - key: tls.crt
-                path: solon/tls.crt
-        - name: foo
+                path: tls.crt
+        - name: herodotos
           secret:
-            secretName: solon-test-secret
+            secretName: herodotos-test-secret
             items:
               - key: tls.key
-                path: herodotos/tls.key
+                path: tls.key
               - key: tls.crt
-                path: herodotos/tls.crt
+                path: tls.crt
   strategy:
     type: RollingUpdate
     rollingUpdate:

@@ -10,30 +10,27 @@ import (
 )
 
 const (
-	AnnotationUpdate   = "perikles/updated"
-	AnnotationValidity = "perikles/validity"
-	AnnotationHost     = "perikles/hostname"
-	AnnotationAccesses = "perikles/accesses"
+	AnnotationUpdate     = "perikles/updated"
+	AnnotationValidity   = "perikles/validity"
+	AnnotationHost       = "perikles/hostname"
+	AnnotationAccesses   = "perikles/accesses"
+	AnnotationHostSecret = "perikles/hostsecret"
 )
 
 func (p *PeriklesHandler) checkForAnnotations(deployment v1.Deployment) error {
 	for key, value := range deployment.Spec.Template.Annotations {
 		if key == AnnotationHost {
-			go func() {
-				err := p.hostFlow(deployment)
-				if err != nil {
-					glg.Error(err)
-				}
-			}()
+			err := p.hostFlow(deployment)
+			if err != nil {
+				return err
+			}
 		}
 
 		if key == AnnotationAccesses {
-			go func() {
-				err := p.clientFlow(value, deployment.Name)
-				if err != nil {
-					glg.Error(err)
-				}
-			}()
+			err := p.clientFlow(value, deployment.Name, deployment.Kind)
+			if err != nil {
+				return err
+			}
 		}
 	}
 
@@ -50,7 +47,7 @@ func (p *PeriklesHandler) hostFlow(deployment v1.Deployment) error {
 
 		if key == AnnotationValidity {
 			validity, _ = strconv.Atoi(value)
-			glg.Info(fmt.Sprintf("validity set to %s", validity))
+			glg.Info(fmt.Sprintf("validity set to %v", validity))
 		}
 
 		if key == AnnotationHost {
@@ -58,9 +55,19 @@ func (p *PeriklesHandler) hostFlow(deployment v1.Deployment) error {
 			glg.Info(fmt.Sprintf("host set to %s", hostName))
 		}
 
+		if key == AnnotationHostSecret {
+			secretName = value
+			glg.Info(fmt.Sprintf("secretName set to %s", secretName))
+		}
+	}
+
+	if secretName == "" {
 		for _, volume := range deployment.Spec.Template.Spec.Volumes {
 			if volume.Secret != nil {
-				secretName = volume.Secret.SecretName
+				if strings.Contains(volume.Secret.SecretName, hostName) || volume.Name == hostName {
+					secretName = volume.Secret.SecretName
+					glg.Info(fmt.Sprintf("secretName set to %s", secretName))
+				}
 			}
 		}
 	}
@@ -74,32 +81,32 @@ func (p *PeriklesHandler) hostFlow(deployment v1.Deployment) error {
 		fmt.Sprintf("%s.%s.svc.cluster.local", hostName, orgName),
 	}
 
-	glg.Info("creating certs")
+	glg.Debug("creating certs")
 	err := p.createCert(hosts, validity, secretName)
 	if err != nil {
 		return err
 	}
 
-	go func() {
-		err := p.syncMapping(hostName, deployment.Name, secretName, validity)
-		if err != nil {
-		}
-	}()
-
-	glg.Info("restarting deployment")
-	err = p.restartDeployment(deployment.Namespace, deployment.Name)
+	glg.Debug("created certs")
+	err = p.addHostToMapping(hostName, secretName, deployment.Kind, validity)
 	if err != nil {
 		return err
 	}
 
+	//glg.Debug("restarting deployment")
+	//err = p.restartKubeResource(deployment.Namespace, deployment.Name, deployment.Kind)
+	//if err != nil {
+	//	return err
+	//}
+
 	return nil
 }
 
-func (p *PeriklesHandler) clientFlow(accesses, name string) error {
+func (p *PeriklesHandler) clientFlow(accesses, name, kubeType string) error {
 	hosts := strings.Split(accesses, ";")
 
 	for _, host := range hosts {
-		err := p.addClientToMapping(host, name, name)
+		err := p.addClientToMapping(host, name, kubeType)
 		if err != nil {
 			return err
 		}
@@ -113,4 +120,14 @@ func (p *PeriklesHandler) restartDeployment(ns, deploymentName string) error {
 	newAnnotation[AnnotationUpdate] = time.Now().UTC().Format(timeFormat)
 	_, err := p.Config.Kube.Workload().UpdateDeploymentViaAnnotation(ns, deploymentName, newAnnotation)
 	return err
+}
+
+func (p *PeriklesHandler) restartKubeResource(ns, name, kubeType string) error {
+	switch kubeType {
+	case "Deployment":
+		err := p.restartDeployment(ns, name)
+		return err
+	}
+
+	return nil
 }

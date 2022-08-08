@@ -11,4 +11,4 @@ spec:
       name: https-webhook
       port: 443
       protocol: TCP
-      targetPort: webhook-tcp
+      targetPort: {{ .Values.envVariables.odysseiaapi.port }}
