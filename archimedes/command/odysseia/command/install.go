@@ -2,6 +2,7 @@ package command
 
 import (
 	"embed"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"github.com/kpango/glg"
@@ -11,6 +12,7 @@ import (
 	vaultCommand "github.com/odysseia/archimedes/command/vault/command"
 	"github.com/odysseia/archimedes/util"
 	"github.com/odysseia/aristoteles/configs"
+	"github.com/odysseia/plato/certificates"
 	"github.com/odysseia/plato/generator"
 	"github.com/odysseia/plato/harbor"
 	"github.com/odysseia/plato/helm"
@@ -215,6 +217,7 @@ type OdysseiaInstaller struct {
 
 type Themistokles struct {
 	ElasticSearch string
+	Perikles      string
 	Vault         string
 	Solon         string
 	Harbor        string
@@ -262,12 +265,22 @@ func (o *OdysseiaInstaller) installOdysseiaComplete(unseal bool) error {
 		}
 	}()
 
-	//1. install elastic
+	//1. loop over install candidates
 	installElastic := false
+	installPerikles := false
+	installHarbor := false
+	installVault := false
+
 	for _, install := range o.ChartsToInstall {
-		if install == "elasticsearch" {
+		switch install {
+		case "elasticsearch":
 			installElastic = true
-			break
+		case "perikles":
+			installPerikles = true
+		case "harbor":
+			installHarbor = true
+		case "vault":
+			installVault = true
 		}
 	}
 
@@ -276,64 +289,6 @@ func (o *OdysseiaInstaller) installOdysseiaComplete(unseal bool) error {
 		if err != nil {
 			return err
 		}
-	}
-
-	installHarbor := false
-	for _, install := range o.ChartsToInstall {
-		if install == "harbor" {
-			installHarbor = true
-			break
-		}
-	}
-
-	if installHarbor {
-		//2. install harbor
-		err = o.installHarborHelmChart()
-		if err != nil {
-			return err
-		}
-
-		//2.a create harbor project etc.
-		err = o.setupHarbor()
-		if err != nil {
-			return err
-		}
-
-		glg.Infof("created harbor project %s at %s", command.DefaultNamespace, command.DefaultHarborUrl)
-
-		//2.b. docker login
-		err = o.dockerLogin()
-		if err != nil {
-			return err
-		}
-
-		o.PrivateImagesInRepo = true
-	}
-
-	installVault := false
-	for _, install := range o.ChartsToInstall {
-		if install == "vault" {
-			installVault = true
-			break
-		}
-	}
-
-	if installVault {
-		//4. install vault
-		err = o.installVaultHelmChart()
-		if err != nil {
-			return err
-		}
-
-		//4b. provision vault
-		err = o.setupVault()
-		if err != nil {
-			return err
-		}
-	}
-
-	if unseal {
-		vaultCommand.UnsealVault("", o.Namespace, o.Kube)
 	}
 
 	var repoName string
@@ -371,6 +326,56 @@ func (o *OdysseiaInstaller) installOdysseiaComplete(unseal bool) error {
 	values := map[string]interface{}{
 		"images": image,
 		"config": config,
+	}
+
+	//2. install perikles
+	if installPerikles {
+		err = o.installPerikles(values)
+		if err != nil {
+			return err
+		}
+	}
+
+	if installHarbor {
+		//3. install harbor
+		err = o.installHarborHelmChart()
+		if err != nil {
+			return err
+		}
+
+		//3.a create harbor project etc.
+		err = o.setupHarbor()
+		if err != nil {
+			return err
+		}
+
+		glg.Infof("created harbor project %s at %s", command.DefaultNamespace, command.DefaultHarborUrl)
+
+		//3.b. docker login
+		err = o.dockerLogin()
+		if err != nil {
+			return err
+		}
+
+		o.PrivateImagesInRepo = true
+	}
+
+	if installVault {
+		//4. install vault
+		err = o.installVaultHelmChart()
+		if err != nil {
+			return err
+		}
+
+		//4b. provision vault
+		err = o.setupVault()
+		if err != nil {
+			return err
+		}
+	}
+
+	if unseal {
+		vaultCommand.UnsealVault("", o.Namespace, o.Kube)
 	}
 
 	installSolon := false
@@ -551,6 +556,33 @@ func (o *OdysseiaInstaller) createElastic() error {
 	return nil
 }
 
+func (o *OdysseiaInstaller) installPerikles(values map[string]interface{}) error {
+	cert, err := o.setupPerikles()
+
+	for key, value := range values {
+		if key == "config" {
+			newConfig := value.(map[string]interface{})
+			newConfig["caBundle"] = cert
+			value = newConfig
+		}
+	}
+
+	rls, err := o.Helm.InstallWithValues(o.Charts.Perikles, values)
+	if err != nil {
+		return err
+	}
+	glg.Info(rls.Name)
+
+	//wait for perikles to be healthy
+	checkFor := 180 * time.Second
+	err = o.checkStatusOfPod(o.Charts.Perikles, checkFor)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (o *OdysseiaInstaller) installHarborHelmChart() error {
 	//create harbor login
 	password, err := generator.RandomPassword(24)
@@ -582,7 +614,16 @@ func (o *OdysseiaInstaller) installHarborHelmChart() error {
 	org := []string{
 		command.DefaultNamespace,
 	}
-	crt, key, _ := generator.GenerateKeyAndCertSet(hosts, org)
+
+	validity := 3650
+
+	certClient, err := certificates.NewCertGeneratorClient(org, validity)
+	err = certClient.InitCa()
+	if err != nil {
+		return err
+	}
+
+	crt, key, _ := certClient.GenerateKeyAndCertSet(hosts, validity)
 	certData := make(map[string][]byte)
 	certData["tls.key"] = key
 	certData["tls.crt"] = crt
@@ -625,60 +666,10 @@ func (o *OdysseiaInstaller) installVaultHelmChart() error {
 }
 
 func (o *OdysseiaInstaller) installAppsHelmChart(valuesOverwrite map[string]interface{}) error {
-	//wait for solon to install
-	ticker := time.NewTicker(5 * time.Second)
-	timeout := time.After(360 * time.Second)
-	var ready bool
-	for {
-		select {
-		case <-ticker.C:
-			pods, err := o.Kube.Workload().List(command.DefaultNamespace)
-			if err != nil {
-				continue
-			}
-
-			podsReady := true
-			for _, pod := range pods.Items {
-				if !podsReady {
-					break
-				}
-				if strings.Contains(pod.Name, "solon") {
-					if pod.Status.Phase != "Running" {
-						glg.Infof("pod: %s not ready", pod.Name)
-						podsReady = false
-					}
-
-					readyStatusFound := false
-					for _, condition := range pod.Status.Conditions {
-						if condition.Type == "Ready" && condition.Status == "True" {
-							readyStatusFound = true
-							break
-						}
-					}
-
-					if !readyStatusFound {
-						glg.Infof("pod: %s not ready", pod.Name)
-						podsReady = false
-					}
-				}
-			}
-
-			if podsReady {
-				ready = true
-				ticker.Stop()
-			} else {
-				continue
-			}
-
-		case <-timeout:
-			glg.Error("timed out")
-			ticker.Stop()
-		}
-		break
-	}
-
-	if !ready {
-		return fmt.Errorf("solon pod has not become healthy after 120 seconds")
+	timer := 360 * time.Second
+	err := o.checkStatusOfPod("solon", timer)
+	if err != nil {
+		return err
 	}
 
 	for _, chart := range o.Charts.Apis {
@@ -709,6 +700,54 @@ func (o *OdysseiaInstaller) installHelmChart(name, chartPath string, valuesOverw
 	glg.Info(rls.Name)
 
 	return nil
+}
+
+func (o *OdysseiaInstaller) setupPerikles() (string, error) {
+	//create cert pair
+	validity := 3650
+
+	orgName := []string{
+		command.DefaultNamespace,
+	}
+
+	hosts := []string{
+		fmt.Sprintf("%s", command.DefaultPerikles),
+		fmt.Sprintf("%s.%s", command.DefaultPerikles, command.DefaultNamespace),
+		fmt.Sprintf("%s.%s.svc", command.DefaultPerikles, command.DefaultNamespace),
+		fmt.Sprintf("%s.%s.svc.cluster.local", command.DefaultPerikles, command.DefaultNamespace),
+	}
+
+	certClient, err := certificates.NewCertGeneratorClient(orgName, validity)
+	err = certClient.InitCa()
+	if err != nil {
+		return "", err
+	}
+
+	crt, key, _ := certClient.GenerateKeyAndCertSet(hosts, validity)
+	certData := make(map[string][]byte)
+	certData["tls.key"] = key
+	certData["tls.crt"] = crt
+
+	secretName := command.DefaultPeriklesSecretName
+
+	_, err = o.Kube.Configuration().GetSecret(command.DefaultNamespace, command.DefaultPeriklesSecretName)
+	if err == nil {
+		err = o.Kube.Configuration().DeleteSecret(command.DefaultNamespace, command.DefaultPeriklesSecretName)
+		if err != nil {
+			return "", err
+		}
+	}
+
+	//create secret
+	err = o.Kube.Configuration().CreateSecret(command.DefaultNamespace, secretName, certData)
+	if err != nil {
+		return "", err
+	}
+
+	//return secret for valueoverwrite
+	encodedCert := base64.StdEncoding.EncodeToString(crt)
+
+	return encodedCert, nil
 }
 
 func (o *OdysseiaInstaller) setupVault() error {
@@ -765,8 +804,19 @@ func (o *OdysseiaInstaller) setupVault() error {
 
 func (o *OdysseiaInstaller) setupHarbor() error {
 	//wait for harbor to install
+	timer := 120 * time.Second
+	err := o.checkStatusOfPod("harbor-core", timer)
+	if err != nil {
+		return err
+	}
+
+	err = o.Harbor.CreateProject(command.DefaultNamespace, true)
+	return err
+}
+
+func (o *OdysseiaInstaller) checkStatusOfPod(podName string, timeToCheckInSeconds time.Duration) error {
 	ticker := time.NewTicker(time.Second)
-	timeout := time.After(120 * time.Second)
+	timeout := time.After(timeToCheckInSeconds)
 	var ready bool
 	for {
 		select {
@@ -781,7 +831,7 @@ func (o *OdysseiaInstaller) setupHarbor() error {
 				if !podsReady {
 					break
 				}
-				if strings.Contains(pod.Name, "harbor-core") {
+				if strings.Contains(pod.Name, podName) {
 					if pod.Status.Phase != "Running" {
 						glg.Infof("pod: %s not ready", pod.Name)
 						podsReady = false
@@ -817,11 +867,9 @@ func (o *OdysseiaInstaller) setupHarbor() error {
 	}
 
 	if !ready {
-		return fmt.Errorf("harbor pods have not become healthy after 120 seconds")
+		return fmt.Errorf("%s pods have not become healthy after %v seconds", podName, timeToCheckInSeconds)
 	}
-
-	err := o.Harbor.CreateProject(command.DefaultNamespace, true)
-	return err
+	return nil
 }
 
 func (o *OdysseiaInstaller) dockerLogin() error {

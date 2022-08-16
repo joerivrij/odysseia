@@ -14,5 +14,5 @@ COPY ${project_name} /app/${project_name}
 ENV TMPDIR=/tmp
 ENV GOMAXPROCS=8
 
-EXPOSE 5000
+EXPOSE 443
 ENTRYPOINT [ "sh", "-c", "/app/${project_name}" ]

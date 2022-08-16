@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/tls"
 	"github.com/kpango/glg"
 	"github.com/odysseia/aristoteles"
 	"github.com/odysseia/aristoteles/configs"
@@ -9,8 +10,7 @@ import (
 	"os"
 )
 
-const standardPort = ":5000"
-const testingEnv = "TEST"
+const standardPort = ":5443"
 
 func init() {
 	errlog := glg.FileWriter("/tmp/error.log", 0666)
@@ -47,9 +47,26 @@ func main() {
 
 	srv := app.InitRoutes(*solonConfig)
 
-	glg.Infof("%s : %s", "running on port", port)
-	err = http.ListenAndServe(port, srv)
+	cfg := &tls.Config{
+		MinVersion:               tls.VersionTLS12,
+		CurvePreferences:         []tls.CurveID{tls.CurveP521, tls.CurveP384, tls.CurveP256},
+		PreferServerCipherSuites: true,
+		CipherSuites: []uint16{
+			tls.TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
+			tls.TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,
+			tls.TLS_RSA_WITH_AES_256_GCM_SHA384,
+			tls.TLS_RSA_WITH_AES_256_CBC_SHA,
+		},
+	}
+
+	httpsServer := &http.Server{
+		Addr:         port,
+		Handler:      srv,
+		TLSConfig:    cfg,
+		TLSNextProto: make(map[string]func(*http.Server, *tls.Conn, http.Handler), 0),
+	}
+	err = httpsServer.ListenAndServeTLS("/tmp/tls.crt", "/tmp/tls.key")
 	if err != nil {
-		panic(err)
+		glg.Fatal(err)
 	}
 }

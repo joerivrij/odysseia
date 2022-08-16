@@ -52,6 +52,13 @@ spec:
                 port:
                   number: {{ .Values.envVariables.dionysios.port }}
           - pathType: Prefix
+            path: /perikles/v1
+            backend:
+              service:
+                name: perikles
+                port:
+                  number: 443
+          - pathType: Prefix
             path: /ploutarchos
             backend:
               service:

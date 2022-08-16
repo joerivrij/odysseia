@@ -7,6 +7,6 @@ spec:
   selector:
     app: "{{ template "solon.uname" . }}"
   ports:
-    - name: "http"
+    - name: "https"
       port: {{ .Values.envVariables.solon.port }}
       targetPort: {{ .Values.envVariables.solon.port }}

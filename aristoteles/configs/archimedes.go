@@ -46,4 +46,23 @@ type ValueOverwrite struct {
 			} `yaml:"resources"`
 		} `yaml:"volumeClaimTemplate"`
 	} `yaml:"elastic"`
+	Vault struct {
+		Global struct {
+			Enabled    bool `yaml:"enabled"`
+			TLSDisable bool `yaml:"tlsDisable"`
+		} `yaml:"global"`
+		Server struct {
+			ExtraEnvironmentVars struct {
+				VAULTCACERT string `yaml:"VAULT_CACERT"`
+			} `yaml:"extraEnvironmentVars"`
+			ExtraVolumes []struct {
+				Type string `yaml:"type"`
+				Name string `yaml:"name"`
+			} `yaml:"extraVolumes"`
+			Standalone struct {
+				Enabled bool   `yaml:"enabled"`
+				Config  string `yaml:"config"`
+			} `yaml:"standalone"`
+		} `yaml:"server"`
+	} `yaml:"vault"`
 }

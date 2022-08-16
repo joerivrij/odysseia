@@ -20,6 +20,11 @@ type KubeClient interface {
 	Workload() Workload
 	Nodes() Nodes
 	Namespaces() Namespace
+	V1Alpha1() V1Alpha1
+}
+
+type V1Alpha1 interface {
+	ServiceMapping() ServiceMapping
 }
 
 type Access interface {
@@ -30,7 +35,11 @@ type Configuration interface {
 	GetSecret(namespace, secretName string) (*corev1.Secret, error)
 	ListSecrets(namespace string) (*corev1.SecretList, error)
 	CreateSecret(namespace, secretName string, data map[string][]byte) error
+	UpdateSecret(namespace, secretName string, data map[string][]byte) error
+	DeleteSecret(namespace, secretName string) error
 	CreateDockerSecret(namespace, secretName string, data map[string]string) error
+	CreateTlSSecret(namespace, secretName string, data map[string][]byte, immutable bool) error
+	UpdateTLSSecret(namespace, secretName string, data map[string][]byte, annotation map[string]string) error
 }
 
 type Cluster interface {
@@ -58,6 +67,10 @@ type Workload interface {
 	GetStatefulSets(namespace string) (*appsv1.StatefulSetList, error)
 	GetPodsBySelector(namespace, selector string) (*corev1.PodList, error)
 	GetPodByName(namespace, name string) (*corev1.Pod, error)
+	CreateDeployment(namespace string, deployment *appsv1.Deployment) (*appsv1.Deployment, error)
+	ListDeployments(namespace string) (*appsv1.DeploymentList, error)
+	UpdateDeploymentViaAnnotation(namespace, name string, annotation map[string]string) (*appsv1.Deployment, error)
+	GetDeployment(namespace, name string) (*appsv1.Deployment, error)
 	GetDeploymentStatus(namespace string) (bool, error)
 	CreateJob(namespace string, spec *batchv1.Job) (*batchv1.Job, error)
 	GetJob(namespace, name string) (*batchv1.Job, error)
@@ -71,6 +84,7 @@ type Nodes interface {
 
 type Kube struct {
 	set           *kubernetes.Clientset
+	v1alpha       *V1Alpha1Impl
 	access        *AccessImpl
 	util          *UtilImpl
 	cluster       *ClusterImpl
@@ -106,30 +120,19 @@ func NewKubeClient(cfg []byte, ns string) (KubeClient, error) {
 	return kube, err
 }
 
-func NewConfigBasedKube(config []byte, ns string) (*Kube, error) {
-	c, err := clientcmd.NewClientConfigFromBytes(config)
-	if err != nil {
-		return nil, err
-	}
-
-	restConfig, err := c.ClientConfig()
-	if err != nil {
-		return nil, err
-	}
-
-	clientSet, err := kubernetes.NewForConfig(restConfig)
-	if err != nil {
-		return nil, err
-	}
-
+func New(clientSet *kubernetes.Clientset, restConfig *rest.Config, config []byte, ns string) (*Kube, error) {
 	access, err := NewAccessClient(clientSet, ns)
 	if err != nil {
 		return nil, err
 	}
 
-	cluster, err := NewClusterClient(config)
-	if err != nil {
-		return nil, err
+	cluster := &ClusterImpl{}
+
+	if config != nil {
+		cluster, err = NewClusterClient(config)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	configuration, err := NewConfigurationClient(clientSet)
@@ -157,21 +160,61 @@ func NewConfigBasedKube(config []byte, ns string) (*Kube, error) {
 		return nil, err
 	}
 
+	v1alphaClient, err := NewV1AlphaClient(restConfig)
+	if err != nil {
+		return nil, err
+	}
+
 	return &Kube{
 		set:           clientSet,
-		config:        config,
+		v1alpha:       v1alphaClient,
 		access:        access,
+		util:          util,
 		cluster:       cluster,
 		configuration: configuration,
 		workload:      workload,
-		util:          util,
 		nodes:         nodes,
 		namespace:     namespaceClient,
+		config:        config,
 	}, nil
+}
+
+func NewConfigBasedKube(config []byte, ns string) (*Kube, error) {
+	c, err := clientcmd.NewClientConfigFromBytes(config)
+	if err != nil {
+		return nil, err
+	}
+
+	restConfig, err := c.ClientConfig()
+	if err != nil {
+		return nil, err
+	}
+
+	clientSet, err := kubernetes.NewForConfig(restConfig)
+	if err != nil {
+		return nil, err
+	}
+
+	return New(clientSet, restConfig, config, ns)
+
+}
+
+func NewInClusterKube(ns string) (*Kube, error) {
+	restConfig, err := rest.InClusterConfig()
+	clientSet, err := kubernetes.NewForConfig(restConfig)
+	if err != nil {
+		return nil, err
+	}
+
+	glg.Debug("created in cluster kube client")
+
+	return New(clientSet, restConfig, nil, ns)
 }
 
 func FakeKubeClient(ns string) (KubeClient, error) {
 	clientSet := fake.NewSimpleClientset()
+
+	glg.Debug("created fake kube client")
 
 	access, err := NewAccessClient(clientSet, ns)
 	if err != nil {
@@ -208,6 +251,11 @@ func FakeKubeClient(ns string) (KubeClient, error) {
 		return nil, err
 	}
 
+	alpha, err := NewV1FakeAlphaClient()
+	if err != nil {
+		return nil, err
+	}
+
 	return &Kube{
 		set:           nil,
 		config:        nil,
@@ -218,47 +266,15 @@ func FakeKubeClient(ns string) (KubeClient, error) {
 		util:          util,
 		nodes:         nodes,
 		namespace:     namespaceClient,
+		v1alpha:       alpha,
 	}, nil
 }
 
-func NewInClusterKube(ns string) (*Kube, error) {
-	config, err := rest.InClusterConfig()
-	clientSet, err := kubernetes.NewForConfig(config)
-	if err != nil {
-		return nil, err
+func (k *Kube) V1Alpha1() V1Alpha1 {
+	if k == nil {
+		return nil
 	}
-
-	glg.Debug("created in cluster kube client")
-
-	access, err := NewAccessClient(clientSet, ns)
-	if err != nil {
-		return nil, err
-	}
-
-	util, err := NewUtilClient(clientSet, ns)
-	if err != nil {
-		return nil, err
-	}
-
-	configuration, err := NewConfigurationClient(clientSet)
-	if err != nil {
-		return nil, err
-	}
-
-	workload, err := NewWorkloadClient(clientSet)
-	if err != nil {
-		return nil, err
-	}
-
-	return &Kube{
-		set:           clientSet,
-		config:        config.CAData,
-		access:        access,
-		util:          util,
-		cluster:       nil,
-		configuration: configuration,
-		workload:      workload,
-	}, nil
+	return k.v1alpha
 }
 
 func (k *Kube) Access() Access {

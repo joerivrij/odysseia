@@ -12,6 +12,8 @@ const (
 	defaultMqPort            = "50000"
 	defaultJobName           = "demokritos"
 	defaultSolonService      = "http://odysseia-greek.internal"
+	defaultCaValidity        = "3650"
+	defaultCrdName           = "perikles-mapping"
 	EnvHealthCheckOverwrite  = "HEALTH_CHECK_OVERWRITE"
 	EnvPodName               = "POD_NAME"
 	EnvNamespace             = "NAMESPACE"
@@ -36,12 +38,16 @@ const (
 	EnvMqAddress             = "MQ_SERVICE"
 	EnvMqPort                = "MQ_PORT"
 	EnvJobName               = "JOB_NAME"
+	EnvCAValidity            = "CA_VALIDITY"
+	EnvCrdName               = "CRD_NAME"
+	EnvTLSFiles              = "TLS_FILES"
 	AuthMethodKube           = "kubernetes"
 	AuthMethodToken          = "token"
 	baseDir                  = "base"
 	configFileName           = "config.yaml"
 	defaultRoleAnnotation    = "odysseia-greek/role"
 	defaultAccessAnnotation  = "odysseia-greek/access"
+	defaultTLSFileLocation   = "/etc/certs"
 	serviceAccountTokenPath  = "/var/run/secrets/kubernetes.io/serviceaccount/token"
 	certPathInPod            = "/app/config/certs/elastic-certificate.pem"
 	elasticServiceDefault    = "http://localhost:9200"
@@ -83,4 +89,7 @@ var validFields = []string{
 	"Queue",
 	"HttpClients",
 	"Cache",
+	"Cert",
+	"CrdName",
+	"TLSFiles",
 }

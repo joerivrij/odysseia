@@ -124,3 +124,69 @@ func TestJobCLient(t *testing.T) {
 		}
 	})
 }
+
+func TestDeploymentClient(t *testing.T) {
+	ns := "odysseia"
+	expectedName := "testpod"
+
+	t.Run("Create", func(t *testing.T) {
+		testClient, err := FakeKubeClient(ns)
+		assert.Nil(t, err)
+
+		deployObject := CreateDeploymentObject(expectedName, ns)
+
+		sut, err := testClient.Workload().CreateDeployment(ns, deployObject)
+		assert.Nil(t, err)
+		assert.Equal(t, expectedName, sut.Name)
+		assert.Equal(t, ns, sut.Namespace)
+	})
+
+	t.Run("Get", func(t *testing.T) {
+		testClient, err := FakeKubeClient(ns)
+		assert.Nil(t, err)
+
+		deployObject := CreateDeploymentObject(expectedName, ns)
+
+		_, err = testClient.Workload().CreateDeployment(ns, deployObject)
+		assert.Nil(t, err)
+
+		sut, err := testClient.Workload().GetDeployment(ns, expectedName)
+		assert.Nil(t, err)
+		assert.Equal(t, expectedName, sut.Name)
+		assert.Equal(t, ns, sut.Namespace)
+	})
+
+	t.Run("List", func(t *testing.T) {
+		testClient, err := FakeKubeClient(ns)
+		assert.Nil(t, err)
+
+		deployObject := CreateDeploymentObject(expectedName, ns)
+
+		_, err = testClient.Workload().CreateDeployment(ns, deployObject)
+		assert.Nil(t, err)
+
+		sut, err := testClient.Workload().ListDeployments(ns)
+		assert.Nil(t, err)
+		assert.Equal(t, 1, len(sut.Items))
+		for _, deploy := range sut.Items {
+			assert.Equal(t, expectedName, deploy.Name)
+			assert.Equal(t, ns, deploy.Namespace)
+		}
+	})
+
+	t.Run("CreateAnnotatedObject", func(t *testing.T) {
+		testClient, err := FakeKubeClient(ns)
+		assert.Nil(t, err)
+
+		annotations := map[string]string{
+			"testkey": "testvalue",
+		}
+		deployObject := CreateAnnotatedDeploymentObject(expectedName, ns, annotations)
+
+		sut, err := testClient.Workload().CreateDeployment(ns, deployObject)
+		assert.Nil(t, err)
+		assert.Equal(t, expectedName, sut.Name)
+		assert.Equal(t, ns, sut.Namespace)
+		assert.Equal(t, annotations, sut.Spec.Template.Annotations)
+	})
+}

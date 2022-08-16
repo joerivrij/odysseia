@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: athena-host
+  labels:
+    app: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+      annotations:
+        perikles/hostname: solon
+        perikles/validity: "10"
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.14.2
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: foo
+              mountPath: "/etc/ssl"
+              readOnly: true
+      volumes:
+        - name: foo
+          secret:
+            secretName: solon-test-secret
+            items:
+              - key: tls.key
+                path: solon/tls.key
+              - key: tls.crt
+                path: solon/tls.crt
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
