@@ -23,3 +23,14 @@ func NewV1AlphaClient(restConfig *rest.Config) (*V1Alpha1Impl, error) {
 		serviceMapping: serviceMapping,
 	}, nil
 }
+
+func NewV1FakeAlphaClient() (*V1Alpha1Impl, error) {
+	serviceMapping, err := NewFakeServiceMappingImpl()
+	if err != nil {
+		return nil, err
+	}
+
+	return &V1Alpha1Impl{
+		serviceMapping: serviceMapping,
+	}, nil
+}

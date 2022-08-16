@@ -23,6 +23,15 @@ func NewWorkloadClient(kube kubernetes.Interface) (*WorkloadImpl, error) {
 	return &WorkloadImpl{client: kube}, nil
 }
 
+func (w *WorkloadImpl) CreateDeployment(namespace string, deployment *appsv1.Deployment) (*appsv1.Deployment, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Minute)
+	defer cancel()
+
+	deploy, err := w.client.AppsV1().Deployments(namespace).Create(ctx, deployment, metav1.CreateOptions{})
+
+	return deploy, err
+}
+
 func (w *WorkloadImpl) ListDeployments(namespace string) (*appsv1.DeploymentList, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
 	defer cancel()

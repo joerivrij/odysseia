@@ -6,6 +6,7 @@ import (
 	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/plato/certificates"
 	"github.com/odysseia/plato/kubernetes"
+	"github.com/odysseia/plato/models"
 	"github.com/stretchr/testify/assert"
 	"io"
 	"io/ioutil"
@@ -43,11 +44,72 @@ func TestValidityFlow(t *testing.T) {
 	err = cert.InitCa()
 	assert.Nil(t, err)
 
-	t.Run("ValidityRequestValid", func(t *testing.T) {
+	t.Run("EmptyBody", func(t *testing.T) {
 		fakeKube, err := kubernetes.FakeKubeClient(ns)
 		assert.Nil(t, err)
 		testConfig := configs.PeriklesConfig{
 			Kube:      fakeKube,
+			Cert:      cert,
+			Namespace: ns,
+		}
+
+		expected := "request"
+		router := InitRoutes(testConfig)
+		response := performPostRequest(router, "/perikles/v1/validate", nil)
+
+		var validity models.ValidationError
+		err = json.NewDecoder(response.Body).Decode(&validity)
+		assert.Nil(t, err)
+		assert.Equal(t, http.StatusBadRequest, response.Code)
+		assert.Contains(t, validity.Messages[0].Message, expected)
+	})
+
+	t.Run("UnparseableBody", func(t *testing.T) {
+		testConfig := configs.PeriklesConfig{
+			Kube:      nil,
+			Cert:      cert,
+			Namespace: ns,
+		}
+
+		expected := "AdmissionReview"
+		router := InitRoutes(testConfig)
+		body := bytes.NewReader([]byte("nonvalidjson"))
+		response := performPostRequest(router, "/perikles/v1/validate", body)
+
+		var validity models.ValidationError
+		err = json.NewDecoder(response.Body).Decode(&validity)
+		assert.Nil(t, err)
+		assert.Equal(t, http.StatusBadRequest, response.Code)
+		assert.Contains(t, validity.Messages[0].Message, expected)
+	})
+
+	t.Run("ArRequestIsNil", func(t *testing.T) {
+		arNilJsonPath := filepath.Join("../fixture", "arNil.json")
+		file, err := os.Open(arNilJsonPath)
+		assert.Nil(t, err)
+		arNilJson, err := ioutil.ReadAll(file)
+		assert.Nil(t, err)
+		testConfig := configs.PeriklesConfig{
+			Kube:      nil,
+			Cert:      cert,
+			Namespace: ns,
+		}
+
+		expected := "nil request"
+		router := InitRoutes(testConfig)
+		bodyInBytes := bytes.NewReader(arNilJson)
+		response := performPostRequest(router, "/perikles/v1/validate", bodyInBytes)
+
+		var validity models.ValidationError
+		err = json.NewDecoder(response.Body).Decode(&validity)
+		assert.Nil(t, err)
+		assert.Equal(t, http.StatusBadRequest, response.Code)
+		assert.Contains(t, validity.Messages[0].Message, expected)
+	})
+
+	t.Run("ValidityRequestValid", func(t *testing.T) {
+		testConfig := configs.PeriklesConfig{
+			Kube:      nil,
 			Cert:      cert,
 			Namespace: ns,
 		}

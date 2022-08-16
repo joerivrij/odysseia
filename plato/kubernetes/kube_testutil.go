@@ -2,6 +2,7 @@ package kubernetes
 
 import (
 	"fmt"
+	appsv1 "k8s.io/api/apps/v1"
 	batchv1 "k8s.io/api/batch/v1"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -149,8 +150,70 @@ func CreateJobObject(name, ns string, completed bool) *batchv1.Job {
 	return job
 }
 
+func CreateDeploymentObject(name, ns string) *appsv1.Deployment {
+	return &appsv1.Deployment{
+		TypeMeta: metav1.TypeMeta{},
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      name,
+			Namespace: ns,
+		},
+		Spec: appsv1.DeploymentSpec{
+			Template: corev1.PodTemplateSpec{
+				ObjectMeta: metav1.ObjectMeta{
+					Annotations: map[string]string{
+						"perikles/deployment": name,
+					},
+				},
+				Spec: corev1.PodSpec{},
+			},
+		},
+		Status: appsv1.DeploymentStatus{},
+	}
+}
+
+func CreateAnnotatedDeploymentObject(name, ns string, annotations map[string]string) *appsv1.Deployment {
+	return &appsv1.Deployment{
+		TypeMeta: metav1.TypeMeta{},
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      name,
+			Namespace: ns,
+		},
+		Spec: appsv1.DeploymentSpec{
+			Template: corev1.PodTemplateSpec{
+				ObjectMeta: metav1.ObjectMeta{
+					Annotations: annotations,
+				},
+				Spec: corev1.PodSpec{},
+			},
+		},
+		Status: appsv1.DeploymentStatus{},
+	}
+}
+
+func CreatePodSpecVolume(name, secretName string) []corev1.Volume {
+	return []corev1.Volume{
+		{
+			Name: name,
+			VolumeSource: corev1.VolumeSource{
+				Secret: &corev1.SecretVolumeSource{
+					SecretName:  secretName,
+					Items:       nil,
+					DefaultMode: nil,
+					Optional:    nil,
+				},
+			},
+		},
+	}
+}
+
 func CreatePodForTest(name, ns, access, role string, client KubeClient) error {
 	pod := CreatePodObject(name, ns, access, role)
 	_, err := client.Workload().CreatePod(ns, pod)
+	return err
+}
+
+func CreateDeploymentForTest(name, ns string, client KubeClient) error {
+	deploy := CreateDeploymentObject(name, ns)
+	_, err := client.Workload().CreateDeployment(ns, deploy)
 	return err
 }

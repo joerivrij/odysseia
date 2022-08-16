@@ -20,7 +20,7 @@ func NewConfigurationClient(kube kubernetes.Interface) (*ConfigurationImpl, erro
 }
 
 func (c *ConfigurationImpl) ListSecrets(namespace string) (*corev1.SecretList, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
+	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Minute)
 	defer cancel()
 
 	secrets, err := c.client.Secrets(namespace).List(ctx, metav1.ListOptions{
@@ -45,7 +45,7 @@ func (c *ConfigurationImpl) ListSecrets(namespace string) (*corev1.SecretList, e
 }
 
 func (c *ConfigurationImpl) CreateSecret(namespace, secretName string, data map[string][]byte) error {
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
+	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Minute)
 	defer cancel()
 
 	secret := corev1.Secret{
@@ -70,8 +70,15 @@ func (c *ConfigurationImpl) CreateSecret(namespace, secretName string, data map[
 	return nil
 }
 
+func (c *ConfigurationImpl) DeleteSecret(namespace, secretName string) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Minute)
+	defer cancel()
+
+	return c.client.Secrets(namespace).Delete(ctx, secretName, metav1.DeleteOptions{})
+}
+
 func (c *ConfigurationImpl) UpdateSecret(namespace, secretName string, data map[string][]byte) error {
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
+	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Minute)
 	defer cancel()
 
 	secret := corev1.Secret{
@@ -97,7 +104,7 @@ func (c *ConfigurationImpl) UpdateSecret(namespace, secretName string, data map[
 }
 
 func (c *ConfigurationImpl) CreateDockerSecret(namespace, secretName string, data map[string]string) error {
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
+	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Minute)
 	defer cancel()
 
 	secret := corev1.Secret{
@@ -122,7 +129,7 @@ func (c *ConfigurationImpl) CreateDockerSecret(namespace, secretName string, dat
 }
 
 func (c *ConfigurationImpl) CreateTlSSecret(namespace, secretName string, data map[string][]byte, immutable bool) error {
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
+	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Minute)
 	defer cancel()
 
 	secret := corev1.Secret{
@@ -147,7 +154,7 @@ func (c *ConfigurationImpl) CreateTlSSecret(namespace, secretName string, data m
 }
 
 func (c *ConfigurationImpl) UpdateTLSSecret(namespace, secretName string, data map[string][]byte, annotation map[string]string) error {
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
+	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Minute)
 	defer cancel()
 
 	immutable := false

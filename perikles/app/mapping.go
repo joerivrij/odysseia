@@ -11,29 +11,26 @@ const (
 	timeFormat string = "2006-01-02 15:04:05"
 )
 
-func (p *PeriklesHandler) addHostToMapping(serviceName, secretName, kubeType string, validity int) error {
+func (p *PeriklesHandler) addHostToMapping(serviceName, secretName, kubeType string, validity int) (*v1alpha.Mapping, error) {
 	mapping, err := p.Config.Kube.V1Alpha1().ServiceMapping().Get(p.Config.CrdName)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	for i, service := range mapping.Spec.Services {
 		if service.Name == serviceName {
-			if service.Active == false {
-				service.Active = true
-				service.Validity = validity
-				service.KubeType = kubeType
-				service.SecretName = secretName
-			}
-
+			service.Active = true
+			service.Validity = validity
+			service.KubeType = kubeType
+			service.SecretName = secretName
 			mapping.Spec.Services[i] = service
 			glg.Debugf("updating existing service mapping %s", service.Name)
-			_, err = p.Config.Kube.V1Alpha1().ServiceMapping().Update(mapping)
+			updatedMapping, err := p.Config.Kube.V1Alpha1().ServiceMapping().Update(mapping)
 			if err != nil {
-				return err
+				return nil, err
 			}
 
-			return nil
+			return updatedMapping, nil
 		}
 	}
 
@@ -50,18 +47,18 @@ func (p *PeriklesHandler) addHostToMapping(serviceName, secretName, kubeType str
 	mapping.Spec.Services = append(mapping.Spec.Services, service)
 
 	glg.Debugf("updating new service mapping %s", serviceName)
-	_, err = p.Config.Kube.V1Alpha1().ServiceMapping().Update(mapping)
+	updatedMapping, err := p.Config.Kube.V1Alpha1().ServiceMapping().Update(mapping)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	return updatedMapping, nil
 }
 
-func (p *PeriklesHandler) addClientToMapping(hostName, clientName, kubeType string) error {
+func (p *PeriklesHandler) addClientToMapping(hostName, clientName, kubeType string) (*v1alpha.Mapping, error) {
 	mapping, err := p.Config.Kube.V1Alpha1().ServiceMapping().Get(p.Config.CrdName)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	client := v1alpha.Client{
@@ -87,18 +84,17 @@ func (p *PeriklesHandler) addClientToMapping(hostName, clientName, kubeType stri
 			Active:     false,
 			Validity:   0,
 			Created:    time.Now().UTC().Format(timeFormat),
-			Clients:    []v1alpha.Client{},
+			Clients:    []v1alpha.Client{client},
 		}
-		service.Clients = append(service.Clients, client)
 		mapping.Spec.Services = append(mapping.Spec.Services, service)
 	}
 
-	_, err = p.Config.Kube.V1Alpha1().ServiceMapping().Update(mapping)
+	updatedMapping, err := p.Config.Kube.V1Alpha1().ServiceMapping().Update(mapping)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	return updatedMapping, nil
 }
 
 func (p *PeriklesHandler) loopForMappingUpdates() {

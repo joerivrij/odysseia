@@ -88,16 +88,16 @@ func (p *PeriklesHandler) hostFlow(deployment v1.Deployment) error {
 	}
 
 	glg.Debug("created certs")
-	err = p.addHostToMapping(hostName, secretName, deployment.Kind, validity)
+	_, err = p.addHostToMapping(hostName, secretName, deployment.Kind, validity)
 	if err != nil {
 		return err
 	}
 
-	//glg.Debug("restarting deployment")
-	//err = p.restartKubeResource(deployment.Namespace, deployment.Name, deployment.Kind)
-	//if err != nil {
-	//	return err
-	//}
+	glg.Debug("restarting deployment")
+	err = p.restartKubeResource(deployment.Namespace, deployment.Name, deployment.Kind)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }
@@ -106,7 +106,7 @@ func (p *PeriklesHandler) clientFlow(accesses, name, kubeType string) error {
 	hosts := strings.Split(accesses, ";")
 
 	for _, host := range hosts {
-		err := p.addClientToMapping(host, name, kubeType)
+		_, err := p.addClientToMapping(host, name, kubeType)
 		if err != nil {
 			return err
 		}

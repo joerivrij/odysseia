@@ -9,4 +9,6 @@ const (
 	DefaultHarbor               = "core.harbor.domain"
 	DefaultHarborUrl            = "https://core.harbor.domain:30003/"
 	DefaultHarborCertSecretName = "harbor-certs"
+	DefaultPerikles             = "perikles"
+	DefaultPeriklesSecretName   = "perikles-certs"
 )

@@ -1,17 +1,25 @@
 package kubernetes
 
 import (
+	"bytes"
 	"context"
+	"encoding/json"
 	"fmt"
 	"github.com/odysseia/plato/kubernetes/crd/v1alpha"
+	"io/ioutil"
+	appsv1 "k8s.io/api/apps/v1"
 	apiextensionv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	"k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	extensionsclient "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
+	fakeclientset "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset/fake"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/client-go/kubernetes/scheme"
 	"k8s.io/client-go/rest"
+	manualfake "k8s.io/client-go/rest/fake"
+	"net/http"
 	"time"
 )
 
@@ -26,9 +34,15 @@ type ServiceMapping interface {
 }
 
 type ServiceMappingsImpl struct {
-	ExtensionClient *clientset.Clientset
+	ExtensionClient clientset.Interface
 	Client          rest.Interface
 }
+
+const (
+	timeFormat string = "2006-01-02 15:04:05"
+)
+
+var updatedMapping v1alpha.Mapping
 
 func NewServiceMappingImpl(restConfig *rest.Config) (*ServiceMappingsImpl, error) {
 	config := *restConfig
@@ -50,6 +64,97 @@ func NewServiceMappingImpl(restConfig *rest.Config) (*ServiceMappingsImpl, error
 	return &ServiceMappingsImpl{
 		ExtensionClient: extensionClient,
 		Client:          client,
+	}, nil
+}
+
+func NewFakeServiceMappingImpl() (*ServiceMappingsImpl, error) {
+	ns := "odysseia"
+	mappingName := "testCrd"
+	kubeType := "Deployment"
+	clientName := "client"
+	serviceName := "fakedService"
+	validity := 10
+
+	header := http.Header{}
+	header.Set("Content-Type", runtime.ContentTypeJSON)
+
+	fakeClient := &manualfake.RESTClient{
+		GroupVersion:         appsv1.SchemeGroupVersion,
+		NegotiatedSerializer: scheme.Codecs,
+		Client: manualfake.CreateHTTPClient(func(req *http.Request) (*http.Response, error) {
+			mapping := v1alpha.Mapping{
+				TypeMeta: metav1.TypeMeta{},
+				ObjectMeta: metav1.ObjectMeta{
+					Name: mappingName,
+				},
+				APIVersion: fmt.Sprintf("%s/%s", v1alpha.GroupName, v1alpha.Version),
+				Kind:       v1alpha.Kind,
+				Spec: v1alpha.Spec{
+					TypeMeta:   metav1.TypeMeta{},
+					ObjectMeta: metav1.ObjectMeta{},
+					Services: []v1alpha.Service{
+						{
+							TypeMeta:   metav1.TypeMeta{},
+							ObjectMeta: metav1.ObjectMeta{},
+							Name:       serviceName,
+							KubeType:   kubeType,
+							SecretName: "",
+							Namespace:  ns,
+							Active:     true,
+							Created:    time.Now().UTC().Format(timeFormat),
+							Validity:   validity,
+							Clients: []v1alpha.Client{
+								{
+									TypeMeta:   metav1.TypeMeta{},
+									ObjectMeta: metav1.ObjectMeta{},
+									Namespace:  ns,
+									Name:       clientName,
+									KubeType:   kubeType,
+								},
+							},
+						},
+					},
+				},
+			}
+
+			switch req.Method {
+			case "GET":
+				byteResponse, _ := mapping.Marshal()
+				if updatedMapping.APIVersion != "" {
+					byteResponse, _ = updatedMapping.Marshal()
+				}
+				return &http.Response{StatusCode: http.StatusOK, Header: header, Body: ioutil.NopCloser(bytes.NewReader(byteResponse))}, nil
+			case "PUT":
+				var v1map v1alpha.Mapping
+				err := json.NewDecoder(req.Body).Decode(&v1map)
+				if err == nil {
+					updatedMapping = v1map
+				}
+				byteResponse, _ := updatedMapping.Marshal()
+				return &http.Response{StatusCode: http.StatusOK, Header: header, Body: ioutil.NopCloser(bytes.NewReader(byteResponse))}, nil
+			case "POST":
+				return &http.Response{StatusCode: http.StatusOK, Header: header, Body: ioutil.NopCloser(req.Body)}, nil
+			default:
+				fmt.Errorf("unexpected request: %#v\n%#v", req.URL, req)
+				return nil, nil
+			}
+		}),
+	}
+	clientConfig := &rest.Config{
+		APIPath: "/apis",
+		ContentConfig: rest.ContentConfig{
+			NegotiatedSerializer: scheme.Codecs,
+			GroupVersion:         &appsv1.SchemeGroupVersion,
+		},
+	}
+	restClient, _ := rest.RESTClientFor(clientConfig)
+	restClient.Client = fakeClient.Client
+
+	extensionClient := fakeclientset.NewSimpleClientset()
+
+	return &ServiceMappingsImpl{
+		ExtensionClient: extensionClient,
+		Client:          restClient,
 	}, nil
 }
 
@@ -157,7 +262,7 @@ func (s *ServiceMappingsImpl) CreateInCluster() (bool, error) {
 	if err != nil {
 		if k8serrors.IsNotFound(err) {
 			created = true
-			_, err := s.ExtensionClient.ApiextensionsV1().CustomResourceDefinitions().Create(context.Background(), crd, metav1.CreateOptions{})
+			_, err = s.ExtensionClient.ApiextensionsV1().CustomResourceDefinitions().Create(context.Background(), crd, metav1.CreateOptions{})
 			if err != nil {
 				return created, err
 			}
