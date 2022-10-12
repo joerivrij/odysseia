@@ -1,13 +1,15 @@
 package main
 
 import (
-	"crypto/tls"
+	"crypto/x509"
 	"github.com/kpango/glg"
 	"github.com/odysseia/aristoteles"
 	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/solon/app"
+	"io/ioutil"
 	"net/http"
 	"os"
+	"path/filepath"
 )
 
 const standardPort = ":5443"
@@ -46,27 +48,35 @@ func main() {
 	}
 
 	srv := app.InitRoutes(*solonConfig)
+	glg.Infof("%s : %v", "TLS enabled", solonConfig.TLSEnabled)
+	glg.Infof("%s : %s", "running on port", port)
 
-	cfg := &tls.Config{
-		MinVersion:               tls.VersionTLS12,
-		CurvePreferences:         []tls.CurveID{tls.CurveP521, tls.CurveP384, tls.CurveP256},
-		PreferServerCipherSuites: true,
-		CipherSuites: []uint16{
-			tls.TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
-			tls.TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,
-			tls.TLS_RSA_WITH_AES_256_GCM_SHA384,
-			tls.TLS_RSA_WITH_AES_256_CBC_SHA,
-		},
-	}
+	if solonConfig.TLSEnabled {
+		rootPath := os.Getenv("CERT_ROOT")
+		if rootPath == "" {
+			glg.Error("rootpath is empty no certs can be loaded")
+		}
+		fp := filepath.Join(rootPath, "solon", "tls.pem")
+		caFromFile, _ := ioutil.ReadFile(fp)
+		ca := x509.NewCertPool()
+		ca.AppendCertsFromPEM(caFromFile)
+		httpsServer := aristoteles.CreateTlSConfig(port, ca, srv)
+		overwrite := os.Getenv("TESTOVERWRITE")
+		var testOverwrite bool
+		if overwrite != "" {
+			testOverwrite = true
+		}
 
-	httpsServer := &http.Server{
-		Addr:         port,
-		Handler:      srv,
-		TLSConfig:    cfg,
-		TLSNextProto: make(map[string]func(*http.Server, *tls.Conn, http.Handler), 0),
-	}
-	err = httpsServer.ListenAndServeTLS("/tmp/tls.crt", "/tmp/tls.key")
-	if err != nil {
-		glg.Fatal(err)
+		glg.Debug("loading cert files from mount")
+		certPath, keyPath := aristoteles.RetrieveCertPathLocally(testOverwrite, "solon")
+		err = httpsServer.ListenAndServeTLS(certPath, keyPath)
+		if err != nil {
+			glg.Fatal(err)
+		}
+	} else {
+		err = http.ListenAndServe(port, srv)
+		if err != nil {
+			panic(err)
+		}
 	}
 }

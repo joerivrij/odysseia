@@ -3,6 +3,7 @@ package aristoteles
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/hashicorp/vault/api"
 	"github.com/kpango/glg"
 	"github.com/odysseia/plato/helpers"
 	"github.com/odysseia/plato/models"
@@ -15,7 +16,11 @@ import (
 	"time"
 )
 
-func (c *Config) getConfigFromVault() (*models.ElasticConfigVault, error) {
+const (
+	VAULT = "vault"
+)
+
+func (c *Config) getConfigFromVault(localHttps bool) (*models.ElasticConfigVault, error) {
 	sidecarService := os.Getenv(EnvPtolemaiosService)
 	if sidecarService == "" {
 		glg.Infof("defaulting to %s for sidecar", defaultSidecarService)
@@ -27,7 +32,14 @@ func (c *Config) getConfigFromVault() (*models.ElasticConfigVault, error) {
 		return nil, err
 	}
 
-	ptolemaiosClient, err := service.NewPtolemaiosConfig(u.Scheme, u.Host, c.BaseConfig.HttpClient)
+	var cert []byte
+	if localHttps {
+		rootPath := os.Getenv("CERT_ROOT")
+		fileName := filepath.Join(rootPath, "ptolemaios")
+		cert, _ = ioutil.ReadFile(fileName)
+	}
+
+	ptolemaiosClient, err := service.NewPtolemaiosConfig(u.Scheme, u.Host, cert, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -51,8 +63,29 @@ func (c *Config) getVaultClient() (vault.Client, error) {
 	vaultAuthMethod := c.getStringFromEnv(EnvAuthMethod, AuthMethodToken)
 	vaultService := c.getStringFromEnv(EnvVaultService, c.BaseConfig.VaultService)
 	vaultRole := c.getStringFromEnv(EnvVaultRole, defaultRoleName)
+	tlsEnabled := c.getBoolFromEnv(EnvTLSEnabled)
+	rootPath := c.getStringFromEnv(EnvRootTlSDir, defaultTLSFileLocation)
+	secretPath := filepath.Join(rootPath, VAULT)
 
 	glg.Debugf("vaultAuthMethod set to %s", vaultAuthMethod)
+	glg.Debugf("secretPath set to %s", secretPath)
+	glg.Debugf("tlsEnabled set to %v", tlsEnabled)
+
+	var tlsConfig *api.TLSConfig
+
+	if tlsEnabled {
+		insecure := false
+		if c.env == "LOCAL" || c.env == "TEST" {
+			insecure = !insecure
+			secretPath = "/tmp"
+		}
+
+		ca := fmt.Sprintf("%s/vault.ca", secretPath)
+		cert := fmt.Sprintf("%s/vault.crt", secretPath)
+		key := fmt.Sprintf("%s/vault.key", secretPath)
+
+		tlsConfig = vault.CreateTLSConfig(insecure, ca, cert, key, secretPath)
+	}
 
 	if vaultAuthMethod == AuthMethodKube {
 		jwtToken, err := os.ReadFile(serviceAccountTokenPath)
@@ -63,7 +96,7 @@ func (c *Config) getVaultClient() (vault.Client, error) {
 
 		vaultJwtToken := string(jwtToken)
 
-		client, err := vault.CreateVaultClientKubernetes(vaultService, vaultRole, vaultJwtToken)
+		client, err := vault.CreateVaultClientKubernetes(vaultService, vaultRole, vaultJwtToken, tlsConfig)
 		if err != nil {
 			glg.Error(err)
 			return nil, err
@@ -87,7 +120,7 @@ func (c *Config) getVaultClient() (vault.Client, error) {
 				glg.Error(err)
 				return nil, err
 			}
-			client, err := vault.NewVaultClient(vaultService, localToken)
+			client, err := vault.NewVaultClient(vaultService, localToken, tlsConfig)
 			if err != nil {
 				glg.Error(err)
 				return nil, err
@@ -95,7 +128,7 @@ func (c *Config) getVaultClient() (vault.Client, error) {
 
 			vaultClient = client
 		} else {
-			client, err := vault.NewVaultClient(vaultService, vaultRootToken)
+			client, err := vault.NewVaultClient(vaultService, vaultRootToken, tlsConfig)
 			if err != nil {
 				glg.Error(err)
 				return nil, err
@@ -105,6 +138,7 @@ func (c *Config) getVaultClient() (vault.Client, error) {
 		}
 	}
 
+	glg.Debug(vaultClient)
 	return vaultClient, nil
 }
 

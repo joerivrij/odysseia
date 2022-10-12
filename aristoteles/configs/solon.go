@@ -14,4 +14,5 @@ type SolonConfig struct {
 	Namespace        string
 	AccessAnnotation string
 	RoleAnnotation   string
+	TLSEnabled       bool
 }

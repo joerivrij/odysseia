@@ -1,6 +1,9 @@
 package service
 
-import "github.com/odysseia/plato/models"
+import (
+	"crypto/tls"
+	"github.com/odysseia/plato/models"
+)
 
 type OdysseiaClient interface {
 	Solon() Solon
@@ -23,20 +26,29 @@ type Ptolemaios interface {
 }
 
 type ClientConfig struct {
+	Ca            []byte
+	CertBundle    CertBundle
 	Scheme        string
 	SolonUrl      string
 	PtolemaiosUrl string
 }
 
-func NewClient(config ClientConfig) (OdysseiaClient, error) {
-	client := NewHttpClient()
+type CertBundle struct {
+	SolonCert      []tls.Certificate
+	PtolemaiosCert []tls.Certificate
+	DionysiosCert  []tls.Certificate
+	HerodotosCert  []tls.Certificate
+	AlexandrosCert []tls.Certificate
+	SokratesCert   []tls.Certificate
+}
 
-	solonImpl, err := NewSolonImpl(config.Scheme, config.SolonUrl, client)
+func NewClient(config ClientConfig) (OdysseiaClient, error) {
+	solonImpl, err := NewSolonImpl(config.Scheme, config.SolonUrl, config.Ca, config.CertBundle.SolonCert)
 	if err != nil {
 		return nil, err
 	}
 
-	ptolemaiosImpl, err := NewPtolemaiosConfig(config.Scheme, config.PtolemaiosUrl, client)
+	ptolemaiosImpl, err := NewPtolemaiosConfig(config.Scheme, config.PtolemaiosUrl, config.Ca, config.CertBundle.PtolemaiosCert)
 	if err != nil {
 		return nil, err
 	}
@@ -50,12 +62,12 @@ func NewClient(config ClientConfig) (OdysseiaClient, error) {
 func NewFakeClient(config ClientConfig, codes []int, responses []string) (OdysseiaClient, error) {
 	client := NewFakeHttpClient(responses, codes)
 
-	solonImpl, err := NewSolonImpl(config.Scheme, config.SolonUrl, client)
+	solonImpl, err := NewFakeSolonImpl(config.Scheme, config.SolonUrl, client)
 	if err != nil {
 		return nil, err
 	}
 
-	ptolemaiosImpl, err := NewPtolemaiosConfig(config.Scheme, config.PtolemaiosUrl, client)
+	ptolemaiosImpl, err := NewFakePtolemaiosConfig(config.Scheme, config.PtolemaiosUrl, client)
 	if err != nil {
 		return nil, err
 	}

@@ -13,7 +13,7 @@ import (
 
 type Adapter func(http.HandlerFunc) http.HandlerFunc
 
-// Iterate over adapters and run them one by one
+// Adapt Iterate over adapters and run them one by one
 func Adapt(h http.HandlerFunc, adapters ...Adapter) http.HandlerFunc {
 	for _, adapter := range adapters {
 		h = adapter(h)

@@ -93,11 +93,12 @@ func (p *PeriklesHandler) hostFlow(deployment v1.Deployment) error {
 		return err
 	}
 
-	glg.Debug("restarting deployment")
-	err = p.restartKubeResource(deployment.Namespace, deployment.Name, deployment.Kind)
-	if err != nil {
-		return err
-	}
+	//TODO: fix the restart since its stuck in a loop
+	//glg.Debug("restarting deployment")
+	//err = p.restartKubeResource(deployment.Namespace, deployment.Name, deployment.Kind)
+	//if err != nil {
+	//	return err
+	//}
 
 	return nil
 }

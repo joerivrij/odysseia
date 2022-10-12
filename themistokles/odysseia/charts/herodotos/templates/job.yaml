@@ -58,6 +58,16 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.annotations['odysseia-greek/access']
+            - name: TLS_ENABLED
+              value: {{ .Values.config.tls | quote }}
+            - name: CERT_ROOT
+              value: {{ .Values.tlsConfig.rootPath }}
+          volumeMounts:
+            {{- range .Values.tlsConfig.mounts }}
+            - name: {{ .name }}
+              mountPath: {{ .path }}
+              readOnly: true
+            {{- end }}
       containers:
         - name: "{{ template "sidecar.uname" . }}"
           {{- if .Values.config.externalRepo | quote }}
@@ -72,6 +82,8 @@ spec:
               value: {{ .Values.envVariables.solonService }}
             - name: VAULT_SERVICE
               value: {{ .Values.envVariables.vaultService }}
+            - name: VAULT_TLS
+              value:  {{ .Values.tlsConfig.vault.enabled | quote }}
             - name: RUN_ONCE
               value: "true"
             - name: ENV
@@ -80,8 +92,21 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
+            - name: TLS_ENABLED
+              value: {{ .Values.config.tls | quote }}
+            - name: CERT_ROOT
+              value: {{ .Values.tlsConfig.rootPath }}
           ports:
             - containerPort: {{ .Values.envVariables.sidecar.port }}
+          volumeMounts:
+            - name: {{ .Values.tlsConfig.vault.name }}
+              mountPath: {{ .Values.tlsConfig.vault.path }}
+              readOnly: true
+            {{- range .Values.tlsConfig.mounts }}
+            - name: {{ .name }}
+              mountPath: {{ .path }}
+              readOnly: true
+            {{- end }}
           resources:
             requests:
               memory: {{ .Values.services.sidecar.requests.memory }}
@@ -106,11 +131,31 @@ spec:
               value: {{ .Values.envVariables.elasticService }}
             - name: ENV
               value: {{ .Values.config.environment }}
-            - name: TLSENABLED
+            - name: TLS_ENABLED
               value: {{ .Values.config.tls | quote }}
+            - name: CERT_ROOT
+              value: {{ .Values.tlsConfig.rootPath }}
             - name: ELASTIC_ACCESS
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.annotations['odysseia-greek/access']
+          volumeMounts:
+            {{- range .Values.tlsConfig.mounts }}
+            - name: {{ .name }}
+              mountPath: {{ .path }}
+              readOnly: true
+            {{- end }}
       restartPolicy: Never
+      volumes:
+        - name: {{ .Values.tlsConfig.vault.name }}
+          secret:
+            secretName: {{ .Values.tlsConfig.vault.secretName }}
+        {{- range .Values.tlsConfig.mounts }}
+        - name: {{ .name }}
+          secret:
+            secretName: {{ .secretName }}
+            {{- if .defaultMode }}
+            defaultMode: {{ .defaultMode }}
+        {{- end }}
+  {{- end }}
   backoffLimit: 3

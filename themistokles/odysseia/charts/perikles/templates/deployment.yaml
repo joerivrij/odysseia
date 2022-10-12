@@ -23,9 +23,6 @@ spec:
         app: {{ template "perikles.uname" . }}
         release: {{ .Release.Name }}
         version: {{ .Values.images.tag }}
-      annotations:
-        perikles/ssl-access: "solon;vault"
-        perikles/ssl-service: "perikles-service"
     spec:
       serviceAccountName: {{ template "perikles.serviceAccountName" . }}
       {{- if .Values.config.externalRepo | quote }}

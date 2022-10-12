@@ -16,6 +16,7 @@ func (p *PeriklesHandler) createCert(hosts []string, validityDays int, secretNam
 	certData := make(map[string][]byte)
 	certData[fmt.Sprintf("%s.key", tlsName)] = key
 	certData[fmt.Sprintf("%s.crt", tlsName)] = crt
+	certData[fmt.Sprintf("%s.pem", tlsName)] = p.Config.Cert.PemEncodedCa()
 
 	secret, _ := p.Config.Kube.Configuration().GetSecret(p.Config.Namespace, secretName)
 

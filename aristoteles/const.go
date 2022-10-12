@@ -31,6 +31,7 @@ const (
 	EnvIndexes               = "ELASTIC_INDEXES"
 	EnvRootToken             = "VAULT_ROOT_TOKEN"
 	EnvAuthMethod            = "AUTH_METHOD"
+	EnvTLSEnabled            = "VAULT_TLS"
 	EnvVaultRole             = "VAULT_ROLE"
 	EnvKubePath              = "KUBE_PATH"
 	EnvSidecarOverwrite      = "SIDECAR_OVERWRITE"
@@ -41,6 +42,7 @@ const (
 	EnvCAValidity            = "CA_VALIDITY"
 	EnvCrdName               = "CRD_NAME"
 	EnvTLSFiles              = "TLS_FILES"
+	EnvRootTlSDir            = "CERT_ROOT"
 	AuthMethodKube           = "kubernetes"
 	AuthMethodToken          = "token"
 	baseDir                  = "base"
@@ -92,4 +94,5 @@ var validFields = []string{
 	"Cert",
 	"CrdName",
 	"TLSFiles",
+	"TLSEnabled",
 }

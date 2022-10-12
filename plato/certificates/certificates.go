@@ -23,6 +23,10 @@ func (c *CertificateGenerator) InitCa() error {
 	return nil
 }
 
+func (c *CertificateGenerator) PemEncodedCa() []byte {
+	return c.CaPem
+}
+
 func (c *CertificateGenerator) GenerateKeyAndCertSet(hosts []string, validityInDays int) ([]byte, []byte, error) {
 	return c.createKeyPairFromCA(hosts, validityInDays)
 }

@@ -1,7 +1,6 @@
 package command
 
 import (
-	"encoding/base64"
 	"fmt"
 	"github.com/kpango/glg"
 	"github.com/odysseia/archimedes/util"
@@ -147,9 +146,7 @@ func enableKubernetesAsAuth(namespace, policyName, rootToken string, kube kubern
 		glg.Error(err)
 	}
 
-	decodedBase64, _ := base64.StdEncoding.DecodeString(string(ca))
-
-	util.WriteFile(decodedBase64, filePath)
+	util.WriteFile(ca, filePath)
 
 	writeResult, err := kube.Util().CopyFileToPod(podName, filePath, filePath)
 	if err != nil {

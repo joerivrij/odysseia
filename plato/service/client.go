@@ -2,6 +2,8 @@ package service
 
 import (
 	"bytes"
+	"crypto/tls"
+	"crypto/x509"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -15,6 +17,7 @@ type HttpClient interface {
 }
 
 type ClientImpl struct {
+	client *http.Client
 }
 
 type FakeClientImpl struct {
@@ -23,8 +26,29 @@ type FakeClientImpl struct {
 	index          int
 }
 
-func NewHttpClient() HttpClient {
-	return &ClientImpl{}
+func NewHttpClient(caCert []byte, certs []tls.Certificate) HttpClient {
+	client := http.Client{
+		Timeout: 10 * time.Second,
+	}
+
+	if caCert != nil {
+		caCertPool := x509.NewCertPool()
+		caCertPool.AppendCertsFromPEM(caCert)
+
+		client = http.Client{
+			Transport: &http.Transport{
+				TLSClientConfig: &tls.Config{
+					RootCAs:      caCertPool,
+					Certificates: certs,
+				},
+			},
+			Timeout: 10 * time.Second,
+		}
+	}
+
+	return &ClientImpl{
+		client: &client,
+	}
 }
 
 func NewFakeHttpClient(responseBodies []string, codes []int) HttpClient {
@@ -36,11 +60,7 @@ func NewFakeHttpClient(responseBodies []string, codes []int) HttpClient {
 }
 
 func (c *ClientImpl) Get(u *url.URL) (*http.Response, error) {
-	//req, err := http.NewRequest(http.MethodGet, u.String(), nil)
-	//req.Header.Set("Content-Type", "application/json")
-
-	client := &http.Client{Timeout: 10 * time.Second}
-	resp, err := client.Get(u.String())
+	resp, err := c.client.Get(u.String())
 	if err != nil {
 		return nil, err
 	}
@@ -52,8 +72,7 @@ func (c *ClientImpl) Post(u *url.URL, body []byte) (*http.Response, error) {
 	req, err := http.NewRequest(http.MethodPost, u.String(), bytes.NewBuffer(body))
 	req.Header.Set("Content-Type", "application/json")
 
-	client := &http.Client{Timeout: 10 * time.Second}
-	resp, err := client.Do(req)
+	resp, err := c.client.Do(req)
 	if err != nil {
 		return nil, err
 	}

@@ -27,7 +27,9 @@ func (c *Config) getElasticClient() (elastic.Client, error) {
 	} else {
 		if c.BaseConfig.TLSEnabled {
 			glg.Debug("getting es config from vault")
-			vaultConf, err := c.getConfigFromVault()
+			//todo enable https for sidecars
+			localHttps := false
+			vaultConf, err := c.getConfigFromVault(localHttps)
 			if err != nil {
 				glg.Fatalf("error getting config from sidecar, shutting down: %s", err)
 			}

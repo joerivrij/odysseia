@@ -60,8 +60,8 @@ images:
     repo: parmenides
 
 envVariables:
-  solonService: http://solon-service:5000
-  vaultService: http://vault:8200
+  solonService: https://solon:5443
+  vaultService: https://vault:8200
   elasticService: https://elastic-master:9200
   mqService: queue
   mqPort: 50000
@@ -71,3 +71,19 @@ envVariables:
     port: 5001
 
 namespaceOverride: odysseia
+
+tlsConfig:
+  rootPath: /etc/certs
+  vault:
+    name: vault-server-tls
+    secretName: vault-server-tls
+    path: /etc/certs/vault
+    enabled: true
+  elastic:
+    name: elastic-certificate-pem
+    secretName: elastic-certificate-pem
+    path: /app/config/certs
+  mounts:
+    - name: solon-certs
+      secretName: solon-tls-certs
+      path: /etc/certs/solon
