@@ -1,5 +1,5 @@
 TLSENABLED: false
-VAULT_SERVICE: http://localhost:8200
+VAULT_SERVICE: https://localhost:8200
 SOLON_SERVICE: http://localhost:5000
 NAMESPACE: "odysseia"
 INDEX: "default"

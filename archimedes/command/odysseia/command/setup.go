@@ -1,8 +1,10 @@
 package command
 
 import (
+	"fmt"
 	"github.com/kpango/glg"
 	"github.com/odysseia/archimedes/command"
+	"github.com/odysseia/archimedes/util"
 	"github.com/odysseia/plato/helm"
 	"github.com/odysseia/plato/kubernetes"
 	"github.com/spf13/cobra"
@@ -152,6 +154,13 @@ func (o *OdysseiaSetup) firstTimeSetup() error {
 		}
 
 		glg.Debugf("created nginx release on a DO k8s %v in ns %v", rls.Name, rls.Namespace)
+	case "minikube":
+		tmpDir := "/tmp"
+		minikubeCommand := fmt.Sprintf("minikube addons enable ingress")
+		err = util.ExecCommand(minikubeCommand, tmpDir)
+		if err != nil {
+			glg.Error(err)
+		}
 	default:
 		rls, err := o.Helm.InstallNamespaced(NginxRepoPath, NginxNamespace, true)
 		if err != nil {

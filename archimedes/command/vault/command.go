@@ -18,6 +18,7 @@ func Manager() *cobra.Command {
 		command.Policy(),
 		command.Init(),
 		command.New(),
+		command.TLS(),
 	)
 
 	return cmd

@@ -1,7 +1,6 @@
 package app
 
 import (
-	"fmt"
 	"github.com/kpango/glg"
 	"github.com/odysseia/aristoteles/configs"
 	"github.com/odysseia/plato/models"
@@ -65,6 +64,8 @@ func (p *ParmenidesHandler) Add(logoi models.Logos, wg *sync.WaitGroup, method, 
 			return err
 		}
 
+		glg.Infof("created word: %s with translation %s | method: %s | category: %s", word.Greek, word.Translation, word.Method, word.Category)
+
 		p.Config.Created++
 	}
 	return nil
@@ -76,6 +77,7 @@ func (p *ParmenidesHandler) Queue(marshalled []byte) error {
 		return err
 	}
 
-	glg.Infof(fmt.Sprintf("message sent to queue with id %s", res.MessageID))
+	message := string(marshalled)
+	glg.Debugf("message queued: %s with payload: %s", res.MessageID, message)
 	return nil
 }

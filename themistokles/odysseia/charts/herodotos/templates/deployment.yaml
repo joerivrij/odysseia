@@ -42,26 +42,36 @@ spec:
           imagePullPolicy: {{ .Values.config.pullPolicy }}
           {{- end}}
           env:
-          - name: ENV
-            value: {{ .Values.config.environment }}
-          - name: SOLON_SERVICE
-            value: {{ .Values.envVariables.solonService }}
-          - name: POD_NAME
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.name
-          - name: NAMESPACE
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.namespace
-          - name: ELASTIC_ROLE
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.annotations['odysseia-greek/role']
-          - name: ELASTIC_ACCESS
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.annotations['odysseia-greek/access']
+            - name: ENV
+              value: {{ .Values.config.environment }}
+            - name: SOLON_SERVICE
+              value: {{ .Values.envVariables.solonService }}
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: ELASTIC_ROLE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.annotations['odysseia-greek/role']
+            - name: ELASTIC_ACCESS
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.annotations['odysseia-greek/access']
+            - name: TLS_ENABLED
+              value: {{ .Values.config.tls | quote }}
+            - name: CERT_ROOT
+              value: {{ .Values.tlsConfig.rootPath }}
+          volumeMounts:
+            {{- range .Values.tlsConfig.mounts }}
+            - name: {{ .name }}
+              mountPath: {{ .path }}
+              readOnly: true
+            {{- end }}
       containers:
         - name: "{{ template "sidecar.uname" . }}"
           {{- if .Values.config.externalRepo | quote }}
@@ -72,17 +82,33 @@ spec:
           imagePullPolicy: {{ .Values.config.pullPolicy }}
           {{- end}}
           env:
-          - name: VAULT_SERVICE
-            value: {{ .Values.envVariables.vaultService }}
-          - name: SOLON_SERVICE
-            value: {{ .Values.envVariables.solonService }}
-          - name: ENV
-            value: {{ .Values.config.environment }}
-          - name: POD_NAME
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.name
-          imagePullPolicy: {{ .Values.config.pullPolicy }}
+            - name: VAULT_SERVICE
+              value: {{ .Values.envVariables.vaultService }}
+            - name: SOLON_SERVICE
+              value: {{ .Values.envVariables.solonService }}
+            - name: ENV
+              value: {{ .Values.config.environment }}
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: VAULT_TLS
+              value:  {{ .Values.tlsConfig.vault.enabled | quote }}
+            - name: TLS_ENABLED
+              value: {{ .Values.config.tls | quote }}
+            - name: CERT_ROOT
+              value: {{ .Values.tlsConfig.rootPath }}
+          ports:
+            - containerPort: {{ .Values.envVariables.sidecar.port }}
+          volumeMounts:
+            - name: {{ .Values.tlsConfig.vault.name }}
+              mountPath: {{ .Values.tlsConfig.vault.path }}
+              readOnly: true
+            {{- range .Values.tlsConfig.mounts }}
+            - name: {{ .name }}
+              mountPath: {{ .path }}
+              readOnly: true
+            {{- end }}
           ports:
             - containerPort: {{ .Values.envVariables.sidecar.port }}
           resources:
@@ -107,8 +133,6 @@ spec:
                   fieldPath: metadata.name
             - name: ENV
               value: {{ .Values.config.environment }}
-            - name: TLSENABLED
-              value: {{ .Values.config.tls | quote }}
             - name: ELASTIC_SEARCH_SERVICE
               value: {{ .Values.envVariables.elasticService }}
             - name: ELASTIC_ACCESS
@@ -117,6 +141,12 @@ spec:
                   fieldPath: metadata.annotations['odysseia-greek/access']
           ports:
             - containerPort: {{ .Values.envVariables.odysseiaapi.port }}
+          volumeMounts:
+            {{- range .Values.tlsConfig.mounts }}
+            - name: {{ .name }}
+              mountPath: {{ .path }}
+              readOnly: true
+            {{- end }}
           livenessProbe:
             httpGet:
               path: /herodotos/v1/health
@@ -136,3 +166,15 @@ spec:
             limits:
               memory: {{.Values.services.odysseiaapi.limits.memory}}
               cpu: {{.Values.services.odysseiaapi.limits.cpu}}
+      volumes:
+        - name: {{ .Values.tlsConfig.vault.name }}
+          secret:
+            secretName: {{ .Values.tlsConfig.vault.secretName }}
+        {{- range .Values.tlsConfig.mounts }}
+        - name: {{ .name }}
+          secret:
+            secretName: {{ .secretName }}
+            {{- if .defaultMode }}
+            defaultMode: {{ .defaultMode }}
+        {{- end }}
+  {{- end }}

@@ -6,7 +6,9 @@ import (
 )
 
 func (v *Vault) SetOnetimeToken(token string) {
+	glg.Debugf("setting token to: %s", token)
 	v.Connection.SetToken(token)
+	glg.Debug("one time token set")
 }
 
 func (v *Vault) GetCurrentToken() string {

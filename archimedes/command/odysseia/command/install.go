@@ -270,10 +270,13 @@ func (o *OdysseiaInstaller) installOdysseiaComplete(unseal bool) error {
 	installPerikles := false
 	installHarbor := false
 	installVault := false
+	installSolon := false
 
 	for _, install := range o.ChartsToInstall {
 		switch install {
 		case "elasticsearch":
+			installElastic = true
+		case "elastic":
 			installElastic = true
 		case "perikles":
 			installPerikles = true
@@ -281,6 +284,8 @@ func (o *OdysseiaInstaller) installOdysseiaComplete(unseal bool) error {
 			installHarbor = true
 		case "vault":
 			installVault = true
+		case "solon":
+			installSolon = true
 		}
 	}
 
@@ -376,14 +381,6 @@ func (o *OdysseiaInstaller) installOdysseiaComplete(unseal bool) error {
 
 	if unseal {
 		vaultCommand.UnsealVault("", o.Namespace, o.Kube)
-	}
-
-	installSolon := false
-	for _, install := range o.ChartsToInstall {
-		if install == "solon" {
-			installSolon = true
-			break
-		}
 	}
 
 	if installSolon {
@@ -656,6 +653,8 @@ func (o *OdysseiaInstaller) installHarborHelmChart() error {
 }
 
 func (o *OdysseiaInstaller) installVaultHelmChart() error {
+	vaultCommand.EnableTlS(o.Namespace, "", o.Kube)
+
 	rls, err := o.Helm.Install(o.Charts.Vault)
 	if err != nil {
 		return err

@@ -65,7 +65,7 @@ func NewConfig(v interface{}) (interface{}, error) {
 		}
 	}
 
-	client := service.NewHttpClient()
+	client := service.NewHttpClient(nil, nil)
 	baseConfig.HttpClient = client
 
 	newConfig := Config{BaseConfig: baseConfig}
@@ -210,6 +210,9 @@ func (c *Config) fillFields(e *reflect.Value) {
 			switch fieldName {
 			case "RunOnce":
 				vb := c.getBoolFromEnv(EnvRunOnce)
+				e.FieldByName(fieldName).SetBool(vb)
+			case "TLSEnabled":
+				vb := c.getBoolFromEnv(EnvTlSKey)
 				e.FieldByName(fieldName).SetBool(vb)
 			}
 		}

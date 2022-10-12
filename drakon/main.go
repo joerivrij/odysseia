@@ -40,6 +40,8 @@ func getLeaderConfig(lock *resourcelock.LeaseLock, id string, config *app.Drakon
 				}
 				if created {
 					glg.Info("created roles while being leader")
+					glg.Info("service exiting after roles have been created")
+					os.Exit(0)
 				}
 			},
 			OnStoppedLeading: func() {

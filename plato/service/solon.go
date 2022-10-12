@@ -1,6 +1,7 @@
 package service
 
 import (
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"github.com/odysseia/plato/models"
@@ -21,7 +22,12 @@ const (
 	registerEndpoint string = "register"
 )
 
-func NewSolonImpl(scheme, baseUrl string, client HttpClient) (*SolonImpl, error) {
+func NewSolonImpl(scheme, baseUrl string, ca []byte, certs []tls.Certificate) (*SolonImpl, error) {
+	client := NewHttpClient(ca, certs)
+	return &SolonImpl{Scheme: scheme, BaseUrl: baseUrl, Client: client}, nil
+}
+
+func NewFakeSolonImpl(scheme, baseUrl string, client HttpClient) (*SolonImpl, error) {
 	return &SolonImpl{Scheme: scheme, BaseUrl: baseUrl, Client: client}, nil
 }
 

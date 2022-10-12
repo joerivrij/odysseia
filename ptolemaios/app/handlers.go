@@ -47,6 +47,7 @@ func (p *PtolemaiosHandler) GetSecretFromVault(w http.ResponseWriter, req *http.
 		return
 	}
 
+	glg.Debug("so far so good")
 	p.Config.Vault.SetOnetimeToken(oneTimeToken)
 	secret, err := p.Config.Vault.GetSecret(p.Config.PodName)
 	if err != nil {

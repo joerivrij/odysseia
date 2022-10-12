@@ -7,6 +7,7 @@ import (
 	auth "github.com/hashicorp/vault/api/auth/kubernetes"
 	"github.com/hashicorp/vault/http"
 	"github.com/hashicorp/vault/vault"
+	"github.com/kpango/glg"
 	"testing"
 	"time"
 )
@@ -33,9 +34,19 @@ const (
 	fixtureValue      string = "oferebor"
 )
 
-func NewVaultClient(address, token string) (Client, error) {
+func NewVaultClient(address, token string, tlsConfig *api.TLSConfig) (Client, error) {
 	config := api.Config{
 		Address: address,
+	}
+
+	glg.Debug(tlsConfig)
+
+	if tlsConfig != nil {
+		glg.Debug(fmt.Sprintf("TLS config found setting to: %s", tlsConfig.CAPath))
+		err := config.ConfigureTLS(tlsConfig)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	client, err := api.NewClient(&config)
@@ -43,8 +54,15 @@ func NewVaultClient(address, token string) (Client, error) {
 		return nil, fmt.Errorf("unable to initialize Vault client: %w", err)
 	}
 
-	client.SetToken(token)
+	glg.Debug("created new vault client")
 
+	if token != "" {
+		glg.Debugf("setting roottoken to: %s", token)
+		client.SetToken(token)
+	} else {
+		glg.Debug("no token set")
+	}
+	
 	return &Vault{Connection: client, SecretPath: defaultPath}, nil
 }
 
@@ -91,9 +109,19 @@ func NewMockVaultClient(t *testing.T) (Client, error) {
 	return &Vault{Connection: client, SecretPath: defaultPath}, nil
 }
 
-func CreateVaultClientKubernetes(address, vaultRole, jwt string) (Client, error) {
+func CreateVaultClientKubernetes(address, vaultRole, jwt string, tlsConfig *api.TLSConfig) (Client, error) {
 	config := api.Config{
 		Address: address,
+	}
+
+	glg.Debug(tlsConfig)
+
+	if tlsConfig != nil {
+		glg.Debug(fmt.Sprintf("TLS config found setting to: %s", tlsConfig.CAPath))
+		err := config.ConfigureTLS(tlsConfig)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	client, err := api.NewClient(&config)
@@ -118,4 +146,14 @@ func CreateVaultClientKubernetes(address, vaultRole, jwt string) (Client, error)
 	client.SetToken(resp.Auth.ClientToken)
 
 	return &Vault{Connection: client, SecretPath: defaultPath}, nil
+}
+
+func CreateTLSConfig(insecure bool, ca, cert, key, caPath string) *api.TLSConfig {
+	return &api.TLSConfig{
+		CAPath:     caPath,
+		CACert:     ca,
+		ClientCert: cert,
+		ClientKey:  key,
+		Insecure:   insecure,
+	}
 }

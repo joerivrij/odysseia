@@ -8,6 +8,7 @@ import (
 type CertClient interface {
 	InitCa() error
 	GenerateKeyAndCertSet(hosts []string, validityInDays int) ([]byte, []byte, error)
+	PemEncodedCa() []byte
 }
 
 type CertificateGenerator struct {

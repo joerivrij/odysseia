@@ -27,6 +27,7 @@ spec:
         odysseia-greek/role: {{ .Values.services.odysseiaapi.role }}
         odysseia-greek/access: {{ .Values.services.odysseiaapi.access }}
         odysseia-greek/secondary-access: {{ .Values.services.odysseiaapi.secondaryAccess }}
+        perikles/accesses: solon
     spec:
       serviceAccountName: {{ template "serviceAccountName" . }}
       {{- if .Values.config.privateImagesInRepo | quote }}
@@ -67,6 +68,16 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.annotations['odysseia-greek/secondary-access']
+          - name: TLS_ENABLED
+            value: {{ .Values.config.tls | quote }}
+          - name: CERT_ROOT
+            value: {{ .Values.tlsConfig.rootPath }}
+          volumeMounts:
+            {{- range .Values.tlsConfig.mounts }}
+            - name: {{ .name }}
+              mountPath: {{ .path }}
+              readOnly: true
+            {{- end }}
       containers:
         - name: "{{ template "sidecar.uname" . }}"
           {{- if .Values.config.externalRepo | quote }}
@@ -87,9 +98,23 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.name
-          imagePullPolicy: {{ .Values.config.pullPolicy }}
+          - name: VAULT_TLS
+            value:  {{ .Values.tlsConfig.vault.enabled | quote }}
+          - name: TLS_ENABLED
+            value: {{ .Values.config.tls | quote }}
+          - name: CERT_ROOT
+            value: {{ .Values.tlsConfig.rootPath }}
           ports:
             - containerPort: {{ .Values.envVariables.sidecar.port }}
+          volumeMounts:
+            - name: {{ .Values.tlsConfig.vault.name }}
+              mountPath: {{ .Values.tlsConfig.vault.path }}
+              readOnly: true
+            {{- range .Values.tlsConfig.mounts }}
+            - name: {{ .name }}
+              mountPath: {{ .path }}
+              readOnly: true
+            {{- end }}
           resources:
             requests:
               memory: {{ .Values.services.sidecar.requests.memory }}
@@ -112,8 +137,6 @@ spec:
                   fieldPath: metadata.name
             - name: ENV
               value: {{ .Values.config.environment }}
-            - name: TLSENABLED
-              value: {{ .Values.config.tls | quote }}
             - name: ELASTIC_SEARCH_SERVICE
               value: {{ .Values.envVariables.elasticService }}
             - name: ELASTIC_ACCESS
@@ -126,6 +149,12 @@ spec:
                   fieldPath: metadata.annotations['odysseia-greek/secondary-access']
           ports:
             - containerPort: {{ .Values.envVariables.odysseiaapi.port }}
+          volumeMounts:
+            {{- range .Values.tlsConfig.mounts }}
+            - name: {{ .name }}
+              mountPath: {{ .path }}
+              readOnly: true
+            {{- end }}
           livenessProbe:
             httpGet:
               path: /dionysios/v1/health
@@ -145,3 +174,15 @@ spec:
             limits:
               memory: {{.Values.services.odysseiaapi.limits.memory}}
               cpu: {{.Values.services.odysseiaapi.limits.cpu}}
+      volumes:
+        - name: {{ .Values.tlsConfig.vault.name }}
+          secret:
+            secretName: {{ .Values.tlsConfig.vault.secretName }}
+        {{- range .Values.tlsConfig.mounts }}
+        - name: {{ .name }}
+          secret:
+            secretName: {{ .secretName }}
+            {{- if .defaultMode }}
+            defaultMode: {{ .defaultMode }}
+        {{- end }}
+  {{- end }}

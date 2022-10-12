@@ -42,7 +42,7 @@ func TestGetVaultConfig(t *testing.T) {
 			},
 		}
 
-		sut, err := cfg.getConfigFromVault()
+		sut, err := cfg.getConfigFromVault(false)
 		assert.Nil(t, err)
 		assert.Equal(t, password, sut.Password)
 		assert.Equal(t, cert, sut.ElasticCERT)

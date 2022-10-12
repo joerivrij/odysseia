@@ -71,7 +71,7 @@ func TestCreateToken(t *testing.T) {
 
 	t.Run("VaultDown", func(t *testing.T) {
 		badAddress := "localhost:239riwefj"
-		vaultClient, err := vault.NewVaultClient(badAddress, "token")
+		vaultClient, err := vault.NewVaultClient(badAddress, "token", nil)
 		assert.Nil(t, err)
 
 		testConfig := configs.SolonConfig{
@@ -253,7 +253,7 @@ func TestRegister(t *testing.T) {
 		assert.Nil(t, err)
 		mockKube, err := kubernetes.FakeKubeClient(ns)
 		assert.Nil(t, err)
-		vaultClient, err := vault.NewVaultClient("localhost:239riwefj", "token")
+		vaultClient, err := vault.NewVaultClient("localhost:239riwefj", "token", nil)
 		assert.Nil(t, err)
 
 		testConfig := configs.SolonConfig{
