@@ -2,9 +2,9 @@ package app
 
 import (
 	"github.com/kpango/glg"
+	"github.com/odysseia-greek/plato/models"
+	"github.com/odysseia-greek/plato/transform"
 	"github.com/odysseia/aristoteles/configs"
-	"github.com/odysseia/plato/models"
-	"github.com/odysseia/plato/transform"
 	"sync"
 )
 

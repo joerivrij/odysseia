@@ -1,7 +1,7 @@
 package aristoteles
 
 import (
-	"github.com/odysseia/plato/certificates"
+	"github.com/odysseia-greek/plato/certificates"
 	"strconv"
 )
 

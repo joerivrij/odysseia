@@ -1,7 +1,7 @@
 package configs
 
 import (
-	"github.com/odysseia/plato/kubernetes"
+	"github.com/odysseia-greek/plato/kubernetes"
 )
 
 type ArchimedesConfig struct {

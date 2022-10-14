@@ -1,8 +1,8 @@
 package configs
 
 import (
-	"github.com/odysseia/plato/elastic"
-	"github.com/odysseia/plato/queue"
+	"github.com/odysseia-greek/plato/elastic"
+	"github.com/odysseia-greek/plato/queue"
 )
 
 type ThalesConfig struct {

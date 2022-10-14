@@ -1,7 +1,7 @@
 package aristoteles
 
 import (
-	"github.com/odysseia/plato/cache"
+	"github.com/odysseia-greek/plato/cache"
 )
 
 func (c *Config) getBadgerClient() (cache.Client, error) {

@@ -2,10 +2,10 @@ package app
 
 import (
 	"encoding/json"
+	"github.com/odysseia-greek/plato/models"
+	"github.com/odysseia-greek/plato/service"
+	"github.com/odysseia-greek/plato/vault"
 	"github.com/odysseia/aristoteles/configs"
-	"github.com/odysseia/plato/models"
-	"github.com/odysseia/plato/service"
-	"github.com/odysseia/plato/vault"
 	"github.com/stretchr/testify/assert"
 	"io"
 	"net/http"

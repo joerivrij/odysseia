@@ -1,8 +1,8 @@
 package aristoteles
 
 import (
+	"github.com/odysseia-greek/plato/models"
 	"github.com/odysseia/aristoteles/configs"
-	"github.com/odysseia/plato/models"
 	"github.com/stretchr/testify/assert"
 	"os"
 	"testing"

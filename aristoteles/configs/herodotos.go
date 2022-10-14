@@ -1,7 +1,7 @@
 package configs
 
 import (
-	"github.com/odysseia/plato/elastic"
+	"github.com/odysseia-greek/plato/elastic"
 )
 
 type HerodotosConfig struct {

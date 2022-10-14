@@ -3,7 +3,7 @@ package app
 import (
 	"fmt"
 	"github.com/kpango/glg"
-	"github.com/odysseia/plato/kubernetes/crd/v1alpha"
+	"github.com/odysseia-greek/plato/kubernetes/crd/v1alpha"
 	"time"
 )
 

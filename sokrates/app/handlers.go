@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"github.com/gorilla/mux"
 	"github.com/kpango/glg"
+	"github.com/odysseia-greek/plato/helpers"
+	"github.com/odysseia-greek/plato/middleware"
+	"github.com/odysseia-greek/plato/models"
 	"github.com/odysseia/aristoteles/configs"
-	"github.com/odysseia/plato/helpers"
-	"github.com/odysseia/plato/middleware"
-	"github.com/odysseia/plato/models"
 	"net/http"
 	"strings"
 )

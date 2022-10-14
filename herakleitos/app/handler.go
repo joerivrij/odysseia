@@ -2,8 +2,8 @@ package app
 
 import (
 	"github.com/kpango/glg"
+	"github.com/odysseia-greek/plato/models"
 	"github.com/odysseia/aristoteles/configs"
-	"github.com/odysseia/plato/models"
 	"sync"
 )
 

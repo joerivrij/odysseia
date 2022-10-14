@@ -1,7 +1,7 @@
 package app
 
 import (
-	"github.com/odysseia/plato/elastic"
+	"github.com/odysseia-greek/plato/elastic"
 	"github.com/stretchr/testify/assert"
 	"os"
 	"testing"
