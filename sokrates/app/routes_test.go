@@ -114,7 +114,7 @@ func TestLastChapter(t *testing.T) {
 		err = json.NewDecoder(response.Body).Decode(&searchResults)
 		assert.Nil(t, err)
 
-		expectedText := "elasticSearch returned an error"
+		expectedText := "informations from Elasticsearch"
 
 		assert.Equal(t, http.StatusBadGateway, response.Code)
 		assert.Contains(t, searchResults.Message.ElasticError, expectedText)
@@ -195,7 +195,7 @@ func TestCheckQuestion(t *testing.T) {
 		err = json.NewDecoder(response.Body).Decode(&searchResults)
 		assert.Nil(t, err)
 
-		expectedText := "elasticSearch returned an error"
+		expectedText := "informations from Elasticsearch"
 
 		assert.Equal(t, http.StatusBadGateway, response.Code)
 		assert.Contains(t, searchResults.Message.ElasticError, expectedText)
@@ -294,16 +294,17 @@ func TestCreateQuestions(t *testing.T) {
 			SearchWord: "test",
 		}
 
+		expectedText := "informations from Elasticsearch"
+
 		router := InitRoutes(testConfig)
 		response := performGetRequest(router, fmt.Sprintf("/sokrates/v1/createQuestion?method=%s&category=%s&chapter=%s", method, category, chapter))
 
-		var searchResults models.NotFoundError
+		var searchResults models.ElasticSearchError
 		err = json.NewDecoder(response.Body).Decode(&searchResults)
 
 		assert.Nil(t, err)
-		assert.Equal(t, http.StatusNotFound, response.Code)
-		assert.Equal(t, "no results", searchResults.Message.Type)
-		assert.Contains(t, searchResults.Message.Reason, chapter)
+		assert.Equal(t, http.StatusBadGateway, response.Code)
+		assert.Contains(t, searchResults.Message.ElasticError, expectedText)
 	})
 
 	t.Run("EmptyQuery", func(t *testing.T) {
@@ -347,7 +348,7 @@ func TestCreateQuestions(t *testing.T) {
 		err = json.NewDecoder(response.Body).Decode(&searchResults)
 		assert.Nil(t, err)
 
-		expectedText := "elasticSearch returned an error"
+		expectedText := "informations from Elasticsearch"
 
 		assert.Equal(t, http.StatusBadGateway, response.Code)
 		assert.Contains(t, searchResults.Message.ElasticError, expectedText)
@@ -399,7 +400,7 @@ func TestMethods(t *testing.T) {
 		err = json.NewDecoder(response.Body).Decode(&searchResults)
 		assert.Nil(t, err)
 
-		expectedText := "elasticSearch returned an error"
+		expectedText := "informations from Elasticsearch"
 
 		assert.Equal(t, http.StatusBadGateway, response.Code)
 		assert.Contains(t, searchResults.Message.ElasticError, expectedText)
@@ -449,7 +450,7 @@ func TestCategories(t *testing.T) {
 		err = json.NewDecoder(response.Body).Decode(&searchResults)
 		assert.Nil(t, err)
 
-		expectedText := "elasticSearch returned an error"
+		expectedText := "informations from Elasticsearch"
 
 		assert.Equal(t, http.StatusBadGateway, response.Code)
 		assert.Contains(t, searchResults.Message.ElasticError, expectedText)

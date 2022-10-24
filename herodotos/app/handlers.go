@@ -75,20 +75,6 @@ func (h *HerodotosHandler) createQuestion(w http.ResponseWriter, req *http.Reque
 	response, err := h.Config.Elastic.Query().Match(h.Config.Index, query)
 
 	if err != nil {
-		errText := err.Error()
-		//todo better way to check for a 404
-		if strings.Contains(errText, "404") {
-			e := models.NotFoundError{
-				ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
-				Message: models.NotFoundMessage{
-					Type:   author,
-					Reason: errText,
-				},
-			}
-			middleware.ResponseWithJson(w, e)
-			return
-		}
-
 		e := models.ElasticSearchError{
 			ErrorModel: models.ErrorModel{UniqueCode: middleware.CreateGUID()},
 			Message: models.ElasticErrorMessage{

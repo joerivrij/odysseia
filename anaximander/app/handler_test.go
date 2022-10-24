@@ -99,7 +99,7 @@ func TestHandlerDeleteIndex(t *testing.T) {
 
 		testHandler := AnaximanderHandler{Config: &testConfig}
 		err = testHandler.DeleteIndexAtStartUp()
-		assert.Nil(t, err)
+		assert.NotNil(t, err)
 	})
 
 	t.Run("NotCreated", func(t *testing.T) {

@@ -114,7 +114,7 @@ func TestAuthorsEndPointShardFailure(t *testing.T) {
 	err = json.NewDecoder(response.Body).Decode(&searchResults)
 	assert.Nil(t, err)
 
-	expectedText := "elasticSearch returned an error"
+	expectedText := "informations from Elasticsearch"
 
 	assert.Equal(t, http.StatusBadGateway, response.Code)
 	assert.Contains(t, searchResults.Message.ElasticError, expectedText)
@@ -164,7 +164,7 @@ func TestBookEndPointShardFailure(t *testing.T) {
 	err = json.NewDecoder(response.Body).Decode(&searchResults)
 	assert.Nil(t, err)
 
-	expectedText := "elasticSearch returned an error"
+	expectedText := "informations from Elasticsearch"
 
 	assert.Equal(t, http.StatusBadGateway, response.Code)
 	assert.Contains(t, searchResults.Message.ElasticError, expectedText)
@@ -282,6 +282,8 @@ func TestCreateQuestionMissingAuthorInElastic(t *testing.T) {
 	mockElasticClient, err := elastic.NewMockClient(fixtureFile, mockCode)
 	assert.Nil(t, err)
 
+	expectedText := "informations from Elasticsearch"
+
 	testConfig := configs.HerodotosConfig{
 		Elastic: mockElasticClient,
 		Index:   "test",
@@ -290,14 +292,12 @@ func TestCreateQuestionMissingAuthorInElastic(t *testing.T) {
 	router := InitRoutes(testConfig)
 	response := performGetRequest(router, fmt.Sprintf("/herodotos/v1/createQuestion?author=%s&book=%v", author, book))
 
-	var searchResults models.NotFoundError
+	var searchResults models.ElasticSearchError
 	err = json.NewDecoder(response.Body).Decode(&searchResults)
 	assert.Nil(t, err)
 
-	expectedText := "404"
-
-	assert.Equal(t, http.StatusNotFound, response.Code)
-	assert.Contains(t, searchResults.Message.Reason, expectedText)
+	assert.Equal(t, http.StatusBadGateway, response.Code)
+	assert.Contains(t, searchResults.Message.ElasticError, expectedText)
 }
 
 func TestCreateQuestionShardFailure(t *testing.T) {
@@ -320,7 +320,7 @@ func TestCreateQuestionShardFailure(t *testing.T) {
 	err = json.NewDecoder(response.Body).Decode(&searchResults)
 	assert.Nil(t, err)
 
-	expectedText := "elasticSearch returned an error"
+	expectedText := "informations from Elasticsearch"
 
 	assert.Equal(t, http.StatusBadGateway, response.Code)
 	assert.Contains(t, searchResults.Message.ElasticError, expectedText)
@@ -438,7 +438,7 @@ func TestCheckSentenceShardFailure(t *testing.T) {
 	err = json.NewDecoder(response.Body).Decode(&searchResults)
 	assert.Nil(t, err)
 
-	expectedText := "elasticSearch returned an error"
+	expectedText := "informations from Elasticsearch"
 
 	assert.Equal(t, http.StatusBadGateway, response.Code)
 	assert.Contains(t, searchResults.Message.ElasticError, expectedText)

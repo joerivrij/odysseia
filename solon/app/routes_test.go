@@ -243,7 +243,7 @@ func TestRegister(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, http.StatusBadRequest, response.Code)
 		assert.Equal(t, "createUser", sut.Messages[0].Field)
-		assert.Contains(t, sut.Messages[0].Message, "elasticSearch")
+		assert.Contains(t, sut.Messages[0].Message, "Elasticsearch")
 	})
 
 	t.Run("VaultDown", func(t *testing.T) {

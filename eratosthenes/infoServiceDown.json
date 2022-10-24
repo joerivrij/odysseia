@@ -1,5 +1,0 @@
-{
-  "statusCode": 502,
-  "error": "Bad Gateway",
-  "message": "Client request timeout"
-}

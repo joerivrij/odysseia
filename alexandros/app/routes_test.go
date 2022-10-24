@@ -83,7 +83,7 @@ func TestSearchShardFailure(t *testing.T) {
 	var searchResults models.ElasticSearchError
 	err = json.NewDecoder(response.Body).Decode(&searchResults)
 	assert.Nil(t, err)
-	expectedText := "elasticSearch returned an error"
+	expectedText := "informations from Elasticsearch"
 
 	assert.Equal(t, http.StatusBadGateway, response.Code)
 	assert.Contains(t, searchResults.Message.ElasticError, expectedText)

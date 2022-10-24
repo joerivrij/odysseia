@@ -95,23 +95,6 @@ func TestAnaximanderCreation(t *testing.T) {
 	})
 }
 
-func TestArchimedesCreation(t *testing.T) {
-	t.Run("StandardConfig", func(t *testing.T) {
-		os.Setenv(EnvKey, "archimedes")
-		cfg := configs.ArchimedesConfig{}
-
-		sut, err := NewConfig(cfg)
-		assert.Nil(t, err)
-		assert.NotNil(t, sut)
-
-		config, ok := sut.(*configs.ArchimedesConfig)
-		assert.True(t, ok)
-		assert.NotNil(t, config.Kube)
-
-		os.Unsetenv(EnvKey)
-	})
-}
-
 func TestDemokritosConfigCreation(t *testing.T) {
 	t.Run("StandardConfigCanBeParsed", func(t *testing.T) {
 		expected := 0
@@ -171,7 +154,9 @@ func TestDemokritosConfigCreation(t *testing.T) {
 func TestDionysiosConfigCreation(t *testing.T) {
 	t.Run("StandardConfig", func(t *testing.T) {
 		expected := "testrole"
+		expectedSecondary := "testsecondaryindex"
 		os.Setenv(EnvIndex, expected)
+		os.Setenv(EnvSecondaryIndex, expectedSecondary)
 		os.Setenv(EnvHealthCheckOverwrite, "yes")
 		cfg := configs.DionysiosConfig{}
 
@@ -185,26 +170,9 @@ func TestDionysiosConfigCreation(t *testing.T) {
 		assert.NotNil(t, dionysiosConfig.Elastic)
 		assert.NotNil(t, dionysiosConfig.Cache)
 		assert.Equal(t, expected, dionysiosConfig.Index)
+		assert.Equal(t, expectedSecondary, dionysiosConfig.SecondaryIndex)
 
 		os.Unsetenv(EnvIndex)
-		os.Unsetenv(EnvHealthCheckOverwrite)
-	})
-
-	t.Run("CanSetSecondaryIndex", func(t *testing.T) {
-		expected := "testrole"
-		os.Setenv(EnvSecondaryIndex, expected)
-		os.Setenv(EnvHealthCheckOverwrite, "yes")
-		cfg := configs.DionysiosConfig{}
-
-		sut, err := NewConfig(cfg)
-		assert.Nil(t, err)
-		assert.NotNil(t, sut)
-
-		dionysiosConfig, ok := sut.(*configs.DionysiosConfig)
-		assert.True(t, ok)
-
-		assert.NotNil(t, dionysiosConfig.Elastic)
-		assert.Equal(t, expected, dionysiosConfig.SecondaryIndex)
 
 		os.Unsetenv(EnvSecondaryIndex)
 		os.Unsetenv(EnvHealthCheckOverwrite)
@@ -220,6 +188,7 @@ func TestDrakonCreation(t *testing.T) {
 		os.Setenv(EnvRoles, expectedRoles)
 		os.Setenv(EnvPodName, expectedPodName)
 		os.Setenv(EnvHealthCheckOverwrite, "yes")
+
 		cfg := configs.DrakonConfig{}
 
 		sut, err := NewConfig(cfg)
