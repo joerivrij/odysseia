@@ -2,12 +2,11 @@ package app
 
 import (
 	"encoding/json"
+	"github.com/odysseia-greek/plato/models"
+	"github.com/odysseia-greek/plato/service"
+	"github.com/odysseia-greek/plato/vault"
 	"github.com/odysseia/aristoteles/configs"
-	"github.com/odysseia/plato/models"
-	"github.com/odysseia/plato/service"
-	"github.com/odysseia/plato/vault"
 	"github.com/stretchr/testify/assert"
-	"io"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -171,13 +170,6 @@ func TestCreateElasticSecret(t *testing.T) {
 
 func performGetRequest(r http.Handler, path string) *httptest.ResponseRecorder {
 	req, _ := http.NewRequest("GET", path, nil)
-	w := httptest.NewRecorder()
-	r.ServeHTTP(w, req)
-	return w
-}
-
-func performPostRequest(r http.Handler, path string, body io.Reader) *httptest.ResponseRecorder {
-	req, _ := http.NewRequest("POST", path, body)
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 	return w

@@ -1,7 +1,7 @@
 package configs
 
 import (
-	"github.com/odysseia/plato/service"
+	"github.com/odysseia-greek/plato/service"
 )
 
 type HippokratosConfig struct {

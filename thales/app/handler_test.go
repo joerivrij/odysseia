@@ -1,10 +1,10 @@
 package app
 
 import (
+	"github.com/odysseia-greek/plato/elastic"
+	"github.com/odysseia-greek/plato/models"
+	"github.com/odysseia-greek/plato/queue"
 	"github.com/odysseia/aristoteles/configs"
-	"github.com/odysseia/plato/elastic"
-	"github.com/odysseia/plato/models"
-	"github.com/odysseia/plato/queue"
 	"github.com/stretchr/testify/assert"
 	"sync"
 	"testing"

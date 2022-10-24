@@ -1,9 +1,9 @@
 package configs
 
 import (
-	"github.com/odysseia/plato/kubernetes"
-	"github.com/odysseia/plato/service"
-	"github.com/odysseia/plato/vault"
+	"github.com/odysseia-greek/plato/kubernetes"
+	"github.com/odysseia-greek/plato/service"
+	"github.com/odysseia-greek/plato/vault"
 )
 
 type PtolemaiosConfig struct {

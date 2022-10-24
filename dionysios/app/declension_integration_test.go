@@ -5,9 +5,9 @@ package app
 
 import (
 	"github.com/kpango/glg"
+	"github.com/odysseia-greek/plato/elastic"
 	"github.com/odysseia/aristoteles"
 	"github.com/odysseia/aristoteles/configs"
-	"github.com/odysseia/plato/elastic"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -160,18 +160,21 @@ func TestFirstDeclensionMascNouns(t *testing.T) {
 	assert.NotNil(t, declensionConfig)
 	assert.Nil(t, err)
 
-	testConfig := configs.DionysiosConfig{
-		Elastic:          mockElasticClient,
-		SecondaryIndex:   dictionaryIndexDefault,
-		Index:            elasticIndexDefault,
-		DeclensionConfig: *declensionConfig,
-	}
-
-	handler := DionysosHandler{Config: &testConfig}
-
 	t.Run("NominativusMascSing", func(t *testing.T) {
 		words := []string{"νεανίας", "πολίτης"}
 		for _, word := range words {
+			mockElasticClient, err = elastic.NewMockClient(fixtureFile, mockCode)
+
+			testConfig := configs.DionysiosConfig{
+				Elastic:          mockElasticClient,
+				SecondaryIndex:   dictionaryIndexDefault,
+				Index:            elasticIndexDefault,
+				DeclensionConfig: *declensionConfig,
+			}
+
+			handler := DionysosHandler{Config: &testConfig}
+
+			assert.Nil(t, err)
 			declensions, err := handler.StartFindingRules(word)
 			assert.Nil(t, err)
 			assert.Contains(t, declensions.Results[0].Rule, "noun - sing - masc - nom")
@@ -181,6 +184,17 @@ func TestFirstDeclensionMascNouns(t *testing.T) {
 	t.Run("GenitivusMascSing", func(t *testing.T) {
 		words := []string{"νεανίου", "πολίτου", "κριτοῦ"}
 		for _, word := range words {
+			mockElasticClient, err = elastic.NewMockClient(fixtureFile, mockCode)
+
+			testConfig := configs.DionysiosConfig{
+				Elastic:          mockElasticClient,
+				SecondaryIndex:   dictionaryIndexDefault,
+				Index:            elasticIndexDefault,
+				DeclensionConfig: *declensionConfig,
+			}
+
+			handler := DionysosHandler{Config: &testConfig}
+
 			declensions, err := handler.StartFindingRules(word)
 			assert.Nil(t, err)
 			assert.Contains(t, declensions.Results[0].Rule, "noun - sing - masc - gen")
@@ -190,6 +204,17 @@ func TestFirstDeclensionMascNouns(t *testing.T) {
 	t.Run("DativusMascSing", func(t *testing.T) {
 		words := []string{"νεανίᾳ", "πολίτῃ", "κριτῇ"}
 		for _, word := range words {
+			mockElasticClient, err = elastic.NewMockClient(fixtureFile, mockCode)
+
+			testConfig := configs.DionysiosConfig{
+				Elastic:          mockElasticClient,
+				SecondaryIndex:   dictionaryIndexDefault,
+				Index:            elasticIndexDefault,
+				DeclensionConfig: *declensionConfig,
+			}
+
+			handler := DionysosHandler{Config: &testConfig}
+
 			declensions, err := handler.StartFindingRules(word)
 			assert.Nil(t, err)
 			assert.Contains(t, declensions.Results[0].Rule, "noun - sing - masc - dat")
@@ -199,6 +224,17 @@ func TestFirstDeclensionMascNouns(t *testing.T) {
 	t.Run("AccusativusMascSing", func(t *testing.T) {
 		words := []string{"νεανίαν", "πολίτην"}
 		for _, word := range words {
+			mockElasticClient, err = elastic.NewMockClient(fixtureFile, mockCode)
+
+			testConfig := configs.DionysiosConfig{
+				Elastic:          mockElasticClient,
+				SecondaryIndex:   dictionaryIndexDefault,
+				Index:            elasticIndexDefault,
+				DeclensionConfig: *declensionConfig,
+			}
+
+			handler := DionysosHandler{Config: &testConfig}
+
 			declensions, err := handler.StartFindingRules(word)
 			assert.Nil(t, err)
 			assert.Contains(t, declensions.Results[0].Rule, "noun - sing - masc - acc")
@@ -208,6 +244,17 @@ func TestFirstDeclensionMascNouns(t *testing.T) {
 	t.Run("NominativusMascPlural", func(t *testing.T) {
 		words := []string{"νεανίαι", "πολίται", "κριταί"}
 		for _, word := range words {
+			mockElasticClient, err = elastic.NewMockClient(fixtureFile, mockCode)
+
+			testConfig := configs.DionysiosConfig{
+				Elastic:          mockElasticClient,
+				SecondaryIndex:   dictionaryIndexDefault,
+				Index:            elasticIndexDefault,
+				DeclensionConfig: *declensionConfig,
+			}
+
+			handler := DionysosHandler{Config: &testConfig}
+
 			declensions, err := handler.StartFindingRules(word)
 			assert.Nil(t, err)
 			assert.Contains(t, declensions.Results[0].Rule, "noun - plural - masc - nom")
@@ -217,6 +264,17 @@ func TestFirstDeclensionMascNouns(t *testing.T) {
 	t.Run("GenitivusMascPlural", func(t *testing.T) {
 		words := []string{"νεανίῶν", "πολίτῶν", "κριτῶν"}
 		for _, word := range words {
+			mockElasticClient, err = elastic.NewMockClient(fixtureFile, mockCode)
+
+			testConfig := configs.DionysiosConfig{
+				Elastic:          mockElasticClient,
+				SecondaryIndex:   dictionaryIndexDefault,
+				Index:            elasticIndexDefault,
+				DeclensionConfig: *declensionConfig,
+			}
+
+			handler := DionysosHandler{Config: &testConfig}
+
 			declensions, err := handler.StartFindingRules(word)
 			assert.Nil(t, err)
 			if len(declensions.Results) > 1 {
@@ -232,6 +290,18 @@ func TestFirstDeclensionMascNouns(t *testing.T) {
 	t.Run("DativusMascPlural", func(t *testing.T) {
 		words := []string{"νεανίαις", "πολίταις", "κριταῖς"}
 		for _, word := range words {
+
+			mockElasticClient, err = elastic.NewMockClient(fixtureFile, mockCode)
+
+			testConfig := configs.DionysiosConfig{
+				Elastic:          mockElasticClient,
+				SecondaryIndex:   dictionaryIndexDefault,
+				Index:            elasticIndexDefault,
+				DeclensionConfig: *declensionConfig,
+			}
+
+			handler := DionysosHandler{Config: &testConfig}
+
 			declensions, err := handler.StartFindingRules(word)
 			assert.Nil(t, err)
 			if len(declensions.Results) > 1 {
@@ -247,6 +317,17 @@ func TestFirstDeclensionMascNouns(t *testing.T) {
 	t.Run("AccusativusMascPlural", func(t *testing.T) {
 		words := []string{"νεανίας", "πολίτας", "κριτᾱ́ς"}
 		for _, word := range words {
+			mockElasticClient, err = elastic.NewMockClient(fixtureFile, mockCode)
+
+			testConfig := configs.DionysiosConfig{
+				Elastic:          mockElasticClient,
+				SecondaryIndex:   dictionaryIndexDefault,
+				Index:            elasticIndexDefault,
+				DeclensionConfig: *declensionConfig,
+			}
+
+			handler := DionysosHandler{Config: &testConfig}
+
 			declensions, err := handler.StartFindingRules(word)
 			assert.Nil(t, err)
 			if len(declensions.Results) > 1 {

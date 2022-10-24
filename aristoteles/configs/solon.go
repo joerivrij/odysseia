@@ -1,9 +1,9 @@
 package configs
 
 import (
-	"github.com/odysseia/plato/elastic"
-	"github.com/odysseia/plato/kubernetes"
-	"github.com/odysseia/plato/vault"
+	"github.com/odysseia-greek/plato/elastic"
+	"github.com/odysseia-greek/plato/kubernetes"
+	"github.com/odysseia-greek/plato/vault"
 )
 
 type SolonConfig struct {

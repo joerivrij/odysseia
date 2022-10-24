@@ -3,10 +3,10 @@ package app
 import (
 	"bytes"
 	"encoding/json"
+	"github.com/odysseia-greek/plato/certificates"
+	"github.com/odysseia-greek/plato/kubernetes"
+	"github.com/odysseia-greek/plato/models"
 	"github.com/odysseia/aristoteles/configs"
-	"github.com/odysseia/plato/certificates"
-	"github.com/odysseia/plato/kubernetes"
-	"github.com/odysseia/plato/models"
 	"github.com/stretchr/testify/assert"
 	"io"
 	"io/ioutil"

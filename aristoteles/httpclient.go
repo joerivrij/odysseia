@@ -4,7 +4,7 @@ import (
 	"crypto/tls"
 	"errors"
 	"github.com/kpango/glg"
-	"github.com/odysseia/plato/service"
+	"github.com/odysseia-greek/plato/service"
 	"io/ioutil"
 	"net/url"
 	"os"

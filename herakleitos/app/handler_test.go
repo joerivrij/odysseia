@@ -1,9 +1,9 @@
 package app
 
 import (
+	"github.com/odysseia-greek/plato/elastic"
+	"github.com/odysseia-greek/plato/models"
 	"github.com/odysseia/aristoteles/configs"
-	"github.com/odysseia/plato/elastic"
-	"github.com/odysseia/plato/models"
 	"github.com/stretchr/testify/assert"
 	"sync"
 	"testing"
@@ -95,7 +95,7 @@ func TestHandlerDeleteIndex(t *testing.T) {
 
 		testHandler := HerakleitosHandler{Config: &testConfig}
 		err = testHandler.DeleteIndexAtStartUp()
-		assert.Nil(t, err)
+		assert.NotNil(t, err)
 	})
 
 	t.Run("NotCreated", func(t *testing.T) {

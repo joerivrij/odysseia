@@ -1,7 +1,7 @@
 package aristoteles
 
 import (
-	"github.com/odysseia/plato/queue"
+	"github.com/odysseia-greek/plato/queue"
 	"strconv"
 )
 

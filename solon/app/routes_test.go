@@ -3,11 +3,11 @@ package app
 import (
 	"bytes"
 	"encoding/json"
+	"github.com/odysseia-greek/plato/elastic"
+	"github.com/odysseia-greek/plato/kubernetes"
+	"github.com/odysseia-greek/plato/models"
+	"github.com/odysseia-greek/plato/vault"
 	"github.com/odysseia/aristoteles/configs"
-	"github.com/odysseia/plato/elastic"
-	"github.com/odysseia/plato/kubernetes"
-	"github.com/odysseia/plato/models"
-	"github.com/odysseia/plato/vault"
 	"github.com/stretchr/testify/assert"
 	"io"
 	"net/http"
@@ -243,7 +243,7 @@ func TestRegister(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, http.StatusBadRequest, response.Code)
 		assert.Equal(t, "createUser", sut.Messages[0].Field)
-		assert.Contains(t, sut.Messages[0].Message, "elasticSearch")
+		assert.Contains(t, sut.Messages[0].Message, "Elasticsearch")
 	})
 
 	t.Run("VaultDown", func(t *testing.T) {

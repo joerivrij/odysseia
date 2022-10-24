@@ -1,8 +1,8 @@
 package app
 
 import (
+	"github.com/odysseia-greek/plato/kubernetes"
 	"github.com/odysseia/aristoteles/configs"
-	"github.com/odysseia/plato/kubernetes"
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"

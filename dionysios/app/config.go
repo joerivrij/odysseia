@@ -2,8 +2,8 @@ package app
 
 import (
 	"encoding/json"
-	"github.com/odysseia/plato/elastic"
-	"github.com/odysseia/plato/models"
+	"github.com/odysseia-greek/plato/elastic"
+	"github.com/odysseia-greek/plato/models"
 	"io/ioutil"
 	"os"
 	"path/filepath"

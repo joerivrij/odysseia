@@ -1,6 +1,6 @@
 package configs
 
-import "github.com/odysseia/plato/service"
+import "github.com/odysseia-greek/plato/service"
 
 type BaseConfig struct {
 	Index                string `yaml:"INDEX"`

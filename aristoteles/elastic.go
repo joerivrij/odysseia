@@ -2,9 +2,8 @@ package aristoteles
 
 import (
 	"github.com/kpango/glg"
-	"github.com/odysseia/plato/elastic"
-	"github.com/odysseia/plato/helpers"
-	"github.com/odysseia/plato/models"
+	"github.com/odysseia-greek/plato/elastic"
+	"github.com/odysseia-greek/plato/models"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -140,8 +139,9 @@ func (c *Config) getCert() []byte {
 
 	if c.BaseConfig.TestOverwrite {
 		glg.Info("trying to read cert file from file")
-		rootPath := helpers.OdysseiaRootPath()
-		certPath := filepath.Join(rootPath, "eratosthenes", "fixture", "elastic-test-cert.pem")
+		path := "odysseia"
+		rootPath := c.OdysseiaRootPath(path)
+		certPath := filepath.Join(rootPath, "eratosthenes", "fixture", "elastic", "elastic-test-cert.pem")
 
 		cert, _ = ioutil.ReadFile(certPath)
 

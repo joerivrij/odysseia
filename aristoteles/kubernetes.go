@@ -2,7 +2,7 @@ package aristoteles
 
 import (
 	"github.com/kpango/glg"
-	"github.com/odysseia/plato/kubernetes"
+	"github.com/odysseia-greek/plato/kubernetes"
 	"io/ioutil"
 	"os"
 	"path/filepath"

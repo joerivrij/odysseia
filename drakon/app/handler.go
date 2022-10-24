@@ -3,8 +3,8 @@ package app
 import (
 	"fmt"
 	"github.com/kpango/glg"
+	"github.com/odysseia-greek/plato/elastic"
 	"github.com/odysseia/aristoteles/configs"
-	"github.com/odysseia/plato/elastic"
 )
 
 type DrakonHandler struct {

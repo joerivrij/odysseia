@@ -1,9 +1,9 @@
 package app
 
 import (
+	"github.com/odysseia-greek/plato/models"
+	"github.com/odysseia-greek/plato/service"
 	"github.com/odysseia/aristoteles/configs"
-	"github.com/odysseia/plato/models"
-	"github.com/odysseia/plato/service"
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"

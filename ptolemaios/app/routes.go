@@ -3,8 +3,8 @@ package app
 import (
 	"github.com/gorilla/mux"
 	"github.com/kpango/glg"
+	"github.com/odysseia-greek/plato/middleware"
 	"github.com/odysseia/aristoteles/configs"
-	"github.com/odysseia/plato/middleware"
 	"os"
 	"time"
 )
