@@ -15,7 +15,7 @@ Vue.prototype.$alexandrosUrl = store.state.AlexandrosUrl
 Vue.prototype.$dionysiosUrl = store.state.DionysiosUrl
 
 if (process.env.NODE_ENV === 'development') {
-  Vue.prototype.$sokratesUrl = "https://odysseia-greek.com/sokrates/v1"
+  Vue.prototype.$sokratesUrl = "http://localhost:5000/sokrates/v1"
   Vue.prototype.$herodotosUrl = "https://odysseia-greek.com/herodotos/v1"
   Vue.prototype.$alexandrosUrl = "https://odysseia-greek.com/alexandros/v1"
   Vue.prototype.$dionysiosUrl = "https://odysseia-greek.com/dionysios/v1"

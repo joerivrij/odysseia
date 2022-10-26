@@ -6,7 +6,7 @@ import (
 	"github.com/kubemq-io/kubemq-go"
 	"github.com/odysseia-greek/plato/models"
 	"github.com/odysseia-greek/plato/transform"
-	"github.com/odysseia/aristoteles/configs"
+	"github.com/odysseia-greek/plato/aristoteles/configs"
 	"strings"
 	"sync"
 	"time"

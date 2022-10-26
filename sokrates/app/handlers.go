@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"github.com/gorilla/mux"
 	"github.com/kpango/glg"
+	"github.com/odysseia-greek/plato/aristoteles/configs"
 	"github.com/odysseia-greek/plato/helpers"
 	"github.com/odysseia-greek/plato/middleware"
 	"github.com/odysseia-greek/plato/models"
-	"github.com/odysseia/aristoteles/configs"
 	"net/http"
 	"strings"
 )
@@ -206,9 +206,7 @@ func (s *SokratesHandler) CreateQuestion(w http.ResponseWriter, req *http.Reques
 		logos, _ := models.UnmarshalWord(source)
 		logoi.Logos = append(logoi.Logos, logos)
 	}
-	randNumber := helpers.GenerateRandomNumber(len(logoi.Logos))
-
-	glg.Debugf("randomNumber: %d", randNumber)
+	randNumber := s.Config.Randomizer.RandomNumberBaseZero(len(logoi.Logos))
 
 	question := logoi.Logos[randNumber]
 	quiz = append(quiz, question.Greek)
@@ -221,7 +219,7 @@ func (s *SokratesHandler) CreateQuestion(w http.ResponseWriter, req *http.Reques
 	}
 
 	for len(quiz) != numberOfNeededAnswers {
-		randNumber = helpers.GenerateRandomNumber(len(logoi.Logos))
+		randNumber = s.Config.Randomizer.RandomNumberBaseZero(len(logoi.Logos))
 		randEntry := logoi.Logos[randNumber]
 
 		exists := findQuizWord(quiz, randEntry.Translation)

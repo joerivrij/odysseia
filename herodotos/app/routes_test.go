@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"github.com/odysseia-greek/plato/elastic"
 	"github.com/odysseia-greek/plato/models"
-	"github.com/odysseia/aristoteles/configs"
+	"github.com/odysseia-greek/plato/aristoteles/configs"
 	"github.com/stretchr/testify/assert"
 	"io"
 	"net/http"

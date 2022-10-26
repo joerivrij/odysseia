@@ -3,8 +3,8 @@ package main
 import (
 	"crypto/x509"
 	"github.com/kpango/glg"
-	"github.com/odysseia/aristoteles"
-	"github.com/odysseia/aristoteles/configs"
+	"github.com/odysseia-greek/plato/aristoteles"
+	"github.com/odysseia-greek/plato/aristoteles/configs"
 	"github.com/odysseia/solon/app"
 	"io/ioutil"
 	"net/http"

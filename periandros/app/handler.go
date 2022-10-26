@@ -3,7 +3,7 @@ package app
 import (
 	"fmt"
 	"github.com/kpango/glg"
-	"github.com/odysseia/aristoteles/configs"
+	"github.com/odysseia-greek/plato/aristoteles/configs"
 	"time"
 )
 
