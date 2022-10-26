@@ -3,7 +3,7 @@ package app
 import (
 	"github.com/gorilla/mux"
 	"github.com/odysseia-greek/plato/middleware"
-	"github.com/odysseia/aristoteles/configs"
+	"github.com/odysseia-greek/plato/aristoteles/configs"
 )
 
 // InitRoutes to start up a mux router and return the routes

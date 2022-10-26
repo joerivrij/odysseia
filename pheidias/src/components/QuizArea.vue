@@ -275,6 +275,25 @@
             Reset Progress
           </v-btn>
 
+          <div>
+            <div style="width:75%; margin: 5em auto;">
+              <v-data-table
+                  :disable-sort="true"
+                  :headers="headers"
+                  :items="historyTable"
+                  :items-per-page="5"
+                  class="elevation-1"
+              >
+                <template v-slot:item.input="{ item }">
+                  <v-chip
+                      :color="item.color"
+                  >
+                    {{ item.input }}
+                  </v-chip>
+                </template>
+              </v-data-table>
+           </div>
+          </div>
           <v-sparkline
               :value="this.graphNumbers"
               :gradient="['#1affcb', '#e9b61d', '#e9501d']"
@@ -307,6 +326,14 @@ export default {
   },
   data() {
     return {
+      headers: [
+        { text: 'Greek', value: 'greek', align: 'center' },
+        { text: 'Input', value: 'input', align: 'center' },
+        {text: 'Answer', value: 'answer', align: 'center'},
+        {text: 'Method', value: 'method', align: 'center'},
+        {text: 'Category', value: 'category', align: 'center'}
+      ],
+      historyTable: [],
       widthStyle : "50%",
       valid: true,
       showButtons: false,
@@ -358,10 +385,10 @@ export default {
       this.value = 0
 
       this.interval = setInterval(() => {
-        if (this.value === 100) {
+        if (this.value >= 100) {
           clearInterval(this.interval)
         }
-        this.value += 4
+        this.value += 6
       }, 100)
     },
     hideAlert: function () {
@@ -370,7 +397,7 @@ export default {
           this.getQuestion()
           this.showAnswer = false
         }
-      }, 3000);
+      }, 2000);
     },
     async getQuestion () {
       this.showButtons = false
@@ -433,6 +460,22 @@ export default {
             if (this.correct) {
               this.correctlyAnswered++
             }
+
+            let color = "#1de9b6"
+            if(!this.correct) {
+              color = "#e9501d"
+            }
+
+            let lastAnswer = {
+              greek: this.quizWord,
+              color: color,
+              answer: this.correctAnswer,
+              input: this.selectedAnswer,
+              category: this.category,
+              method: this.selectedMethod,
+            }
+
+            this.historyTable.unshift(lastAnswer)
 
             this.percentage = Math.round(this.correctlyAnswered / this.answered * 100)
             let inNumbers = Math.round(this.correctlyAnswered / this.answered * 10)

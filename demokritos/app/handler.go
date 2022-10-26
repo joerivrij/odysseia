@@ -4,7 +4,7 @@ import (
 	"github.com/kpango/glg"
 	"github.com/odysseia-greek/plato/models"
 	"github.com/odysseia-greek/plato/transform"
-	"github.com/odysseia/aristoteles/configs"
+	"github.com/odysseia-greek/plato/aristoteles/configs"
 	"sync"
 )
 
