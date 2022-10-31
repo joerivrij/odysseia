@@ -1,7 +1,0 @@
-venv
-.idea
-.code
-Dockerfile
-Makefile
-dist
-__pycache__

@@ -1,5 +1,0 @@
-apiVersion: v2
-name: queue
-description: Kubernetes manifest but managed by helm
-version: 0.1.0
-appVersion: "0.1.0"
