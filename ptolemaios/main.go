@@ -48,25 +48,19 @@ func main() {
 		glg.Fatal("could not parse config")
 	}
 
-	//srv := app.InitRoutes(*ptolemaiosConfig)
 	handler := app.CreateHandler(*ptolemaiosConfig)
-
-	glg.Infof("%s : %s", "running on port", port)
 
 	lis, err := net.Listen("tcp", fmt.Sprintf("%s", port))
 	if err != nil {
 		glg.Fatalf("failed to listen: %v", err)
 	}
+
+	glg.Infof("%s : %s", "setting up rpc service on", port)
+
 	s := grpc.NewServer()
 	pb.RegisterPtolemaiosServer(s, handler)
 	glg.Infof("server listening at %v", lis.Addr())
 	if err := s.Serve(lis); err != nil {
 		glg.Fatalf("failed to serve: %v", err)
 	}
-
-	//err = http.ListenAndServe(port, srv)
-	//
-	//if err != nil {
-	//	panic(err)
-	//}
 }
