@@ -6,7 +6,7 @@ require (
 	github.com/gorilla/mux v1.8.0
 	github.com/kpango/glg v1.6.13
 	github.com/kubemq-io/kubemq-go v1.7.6
-	github.com/odysseia-greek/plato v0.1.7
+	github.com/odysseia-greek/plato v0.1.12
 	github.com/stretchr/testify v1.8.0
 	golang.org/x/text v0.3.7
 	k8s.io/api v0.25.2
@@ -224,7 +224,7 @@ require (
 	google.golang.org/api v0.91.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/genproto v0.0.0-20220808131553-a91ffa7f803e // indirect
-	google.golang.org/grpc v1.48.0 // indirect
+	google.golang.org/grpc v1.48.0
 	google.golang.org/protobuf v1.28.1 // indirect
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect

@@ -1,15 +1,19 @@
 package main
 
 import (
+	"fmt"
 	"github.com/kpango/glg"
 	"github.com/odysseia-greek/plato/aristoteles"
 	"github.com/odysseia-greek/plato/aristoteles/configs"
 	"github.com/odysseia/ptolemaios/app"
-	"net/http"
+	"google.golang.org/grpc"
+	"net"
 	"os"
+
+	pb "github.com/odysseia-greek/plato/proto"
 )
 
-const standardPort = ":5001"
+const standardPort = ":50051"
 
 func init() {
 	errlog := glg.FileWriter("/tmp/error.log", 0666)
@@ -44,12 +48,19 @@ func main() {
 		glg.Fatal("could not parse config")
 	}
 
-	srv := app.InitRoutes(*ptolemaiosConfig)
+	handler := app.CreateHandler(*ptolemaiosConfig)
 
-	glg.Infof("%s : %s", "running on port", port)
-	err = http.ListenAndServe(port, srv)
-
+	lis, err := net.Listen("tcp", fmt.Sprintf("%s", port))
 	if err != nil {
-		panic(err)
+		glg.Fatalf("failed to listen: %v", err)
+	}
+
+	glg.Infof("%s : %s", "setting up rpc service on", port)
+
+	s := grpc.NewServer()
+	pb.RegisterPtolemaiosServer(s, handler)
+	glg.Infof("server listening at %v", lis.Addr())
+	if err := s.Serve(lis); err != nil {
+		glg.Fatalf("failed to serve: %v", err)
 	}
 }

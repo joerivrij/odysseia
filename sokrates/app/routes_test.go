@@ -4,9 +4,10 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/odysseia-greek/plato/aristoteles/configs"
 	"github.com/odysseia-greek/plato/elastic"
 	"github.com/odysseia-greek/plato/models"
-	"github.com/odysseia-greek/plato/aristoteles/configs"
+	"github.com/odysseia-greek/plato/randomizer"
 	"github.com/stretchr/testify/assert"
 	"io"
 	"net/http"
@@ -232,6 +233,8 @@ func TestCreateQuestions(t *testing.T) {
 	category := "verba"
 	method := "mousieon"
 	chapter := "1"
+	mockRandomizer, err := randomizer.NewRandomizerClient()
+	assert.Nil(t, err)
 
 	t.Run("HappyPath", func(t *testing.T) {
 		fixtureFile := "createQuestionSokrates"
@@ -241,6 +244,7 @@ func TestCreateQuestions(t *testing.T) {
 
 		testConfig := configs.SokratesConfig{
 			Elastic:    mockElasticClient,
+			Randomizer: mockRandomizer,
 			SearchWord: "greek",
 		}
 
@@ -266,6 +270,7 @@ func TestCreateQuestions(t *testing.T) {
 
 		testConfig := configs.SokratesConfig{
 			Elastic:    mockElasticClient,
+			Randomizer: mockRandomizer,
 			SearchWord: "greek",
 		}
 
@@ -291,7 +296,8 @@ func TestCreateQuestions(t *testing.T) {
 
 		testConfig := configs.SokratesConfig{
 			Elastic:    mockElasticClient,
-			SearchWord: "test",
+			Randomizer: mockRandomizer,
+			SearchWord: "greek",
 		}
 
 		expectedText := "informations from Elasticsearch"
@@ -315,7 +321,8 @@ func TestCreateQuestions(t *testing.T) {
 
 		testConfig := configs.SokratesConfig{
 			Elastic:    mockElasticClient,
-			SearchWord: "test",
+			Randomizer: mockRandomizer,
+			SearchWord: "greek",
 		}
 
 		router := InitRoutes(testConfig)
@@ -338,6 +345,7 @@ func TestCreateQuestions(t *testing.T) {
 
 		testConfig := configs.SokratesConfig{
 			Elastic:    mockElasticClient,
+			Randomizer: mockRandomizer,
 			SearchWord: "greek",
 		}
 

@@ -3,32 +3,18 @@ package app
 import (
 	"encoding/json"
 	"github.com/kpango/glg"
-	"github.com/odysseia-greek/plato/helpers"
+	"github.com/odysseia-greek/plato/aristoteles/configs"
 	"github.com/odysseia-greek/plato/middleware"
 	"github.com/odysseia-greek/plato/models"
-	"github.com/odysseia-greek/plato/aristoteles/configs"
+	pb "github.com/odysseia-greek/plato/proto"
 	"net/http"
-	"strconv"
 	"time"
 )
 
 type PtolemaiosHandler struct {
 	Config   *configs.PtolemaiosConfig
 	Duration time.Duration
-}
-
-// PingPong pongs the ping
-func (p *PtolemaiosHandler) PingPong(w http.ResponseWriter, req *http.Request) {
-	pingPong := models.ResultModel{Result: "pong"}
-	middleware.ResponseWithJson(w, pingPong)
-}
-
-func (p *PtolemaiosHandler) Health(w http.ResponseWriter, r *http.Request) {
-	vaultHealth, _ := p.Config.Vault.Health()
-	glg.Debugf("%s : %s", "vault healthy", strconv.FormatBool(vaultHealth))
-
-	healthy := helpers.GetHealthWithVault(vaultHealth)
-	middleware.ResponseWithJson(w, healthy)
+	pb.UnimplementedPtolemaiosServer
 }
 
 func (p *PtolemaiosHandler) GetSecretFromVault(w http.ResponseWriter, req *http.Request) {
