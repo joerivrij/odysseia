@@ -2,10 +2,10 @@ package app
 
 import (
 	"github.com/kpango/glg"
+	"github.com/odysseia-greek/plato/aristoteles/configs"
 	"github.com/odysseia-greek/plato/helpers"
 	"github.com/odysseia-greek/plato/middleware"
 	"github.com/odysseia-greek/plato/models"
-	"github.com/odysseia-greek/plato/aristoteles/configs"
 	"net/http"
 )
 

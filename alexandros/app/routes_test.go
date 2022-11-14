@@ -3,9 +3,9 @@ package app
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/odysseia-greek/plato/aristoteles/configs"
 	"github.com/odysseia-greek/plato/elastic"
 	"github.com/odysseia-greek/plato/models"
-	"github.com/odysseia-greek/plato/aristoteles/configs"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/http/httptest"

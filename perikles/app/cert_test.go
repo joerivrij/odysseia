@@ -1,9 +1,9 @@
 package app
 
 import (
+	"github.com/odysseia-greek/plato/aristoteles/configs"
 	"github.com/odysseia-greek/plato/certificates"
 	"github.com/odysseia-greek/plato/kubernetes"
-	"github.com/odysseia-greek/plato/aristoteles/configs"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
