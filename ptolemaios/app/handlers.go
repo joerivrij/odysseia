@@ -1,12 +1,14 @@
 package app
 
 import (
+	"context"
 	"encoding/json"
 	"github.com/kpango/glg"
+	"github.com/odysseia-greek/plato/aristoteles/configs"
 	"github.com/odysseia-greek/plato/helpers"
 	"github.com/odysseia-greek/plato/middleware"
 	"github.com/odysseia-greek/plato/models"
-	"github.com/odysseia-greek/plato/aristoteles/configs"
+	pb "github.com/odysseia-greek/plato/proto"
 	"net/http"
 	"strconv"
 	"time"
@@ -15,12 +17,41 @@ import (
 type PtolemaiosHandler struct {
 	Config   *configs.PtolemaiosConfig
 	Duration time.Duration
+	pb.UnimplementedPtolemaiosServer
 }
 
 // PingPong pongs the ping
 func (p *PtolemaiosHandler) PingPong(w http.ResponseWriter, req *http.Request) {
 	pingPong := models.ResultModel{Result: "pong"}
 	middleware.ResponseWithJson(w, pingPong)
+}
+
+// GetSecret creates a 1 time token and returns the secret from vault
+func (p *PtolemaiosHandler) GetSecret(context.Context, *pb.VaultRequest) (*pb.ElasticConfigVault, error) {
+	oneTimeToken, err := p.getOneTimeToken()
+	if err != nil {
+		return nil, err
+	}
+
+	glg.Debug("so far so good")
+	p.Config.Vault.SetOnetimeToken(oneTimeToken)
+	secret, err := p.Config.Vault.GetSecret(p.Config.PodName)
+	if err != nil {
+		return nil, err
+	}
+
+	var elasticModel pb.ElasticConfigVault
+	for key, value := range secret.Data {
+		if key == "data" {
+			j, _ := json.Marshal(value)
+			err := json.Unmarshal(j, &elasticModel)
+			if err != nil {
+				return nil, err
+			}
+		}
+	}
+
+	return &elasticModel, nil
 }
 
 func (p *PtolemaiosHandler) Health(w http.ResponseWriter, r *http.Request) {
